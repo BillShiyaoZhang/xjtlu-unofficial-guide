@@ -2,6 +2,7 @@
 
 import {
   CheckCircle2,
+  ClipboardList,
   KeyRound,
   Loader2,
   LogOut,
@@ -14,6 +15,7 @@ import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { clearMobileTabSessionState } from '@/lib/mobile-navigation';
 import { PILOT_NOTICE, PILOT_NOTICE_VERSION } from '@/lib/pilot-contract';
 
 const PILOT_FLASH_KEY = 'xg-pilot-action-result';
@@ -125,6 +127,11 @@ export function PilotAccessPanel({
       if (!response.ok) {
         throw new Error(payload.error?.message ?? '操作失败，请稍后重试。');
       }
+      try {
+        clearMobileTabSessionState(window.sessionStorage);
+      } catch {
+        // Server-side exit or withdrawal remains authoritative.
+      }
       if (withdraw && inviteCode) {
         setBusy(null);
         setMessage('研究同意已撤回，可识别产品研究关联已清理。');
@@ -181,7 +188,7 @@ export function PilotAccessPanel({
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-px bg-border">
+          <div className="grid grid-cols-3 gap-px bg-border">
             <Link
               href="/"
               className="flex min-h-24 flex-col justify-center bg-card px-5 outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/40"
@@ -195,6 +202,16 @@ export function PilotAccessPanel({
             >
               <ShieldCheck aria-hidden="true" className="size-5 text-primary" />
               <span className="mt-2 font-semibold">提交私有线索</span>
+            </Link>
+            <Link
+              href="/pilot/activity"
+              className="flex min-h-24 flex-col justify-center bg-card px-4 outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/40"
+            >
+              <ClipboardList
+                aria-hidden="true"
+                className="size-5 text-primary"
+              />
+              <span className="mt-2 font-semibold">我的活动</span>
             </Link>
           </div>
         </section>

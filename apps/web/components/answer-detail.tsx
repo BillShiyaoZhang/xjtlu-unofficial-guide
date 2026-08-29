@@ -71,7 +71,9 @@ export function AnswerDetail({
       ? { href: '/', label: '首页' }
       : sourceTab === 'topics'
         ? { href: `/topics/${card.topicSlug}`, label: card.topicTitle }
-        : { href: '/search', label: '查找' };
+        : sourceTab === 'more'
+          ? { href: '/pilot/activity', label: '我的活动' }
+          : { href: '/search', label: '查找' };
   if (returnTo) backLink.href = returnTo;
 
   return (

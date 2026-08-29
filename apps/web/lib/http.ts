@@ -70,7 +70,12 @@ export function editorAuthResponse(
         message:
           result.status === 401
             ? '请先登录编辑工作台。'
-            : '当前账号不在编辑白名单中。',
+            : result.code === 'editor_password_change_required'
+              ? '请先在账号安全页修改初始密码。'
+              : '当前账号没有执行此操作所需的权限。',
+        ...(result.requiredPermission
+          ? { required_permission: result.requiredPermission }
+          : {}),
       },
       request_id: crypto.randomUUID(),
     },

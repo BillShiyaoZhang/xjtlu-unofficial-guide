@@ -25,10 +25,24 @@ export default defineConfig(async ({ command, mode }) => {
       AUTH_PROXY_SECRET: localRuntimeValue('AUTH_PROXY_SECRET'),
       EDITOR_LOGIN_SECRET: localRuntimeValue('EDITOR_LOGIN_SECRET'),
       EDITOR_SESSION_SECRET: localRuntimeValue('EDITOR_SESSION_SECRET'),
+      EDITOR_ENABLE_LEGACY_LOGIN:
+        localRuntimeValue('EDITOR_ENABLE_LEGACY_LOGIN') ||
+        (command === 'serve' ? 'true' : 'false'),
+      EDITOR_PASSWORD_PEPPER: localRuntimeValue('EDITOR_PASSWORD_PEPPER'),
+      EDITOR_MFA_KEY_V1: localRuntimeValue('EDITOR_MFA_KEY_V1'),
+      EDITOR_BOOTSTRAP_EMAIL: localRuntimeValue('EDITOR_BOOTSTRAP_EMAIL'),
+      EDITOR_BOOTSTRAP_NAME: localRuntimeValue('EDITOR_BOOTSTRAP_NAME'),
+      EDITOR_BOOTSTRAP_PASSWORD: localRuntimeValue('EDITOR_BOOTSTRAP_PASSWORD'),
+      EDITOR_BOOTSTRAP_TOTP_SECRET: localRuntimeValue(
+        'EDITOR_BOOTSTRAP_TOTP_SECRET',
+      ),
+      EDITOR_RATE_LIMIT_SECRET: localRuntimeValue('EDITOR_RATE_LIMIT_SECRET'),
+      PRIVATE_INTAKE_KEY_V1: localRuntimeValue('PRIVATE_INTAKE_KEY_V1'),
       PILOT_SECRET: localRuntimeValue('PILOT_SECRET'),
       PILOT_WINDOW_START: localRuntimeValue('PILOT_WINDOW_START'),
       PILOT_WINDOW_END: localRuntimeValue('PILOT_WINDOW_END'),
       MAINTENANCE_SECRET: localRuntimeValue('MAINTENANCE_SECRET'),
+      PUBLIC_ORIGIN: localRuntimeValue('PUBLIC_ORIGIN'),
       SEED_DEMO_CONTENT:
         localRuntimeValue('SEED_DEMO_CONTENT') ||
         (command === 'serve' ? 'true' : 'false'),

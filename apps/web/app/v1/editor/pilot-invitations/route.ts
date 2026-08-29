@@ -11,7 +11,7 @@ import { enforceRateLimit } from '@/lib/rate-limit';
 
 export async function POST(request: Request) {
   const requestId = crypto.randomUUID();
-  const auth = await getEditorApiAuth();
+  const auth = await getEditorApiAuth('pilot:manage');
   if (!auth.ok) return editorAuthResponse(auth);
   try {
     assertSameOrigin(request);

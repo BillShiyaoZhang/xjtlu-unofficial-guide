@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { EditorLoginPanel } from '@/components/editor-login-panel';
 import { getEditorApiAuth } from '@/lib/authz';
-import { parseEditorReturnTo } from '@/lib/editor-session';
+import { getEditorLoginMode, parseEditorReturnTo } from '@/lib/editor-session';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: '编辑登录' };
@@ -20,6 +20,7 @@ export default async function EditorLoginPage({
   );
   const auth = await getEditorApiAuth();
   if (auth.ok) redirect(returnTo);
+  const loginMode = await getEditorLoginMode();
 
   return (
     <main
@@ -39,7 +40,7 @@ export default async function EditorLoginPage({
           </p>
         </div>
       </header>
-      <EditorLoginPanel returnTo={returnTo} />
+      <EditorLoginPanel returnTo={returnTo} mode={loginMode.mode} />
     </main>
   );
 }

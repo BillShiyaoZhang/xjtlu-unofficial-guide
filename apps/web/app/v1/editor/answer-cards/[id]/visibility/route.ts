@@ -13,7 +13,7 @@ export async function PATCH(
   context: { params: Promise<{ id: string }> },
 ) {
   const requestId = crypto.randomUUID();
-  const auth = await getEditorApiAuth();
+  const auth = await getEditorApiAuth('content:visibility');
   if (!auth.ok) return editorAuthResponse(auth);
   try {
     assertSameOrigin(request);

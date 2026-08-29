@@ -1,4 +1,7 @@
-import { clearEditorCookieHeader } from '@/lib/editor-session';
+import {
+  clearEditorCookieHeader,
+  revokeEditorSessionFromCookie,
+} from '@/lib/editor-session';
 import { assertSameOrigin, noStoreJson, readJsonBody } from '@/lib/http';
 import { errorResponse } from '@/lib/mutations';
 
@@ -7,6 +10,10 @@ export async function POST(request: Request) {
   try {
     assertSameOrigin(request);
     await readJsonBody(request, 1_000);
+    await revokeEditorSessionFromCookie(
+      request.headers.get('cookie'),
+      requestId,
+    );
     return noStoreJson(
       { data: { authenticated: false }, request_id: requestId },
       { headers: { 'Set-Cookie': clearEditorCookieHeader() } },

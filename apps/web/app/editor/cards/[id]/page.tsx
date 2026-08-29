@@ -21,7 +21,10 @@ export default async function EditorCardPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const { user, allowed } = await requireEditorPage(`/editor/cards/${id}`);
+  const { user, allowed } = await requireEditorPage(
+    `/editor/cards/${id}`,
+    'content:read',
+  );
   if (!allowed) return <EditorAccessDenied email={user.email} />;
   const [data, topics, scopes] = await Promise.all([
     getEditorCard(id),
@@ -36,7 +39,10 @@ export default async function EditorCardPage({
       id="main-content"
       className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8"
     >
-      <EditorNav displayName={user.displayName} />
+      <EditorNav
+        displayName={user.displayName}
+        permissions={user.permissions}
+      />
       <header className="mb-8">
         <div className="flex flex-wrap items-center gap-2">
           <Badge variant="secondary">{data.card.topicTitle}</Badge>

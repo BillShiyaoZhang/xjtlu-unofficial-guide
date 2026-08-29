@@ -13,7 +13,7 @@ export async function PATCH(
   context: { params: Promise<{ code: string }> },
 ) {
   const requestId = crypto.randomUUID();
-  const auth = await getEditorApiAuth();
+  const auth = await getEditorApiAuth('safety:manage');
   if (!auth.ok) return editorAuthResponse(auth);
   try {
     assertSameOrigin(request);
@@ -33,9 +33,20 @@ export async function PATCH(
       status: body.status as 'reviewing' | 'resolved' | 'closed',
       publicResponse:
         typeof body.publicResponse === 'string' ? body.publicResponse : null,
+      decisionCode:
+        typeof body.decisionCode === 'string' ? body.decisionCode : null,
+      resolutionCardId:
+        typeof body.resolutionCardId === 'string'
+          ? body.resolutionCardId
+          : null,
+      resolutionRevisionId:
+        typeof body.resolutionRevisionId === 'string'
+          ? body.resolutionRevisionId
+          : null,
       actorId: auth.user.userId,
       expectedVersion: parseIfMatch(request),
       idempotencyKey: request.headers.get('idempotency-key'),
+      requestId,
     });
     return noStoreJson({
       data: result.data,

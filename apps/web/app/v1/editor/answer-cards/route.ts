@@ -9,7 +9,7 @@ import { createAnswerCardDraft, errorResponse } from '@/lib/mutations';
 
 export async function POST(request: Request) {
   const requestId = crypto.randomUUID();
-  const auth = await getEditorApiAuth();
+  const auth = await getEditorApiAuth('content:edit');
   if (!auth.ok) return editorAuthResponse(auth);
   try {
     assertSameOrigin(request);

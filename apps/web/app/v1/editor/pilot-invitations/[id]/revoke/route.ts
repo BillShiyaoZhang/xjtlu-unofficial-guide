@@ -13,7 +13,7 @@ export async function POST(
   context: { params: Promise<{ id: string }> },
 ) {
   const requestId = crypto.randomUUID();
-  const auth = await getEditorApiAuth();
+  const auth = await getEditorApiAuth('pilot:manage');
   if (!auth.ok) return editorAuthResponse(auth);
   try {
     assertSameOrigin(request);

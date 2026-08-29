@@ -139,6 +139,13 @@ export type EditorCardListItem = {
 };
 
 export type EditorDashboard = {
+  queueCounts: {
+    totalCards: number;
+    draftCards: number;
+    overdueCards: number;
+    openReports: number;
+    openIntakes: number;
+  };
   cards: EditorCardListItem[];
   reports: Array<{
     publicCode: string;

@@ -6,6 +6,7 @@ import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import { PwaRuntime } from '@/components/pwa-runtime';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
+import { getBuildPublicOrigin } from '@/lib/public-origin';
 
 import './globals.css';
 
@@ -15,7 +16,7 @@ const geist = Geist({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://xjtlu-guide.example'),
+  metadataBase: new URL(getBuildPublicOrigin()),
   applicationName: '西浦非官方指南',
   manifest: '/manifest.webmanifest',
   title: {
@@ -45,7 +46,14 @@ export const metadata: Metadata = {
     statusBarStyle: 'default',
   },
   other: { 'mobile-web-app-capable': 'yes' },
-  robots: { index: false, follow: false },
+  robots: {
+    index:
+      process.env.NODE_ENV === 'production' &&
+      getBuildPublicOrigin() !== 'https://xjtlu-guide.invalid',
+    follow:
+      process.env.NODE_ENV === 'production' &&
+      getBuildPublicOrigin() !== 'https://xjtlu-guide.invalid',
+  },
   openGraph: {
     title: '西浦非官方指南',
     description: '先核对来源，再做决定。',

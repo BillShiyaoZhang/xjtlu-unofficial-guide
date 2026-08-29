@@ -17,6 +17,10 @@ import type {
   Scope,
   TopicSummary,
 } from './types';
+import { getPublicOrigin } from './public-origin';
+import { matchesScopeSelection } from './scope-matching';
+
+export { matchesScopeSelection } from './scope-matching';
 
 type CardRow = {
   id: string;
@@ -89,6 +93,7 @@ export async function listScopes(): Promise<Scope[]> {
     .prepare(
       `SELECT id, dimension, code, label_zh, label_en
        FROM applicability_scopes
+       WHERE status = 'active'
        ORDER BY dimension ASC, sort_order ASC, label_zh ASC`,
     )
     .all<Omit<ScopeRow, 'card_revision_id'>>();
@@ -122,15 +127,22 @@ export async function searchAnswerCards(options?: {
                 FROM answer_card_sentence_citations sc
                 LEFT JOIN evidence_spans es ON es.id = sc.evidence_span_id
                 LEFT JOIN artifact_revisions ear ON ear.id = es.artifact_revision_id
+                LEFT JOIN artifacts ea ON ea.id = ear.artifact_id
                 LEFT JOIN link_citations lc ON lc.id = sc.link_citation_id
                 LEFT JOIN artifact_revisions lar ON lar.id = lc.artifact_revision_id
+                LEFT JOIN artifacts la ON la.id = lar.artifact_id
                 WHERE sc.card_revision_id = r.id
                   AND (
                     (sc.evidence_span_id IS NOT NULL AND (
                       es.visibility != 'public' OR ear.visibility != 'public'
+                      OR ea.moderation_status != 'approved'
                       OR (ear.rights_expires_at IS NOT NULL AND ear.rights_expires_at <= ?)
                     ))
-                    OR (sc.link_citation_id IS NOT NULL AND lar.visibility != 'public')
+                    OR (sc.link_citation_id IS NOT NULL AND (
+                      lar.visibility != 'public'
+                      OR la.moderation_status != 'approved'
+                      OR (lar.rights_expires_at IS NOT NULL AND lar.rights_expires_at <= ?)
+                    ))
                   )
               ) THEN 1 ELSE 0 END AS source_issue
        FROM answer_cards c
@@ -144,16 +156,27 @@ export async function searchAnswerCards(options?: {
                 r.review_owner_label, r.evidence_coverage, r.dispute_status,
                 r.evidence_note`,
     )
-    .bind(now)
+    .bind(now, now)
     .all<CardRow>();
 
   const revisionIds = result.results.map((row) => row.revision_id);
-  const scopesByRevision = await loadScopesForRevisions(revisionIds);
+  const [scopesByRevision, availableScopes] = await Promise.all([
+    loadScopesForRevisions(revisionIds),
+    listScopes(),
+  ]);
   const query = options?.query?.trim() ?? '';
-  const requiredScopes = new Set(options?.scopeIds ?? []);
+  const selectedScopes = new Set(options?.scopeIds ?? []);
+  const selectedDimensions = new Map<string, Set<string>>();
+  for (const scope of availableScopes) {
+    if (!selectedScopes.has(scope.id)) continue;
+    const ids = selectedDimensions.get(scope.dimension) ?? new Set<string>();
+    ids.add(scope.id);
+    selectedDimensions.set(scope.dimension, ids);
+  }
   const requestedTopic = options?.topicSlug?.trim();
 
   return result.results
+    .filter((row) => !row.source_issue)
     .map((row) => {
       const scopes = scopesByRevision.get(row.revision_id) ?? [];
       const effectiveDispute = row.source_issue
@@ -163,11 +186,9 @@ export async function searchAnswerCards(options?: {
       return card;
     })
     .filter((card) => !requestedTopic || card.topicSlug === requestedTopic)
-    .filter((card) => {
-      if (requiredScopes.size === 0) return true;
-      const present = new Set(card.scopes.map((scope) => scope.id));
-      return [...requiredScopes].every((scopeId) => present.has(scopeId));
-    })
+    .filter((card) =>
+      matchesScopeSelection(card.scopeMode, card.scopes, selectedDimensions),
+    )
     .filter((card) => !query || card.searchScore > 0)
     .sort((left, right) => {
       if (left.status.isOverdue !== right.status.isOverdue) {
@@ -280,6 +301,7 @@ async function getAnswerRevision(
                   lc.url AS link_url, lc.accessed_at,
                   COALESCE(lc.published_at, ar.published_at) AS published_at,
                   ar.captured_at, a.canonical_url, p.name_zh AS publisher_name,
+                  a.moderation_status AS artifact_moderation_status,
                   ar.visibility AS artifact_visibility,
                   es.visibility AS evidence_visibility,
                   ar.rights_expires_at
@@ -333,6 +355,7 @@ async function getAnswerRevision(
   const sourceIssue = sentences.some(
     (sentence) => sentence.isFactual && sentence.citations.length === 0,
   );
+  if (sourceIssue) return null;
   const effectiveDispute: DisputeStatus = sourceIssue
     ? 'confirmed'
     : row.dispute_status;
@@ -392,6 +415,11 @@ export async function getReportByCode(code: string) {
 
 export async function getEditorDashboard(
   actorId: string,
+  access: {
+    content: boolean;
+    safety: boolean;
+    audit: boolean;
+  } = { content: true, safety: true, audit: true },
 ): Promise<EditorDashboard> {
   await ensureDatabase();
   const d1 = getD1();
@@ -409,10 +437,12 @@ export async function getEditorDashboard(
     .bind(`audit-${requestId}`, actorId, requestId, now)
     .run();
 
-  const [cards, reports, intakes, audit] = await Promise.all([
-    d1
-      .prepare(
-        `SELECT c.id, c.slug, c.publication_status, c.risk_level,
+  const [cards, reports, intakes, audit, safetyCounts, contentCounts] =
+    await Promise.all([
+      access.content
+        ? d1
+            .prepare(
+              `SELECT c.id, c.slug, c.publication_status, c.risk_level,
                 c.lock_version, c.current_public_revision_id,
                 current_r.title AS current_title,
                 current_r.review_due_at AS current_review_due_at,
@@ -434,26 +464,29 @@ export async function getEditorDashboard(
          ORDER BY
            CASE WHEN current_r.review_due_at IS NOT NULL
                      AND current_r.review_due_at <= ? THEN 0 ELSE 1 END,
-           latest_r.created_at DESC`,
-      )
-      .bind(now)
-      .all<{
-        id: string;
-        slug: string;
-        publication_status: string;
-        risk_level: string;
-        lock_version: number;
-        current_public_revision_id: string | null;
-        current_title: string | null;
-        current_review_due_at: number | null;
-        latest_revision_id: string | null;
-        latest_version_number: number | null;
-        latest_title: string | null;
-        topic_title: string;
-      }>(),
-    d1
-      .prepare(
-        `SELECT r.public_code, r.type, r.affected_area, r.status,
+           latest_r.created_at DESC
+         LIMIT 8`,
+            )
+            .bind(now)
+            .all<{
+              id: string;
+              slug: string;
+              publication_status: string;
+              risk_level: string;
+              lock_version: number;
+              current_public_revision_id: string | null;
+              current_title: string | null;
+              current_review_due_at: number | null;
+              latest_revision_id: string | null;
+              latest_version_number: number | null;
+              latest_title: string | null;
+              topic_title: string;
+            }>()
+        : Promise.resolve({ results: [] }),
+      access.safety
+        ? d1
+            .prepare(
+              `SELECT r.public_code, r.type, r.affected_area, r.status,
                 r.lock_version, r.created_at,
                 cr.title AS card_title
          FROM reports r
@@ -461,57 +494,107 @@ export async function getEditorDashboard(
          LEFT JOIN answer_card_revisions cr ON cr.id = c.current_public_revision_id
          WHERE r.status IN ('received', 'reviewing')
          ORDER BY CASE r.type WHEN 'privacy' THEN 0 ELSE 1 END, r.created_at ASC
-         LIMIT 50`,
-      )
-      .all<{
-        public_code: string;
-        type: string;
-        affected_area: string | null;
-        status: string;
-        lock_version: number;
-        created_at: number;
-        card_title: string | null;
-      }>(),
-    d1
-      .prepare(
-        `SELECT id, kind, context_scope, body, source_url, provenance_role,
+         LIMIT 8`,
+            )
+            .all<{
+              public_code: string;
+              type: string;
+              affected_area: string | null;
+              status: string;
+              lock_version: number;
+              created_at: number;
+              card_title: string | null;
+            }>()
+        : Promise.resolve({ results: [] }),
+      access.safety
+        ? d1
+            .prepare(
+              `SELECT id, kind, context_scope,
                 status, lock_version, submitted_at, expires_at
          FROM research_intakes
          WHERE status IN ('submitted', 'screening') AND purged_at IS NULL
          ORDER BY submitted_at ASC
-         LIMIT 50`,
-      )
-      .all<{
-        id: string;
-        kind: string;
-        context_scope: string;
-        body: string | null;
-        source_url: string | null;
-        provenance_role: string | null;
-        status: string;
-        lock_version: number;
-        submitted_at: number;
-        expires_at: number;
-      }>(),
-    d1
-      .prepare(
-        `SELECT id, actor_id, action, target_type, target_id, reason, created_at
+         LIMIT 8`,
+            )
+            .all<{
+              id: string;
+              kind: string;
+              context_scope: string;
+              status: string;
+              lock_version: number;
+              submitted_at: number;
+              expires_at: number;
+            }>()
+        : Promise.resolve({ results: [] }),
+      access.audit
+        ? d1
+            .prepare(
+              `SELECT id, actor_id, action, target_type, target_id, reason, created_at
          FROM audit_events
          ORDER BY created_at DESC
          LIMIT 25`,
-      )
-      .all<{
-        id: string;
-        actor_id: string;
-        action: string;
-        target_type: string;
-        target_id: string;
-        reason: string;
-        created_at: number;
-      }>(),
-  ]);
+            )
+            .all<{
+              id: string;
+              actor_id: string;
+              action: string;
+              target_type: string;
+              target_id: string;
+              reason: string;
+              created_at: number;
+            }>()
+        : Promise.resolve({ results: [] }),
+      access.safety
+        ? d1
+            .prepare(
+              `SELECT
+               (SELECT COUNT(*) FROM reports
+                WHERE status IN ('received', 'reviewing')) AS open_reports,
+               (SELECT COUNT(*) FROM research_intakes
+                WHERE status IN ('submitted', 'screening')
+                  AND purged_at IS NULL) AS open_intakes`,
+            )
+            .first<{ open_reports: number; open_intakes: number }>()
+        : Promise.resolve(null),
+      access.content
+        ? d1
+            .prepare(
+              `SELECT
+               COUNT(*) AS total_cards,
+               SUM(CASE WHEN latest_r.id IS NOT NULL
+                          AND latest_r.id IS NOT c.current_public_revision_id
+                        THEN 1 ELSE 0 END) AS draft_cards,
+               SUM(CASE WHEN current_r.review_due_at IS NOT NULL
+                          AND current_r.review_due_at <= ?
+                        THEN 1 ELSE 0 END) AS overdue_cards
+             FROM answer_cards c
+             LEFT JOIN answer_card_revisions current_r
+               ON current_r.id = c.current_public_revision_id
+             LEFT JOIN answer_card_revisions latest_r
+               ON latest_r.card_id = c.id
+              AND latest_r.version_number = (
+                SELECT MAX(candidate.version_number)
+                FROM answer_card_revisions candidate
+                WHERE candidate.card_id = c.id
+              )`,
+            )
+            .bind(now)
+            .first<{
+              total_cards: number;
+              draft_cards: number;
+              overdue_cards: number;
+            }>()
+        : Promise.resolve(null),
+    ]);
 
   return {
+    queueCounts: {
+      totalCards: Number(contentCounts?.total_cards ?? 0),
+      draftCards: Number(contentCounts?.draft_cards ?? 0),
+      overdueCards: Number(contentCounts?.overdue_cards ?? 0),
+      openReports: Number(safetyCounts?.open_reports ?? 0),
+      openIntakes: Number(safetyCounts?.open_intakes ?? 0),
+    },
     cards: cards.results.map((row) => ({
       id: row.id,
       slug: row.slug,
@@ -550,10 +633,13 @@ export async function getEditorDashboard(
     intakes: intakes.results.map((row) => ({
       id: row.id,
       kind: row.kind,
-      contextScope: row.context_scope,
-      body: row.body,
-      sourceUrl: row.source_url,
-      provenanceRole: row.provenance_role,
+      contextScope:
+        row.context_scope === '已按保留期限清理'
+          ? row.context_scope
+          : '受限载荷 · 打开详情后解密',
+      body: null,
+      sourceUrl: null,
+      provenanceRole: null,
       status: row.status,
       lockVersion: Number(row.lock_version),
       submittedAt: Number(row.submitted_at),
@@ -724,7 +810,7 @@ async function getEditorRevisionSentences(revisionId: string) {
       kind: row.kind,
       sourceTitle: row.source_title,
       sourceUrl: row.source_url.startsWith('/')
-        ? `https://xjtlu-guide.example${row.source_url}`
+        ? `${getPublicOrigin()}${row.source_url}`
         : row.source_url,
       publisherName: row.publisher_name,
       quote: row.quote,
@@ -828,6 +914,7 @@ type SentenceCitationRow = {
   canonical_url: string | null;
   publisher_name: string | null;
   artifact_visibility: string | null;
+  artifact_moderation_status: string | null;
   evidence_visibility: string | null;
   rights_expires_at: number | null;
 };
@@ -860,6 +947,7 @@ function mapCitation(
   now: number,
 ): CitationDetail | null {
   const sourceIsPublic =
+    row.artifact_moderation_status === 'approved' &&
     row.artifact_visibility === 'public' &&
     (row.rights_expires_at === null || Number(row.rights_expires_at) > now);
   if (!sourceIsPublic || row.citation_ordinal === null || !row.publisher_name)

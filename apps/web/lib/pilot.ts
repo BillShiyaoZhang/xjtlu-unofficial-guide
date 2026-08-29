@@ -77,6 +77,27 @@ export type PilotAdminSnapshot = {
   metricWindow: PilotMetricWindow;
 };
 
+export type PilotActivity = {
+  reports: Array<{
+    code: string;
+    type: string;
+    status: string;
+    publicResponse: string | null;
+    createdAt: number;
+    updatedAt: number;
+    resolution: { slug: string; title: string } | null;
+  }>;
+  intakes: Array<{
+    reference: string;
+    kind: string;
+    status: string;
+    decisionCode: string | null;
+    submittedAt: number;
+    actionedAt: number | null;
+    linkedAnswer: { slug: string; title: string } | null;
+  }>;
+};
+
 export async function getPilotSessionFromRequest(
   request: Request,
 ): Promise<PilotSessionIdentity | null> {
@@ -122,6 +143,104 @@ export async function getPilotSessionFromCookieHeader(
     expiresAt: Number(row.expires_at),
     noticeVersion: row.notice_version,
     isTest: Boolean(row.is_test),
+  };
+}
+
+export async function getPilotActivity(
+  session: PilotSessionIdentity,
+): Promise<PilotActivity> {
+  await ensureDatabase();
+  const d1 = getD1();
+  const requestId = crypto.randomUUID();
+  const now = nowSeconds();
+  const [reportRows, intakeRows] = await Promise.all([
+    d1
+      .prepare(
+        `SELECT r.public_code, r.type, r.status, r.public_response,
+                r.created_at, r.updated_at,
+                CASE WHEN linked_card.publication_status = 'published'
+                     THEN linked_card.slug ELSE NULL END AS linked_slug,
+                CASE WHEN linked_card.publication_status = 'published'
+                     THEN linked_public.title ELSE NULL END AS linked_title
+         FROM reports r
+         LEFT JOIN answer_card_revisions linked_revision
+           ON linked_revision.id = r.resolution_revision_id
+         LEFT JOIN answer_cards linked_card
+           ON linked_card.id = COALESCE(r.resolution_card_id,
+                                        linked_revision.card_id)
+         LEFT JOIN answer_card_revisions linked_public
+           ON linked_public.id = linked_card.current_public_revision_id
+         WHERE r.pilot_participant_id = ?
+         ORDER BY r.created_at DESC`,
+      )
+      .bind(session.participantId)
+      .all<PilotReportActivityRow>(),
+    d1
+      .prepare(
+        `SELECT i.id, i.kind, i.status, i.decision_code,
+                i.submitted_at, i.actioned_at,
+                CASE WHEN linked_card.publication_status = 'published'
+                     THEN linked_card.slug ELSE NULL END AS linked_slug,
+                CASE WHEN linked_card.publication_status = 'published'
+                     THEN linked_public.title ELSE NULL END AS linked_title
+         FROM research_intakes i
+         LEFT JOIN answer_card_revisions linked_revision
+           ON linked_revision.id = i.linked_revision_id
+         LEFT JOIN answer_cards linked_card
+           ON linked_card.id = COALESCE(i.linked_card_id,
+                                        linked_revision.card_id)
+         LEFT JOIN answer_card_revisions linked_public
+           ON linked_public.id = linked_card.current_public_revision_id
+         WHERE i.pilot_participant_id = ? AND i.purged_at IS NULL
+         ORDER BY i.submitted_at DESC`,
+      )
+      .bind(session.participantId)
+      .all<PilotIntakeActivityRow>(),
+  ]);
+  await d1
+    .prepare(
+      `INSERT INTO audit_events
+        (id, actor_id, action, target_type, target_id, reason, request_id,
+         metadata_json, created_at)
+       VALUES (?, ?, 'pilot.activity.read', 'pilot_session', ?,
+               '参与者查看自己的报告和私有线索处理状态', ?,
+               json_object('reports', ?, 'intakes', ?), ?)`,
+    )
+    .bind(
+      `audit-${requestId}`,
+      `pilot-session:${session.id}`,
+      session.id,
+      requestId,
+      reportRows.results.length,
+      intakeRows.results.length,
+      now,
+    )
+    .run();
+  return {
+    reports: reportRows.results.map((row) => ({
+      code: row.public_code,
+      type: row.type,
+      status: row.status,
+      publicResponse: row.public_response,
+      createdAt: Number(row.created_at),
+      updatedAt: Number(row.updated_at),
+      resolution:
+        row.linked_slug && row.linked_title
+          ? { slug: row.linked_slug, title: row.linked_title }
+          : null,
+    })),
+    intakes: intakeRows.results.map((row) => ({
+      reference: row.id,
+      kind: row.kind,
+      status: row.status,
+      decisionCode: row.decision_code,
+      submittedAt: Number(row.submitted_at),
+      actionedAt: row.actioned_at === null ? null : Number(row.actioned_at),
+      linkedAnswer:
+        row.linked_slug && row.linked_title
+          ? { slug: row.linked_slug, title: row.linked_title }
+          : null,
+    })),
   };
 }
 
@@ -761,6 +880,28 @@ type SessionRow = {
   expires_at: number;
   notice_version: string;
   is_test: number;
+};
+
+type PilotReportActivityRow = {
+  public_code: string;
+  type: string;
+  status: string;
+  public_response: string | null;
+  created_at: number;
+  updated_at: number;
+  linked_slug: string | null;
+  linked_title: string | null;
+};
+
+type PilotIntakeActivityRow = {
+  id: string;
+  kind: string;
+  status: string;
+  decision_code: string | null;
+  submitted_at: number;
+  actioned_at: number | null;
+  linked_slug: string | null;
+  linked_title: string | null;
 };
 
 type MetricRow = {

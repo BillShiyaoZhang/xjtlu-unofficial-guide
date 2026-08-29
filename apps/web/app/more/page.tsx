@@ -1,6 +1,8 @@
 import {
   BookOpenCheck,
+  CheckCircle2,
   ChevronRight,
+  ClipboardList,
   FlaskConical,
   LockKeyhole,
   MessageSquareWarning,
@@ -10,10 +12,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { InstallAppPanel } from '@/components/install-app-panel';
+import { getPilotSessionForPage } from '@/lib/pilot-server';
 
 export const metadata: Metadata = { title: '更多' };
+export const dynamic = 'force-dynamic';
 
-const entries = [
+const baseEntries = [
   {
     href: '/pilot',
     title: '研究试点',
@@ -44,7 +48,22 @@ const entries = [
   },
 ] as const;
 
-export default function MorePage() {
+export default async function MorePage() {
+  const session = await getPilotSessionForPage();
+  const entries = [
+    ...(session
+      ? [
+          {
+            href: '/pilot/activity',
+            title: '我的活动',
+            detail: '查看报告与研究线索的处理进度',
+            icon: ClipboardList,
+            iconClassName: 'bg-[#dcebe5] text-[#0f594d]',
+          },
+        ]
+      : []),
+    ...baseEntries,
+  ];
   return (
     <main
       id="main-content"
@@ -62,9 +81,36 @@ export default function MorePage() {
         </div>
       </header>
 
+      <Link
+        href={session ? '/pilot/activity' : '/pilot'}
+        className="mt-7 flex items-center gap-3 rounded-2xl border border-emerald-800/15 bg-emerald-900/7 p-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+      >
+        <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-emerald-800 text-white">
+          {session ? (
+            <CheckCircle2 aria-hidden="true" className="size-5" />
+          ) : (
+            <FlaskConical aria-hidden="true" className="size-5" />
+          )}
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-heading font-semibold">
+            {session ? '试点会话已启用' : '尚未加入研究试点'}
+          </span>
+          <span className="mt-0.5 block truncate text-xs text-foreground/65 sm:text-sm">
+            {session
+              ? `有效至 ${new Date(session.expiresAt * 1_000).toLocaleDateString('zh-CN')}`
+              : '受邀成年参与者可兑换一次性邀请'}
+          </span>
+        </span>
+        <ChevronRight
+          aria-hidden="true"
+          className="size-5 shrink-0 text-emerald-800"
+        />
+      </Link>
+
       <nav
         aria-label="更多功能"
-        className="mt-7 overflow-hidden rounded-2xl bg-card shadow-[0_8px_28px_rgb(40_47_43/6%)] ring-1 ring-foreground/10"
+        className="mt-4 overflow-hidden rounded-2xl bg-card shadow-[0_8px_28px_rgb(40_47_43/6%)] ring-1 ring-foreground/10"
       >
         {entries.map((entry) => {
           const Icon = entry.icon;

@@ -1,5 +1,5 @@
 import { ensureDatabase } from '@/db/bootstrap';
-import { getD1 } from '@/db/index';
+import { getD1, getRuntimeValue } from '@/db/index';
 
 import {
   cleanPlainText,
@@ -27,6 +27,7 @@ import type {
 import { AppError } from './errors';
 import { authorizeFeedbackQuery, isOwnedPilotQuery } from './measurement';
 import type { PilotSessionIdentity } from './pilot';
+import { encryptPrivateIntakePayload } from './private-intake-crypto';
 
 export { AppError } from './errors';
 
@@ -221,6 +222,15 @@ export async function submitReport(input: {
   const code = `XG-${id.replaceAll('-', '').toLocaleUpperCase()}`;
   const response = { code, status: 'received' as const };
   const now = nowSeconds();
+  const priority =
+    input.type === 'privacy'
+      ? 'critical'
+      : input.type === 'source_mismatch'
+        ? 'high'
+        : 'standard';
+  const slaDueAt =
+    now +
+    (priority === 'critical' ? 3_600 : priority === 'high' ? 86_400 : 259_200);
   const d1 = getD1();
   try {
     await d1.batch([
@@ -228,10 +238,10 @@ export async function submitReport(input: {
         .prepare(
           `INSERT INTO reports
             (id, public_code, target_card_id, pilot_participant_id,
-             affected_area, type,
+             affected_area, type, priority, sla_due_at,
              status, public_response, created_at, reviewing_at, updated_at,
              resolved_at)
-           VALUES (?, ?, ?, ?, ?, ?, 'received', NULL, ?, NULL, ?, NULL)`,
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'received', NULL, ?, NULL, ?, NULL)`,
         )
         .bind(
           id,
@@ -240,6 +250,8 @@ export async function submitReport(input: {
           input.type === 'privacy' ? null : input.pilotSession?.participantId,
           affectedArea,
           input.type,
+          priority,
+          slaDueAt,
           now,
           now,
         ),
@@ -370,6 +382,16 @@ export async function submitResearchIntake(input: {
     reference,
     expiresAt: new Date(expiresAt * 1000).toISOString(),
   };
+  const payloadCiphertext = await encryptPrivateIntakePayload(
+    reference,
+    {
+      contextScope,
+      body,
+      sourceUrl,
+      provenanceRole,
+    },
+    getRuntimeValue('PRIVATE_INTAKE_KEY_V1'),
+  );
   const d1 = getD1();
   try {
     await d1.batch([
@@ -378,18 +400,17 @@ export async function submitResearchIntake(input: {
           `INSERT INTO research_intakes
             (id, participant_ref_hash, pilot_participant_id,
              origin_query_event_id, kind, context_scope, body, source_url,
-             provenance_role, status, submitted_at, expires_at, purged_at)
-           VALUES (?, 'managed', ?, ?, ?, ?, ?, ?, ?, 'submitted', ?, ?, NULL)`,
+             provenance_role, payload_ciphertext, payload_key_version,
+             status, submitted_at, expires_at, purged_at)
+           VALUES (?, 'managed', ?, ?, ?, '受限载荷', NULL, NULL, NULL,
+                   ?, 1, 'submitted', ?, ?, NULL)`,
         )
         .bind(
           reference,
           input.pilotSession.participantId,
           originQueryEventId || null,
           input.kind,
-          contextScope,
-          body,
-          sourceUrl,
-          provenanceRole,
+          payloadCiphertext,
           now,
           expiresAt,
         ),
@@ -881,9 +902,13 @@ export async function updateReport(input: {
   publicCode: string;
   status: 'reviewing' | 'resolved' | 'closed';
   publicResponse?: string | null;
+  decisionCode?: string | null;
+  resolutionCardId?: string | null;
+  resolutionRevisionId?: string | null;
   actorId: string;
   expectedVersion: number;
   idempotencyKey: string | null;
+  requestId?: string;
 }): Promise<
   MutationResult<{
     code: string;
@@ -897,9 +922,28 @@ export async function updateReport(input: {
   const response = input.publicResponse
     ? cleanPlainText(input.publicResponse, 500)
     : null;
+  const decisionCodes = [
+    'corrected',
+    'hidden',
+    'no_change',
+    'duplicate',
+    'invalid',
+  ] as const;
+  const decisionCode = isOneOf(input.decisionCode, decisionCodes)
+    ? input.decisionCode
+    : null;
+  const resolutionCardId = input.resolutionCardId
+    ? cleanPlainText(input.resolutionCardId, 100)
+    : null;
+  const resolutionRevisionId = input.resolutionRevisionId
+    ? cleanPlainText(input.resolutionRevisionId, 100)
+    : null;
   const payload = {
     status: input.status,
     publicResponse: response,
+    decisionCode,
+    resolutionCardId,
+    resolutionRevisionId,
     expectedVersion: input.expectedVersion,
   };
   const idempotency = await prepareIdempotency(
@@ -973,9 +1017,33 @@ export async function updateReport(input: {
       '发布最终结果前，请填写至少 10 个字符的公开处理说明。',
     );
   }
+  if (
+    (input.status === 'resolved' || input.status === 'closed') &&
+    !decisionCode
+  ) {
+    throw new AppError(
+      400,
+      'report_decision_required',
+      '发布最终结果前，请选择结构化处理结论。',
+    );
+  }
+  if (decisionCode === 'corrected' && !resolutionRevisionId) {
+    throw new AppError(
+      400,
+      'report_revision_required',
+      '“已更正”结论需要填写关联修订 ID。',
+    );
+  }
+  if (decisionCode === 'hidden' && !resolutionCardId) {
+    throw new AppError(
+      400,
+      'report_card_required',
+      '“已隐藏”结论需要填写关联答案卡 ID。',
+    );
+  }
 
   const now = nowSeconds();
-  const requestId = crypto.randomUUID();
+  const requestId = input.requestId ?? crypto.randomUUID();
   const operationId = crypto.randomUUID();
   const resultValue = {
     code,
@@ -1001,6 +1069,10 @@ export async function updateReport(input: {
         .prepare(
           `UPDATE reports
            SET status = ?, public_response = ?,
+               assignee_editor_id = COALESCE(assignee_editor_id, ?),
+               assigned_at = COALESCE(assigned_at, ?),
+               decision_code = ?, resolution_card_id = ?,
+               resolution_revision_id = ?,
                reviewing_at = CASE WHEN ? = 'reviewing' THEN ? ELSE reviewing_at END,
                resolved_at = ?, updated_at = ?,
                lock_version = lock_version + 1,
@@ -1010,6 +1082,11 @@ export async function updateReport(input: {
         .bind(
           input.status,
           response,
+          input.actorId,
+          now,
+          decisionCode,
+          resolutionCardId,
+          resolutionRevisionId,
           input.status,
           now,
           input.status === 'resolved' || input.status === 'closed' ? now : null,
@@ -1034,13 +1111,41 @@ export async function updateResearchIntake(input: {
   actorId: string;
   expectedVersion: number;
   idempotencyKey: string | null;
+  decisionCode?: string | null;
+  outcomeReason?: string | null;
+  linkedCardId?: string | null;
+  linkedRevisionId?: string | null;
+  requestId?: string;
 }): Promise<
   MutationResult<{ id: string; status: string; lockVersion: number }>
 > {
   await ensureDatabase();
   const id = cleanPlainText(input.id, 80);
+  const decisionCodes = [
+    'draft_created',
+    'linked_existing',
+    'rejected_out_of_scope',
+    'rejected_insufficient',
+    'duplicate',
+  ] as const;
+  const decisionCode = isOneOf(input.decisionCode, decisionCodes)
+    ? input.decisionCode
+    : null;
+  const outcomeReason = input.outcomeReason
+    ? cleanPlainText(input.outcomeReason, 500)
+    : null;
+  const linkedCardId = input.linkedCardId
+    ? cleanPlainText(input.linkedCardId, 100)
+    : null;
+  const linkedRevisionId = input.linkedRevisionId
+    ? cleanPlainText(input.linkedRevisionId, 100)
+    : null;
   const payload = {
     status: input.status,
+    decisionCode,
+    outcomeReason,
+    linkedCardId,
+    linkedRevisionId,
     expectedVersion: input.expectedVersion,
   };
   const idempotency = await prepareIdempotency(
@@ -1089,9 +1194,26 @@ export async function updateResearchIntake(input: {
       },
     );
   }
+  if (
+    (input.status === 'actioned' || input.status === 'rejected') &&
+    (!decisionCode || !outcomeReason || outcomeReason.length < 8)
+  ) {
+    throw new AppError(
+      400,
+      'intake_outcome_required',
+      '完成线索前，请选择结论并填写至少 8 个字符的内部说明。',
+    );
+  }
+  if (input.status === 'actioned' && !linkedCardId && !linkedRevisionId) {
+    throw new AppError(
+      400,
+      'intake_content_link_required',
+      '标记为已转化前，需要关联答案卡或修订。',
+    );
+  }
 
   const now = nowSeconds();
-  const requestId = crypto.randomUUID();
+  const requestId = input.requestId ?? crypto.randomUUID();
   const operationId = crypto.randomUUID();
   const resultValue = {
     id,
@@ -1115,11 +1237,30 @@ export async function updateResearchIntake(input: {
       d1
         .prepare(
           `UPDATE research_intakes
-           SET status = ?, lock_version = lock_version + 1,
+           SET status = ?,
+               assignee_editor_id = COALESCE(assignee_editor_id, ?),
+               assigned_at = COALESCE(assigned_at, ?),
+               decision_code = ?, outcome_reason = ?,
+               linked_card_id = ?, linked_revision_id = ?,
+               actioned_at = CASE WHEN ? IN ('actioned', 'rejected')
+                                  THEN ? ELSE actioned_at END,
+               lock_version = lock_version + 1,
                last_workflow_operation_id = ?
            WHERE id = ?`,
         )
-        .bind(input.status, operationId, id),
+        .bind(
+          input.status,
+          input.actorId,
+          now,
+          decisionCode,
+          outcomeReason,
+          linkedCardId,
+          linkedRevisionId,
+          input.status,
+          now,
+          operationId,
+          id,
+        ),
       idempotencyInsert(d1, idempotency, 200, resultValue, now + 7 * 86_400),
     ]);
   } catch (error) {

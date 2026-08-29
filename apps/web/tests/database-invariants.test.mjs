@@ -28,6 +28,12 @@ const migrationFiles = [
   new URL('../drizzle/0006_intake_query_origin.sql', import.meta.url),
   new URL('../drizzle/0007_pilot_security_hardening.sql', import.meta.url),
   new URL('../drizzle/0008_ordinary_champions.sql', import.meta.url),
+  new URL('../drizzle/0009_editor_identity.sql', import.meta.url),
+  new URL('../drizzle/0010_catalog_operations.sql', import.meta.url),
+  new URL('../drizzle/0011_case_management.sql', import.meta.url),
+  new URL('../drizzle/0012_operational_evidence.sql', import.meta.url),
+  new URL('../drizzle/0013_runtime_guards.sql', import.meta.url),
+  new URL('../drizzle/0014_private_intake_encryption.sql', import.meta.url),
 ];
 
 function createDatabase() {
@@ -158,6 +164,165 @@ function attemptPublish(db, operationId = 'operation', expectedVersion = 0) {
   }
 }
 
+test('latest identity, catalog, case, and operations migrations apply together', () => {
+  const db = createDatabase();
+  const tables = new Set(
+    db
+      .prepare("SELECT name FROM sqlite_schema WHERE type = 'table'")
+      .all()
+      .map((row) => row.name),
+  );
+  for (const table of [
+    'editor_accounts',
+    'editor_sessions',
+    'artifact_disposition_events',
+    'case_notes',
+    'backup_runs',
+    'recovery_drills',
+  ]) {
+    assert.equal(tables.has(table), true, `${table} should exist`);
+  }
+
+  const reportColumns = new Set(
+    db
+      .prepare("PRAGMA table_info('reports')")
+      .all()
+      .map((row) => row.name),
+  );
+  assert.equal(reportColumns.has('decision_code'), true);
+  assert.equal(reportColumns.has('sla_due_at'), true);
+
+  const scopeColumns = new Set(
+    db
+      .prepare("PRAGMA table_info('applicability_scopes')")
+      .all()
+      .map((row) => row.name),
+  );
+  assert.equal(scopeColumns.has('status'), true);
+  db.close();
+});
+
+test('editor account security version changes revoke every active session', () => {
+  const db = createDatabase();
+  db.exec(`
+    INSERT INTO editor_accounts
+      (id, email, display_name, password_salt, password_hash,
+       password_iterations, status, session_version, must_change_password,
+       failed_login_count, created_at, updated_at)
+    VALUES ('account', 'editor@example.com', '编辑', 'salt', 'hash',
+            600000, 'active', 1, 0, 0, 1800000000, 1800000000);
+    INSERT INTO editor_sessions
+      (id, account_id, token_hash, session_version, issued_at, last_seen_at,
+       idle_expires_at, absolute_expires_at)
+    VALUES ('editor-session', 'account', 'token-hash', 1, 1800000000,
+            1800000000, 1800001800, 1800028800);
+  `);
+
+  db.exec(`
+    UPDATE editor_accounts
+    SET display_name = '内容编辑', updated_at = 1800000010
+    WHERE id = 'account';
+  `);
+  assert.equal(
+    db
+      .prepare(
+        "SELECT revoked_at FROM editor_sessions WHERE id = 'editor-session'",
+      )
+      .get().revoked_at,
+    null,
+  );
+
+  db.exec(`
+    UPDATE editor_accounts
+    SET session_version = session_version + 1, updated_at = 1800000020
+    WHERE id = 'account';
+  `);
+  assert.deepEqual(
+    {
+      ...db
+        .prepare(`
+          SELECT revoked_by, revoke_reason, revoked_at IS NOT NULL AS revoked
+          FROM editor_sessions WHERE id = 'editor-session'
+        `)
+        .get(),
+    },
+    {
+      revoked_by: 'system:account-change',
+      revoke_reason: '账号安全状态已变更',
+      revoked: 1,
+    },
+  );
+  db.close();
+});
+
+test('backup and recovery success require evidence and terminal states are immutable', () => {
+  const db = createDatabase();
+  assert.throws(
+    () =>
+      db.exec(`
+        INSERT INTO backup_runs
+          (id, status, started_at, completed_at)
+        VALUES ('backup-missing-proof', 'succeeded', 1800000000, 1800000010)
+      `),
+    /backup_success_evidence_required/u,
+  );
+
+  db.exec(`
+    INSERT INTO backup_runs (id, status, started_at)
+    VALUES ('backup', 'running', 1800000000)
+  `);
+  assert.throws(
+    () =>
+      db.exec(`
+        UPDATE backup_runs
+        SET status = 'succeeded', completed_at = 1800000010
+        WHERE id = 'backup'
+      `),
+    /backup_success_evidence_required/u,
+  );
+  db.prepare(`
+    UPDATE backup_runs
+    SET status = 'succeeded', snapshot_ref_hash = 'snapshot-ref',
+        checksum_sha256 = ?, completed_at = 1800000010,
+        verified_at = 1800000011
+    WHERE id = 'backup'
+  `).run('a'.repeat(64));
+  assert.throws(
+    () =>
+      db.exec("UPDATE backup_runs SET status = 'failed' WHERE id = 'backup'"),
+    /backup_terminal_state/u,
+  );
+
+  db.exec(`
+    INSERT INTO recovery_drills
+      (id, backup_run_id, status, started_at)
+    VALUES ('drill', 'backup', 'running', 1800000100)
+  `);
+  assert.throws(
+    () =>
+      db.exec(`
+        UPDATE recovery_drills
+        SET status = 'succeeded', completed_at = 1800000110
+        WHERE id = 'drill'
+      `),
+    /recovery_success_evidence_required/u,
+  );
+  db.exec(`
+    UPDATE recovery_drills
+    SET status = 'succeeded', completed_at = 1800000110,
+        foreign_key_check_passed = 1, smoke_check_passed = 1
+    WHERE id = 'drill'
+  `);
+  assert.throws(
+    () =>
+      db.exec(
+        "UPDATE recovery_drills SET status = 'failed' WHERE id = 'drill'",
+      ),
+    /recovery_drill_terminal_state/u,
+  );
+  db.close();
+});
+
 test('link-only revisions cannot store content or create evidence spans', () => {
   const db = createDatabase();
   insertBase(db);
@@ -265,6 +430,50 @@ test('high-risk link-only and AI drafts are blocked at publish time', () => {
   insertBase(aiDraft, { generation: 'ai_draft' });
   assert.throws(() => attemptPublish(aiDraft), /revision_not_publishable/u);
   aiDraft.close();
+});
+
+test('publishing rejects non-approved sources and moderation status is constrained', () => {
+  const db = createDatabase();
+  insertBase(db);
+
+  assert.throws(
+    () =>
+      db.exec(
+        "UPDATE artifacts SET moderation_status = 'unsafe' WHERE id = 'artifact'",
+      ),
+    /invalid_artifact_moderation_status/u,
+  );
+  assert.equal(
+    db
+      .prepare("SELECT moderation_status FROM artifacts WHERE id = 'artifact'")
+      .get().moderation_status,
+    'approved',
+  );
+
+  db.exec(
+    "UPDATE artifacts SET moderation_status = 'under_review' WHERE id = 'artifact'",
+  );
+  assert.throws(() => attemptPublish(db), /artifact_not_approved/u);
+  assert.equal(
+    db.prepare('SELECT COUNT(*) AS total FROM publish_operations').get().total,
+    0,
+  );
+  assert.deepEqual(
+    {
+      ...db
+        .prepare(`
+          SELECT publication_status, current_public_revision_id, lock_version
+          FROM answer_cards WHERE id = 'card'
+        `)
+        .get(),
+    },
+    {
+      publication_status: 'unpublished',
+      current_public_revision_id: null,
+      lock_version: 0,
+    },
+  );
+  db.close();
 });
 
 test('answer-card hiding is versioned, atomic, and audited', () => {
@@ -460,6 +669,92 @@ test('report workflow records reviewing and a public resolution atomically', () 
   db.close();
 });
 
+test('terminal report decisions require a structured outcome and matching content link', () => {
+  const db = createDatabase();
+  insertBase(db);
+  db.exec(`
+    INSERT INTO reports
+      (id, public_code, target_card_id, affected_area, type, status, public_response,
+       created_at, updated_at, resolved_at)
+    VALUES ('report', 'XG-4123456789ABCDEF0123456789ABCDEF', NULL, 'reporting',
+            'privacy', 'received', NULL, 1800000000, 1800000000, NULL);
+  `);
+  applyReportTransition(db, {
+    operationId: 'report-reviewing',
+    fromVersion: 0,
+    status: 'reviewing',
+    at: 1800000010,
+  });
+
+  assert.throws(
+    () =>
+      applyReportTransition(db, {
+        operationId: 'report-no-decision',
+        fromVersion: 1,
+        status: 'resolved',
+        publicResponse: '已完成复核并记录了最终处理结果。',
+        decisionCode: null,
+        at: 1800000020,
+      }),
+    /report_resolution_requires_decision/u,
+  );
+  assert.throws(
+    () =>
+      applyReportTransition(db, {
+        operationId: 'report-correction-no-revision',
+        fromVersion: 1,
+        status: 'resolved',
+        publicResponse: '已完成复核并确认需要修订对应内容。',
+        decisionCode: 'corrected',
+        at: 1800000030,
+      }),
+    /report_correction_requires_revision/u,
+  );
+  assert.throws(
+    () =>
+      applyReportTransition(db, {
+        operationId: 'report-hide-no-card',
+        fromVersion: 1,
+        status: 'resolved',
+        publicResponse: '已完成复核并确认需要隐藏对应内容。',
+        decisionCode: 'hidden',
+        at: 1800000040,
+      }),
+    /report_hide_requires_card/u,
+  );
+
+  applyReportTransition(db, {
+    operationId: 'report-valid-correction',
+    fromVersion: 1,
+    status: 'resolved',
+    publicResponse: '已完成复核并发布了对应的修订版本。',
+    decisionCode: 'corrected',
+    resolutionCardId: 'card',
+    resolutionRevisionId: 'revision',
+    at: 1800000050,
+  });
+  assert.deepEqual(
+    {
+      ...db
+        .prepare(`
+          SELECT status, decision_code, resolution_card_id,
+                 resolution_revision_id, lock_version
+          FROM reports WHERE id = 'report'
+        `)
+        .get(),
+    },
+    {
+      status: 'resolved',
+      decision_code: 'corrected',
+      resolution_card_id: 'card',
+      resolution_revision_id: 'revision',
+      lock_version: 2,
+    },
+  );
+
+  db.close();
+});
+
 test('legacy terminal reports are backfilled before strict workflow triggers', () => {
   const db = new DatabaseSync(':memory:');
   db.exec('PRAGMA foreign_keys = ON');
@@ -487,8 +782,21 @@ test('legacy terminal reports are backfilled before strict workflow triggers', (
 
 function applyReportTransition(
   db,
-  { operationId, fromVersion, status, publicResponse = null, at },
+  {
+    operationId,
+    fromVersion,
+    status,
+    publicResponse = null,
+    decisionCode,
+    resolutionCardId = null,
+    resolutionRevisionId = null,
+    at,
+  },
 ) {
+  const finalDecision =
+    decisionCode === undefined && ['resolved', 'closed'].includes(status)
+      ? 'no_change'
+      : (decisionCode ?? null);
   db.exec('BEGIN');
   try {
     db.prepare(`
@@ -500,18 +808,196 @@ function applyReportTransition(
     db.prepare(`
       UPDATE reports
       SET status = ?, public_response = ?,
+          decision_code = ?, resolution_card_id = ?, resolution_revision_id = ?,
           reviewing_at = CASE WHEN ? = 'reviewing' THEN ? ELSE reviewing_at END,
           resolved_at = CASE WHEN ? IN ('resolved', 'closed') THEN ? ELSE NULL END,
           updated_at = ?, lock_version = lock_version + 1,
           last_workflow_operation_id = ?
       WHERE id = 'report'
-    `).run(status, publicResponse, status, at, status, at, at, operationId);
+    `).run(
+      status,
+      publicResponse,
+      finalDecision,
+      resolutionCardId,
+      resolutionRevisionId,
+      status,
+      at,
+      status,
+      at,
+      at,
+      operationId,
+    );
     db.exec('COMMIT');
   } catch (error) {
     db.exec('ROLLBACK');
     throw error;
   }
 }
+
+function applyIntakeTransition(
+  db,
+  {
+    operationId,
+    intakeId,
+    fromVersion,
+    status,
+    decisionCode = null,
+    outcomeReason = null,
+    linkedCardId = null,
+    linkedRevisionId = null,
+    at,
+  },
+) {
+  db.exec('BEGIN');
+  try {
+    db.prepare(`
+      INSERT INTO workflow_operations
+        (id, target_type, target_id, expected_version, target_status, actor_id,
+         reason, request_id, created_at, applied_at)
+      VALUES (?, 'research_intake', ?, ?, ?, 'editor', '处理研究材料', ?, ?, NULL)
+    `).run(
+      operationId,
+      intakeId,
+      fromVersion,
+      status,
+      `request-${operationId}`,
+      at,
+    );
+    db.prepare(`
+      UPDATE research_intakes
+      SET status = ?, decision_code = ?, outcome_reason = ?,
+          linked_card_id = ?, linked_revision_id = ?,
+          actioned_at = CASE WHEN ? IN ('actioned', 'rejected') THEN ? ELSE NULL END,
+          lock_version = lock_version + 1,
+          last_workflow_operation_id = ?
+      WHERE id = ?
+    `).run(
+      status,
+      decisionCode,
+      outcomeReason,
+      linkedCardId,
+      linkedRevisionId,
+      status,
+      at,
+      operationId,
+      intakeId,
+    );
+    db.exec('COMMIT');
+  } catch (error) {
+    db.exec('ROLLBACK');
+    throw error;
+  }
+}
+
+test('terminal intake decisions require a reason and actioned content link', () => {
+  const db = createDatabase();
+  insertBase(db);
+  const pilot = insertPilot(db);
+  db.prepare(`
+    INSERT INTO research_intakes
+      (id, participant_ref_hash, pilot_participant_id, kind, context_scope,
+       body, status, submitted_at, expires_at)
+    VALUES ('intake-case', 'managed', ?, 'question', '苏州校区',
+            '一个不包含个人信息的测试问题', 'submitted', 1800000000,
+            2000000000)
+  `).run(pilot.participant);
+  applyIntakeTransition(db, {
+    operationId: 'intake-screening',
+    intakeId: 'intake-case',
+    fromVersion: 0,
+    status: 'screening',
+    at: 1800000010,
+  });
+
+  assert.throws(
+    () =>
+      applyIntakeTransition(db, {
+        operationId: 'intake-no-outcome',
+        intakeId: 'intake-case',
+        fromVersion: 1,
+        status: 'actioned',
+        decisionCode: 'draft_created',
+        at: 1800000020,
+      }),
+    /research_intake_outcome_required/u,
+  );
+  assert.throws(
+    () =>
+      applyIntakeTransition(db, {
+        operationId: 'intake-no-link',
+        intakeId: 'intake-case',
+        fromVersion: 1,
+        status: 'actioned',
+        decisionCode: 'draft_created',
+        outcomeReason: '已完成核对并决定形成新的内容草稿。',
+        at: 1800000030,
+      }),
+    /research_intake_action_requires_content_link/u,
+  );
+
+  applyIntakeTransition(db, {
+    operationId: 'intake-actioned',
+    intakeId: 'intake-case',
+    fromVersion: 1,
+    status: 'actioned',
+    decisionCode: 'draft_created',
+    outcomeReason: '已完成核对并决定形成新的内容草稿。',
+    linkedCardId: 'card',
+    linkedRevisionId: 'revision',
+    at: 1800000040,
+  });
+  assert.deepEqual(
+    {
+      ...db
+        .prepare(`
+          SELECT status, decision_code, outcome_reason, linked_card_id,
+                 linked_revision_id, actioned_at, lock_version
+          FROM research_intakes WHERE id = 'intake-case'
+        `)
+        .get(),
+    },
+    {
+      status: 'actioned',
+      decision_code: 'draft_created',
+      outcome_reason: '已完成核对并决定形成新的内容草稿。',
+      linked_card_id: 'card',
+      linked_revision_id: 'revision',
+      actioned_at: 1800000040,
+      lock_version: 2,
+    },
+  );
+
+  db.prepare(`
+    INSERT INTO research_intakes
+      (id, participant_ref_hash, pilot_participant_id, kind, context_scope,
+       body, status, submitted_at, expires_at)
+    VALUES ('intake-rejected', 'managed', ?, 'question', '苏州校区',
+            '另一个不包含个人信息的测试问题', 'submitted', 1800000000,
+            2000000000)
+  `).run(pilot.participant);
+  assert.throws(
+    () =>
+      applyIntakeTransition(db, {
+        operationId: 'intake-rejected-no-reason',
+        intakeId: 'intake-rejected',
+        fromVersion: 0,
+        status: 'rejected',
+        decisionCode: 'rejected_out_of_scope',
+        at: 1800000050,
+      }),
+    /research_intake_outcome_required/u,
+  );
+  applyIntakeTransition(db, {
+    operationId: 'intake-rejected-valid',
+    intakeId: 'intake-rejected',
+    fromVersion: 0,
+    status: 'rejected',
+    decisionCode: 'rejected_out_of_scope',
+    outcomeReason: '材料内容不在本产品当前服务范围内。',
+    at: 1800000060,
+  });
+  db.close();
+});
 
 test('expired research intake purge removes linkable payload fields', () => {
   const db = createDatabase();
@@ -551,6 +1037,58 @@ test('expired research intake purge removes linkable payload fields', () => {
       provenance_role: null,
       status: 'expired',
     },
+  );
+  db.close();
+});
+
+test('encrypted private intake payload is immutable and purge removes ciphertext', () => {
+  const db = createDatabase();
+  const pilot = insertPilot(db);
+  db.prepare(`
+    INSERT INTO research_intakes
+      (id, participant_ref_hash, pilot_participant_id, kind, context_scope,
+       body, source_url, provenance_role, payload_ciphertext,
+       payload_key_version, status, submitted_at, expires_at, purged_at)
+    VALUES ('encrypted-intake', 'managed', ?, 'question', '受限载荷',
+            NULL, NULL, NULL, 'v1.iv.ciphertext', 1, 'submitted', 1, 2, NULL)
+  `).run(pilot.participant);
+  assert.throws(
+    () =>
+      db.exec(`
+        UPDATE research_intakes
+        SET payload_ciphertext = 'v1.changed.ciphertext'
+        WHERE id = 'encrypted-intake'
+      `),
+    /research_intake_payload_immutable/u,
+  );
+  assert.throws(
+    () =>
+      db.exec(`
+        UPDATE research_intakes
+        SET participant_ref_hash = 'purged', pilot_participant_id = NULL,
+            context_scope = '已按保留期限清理', status = 'expired',
+            purged_at = unixepoch()
+        WHERE id = 'encrypted-intake'
+      `),
+    /invalid_research_intake_expiry_purge/u,
+  );
+  db.exec(`
+    UPDATE research_intakes
+    SET participant_ref_hash = 'purged', pilot_participant_id = NULL,
+        context_scope = '已按保留期限清理', payload_ciphertext = NULL,
+        payload_key_version = NULL, status = 'expired', purged_at = unixepoch()
+    WHERE id = 'encrypted-intake'
+  `);
+  assert.deepEqual(
+    {
+      ...db
+        .prepare(`
+          SELECT status, payload_ciphertext, payload_key_version
+          FROM research_intakes WHERE id = 'encrypted-intake'
+        `)
+        .get(),
+    },
+    { status: 'expired', payload_ciphertext: null, payload_key_version: null },
   );
   db.close();
 });

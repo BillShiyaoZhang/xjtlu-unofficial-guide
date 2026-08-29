@@ -13,9 +13,22 @@ export async function POST(request: Request) {
     assertSameOrigin(request);
     await enforceRateLimit(request, 'editor-session-login', 8, 600);
     const body = await readJsonBody(request, 4_000);
-    const result = await createEditorSession(
-      typeof body.secret === 'string' ? body.secret : '',
-    );
+    if (typeof body.email === 'string' && body.email.trim()) {
+      await enforceRateLimit(
+        request,
+        'editor-session-account',
+        8,
+        600,
+        body.email,
+      );
+    }
+    const result = await createEditorSession({
+      email: typeof body.email === 'string' ? body.email : '',
+      password: typeof body.password === 'string' ? body.password : '',
+      mfaCode: typeof body.mfaCode === 'string' ? body.mfaCode : '',
+      legacySecret: typeof body.secret === 'string' ? body.secret : '',
+      requestId,
+    });
     const returnTo = parseEditorReturnTo(
       typeof body.returnTo === 'string' ? body.returnTo : undefined,
     );

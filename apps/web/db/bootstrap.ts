@@ -7,12 +7,22 @@ import migration5 from '@/drizzle/0005_pilot_query_measurement.sql?raw';
 import migration6 from '@/drizzle/0006_intake_query_origin.sql?raw';
 import migration7 from '@/drizzle/0007_pilot_security_hardening.sql?raw';
 import migration8 from '@/drizzle/0008_ordinary_champions.sql?raw';
+import migration9 from '@/drizzle/0009_editor_identity.sql?raw';
+import migration10 from '@/drizzle/0010_catalog_operations.sql?raw';
+import migration11 from '@/drizzle/0011_case_management.sql?raw';
+import migration12 from '@/drizzle/0012_operational_evidence.sql?raw';
+import migration13 from '@/drizzle/0013_runtime_guards.sql?raw';
+import migration14 from '@/drizzle/0014_private_intake_encryption.sql?raw';
 
 import { getD1, getRuntimeValue } from './index';
 import {
   RESEARCH_EVENT_RETENTION_DAYS,
   RESEARCH_EVENT_RETENTION_SQL,
 } from './retention';
+import {
+  encryptPrivateIntakePayload,
+  privateIntakeEncryptionConfigured,
+} from '@/lib/private-intake-crypto';
 
 const migrations = [
   { id: '0000_flat_brood', sql: migration0 },
@@ -24,11 +34,28 @@ const migrations = [
   { id: '0006_intake_query_origin', sql: migration6 },
   { id: '0007_pilot_security_hardening', sql: migration7 },
   { id: '0008_share_and_report_context', sql: migration8 },
+  { id: '0009_editor_identity', sql: migration9 },
+  { id: '0010_catalog_operations', sql: migration10 },
+  { id: '0011_case_management', sql: migration11 },
+  { id: '0012_operational_evidence', sql: migration12 },
+  { id: '0013_runtime_guards', sql: migration13 },
+  { id: '0014_private_intake_encryption', sql: migration14 },
 ] as const;
 
 let bootstrapPromise: Promise<void> | undefined;
-let maintenancePromise: Promise<void> | undefined;
+let maintenancePromise: Promise<MaintenanceSummary> | undefined;
 let nextMaintenanceAt = 0;
+
+export type MaintenanceSummary = {
+  runId: string | null;
+  skipped: boolean;
+  purgedIntakes: number;
+  purgedQueryEvents: number;
+  expiredRateLimits: number;
+  expiredEditorSessions: number;
+  hiddenCardsForExpiredRights: number;
+  encryptedLegacyIntakes: number;
+};
 
 function splitStatements(migrationSql: string): string[] {
   return migrationSql
@@ -46,17 +73,20 @@ export async function ensureDatabase(): Promise<void> {
   await runDatabaseMaintenance(false);
 }
 
-export async function runDatabaseMaintenance(force = true): Promise<void> {
+export async function runDatabaseMaintenance(
+  force = true,
+): Promise<MaintenanceSummary> {
   const nowMs = Date.now();
-  if (!force && nowMs < nextMaintenanceAt) return;
+  if (!force && nowMs < nextMaintenanceAt) return emptyMaintenanceSummary();
   maintenancePromise ??= performDatabaseMaintenance()
-    .then(() => {
+    .then((summary) => {
       nextMaintenanceAt = Date.now() + 60_000;
+      return summary;
     })
     .finally(() => {
       maintenancePromise = undefined;
     });
-  await maintenancePromise;
+  return maintenancePromise;
 }
 
 async function bootstrapDatabase() {
@@ -126,15 +156,77 @@ async function performDatabaseMaintenance() {
   const d1 = getD1();
   const now = Math.floor(Date.now() / 1000);
   const researchCutoff = now - RESEARCH_EVENT_RETENTION_DAYS * 86_400;
+  const encryptedLegacyIntakes = await encryptLegacyPrivateIntakes(d1);
   const requestId = crypto.randomUUID();
-  await d1.batch([
+  const runId = crypto.randomUUID();
+  await d1
+    .prepare(
+      `INSERT INTO maintenance_runs
+        (id, job, status, started_at, completed_at, details_json)
+       VALUES (?, 'retention-and-integrity', 'running', ?, NULL, NULL)`,
+    )
+    .bind(runId, now)
+    .run();
+  const [counts, expiredRights] = await Promise.all([
+    d1
+      .prepare(
+        `SELECT
+           (SELECT COUNT(*) FROM research_intakes
+            WHERE expires_at <= ? AND purged_at IS NULL) AS intakes,
+           (SELECT COUNT(*) FROM query_events
+            WHERE created_at <= ?) AS query_events,
+           (SELECT COUNT(*) FROM rate_limit_windows
+            WHERE expires_at <= ?) AS rate_limits,
+           (SELECT COUNT(*) FROM editor_sessions
+            WHERE revoked_at IS NULL
+              AND (idle_expires_at <= ? OR absolute_expires_at <= ?)) AS editor_sessions`,
+      )
+      .bind(now, researchCutoff, now, now, now)
+      .first<{
+        intakes: number;
+        query_events: number;
+        rate_limits: number;
+        editor_sessions: number;
+      }>(),
+    d1
+      .prepare(
+        `SELECT DISTINCT c.id, c.lock_version
+         FROM answer_cards c
+         JOIN answer_card_sentence_citations sc
+           ON sc.card_revision_id = c.current_public_revision_id
+         LEFT JOIN evidence_spans es ON es.id = sc.evidence_span_id
+         LEFT JOIN link_citations lc ON lc.id = sc.link_citation_id
+         JOIN artifact_revisions ar
+           ON ar.id = COALESCE(es.artifact_revision_id, lc.artifact_revision_id)
+         JOIN artifacts a ON a.id = ar.artifact_id
+         WHERE c.publication_status = 'published'
+           AND (a.moderation_status != 'approved'
+                OR ar.visibility != 'public'
+                OR (ar.rights_expires_at IS NOT NULL AND ar.rights_expires_at <= ?))`,
+      )
+      .bind(now)
+      .all<{ id: string; lock_version: number }>(),
+  ]);
+  const summary: MaintenanceSummary = {
+    runId,
+    skipped: false,
+    purgedIntakes: Number(counts?.intakes ?? 0),
+    purgedQueryEvents: Number(counts?.query_events ?? 0),
+    expiredRateLimits: Number(counts?.rate_limits ?? 0),
+    expiredEditorSessions: Number(counts?.editor_sessions ?? 0),
+    hiddenCardsForExpiredRights: expiredRights.results.length,
+    encryptedLegacyIntakes,
+  };
+  const statements: D1PreparedStatement[] = [
     d1
       .prepare(
         `UPDATE research_intakes
          SET participant_ref_hash = 'purged', pilot_participant_id = NULL,
              origin_query_event_id = NULL,
              context_scope = '已按保留期限清理', body = NULL,
-             source_url = NULL, provenance_role = NULL, status = 'expired',
+             source_url = NULL, provenance_role = NULL,
+             payload_ciphertext = NULL, payload_key_version = NULL,
+             status = 'expired',
              purged_at = ?
          WHERE expires_at <= ? AND purged_at IS NULL`,
       )
@@ -150,6 +242,13 @@ async function performDatabaseMaintenance() {
          WHERE changes() > 0`,
       )
       .bind(`audit-${requestId}`, `purge-${now}`, requestId, now),
+    d1.prepare(
+      `DELETE FROM case_notes
+         WHERE target_type = 'research_intake'
+           AND target_id IN (
+             SELECT id FROM research_intakes WHERE purged_at IS NOT NULL
+           )`,
+    ),
     ...RESEARCH_EVENT_RETENTION_SQL.map((sql) =>
       d1.prepare(sql).bind(researchCutoff),
     ),
@@ -174,6 +273,19 @@ async function performDatabaseMaintenance() {
     d1
       .prepare('DELETE FROM idempotency_records WHERE expires_at <= ?')
       .bind(now),
+    d1
+      .prepare('DELETE FROM rate_limit_windows WHERE expires_at <= ?')
+      .bind(now),
+    d1
+      .prepare(
+        `UPDATE editor_sessions
+         SET revoked_at = COALESCE(revoked_at, ?),
+             revoked_by = COALESCE(revoked_by, 'system:expiry'),
+             revoke_reason = COALESCE(revoke_reason, '会话已过期')
+         WHERE revoked_at IS NULL
+           AND (idle_expires_at <= ? OR absolute_expires_at <= ?)`,
+      )
+      .bind(now, now, now),
     d1
       .prepare(
         `UPDATE reports SET pilot_participant_id = NULL
@@ -222,7 +334,125 @@ async function performDatabaseMaintenance() {
            )`,
       )
       .bind(now),
-  ]);
+  ];
+  for (const card of expiredRights.results) {
+    const operationId = crypto.randomUUID();
+    statements.push(
+      d1
+        .prepare(
+          `INSERT INTO workflow_operations
+            (id, target_type, target_id, expected_version, target_status,
+             actor_id, reason, request_id, created_at, applied_at)
+           VALUES (?, 'answer_card', ?, ?, 'hidden', 'system:rights-expiry',
+                   '公开来源已撤回、不可用或授权到期', ?, ?, NULL)`,
+        )
+        .bind(
+          operationId,
+          card.id,
+          card.lock_version,
+          `${requestId}:rights:${card.id}`,
+          now,
+        ),
+      d1
+        .prepare(
+          `UPDATE answer_cards
+           SET publication_status = 'hidden', lock_version = lock_version + 1,
+               last_workflow_operation_id = ? WHERE id = ?`,
+        )
+        .bind(operationId, card.id),
+    );
+  }
+  try {
+    await d1.batch(statements);
+    await d1
+      .prepare(
+        `UPDATE maintenance_runs
+         SET status = 'succeeded', completed_at = ?, details_json = ?
+         WHERE id = ?`,
+      )
+      .bind(nowSeconds(), JSON.stringify(summary), runId)
+      .run();
+    return summary;
+  } catch (error) {
+    await d1
+      .prepare(
+        `UPDATE maintenance_runs
+         SET status = 'failed', completed_at = ?, details_json = ? WHERE id = ?`,
+      )
+      .bind(
+        nowSeconds(),
+        JSON.stringify({ error: 'maintenance_failed' }),
+        runId,
+      )
+      .run();
+    throw error;
+  }
+}
+
+function emptyMaintenanceSummary(): MaintenanceSummary {
+  return {
+    runId: null,
+    skipped: true,
+    purgedIntakes: 0,
+    purgedQueryEvents: 0,
+    expiredRateLimits: 0,
+    expiredEditorSessions: 0,
+    hiddenCardsForExpiredRights: 0,
+    encryptedLegacyIntakes: 0,
+  };
+}
+
+async function encryptLegacyPrivateIntakes(d1: D1Database) {
+  const encryptionSecret = getRuntimeValue('PRIVATE_INTAKE_KEY_V1');
+  if (!privateIntakeEncryptionConfigured(encryptionSecret)) return 0;
+  const rows = await d1
+    .prepare(
+      `SELECT id, context_scope, body, source_url, provenance_role
+       FROM research_intakes
+       WHERE purged_at IS NULL AND payload_ciphertext IS NULL
+       ORDER BY submitted_at ASC LIMIT 50`,
+    )
+    .all<{
+      id: string;
+      context_scope: string;
+      body: string | null;
+      source_url: string | null;
+      provenance_role: string | null;
+    }>();
+  if (!rows.results.length) return 0;
+  const statements: D1PreparedStatement[] = [];
+  for (const row of rows.results) {
+    const ciphertext = await encryptPrivateIntakePayload(
+      row.id,
+      {
+        contextScope: row.context_scope,
+        body: row.body,
+        sourceUrl: row.source_url,
+        provenanceRole: row.provenance_role,
+      },
+      encryptionSecret,
+    );
+    statements.push(
+      d1
+        .prepare(
+          `UPDATE research_intakes
+           SET context_scope = '受限载荷', body = NULL, source_url = NULL,
+               provenance_role = NULL, payload_ciphertext = ?,
+               payload_key_version = 1
+           WHERE id = ? AND purged_at IS NULL AND payload_ciphertext IS NULL`,
+        )
+        .bind(ciphertext, row.id),
+    );
+  }
+  const results = await d1.batch(statements);
+  return results.reduce(
+    (total, result) => total + Number(result.meta.changes ?? 0),
+    0,
+  );
+}
+
+function nowSeconds() {
+  return Math.floor(Date.now() / 1_000);
 }
 
 type Prepared = D1PreparedStatement;

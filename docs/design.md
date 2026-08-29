@@ -1,9 +1,11 @@
 # 可信校园信息平台（西浦场景）：产品与技术详细设计
 
-- 状态：Draft v0.2（交叉复核后）
+- 状态：v0.3（阶段 1 已实现；扩大范围仍需退出评审）
 - 日期：2026-08-29
 - 上游想法：[intention.md](./intention.md)
 - 适用阶段：需求验证、MVP 与首轮校园试点
+
+当前软件实现、可运行边界和运维要求分别见 [implementation.md](./implementation.md)、[product-boundary.md](./product-boundary.md) 与 [operations.md](./operations.md)。本项目不部署到 OpenAI Sites；公开 UGC、高影响内容、LLM 自动发布和知识图谱仍保持 fail-closed。
 
 ## 1. 结论
 

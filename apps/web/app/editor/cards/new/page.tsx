@@ -11,7 +11,10 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: '新建答案卡' };
 
 export default async function NewEditorCardPage() {
-  const { user, allowed } = await requireEditorPage('/editor/cards/new');
+  const { user, allowed } = await requireEditorPage(
+    '/editor/cards/new',
+    'content:edit',
+  );
   if (!allowed) return <EditorAccessDenied email={user.email} />;
   const [topics, scopes] = await Promise.all([listTopics(), listScopes()]);
   const dates = defaultEditorDates();
@@ -20,7 +23,10 @@ export default async function NewEditorCardPage() {
       id="main-content"
       className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8"
     >
-      <EditorNav displayName={user.displayName} />
+      <EditorNav
+        displayName={user.displayName}
+        permissions={user.permissions}
+      />
       <header className="mb-8">
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
           New answer card
