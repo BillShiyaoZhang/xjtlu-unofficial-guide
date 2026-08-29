@@ -269,12 +269,11 @@ async function getAnswerRevision(
         .first<CardRow>();
   if (!row) return null;
 
-  const [scopesByRevision, sentenceResult, historyResult, feedbackResult] =
-    await Promise.all([
-      loadScopesForRevisions([row.revision_id]),
-      d1
-        .prepare(
-          `SELECT s.sentence_key, s.ordinal AS sentence_ordinal, s.text,
+  const [scopesByRevision, sentenceResult, historyResult] = await Promise.all([
+    loadScopesForRevisions([row.revision_id]),
+    d1
+      .prepare(
+        `SELECT s.sentence_key, s.ordinal AS sentence_ordinal, s.text,
                   s.is_factual, sc.ordinal AS citation_ordinal,
                   es.id AS evidence_id, es.locator_kind, es.locator_value,
                   es.quote, lc.id AS link_id, lc.title AS link_title,
@@ -296,12 +295,12 @@ async function getAnswerRevision(
            LEFT JOIN publishers p ON p.id = a.publisher_id
            WHERE s.card_revision_id = ?
            ORDER BY s.ordinal ASC, sc.ordinal ASC`,
-        )
-        .bind(row.revision_id)
-        .all<SentenceCitationRow>(),
-      d1
-        .prepare(
-          `SELECT r.id, r.version_number, r.title,
+      )
+      .bind(row.revision_id)
+      .all<SentenceCitationRow>(),
+    d1
+      .prepare(
+        `SELECT r.id, r.version_number, r.title,
                   COALESCE((
                     SELECT s.text FROM answer_card_revision_sentences s
                     WHERE s.card_revision_id = r.id
@@ -317,27 +316,18 @@ async function getAnswerRevision(
            GROUP BY r.id, r.version_number, r.title, r.summary, r.as_of,
                     c.current_public_revision_id
            ORDER BY r.version_number DESC`,
-        )
-        .bind(row.id)
-        .all<{
-          id: string;
-          version_number: number;
-          title: string;
-          summary: string;
-          as_of: string;
-          published_at: number;
-          is_current: number;
-        }>(),
-      d1
-        .prepare(
-          `SELECT outcome, COUNT(*) AS total
-           FROM feedback_events
-           WHERE card_revision_id = ?
-           GROUP BY outcome`,
-        )
-        .bind(row.revision_id)
-        .all<{ outcome: 'resolved' | 'unclear'; total: number }>(),
-    ]);
+      )
+      .bind(row.id)
+      .all<{
+        id: string;
+        version_number: number;
+        title: string;
+        summary: string;
+        as_of: string;
+        published_at: number;
+        is_current: number;
+      }>(),
+  ]);
 
   const sentences = mapSentences(sentenceResult.results, now);
   const sourceIssue = sentences.some(
@@ -352,10 +342,6 @@ async function getAnswerRevision(
     effectiveDispute,
     '',
   );
-  const feedback = { resolved: 0, unclear: 0 };
-  for (const item of feedbackResult.results)
-    feedback[item.outcome] = Number(item.total);
-
   return {
     ...base,
     sentences,
@@ -368,7 +354,6 @@ async function getAnswerRevision(
       publishedAt: Number(item.published_at),
       isCurrent: Boolean(item.is_current),
     })),
-    feedback,
   };
 }
 
@@ -378,8 +363,9 @@ export async function getReportByCode(code: string) {
   if (!/^XG-[A-F0-9]{32}$/u.test(normalized)) return null;
   return getD1()
     .prepare(
-      `SELECT r.public_code, r.type, r.status, r.public_response,
-              r.created_at, r.resolved_at, c.slug AS card_slug,
+      `SELECT r.public_code, r.type, r.affected_area, r.status, r.public_response,
+              r.created_at, r.reviewing_at, r.updated_at, r.resolved_at,
+              r.lock_version, c.slug AS card_slug,
               cr.title AS card_title
        FROM reports r
        LEFT JOIN answer_cards c ON c.id = r.target_card_id
@@ -391,10 +377,14 @@ export async function getReportByCode(code: string) {
     .first<{
       public_code: string;
       type: string;
+      affected_area: string | null;
       status: string;
       public_response: string | null;
       created_at: number;
+      reviewing_at: number | null;
+      updated_at: number;
       resolved_at: number | null;
+      lock_version: number;
       card_slug: string | null;
       card_title: string | null;
     }>();
@@ -463,7 +453,8 @@ export async function getEditorDashboard(
       }>(),
     d1
       .prepare(
-        `SELECT r.public_code, r.type, r.status, r.lock_version, r.created_at,
+        `SELECT r.public_code, r.type, r.affected_area, r.status,
+                r.lock_version, r.created_at,
                 cr.title AS card_title
          FROM reports r
          LEFT JOIN answer_cards c ON c.id = r.target_card_id
@@ -475,6 +466,7 @@ export async function getEditorDashboard(
       .all<{
         public_code: string;
         type: string;
+        affected_area: string | null;
         status: string;
         lock_version: number;
         created_at: number;
@@ -552,6 +544,7 @@ export async function getEditorDashboard(
       status: row.status,
       lockVersion: Number(row.lock_version),
       cardTitle: row.card_title,
+      affectedArea: row.affected_area,
       createdAt: Number(row.created_at),
     })),
     intakes: intakes.results.map((row) => ({

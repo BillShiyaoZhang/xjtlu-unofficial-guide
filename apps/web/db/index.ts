@@ -23,7 +23,12 @@ export function getD1(): D1Database {
 export function getRuntimeValue(
   name:
     | 'EDITOR_EMAILS'
-    | 'RESEARCH_INTAKE_SECRET'
+    | 'AUTH_PROXY_SECRET'
+    | 'EDITOR_LOGIN_SECRET'
+    | 'EDITOR_SESSION_SECRET'
+    | 'PILOT_SECRET'
+    | 'PILOT_WINDOW_START'
+    | 'PILOT_WINDOW_END'
     | 'MAINTENANCE_SECRET'
     | 'SEED_DEMO_CONTENT',
 ) {

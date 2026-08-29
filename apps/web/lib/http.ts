@@ -27,6 +27,9 @@ export async function readJsonBody(request: Request, maxBytes = 64_000) {
 }
 
 export function assertSameOrigin(request: Request) {
+  if (request.headers.get('sec-fetch-site') === 'cross-site') {
+    throw new AppError(403, 'cross_site_rejected', '不接受跨站写请求。');
+  }
   const origin = request.headers.get('origin');
   if (!origin) throw new AppError(403, 'origin_required', '缺少来源校验信息。');
   let originUrl: URL;
@@ -66,7 +69,7 @@ export function editorAuthResponse(
         code: result.code,
         message:
           result.status === 401
-            ? '请先使用 ChatGPT 登录。'
+            ? '请先登录编辑工作台。'
             : '当前账号不在编辑白名单中。',
       },
       request_id: crypto.randomUUID(),

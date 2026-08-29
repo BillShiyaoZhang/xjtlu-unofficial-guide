@@ -15,7 +15,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { FeedbackButtons } from '@/components/feedback-buttons';
+import { MeasuredFeedback } from '@/components/measured-feedback';
+import { ShareAnswerButton } from '@/components/share-answer-button';
 import { StatusBadge } from '@/components/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
@@ -34,11 +35,13 @@ export function AnswerDetail({
   historical = false,
   sourceTab,
   returnTo,
+  queryEventId,
 }: {
   card: AnswerCardDetail;
   historical?: boolean;
   sourceTab?: MobileTabContext;
   returnTo?: string;
+  queryEventId?: string;
 }) {
   const sources = uniqueSources(card);
   const sourceNumbers = new Map(
@@ -115,6 +118,16 @@ export function AnswerDetail({
           <h1 className="mt-4 max-w-4xl text-balance font-heading text-[2rem] font-semibold leading-[1.18] tracking-tight sm:mt-5 sm:text-5xl">
             {card.title}
           </h1>
+          {!historical ? (
+            <div className="mt-5">
+              <ShareAnswerButton
+                slug={card.slug}
+                title={card.title}
+                revisionId={card.revisionId}
+                queryEventId={queryEventId}
+              />
+            </div>
+          ) : null}
           <div className="mt-5 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-card/80 lg:hidden">
             <div className="border-r border-border p-3.5">
               <p className="text-[11px] font-semibold text-muted-foreground">
@@ -230,7 +243,10 @@ export function AnswerDetail({
 
             {canCollectFeedback ? (
               <section className="mt-8 rounded-2xl border border-primary/15 bg-card p-4 sm:mt-12 sm:rounded-xl sm:p-6">
-                <FeedbackButtons revisionId={card.revisionId} />
+                <MeasuredFeedback
+                  revisionId={card.revisionId}
+                  queryEventId={queryEventId}
+                />
                 <div className="mt-5 border-t border-border pt-4 text-sm text-muted-foreground">
                   <Link
                     className="inline-flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"

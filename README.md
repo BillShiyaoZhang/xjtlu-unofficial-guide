@@ -16,4 +16,4 @@ npm install
 npm run dev
 ```
 
-本地演示数据、编辑白名单和私有线索入口的配置方式见 [`apps/web/README.md`](./apps/web/README.md)。
+本地演示数据、应用自带编辑登录和私有线索入口的配置方式见 [`apps/web/README.md`](./apps/web/README.md)。

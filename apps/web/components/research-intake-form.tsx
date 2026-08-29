@@ -7,15 +7,25 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-export function ResearchIntakeForm() {
+export function ResearchIntakeForm({
+  defaultKind = '',
+  defaultBody = '',
+  defaultContextScope = '',
+  originQueryEventId,
+}: {
+  defaultKind?: 'question' | 'material' | '';
+  defaultBody?: string;
+  defaultContextScope?: string;
+  originQueryEventId?: string;
+}) {
   const [state, setState] = useState<'idle' | 'sending' | 'error'>('idle');
   const [message, setMessage] = useState('');
-  const [kind, setKind] = useState<'question' | 'material' | ''>('');
+  const [kind, setKind] = useState<'question' | 'material' | ''>(defaultKind);
   const [result, setResult] = useState<{
     reference: string;
     expiresAt: string;
   } | null>(null);
-  const key = useRef(crypto.randomUUID());
+  const attempt = useRef<{ fingerprint: string; key: string } | null>(null);
 
   async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,23 +33,26 @@ export function ResearchIntakeForm() {
     setMessage('');
     const form = new FormData(event.currentTarget);
     const body = Object.fromEntries(form.entries());
+    const requestPayload = {
+      originQueryEventId: originQueryEventId ?? null,
+      kind: body.kind,
+      contextScope: body.contextScope,
+      body: body.body || null,
+      sourceUrl: body.sourceUrl || null,
+      provenanceRole: body.provenanceRole || null,
+    };
+    const fingerprint = JSON.stringify(requestPayload);
+    if (!attempt.current || attempt.current.fingerprint !== fingerprint) {
+      attempt.current = { fingerprint, key: crypto.randomUUID() };
+    }
     try {
       const response = await fetch('/v1/research-intakes', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'idempotency-key': key.current,
+          'idempotency-key': attempt.current.key,
         },
-        body: JSON.stringify({
-          inviteSecret: body.inviteSecret,
-          participantRef: body.participantRef,
-          adultAttested: body.adultAttested === 'on',
-          kind: body.kind,
-          contextScope: body.contextScope,
-          body: body.body || null,
-          sourceUrl: body.sourceUrl || null,
-          provenanceRole: body.provenanceRole || null,
-        }),
+        body: JSON.stringify(requestPayload),
       });
       const payload = (await response.json()) as {
         data?: { reference: string; expiresAt: string };
@@ -50,7 +63,6 @@ export function ResearchIntakeForm() {
       setResult(payload.data);
       setState('idle');
     } catch (error) {
-      key.current = crypto.randomUUID();
       setMessage(
         error instanceof Error && error.message !== 'submit_failed'
           ? error.message
@@ -80,28 +92,8 @@ export function ResearchIntakeForm() {
       onSubmit={submit}
       className="space-y-6 rounded-xl border border-border bg-card p-5 shadow-sm sm:p-7"
     >
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="邀请凭证" htmlFor="invite-secret">
-          <Input
-            id="invite-secret"
-            name="inviteSecret"
-            type="password"
-            required
-            className="min-h-11"
-            autoComplete="off"
-          />
-        </Field>
-        <Field label="随机研究编号" htmlFor="participant-ref">
-          <Input
-            id="participant-ref"
-            name="participantRef"
-            required
-            minLength={6}
-            maxLength={80}
-            className="min-h-11"
-            autoComplete="off"
-          />
-        </Field>
+      <div className="rounded-lg border border-emerald-800/15 bg-emerald-900/7 p-4 text-sm font-medium text-emerald-950">
+        当前成年试点会话有效。研究编号与邀请代码不会进入这份线索。
       </div>
       <fieldset>
         <legend className="text-sm font-semibold">线索类型</legend>
@@ -143,6 +135,7 @@ export function ResearchIntakeForm() {
           required
           maxLength={160}
           className="min-h-11"
+          defaultValue={defaultContextScope}
         />
       </Field>
       <Field
@@ -150,7 +143,13 @@ export function ResearchIntakeForm() {
         htmlFor="intake-body"
         hint="请勿填写姓名、学号、电话、邮箱或其他可识别个人的信息。"
       >
-        <Textarea id="intake-body" name="body" maxLength={1500} rows={6} />
+        <Textarea
+          id="intake-body"
+          name="body"
+          maxLength={1500}
+          rows={6}
+          defaultValue={defaultBody}
+        />
       </Field>
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="公开材料链接（可选）" htmlFor="source-url">
@@ -181,15 +180,6 @@ export function ResearchIntakeForm() {
           </select>
         </Field>
       </div>
-      <label className="flex items-start gap-3 rounded-lg border border-border bg-muted/45 p-4 text-sm leading-6">
-        <input
-          type="checkbox"
-          name="adultAttested"
-          required
-          className="mt-1 size-4 shrink-0 accent-primary"
-        />
-        我已通过招募方的线下流程确认成年，并理解这里提交的是私有研究线索，不是公开提问。
-      </label>
       <Button
         type="submit"
         size="lg"

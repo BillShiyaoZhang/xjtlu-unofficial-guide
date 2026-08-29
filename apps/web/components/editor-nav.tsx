@@ -1,9 +1,10 @@
-import { LayoutDashboard, LogOut, Plus } from 'lucide-react';
+import { LayoutDashboard, Plus } from 'lucide-react';
 import Link from 'next/link';
 
-import { chatGPTSignOutPath } from '@/app/chatgpt-auth';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+import { EditorSignOutButton } from './editor-sign-out-button';
 
 export function EditorNav({ displayName }: { displayName: string }) {
   return (
@@ -32,17 +33,7 @@ export function EditorNav({ displayName }: { displayName: string }) {
       </nav>
       <div className="flex items-center gap-2 px-2 text-xs text-muted-foreground">
         <span className="max-w-40 truncate">{displayName}</span>
-        <a
-          href={chatGPTSignOutPath('/')}
-          target="_top"
-          className={cn(
-            buttonVariants({ variant: 'ghost', size: 'sm' }),
-            'min-h-9',
-          )}
-        >
-          <LogOut />
-          退出
-        </a>
+        <EditorSignOutButton />
       </div>
     </div>
   );

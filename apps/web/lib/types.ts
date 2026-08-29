@@ -83,7 +83,6 @@ export type RevisionHistoryItem = {
 export type AnswerCardDetail = AnswerCardSummary & {
   sentences: AnswerSentence[];
   history: RevisionHistoryItem[];
-  feedback: { resolved: number; unclear: number };
 };
 
 export type CitationDraftInput = {
@@ -147,6 +146,7 @@ export type EditorDashboard = {
     status: string;
     lockVersion: number;
     cardTitle: string | null;
+    affectedArea: string | null;
     createdAt: number;
   }>;
   intakes: Array<{

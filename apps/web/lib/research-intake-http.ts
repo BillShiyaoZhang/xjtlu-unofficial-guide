@@ -1,5 +1,6 @@
-import { readJsonBody } from './http';
+import { assertSameOrigin, noStoreJson, readJsonBody } from './http';
 import { errorResponse, submitResearchIntake } from './mutations';
+import { getPilotSessionFromRequest } from './pilot';
 import { enforceRateLimit } from './rate-limit';
 
 export async function handleResearchIntakeRequest(
@@ -8,17 +9,18 @@ export async function handleResearchIntakeRequest(
 ) {
   const requestId = crypto.randomUUID();
   try {
-    enforceRateLimit(request, 'research-intake-write', 8, 600);
+    assertSameOrigin(request);
+    await enforceRateLimit(request, 'research-intake-write', 8, 600);
     const body = (await readJsonBody(request, 16_000)) as Record<
       string,
       unknown
     >;
     const result = await submitResearchIntake({
-      inviteSecret:
-        typeof body.inviteSecret === 'string' ? body.inviteSecret : '',
-      participantRef:
-        typeof body.participantRef === 'string' ? body.participantRef : '',
-      adultAttested: body.adultAttested === true,
+      pilotSession: await getPilotSessionFromRequest(request),
+      originQueryEventId:
+        typeof body.originQueryEventId === 'string'
+          ? body.originQueryEventId
+          : null,
       kind: forcedKind ?? body.kind,
       contextScope:
         typeof body.contextScope === 'string' ? body.contextScope : '',
@@ -28,7 +30,7 @@ export async function handleResearchIntakeRequest(
         typeof body.provenanceRole === 'string' ? body.provenanceRole : null,
       idempotencyKey: request.headers.get('idempotency-key'),
     });
-    return Response.json(
+    return noStoreJson(
       { data: result.data, replayed: result.replayed, request_id: requestId },
       { status: result.replayed ? 200 : 201 },
     );

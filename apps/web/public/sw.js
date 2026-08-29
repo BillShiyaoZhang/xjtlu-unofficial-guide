@@ -7,6 +7,7 @@ const PRIVATE_PREFIXES = [
   '/report',
   '/reports',
   '/research-intake',
+  '/pilot',
 ];
 
 self.addEventListener('install', (event) => {

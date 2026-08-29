@@ -369,6 +369,259 @@ export const publishOperations = sqliteTable(
   ],
 );
 
+export const pilotParticipants = sqliteTable(
+  'pilot_participants',
+  {
+    id: text('id').primaryKey(),
+    participantRefHmac: text('participant_ref_hmac'),
+    participantHint: text('participant_hint').notNull(),
+    recruitmentChannel: text('recruitment_channel').notNull(),
+    isTest: integer('is_test', { mode: 'boolean' }).notNull().default(false),
+    adultVerifiedAt: integer('adult_verified_at').notNull(),
+    adultVerifiedBy: text('adult_verified_by').notNull(),
+    status: text('status').notNull().default('active'),
+    createdAt: integer('created_at').notNull(),
+    withdrawnAt: integer('withdrawn_at'),
+  },
+  (table) => [
+    uniqueIndex('idx_pilot_participants_ref_hmac').on(table.participantRefHmac),
+    index('idx_pilot_participants_status_created').on(
+      table.status,
+      table.createdAt,
+    ),
+    check(
+      'pilot_participants_channel_check',
+      sql`${table.recruitmentChannel} IN ('campus', 'student_group', 'referral', 'other')`,
+    ),
+    check(
+      'pilot_participants_status_check',
+      sql`${table.status} IN ('active', 'withdrawn')`,
+    ),
+  ],
+);
+
+export const pilotInvitations = sqliteTable(
+  'pilot_invitations',
+  {
+    id: text('id').primaryKey(),
+    participantId: text('participant_id')
+      .notNull()
+      .references(() => pilotParticipants.id, { onDelete: 'restrict' }),
+    tokenHash: text('token_hash').notNull(),
+    issuedBy: text('issued_by').notNull(),
+    issuedAt: integer('issued_at').notNull(),
+    expiresAt: integer('expires_at').notNull(),
+    redeemedAt: integer('redeemed_at'),
+    revokedAt: integer('revoked_at'),
+    revokedBy: text('revoked_by'),
+    lockVersion: integer('lock_version').notNull().default(0),
+  },
+  (table) => [
+    uniqueIndex('idx_pilot_invitations_token_hash').on(table.tokenHash),
+    index('idx_pilot_invitations_participant').on(
+      table.participantId,
+      table.issuedAt,
+    ),
+    index('idx_pilot_invitations_expiry').on(table.expiresAt),
+    check(
+      'pilot_invitations_expiry_check',
+      sql`${table.expiresAt} > ${table.issuedAt}`,
+    ),
+  ],
+);
+
+export const pilotConsentRecords = sqliteTable(
+  'pilot_consent_records',
+  {
+    id: text('id').primaryKey(),
+    participantId: text('participant_id')
+      .notNull()
+      .references(() => pilotParticipants.id, { onDelete: 'restrict' }),
+    invitationId: text('invitation_id')
+      .notNull()
+      .references(() => pilotInvitations.id, { onDelete: 'restrict' }),
+    noticeVersion: text('notice_version').notNull(),
+    purpose: text('purpose').notNull(),
+    separateConsent: integer('separate_consent', { mode: 'boolean' })
+      .notNull()
+      .default(true),
+    grantedAt: integer('granted_at').notNull(),
+    withdrawnAt: integer('withdrawn_at'),
+  },
+  (table) => [
+    uniqueIndex('idx_pilot_consent_invitation').on(table.invitationId),
+    index('idx_pilot_consent_participant').on(
+      table.participantId,
+      table.grantedAt,
+    ),
+    check(
+      'pilot_consent_purpose_check',
+      sql`${table.purpose} = 'stage1_product_research'`,
+    ),
+    check('pilot_consent_separate_check', sql`${table.separateConsent} = 1`),
+  ],
+);
+
+export const pilotSessions = sqliteTable(
+  'pilot_sessions',
+  {
+    id: text('id').primaryKey(),
+    participantId: text('participant_id')
+      .notNull()
+      .references(() => pilotParticipants.id, { onDelete: 'restrict' }),
+    consentId: text('consent_id')
+      .notNull()
+      .references(() => pilotConsentRecords.id, { onDelete: 'restrict' }),
+    invitationId: text('invitation_id')
+      .notNull()
+      .references(() => pilotInvitations.id, { onDelete: 'restrict' }),
+    tokenHash: text('token_hash').notNull(),
+    issuedAt: integer('issued_at').notNull(),
+    expiresAt: integer('expires_at').notNull(),
+    revokedAt: integer('revoked_at'),
+  },
+  (table) => [
+    uniqueIndex('idx_pilot_sessions_invitation').on(table.invitationId),
+    uniqueIndex('idx_pilot_sessions_token_hash').on(table.tokenHash),
+    index('idx_pilot_sessions_participant').on(
+      table.participantId,
+      table.expiresAt,
+    ),
+    check(
+      'pilot_sessions_expiry_check',
+      sql`${table.expiresAt} > ${table.issuedAt}`,
+    ),
+  ],
+);
+
+export const queryEvents = sqliteTable(
+  'query_events',
+  {
+    id: text('id').primaryKey(),
+    principalKind: text('principal_kind').notNull(),
+    pilotSessionId: text('pilot_session_id').references(
+      () => pilotSessions.id,
+      { onDelete: 'set null' },
+    ),
+    qualified: integer('qualified', { mode: 'boolean' })
+      .notNull()
+      .default(false),
+    qualificationRuleVersion: text('qualification_rule_version').notNull(),
+    retrievalStatus: text('retrieval_status').notNull(),
+    queryLengthBucket: text('query_length_bucket').notNull(),
+    hasTopicFilter: integer('has_topic_filter', { mode: 'boolean' })
+      .notNull()
+      .default(false),
+    scopeFilterCount: integer('scope_filter_count').notNull().default(0),
+    resultCount: integer('result_count'),
+    retrievalVersion: text('retrieval_version').notNull(),
+    createdAt: integer('created_at').notNull(),
+  },
+  (table) => [
+    index('idx_query_events_principal_created').on(
+      table.principalKind,
+      table.createdAt,
+    ),
+    index('idx_query_events_session_created').on(
+      table.pilotSessionId,
+      table.createdAt,
+    ),
+    check(
+      'query_events_principal_check',
+      sql`${table.principalKind} IN ('public_anonymous', 'research_participant', 'editor', 'withdrawn')`,
+    ),
+    check(
+      'query_events_retrieval_status_check',
+      sql`${table.retrievalStatus} IN ('completed', 'error')`,
+    ),
+    check(
+      'query_events_length_bucket_check',
+      sql`${table.queryLengthBucket} IN ('short', 'medium', 'long')`,
+    ),
+    check(
+      'query_events_scope_count_check',
+      sql`${table.scopeFilterCount} >= 0 AND ${table.scopeFilterCount} <= 8`,
+    ),
+    check(
+      'query_events_result_count_check',
+      sql`(${table.retrievalStatus} = 'completed' AND ${table.resultCount} IS NOT NULL AND ${table.resultCount} >= 0) OR (${table.retrievalStatus} = 'error' AND ${table.resultCount} IS NULL)`,
+    ),
+    check(
+      'query_events_participant_check',
+      sql`(${table.principalKind} = 'research_participant' AND ${table.pilotSessionId} IS NOT NULL) OR (${table.principalKind} != 'research_participant' AND ${table.pilotSessionId} IS NULL)`,
+    ),
+    check(
+      'query_events_qualification_check',
+      sql`${table.qualified} = 0 OR (${table.principalKind} = 'research_participant' AND ${table.pilotSessionId} IS NOT NULL)`,
+    ),
+  ],
+);
+
+export const queryResultImpressions = sqliteTable(
+  'query_result_impressions',
+  {
+    queryEventId: text('query_event_id')
+      .notNull()
+      .references(() => queryEvents.id, { onDelete: 'cascade' }),
+    cardId: text('card_id')
+      .notNull()
+      .references(() => answerCards.id, { onDelete: 'restrict' }),
+    cardRevisionId: text('card_revision_id')
+      .notNull()
+      .references(() => answerCardRevisions.id, { onDelete: 'restrict' }),
+    rank: integer('rank').notNull(),
+    recordedAt: integer('recorded_at').notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.queryEventId, table.cardRevisionId] }),
+    index('idx_query_impressions_event_rank').on(
+      table.queryEventId,
+      table.rank,
+    ),
+    check('query_impressions_rank_check', sql`${table.rank} > 0`),
+  ],
+);
+
+export const answerOpenEvents = sqliteTable(
+  'answer_open_events',
+  {
+    queryEventId: text('query_event_id')
+      .notNull()
+      .references(() => queryEvents.id, { onDelete: 'cascade' }),
+    cardRevisionId: text('card_revision_id')
+      .notNull()
+      .references(() => answerCardRevisions.id, { onDelete: 'restrict' }),
+    openedAt: integer('opened_at').notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.queryEventId, table.cardRevisionId] }),
+    index('idx_answer_open_events_event').on(
+      table.queryEventId,
+      table.openedAt,
+    ),
+  ],
+);
+
+export const answerShareEvents = sqliteTable(
+  'answer_share_events',
+  {
+    queryEventId: text('query_event_id')
+      .notNull()
+      .references(() => queryEvents.id, { onDelete: 'cascade' }),
+    cardRevisionId: text('card_revision_id')
+      .notNull()
+      .references(() => answerCardRevisions.id, { onDelete: 'restrict' }),
+    sharedAt: integer('shared_at').notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.queryEventId, table.cardRevisionId] }),
+    index('idx_answer_share_events_event').on(
+      table.queryEventId,
+      table.sharedAt,
+    ),
+  ],
+);
+
 export const feedbackEvents = sqliteTable(
   'feedback_events',
   {
@@ -376,6 +629,9 @@ export const feedbackEvents = sqliteTable(
     cardRevisionId: text('card_revision_id')
       .notNull()
       .references(() => answerCardRevisions.id, { onDelete: 'restrict' }),
+    queryEventId: text('query_event_id').references(() => queryEvents.id, {
+      onDelete: 'set null',
+    }),
     outcome: text('outcome').notNull(),
     createdAt: integer('created_at').notNull(),
   },
@@ -384,6 +640,10 @@ export const feedbackEvents = sqliteTable(
       table.cardRevisionId,
       table.createdAt,
     ),
+    index('idx_feedback_query_created').on(table.queryEventId, table.createdAt),
+    uniqueIndex('idx_feedback_query_revision_unique')
+      .on(table.queryEventId, table.cardRevisionId)
+      .where(sql`${table.queryEventId} IS NOT NULL`),
     check(
       'feedback_outcome_check',
       sql`${table.outcome} IN ('resolved', 'unclear')`,
@@ -399,12 +659,19 @@ export const reports = sqliteTable(
     targetCardId: text('target_card_id').references(() => answerCards.id, {
       onDelete: 'restrict',
     }),
+    pilotParticipantId: text('pilot_participant_id').references(
+      () => pilotParticipants.id,
+      { onDelete: 'set null' },
+    ),
+    affectedArea: text('affected_area'),
     type: text('type').notNull(),
     status: text('status').notNull().default('received'),
     publicResponse: text('public_response'),
     lockVersion: integer('lock_version').notNull().default(0),
     lastWorkflowOperationId: text('last_workflow_operation_id'),
     createdAt: integer('created_at').notNull(),
+    reviewingAt: integer('reviewing_at'),
+    updatedAt: integer('updated_at').notNull().default(0),
     resolvedAt: integer('resolved_at'),
   },
   (table) => [
@@ -418,6 +685,10 @@ export const reports = sqliteTable(
       'reports_status_check',
       sql`${table.status} IN ('received', 'reviewing', 'resolved', 'closed')`,
     ),
+    check(
+      'reports_affected_area_check',
+      sql`${table.affectedArea} IS NULL OR ${table.affectedArea} IN ('home', 'search', 'topics', 'pilot', 'intake', 'reporting', 'other')`,
+    ),
   ],
 );
 
@@ -426,6 +697,14 @@ export const researchIntakes = sqliteTable(
   {
     id: text('id').primaryKey(),
     participantRefHash: text('participant_ref_hash').notNull(),
+    pilotParticipantId: text('pilot_participant_id').references(
+      () => pilotParticipants.id,
+      { onDelete: 'set null' },
+    ),
+    originQueryEventId: text('origin_query_event_id').references(
+      () => queryEvents.id,
+      { onDelete: 'set null' },
+    ),
     kind: text('kind').notNull(),
     contextScope: text('context_scope').notNull(),
     body: text('body'),

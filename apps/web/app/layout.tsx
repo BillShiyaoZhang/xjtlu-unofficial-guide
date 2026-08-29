@@ -24,6 +24,7 @@ export const metadata: Metadata = {
   },
   description:
     '编辑维护、公开只读的校园信息核验指南；每张答案标出适用范围、核验时间和来源。',
+  referrer: 'same-origin',
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },

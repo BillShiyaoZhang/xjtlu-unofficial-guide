@@ -6,13 +6,15 @@ import { Input } from '@/components/ui/input';
 export function SearchBox({ defaultValue = '', compact = false }) {
   return (
     <form
-      action="/search"
+      action="/search/start"
+      method="post"
       className={
         compact
           ? 'grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]'
           : 'grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-2xl border border-primary/15 bg-card p-2 shadow-[0_16px_50px_rgb(41_53_46/10%)] sm:gap-3 sm:p-3'
       }
     >
+      <input type="hidden" name="intent" value="new" />
       <div>
         <label
           htmlFor={compact ? 'search-query-compact' : 'search-query'}
@@ -29,6 +31,7 @@ export function SearchBox({ defaultValue = '', compact = false }) {
           className="min-h-13 border-0 bg-transparent px-3 text-base shadow-none focus-visible:ring-0 sm:min-h-12 sm:text-base"
           placeholder="搜问题、系统或办事项"
           autoComplete="off"
+          spellCheck={false}
           enterKeyHint="search"
         />
       </div>

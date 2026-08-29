@@ -5,28 +5,62 @@ import { useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-export function FeedbackButtons({ revisionId }: { revisionId: string }) {
+export function FeedbackButtons({
+  revisionId,
+  queryEventId,
+}: {
+  revisionId: string;
+  queryEventId?: string;
+}) {
   const [state, setState] = useState<'idle' | 'sending' | 'done' | 'error'>(
     'idle',
   );
-  const key = useRef<string>(crypto.randomUUID());
+  const [pendingOutcome, setPendingOutcome] = useState<
+    'resolved' | 'unclear' | null
+  >(null);
+  const [message, setMessage] = useState('');
+  const keys = useRef(new Map<string, string>());
 
   async function submit(outcome: 'resolved' | 'unclear') {
     setState('sending');
+    setPendingOutcome(outcome);
+    setMessage('');
+    const fingerprint = JSON.stringify({
+      cardRevisionId: revisionId,
+      queryEventId: queryEventId ?? null,
+      outcome,
+    });
+    const key = keys.current.get(fingerprint) ?? crypto.randomUUID();
+    keys.current.set(fingerprint, key);
     try {
       const response = await fetch('/v1/feedback', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'idempotency-key': key.current,
+          'idempotency-key': key,
         },
-        body: JSON.stringify({ cardRevisionId: revisionId, outcome }),
+        body: JSON.stringify({
+          cardRevisionId: revisionId,
+          queryEventId: queryEventId ?? null,
+          outcome,
+        }),
       });
-      if (!response.ok) throw new Error('feedback_failed');
+      const result = (await response.json()) as {
+        error?: { message?: string };
+      };
+      if (!response.ok) {
+        throw new Error(result.error?.message ?? 'feedback_failed');
+      }
       setState('done');
-    } catch {
-      key.current = crypto.randomUUID();
+      setPendingOutcome(null);
+    } catch (error) {
+      setMessage(
+        error instanceof Error && error.message !== 'feedback_failed'
+          ? error.message
+          : '暂时无法记录，请稍后重试。',
+      );
       setState('error');
+      setPendingOutcome(null);
     }
   }
 
@@ -40,7 +74,7 @@ export function FeedbackButtons({ revisionId }: { revisionId: string }) {
   }
 
   return (
-    <div>
+    <div aria-busy={state === 'sending'}>
       <p className="font-heading text-sm font-semibold">
         这张答案卡解决了你的问题吗？
       </p>
@@ -53,7 +87,7 @@ export function FeedbackButtons({ revisionId }: { revisionId: string }) {
           disabled={state === 'sending'}
           onClick={() => void submit('resolved')}
         >
-          {state === 'sending' ? (
+          {state === 'sending' && pendingOutcome === 'resolved' ? (
             <Loader2 className="animate-spin" />
           ) : (
             <Check />
@@ -68,13 +102,17 @@ export function FeedbackButtons({ revisionId }: { revisionId: string }) {
           disabled={state === 'sending'}
           onClick={() => void submit('unclear')}
         >
-          <HelpCircle />
+          {state === 'sending' && pendingOutcome === 'unclear' ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <HelpCircle />
+          )}
           仍不清楚
         </Button>
       </div>
       {state === 'error' ? (
         <p role="alert" className="mt-2 text-sm text-destructive">
-          暂时无法记录，请稍后重试。
+          {message}
         </p>
       ) : null}
     </div>

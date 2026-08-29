@@ -1,6 +1,9 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+import { getRuntimeValue } from '@/db';
+import { isTrustedIdentityBoundary } from '@/lib/auth-boundary';
+
 export type ChatGPTUser = {
   userId: string;
   displayName: string;
@@ -20,6 +23,17 @@ const CALLBACK_PATH = '/callback';
 
 export async function getChatGPTUser(): Promise<ChatGPTUser | null> {
   const requestHeaders = await headers();
+  if (
+    !(await isTrustedIdentityBoundary({
+      nodeEnv: process.env.NODE_ENV,
+      host: requestHeaders.get('host') ?? '',
+      configuredSecret: getRuntimeValue('AUTH_PROXY_SECRET')?.trim() ?? '',
+      presentedSecret:
+        requestHeaders.get('x-xg-auth-proxy-secret')?.trim() ?? '',
+    }))
+  ) {
+    return null;
+  }
   const userId = requestHeaders.get(USER_ID_HEADER);
   const email = requestHeaders.get(USER_EMAIL_HEADER);
   if (!userId || !email) return null;

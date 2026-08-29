@@ -36,28 +36,28 @@
 
 ### 1.3 对原始设想的关键调整
 
-| 原始设想 | 设计决策 | 原因 |
-|---|---|---|
-| 完整校园本体和知识图谱 | 阶段 1 只用答案卡结构化字段；阶段 2 再引入小型受控词表和声明关系 | 在没有真实查询数据前，完整本体容易过度设计 |
-| 所有内容抽取进图谱 | 模型只生成候选声明，人工确认后才能进入正式知识层 | 防止模型错误获得“事实”外观 |
-| 信息可靠度总分 | 展示来源、时效、独立佐证、争议等可解释标签 | 不同领域的“可靠”含义不同，单分数会误导且易操纵 |
-| 用户信用影响信息真伪 | 身份只证明角色；贡献记录仅影响审核优先级和反滥用 | 身份、受欢迎程度都不能证明具体声明正确 |
-| Git 式版本控制 | 后台追加式修订与审计；前台展示简洁差异和历史 | 满足追溯需求，不把 Git 的分支/合并复杂度暴露给用户 |
-| 身份证或校园卡图片认证 | 发帖账号做后台实名；校方 SSO 才可确认具体角色，普通邮箱只标“校园邮箱已验证” | 遵循数据最小化，避免对邮箱证明能力作过度承诺 |
-| 话题意见百分比 | MVP 展示样本数、主要分歧和数据口径，不展示“全校占比” | 平台用户是自选择样本，百分比容易制造虚假精确感 |
-| 自动接入所有来源 | MVP 对无授权公开来源只做 `link_only`，快照/摘录/模型处理需分别获权 | 邮件、公众号、登录后页面涉及访问权、版权和平台政策 |
+| 原始设想               | 设计决策                                                                    | 原因                                               |
+| ---------------------- | --------------------------------------------------------------------------- | -------------------------------------------------- |
+| 完整校园本体和知识图谱 | 阶段 1 只用答案卡结构化字段；阶段 2 再引入小型受控词表和声明关系            | 在没有真实查询数据前，完整本体容易过度设计         |
+| 所有内容抽取进图谱     | 模型只生成候选声明，人工确认后才能进入正式知识层                            | 防止模型错误获得“事实”外观                         |
+| 信息可靠度总分         | 展示来源、时效、独立佐证、争议等可解释标签                                  | 不同领域的“可靠”含义不同，单分数会误导且易操纵     |
+| 用户信用影响信息真伪   | 身份只证明角色；贡献记录仅影响审核优先级和反滥用                            | 身份、受欢迎程度都不能证明具体声明正确             |
+| Git 式版本控制         | 后台追加式修订与审计；前台展示简洁差异和历史                                | 满足追溯需求，不把 Git 的分支/合并复杂度暴露给用户 |
+| 身份证或校园卡图片认证 | 发帖账号做后台实名；校方 SSO 才可确认具体角色，普通邮箱只标“校园邮箱已验证” | 遵循数据最小化，避免对邮箱证明能力作过度承诺       |
+| 话题意见百分比         | MVP 展示样本数、主要分歧和数据口径，不展示“全校占比”                        | 平台用户是自选择样本，百分比容易制造虚假精确感     |
+| 自动接入所有来源       | MVP 对无授权公开来源只做 `link_only`，快照/摘录/模型处理需分别获权          | 邮件、公众号、登录后页面涉及访问权、版权和平台政策 |
 
 ## 2. 产品定义
 
 ### 2.1 目标用户
 
-| 用户 | 主要任务 | 首期价值 |
-|---|---|---|
-| 新生、准新生 | 找到到校、账号、住宿、交通、校园设施等答案 | 快速得到带来源和适用范围的答案 |
-| 在读学生 | 核对办事流程、政策变更和真实执行经验 | 区分正式规则、个人经验与过期信息 |
-| 种子编辑 | 整理常见问题、补来源、标记过期、处理冲突 | 低成本维护高价值知识卡 |
-| 普通贡献者 | 提问、补充证据、确认仍有效、发起纠错 | 不必写长文也能贡献 |
-| 学校部门或学生组织 | 澄清信息、维护官方身份、纠正过期内容 | 为其领域提供可追溯的权威说明 |
+| 用户               | 主要任务                                   | 首期价值                         |
+| ------------------ | ------------------------------------------ | -------------------------------- |
+| 新生、准新生       | 找到到校、账号、住宿、交通、校园设施等答案 | 快速得到带来源和适用范围的答案   |
+| 在读学生           | 核对办事流程、政策变更和真实执行经验       | 区分正式规则、个人经验与过期信息 |
+| 种子编辑           | 整理常见问题、补来源、标记过期、处理冲突   | 低成本维护高价值知识卡           |
+| 普通贡献者         | 提问、补充证据、确认仍有效、发起纠错       | 不必写长文也能贡献               |
+| 学校部门或学生组织 | 澄清信息、维护官方身份、纠正过期内容       | 为其领域提供可追溯的权威说明     |
 
 ### 2.2 优先用户任务
 
@@ -114,19 +114,19 @@ MVP 明确不做：
 
 ### 3.2 功能范围
 
-| 能力 | MVP | 下一阶段 | 远期候选 |
-|---|---|---|---|
-| 中英文关键词检索 | 是 | — | — |
-| 基于向量的语义召回 | 否，先建离线基线 | 只有证明优于全文检索才开启 | 优化与扩容 |
-| 带来源的答案卡 | 是，编辑发布 | 用户协作完善 | 自动草拟、人工确认 |
-| 适用范围、有效时间、核验时间 | 是，含负责人、复核期限与逾期降级 | 获授权来源辅助复核 | 自动更新候选 |
-| 提问、补证据、建议修改 | 私有问题线索；不直接公开 | 完成实名与治理后受控开放 | 可信贡献者快速通道 |
-| 话题和重复话题匹配 | 规则 + 检索候选 | 模型辅助 | 半自动维护 |
-| 评论/回答 | 否 | 完成实名与治理后受控开放 | 分领域开放 |
-| 身份徽章 | 编辑与组织试点 | 学生/校友凭证 | 校方 SSO/接口 |
-| 声明抽取与冲突提示 | 后台试验 | 人工确认后上线 | 规模化 |
-| 意见聚类 | 否 | 仅在样本充足时试验 | — |
-| 专用图数据库 | 否 | 否 | 只有真实多跳需求成立才评估 |
+| 能力                         | MVP                              | 下一阶段                   | 远期候选                   |
+| ---------------------------- | -------------------------------- | -------------------------- | -------------------------- |
+| 中英文关键词检索             | 是                               | —                          | —                          |
+| 基于向量的语义召回           | 否，先建离线基线                 | 只有证明优于全文检索才开启 | 优化与扩容                 |
+| 带来源的答案卡               | 是，编辑发布                     | 用户协作完善               | 自动草拟、人工确认         |
+| 适用范围、有效时间、核验时间 | 是，含负责人、复核期限与逾期降级 | 获授权来源辅助复核         | 自动更新候选               |
+| 提问、补证据、建议修改       | 私有问题线索；不直接公开         | 完成实名与治理后受控开放   | 可信贡献者快速通道         |
+| 话题和重复话题匹配           | 规则 + 检索候选                  | 模型辅助                   | 半自动维护                 |
+| 评论/回答                    | 否                               | 完成实名与治理后受控开放   | 分领域开放                 |
+| 身份徽章                     | 编辑与组织试点                   | 学生/校友凭证              | 校方 SSO/接口              |
+| 声明抽取与冲突提示           | 后台试验                         | 人工确认后上线             | 规模化                     |
+| 意见聚类                     | 否                               | 仅在样本充足时试验         | —                          |
+| 专用图数据库                 | 否                               | 否                         | 只有真实多跳需求成立才评估 |
 
 ### 3.3 MVP 发布形态
 
@@ -174,32 +174,32 @@ flowchart LR
 
 ### 4.3 核心对象
 
-| 对象 | 定义 | 关键约束 |
-|---|---|---|
-| `Account` | 平台账号 | 公开身份与后台实名信息隔离 |
-| `VerificationAttestation` | 某认证方在一定期限内确认的身份/角色 | 只证明角色，不证明发言正确；支持到期和撤销 |
-| `Publisher` | 学校部门、组织、公众号或个人等原始发布主体 | 与上传者、平台账号分开 |
-| `PublisherAuthorityScope` | 发布主体在哪些主题/谓词上有直接权威 | “官方”不是跨领域的永久高权重 |
-| `Artifact` | 一篇网页、通知、邮件、图片或用户原创材料的逻辑对象 | 保存链接、来源类型、访问范围和转载/摘录权利模式 |
-| `ArtifactRevision` | 某次捕获到的不可变材料版本 | 获权保存正文时用内容哈希去重；新版本追加而非覆盖 |
-| `ProvenanceEdge` | 材料间的转载、引用、派生关系 | 用于识别同源转载，避免伪多源 |
-| `EvidenceSpan` | 材料中可引用的精确片段 | 文本范围、PDF 页码、图片区域或音视频时间码；继承来源访问权限 |
-| `LinkCitation` | `link_only` 来源的未归档引用 | 只含 URL、标题、发布日期和访问时间；无正文、哈希、向量，不能单独支撑高影响结论 |
-| `AnswerCard` | 某话题下用于首屏回答问题的稳定发布对象 | 保存当前公开版本指针，不直接保存可编辑正文 |
-| `AnswerCardRevision` | 答案卡的不可变版本 | 结论、适用范围、核验人与复核期限；每个事实句均有引用 |
-| `ResearchIntake` | 阶段 1 成年研究队列的短期私有问题/材料线索 | 纯人工处理、短 TTL，不成为公开作者内容 |
-| `Submission` | 阶段 2 的正式投稿工作流 | 作者确认与编辑批准分开；通过后才晋升为正式对象 |
-| `Entity` | 校区、学院、专业、课程、服务点、组织等稳定对象 | MVP 不建立普通学生实体；别名和合并可撤销 |
-| `PredicateSchema` | 声明允许使用的谓词及类型约束 | 有版本号，新增谓词需编辑审核 |
-| `Claim` | 原子命题跨修订的稳定身份 | 只保存当前**已确认**版本指针和生命周期，不重复保存命题正文 |
-| `ClaimRevision` | 可以被证据支持或反驳的不可变已确认命题版本 | 带类型化对象、限定范围和有效时间；审核留在 Proposal/ReviewCase |
-| `ClaimEvidence` | 证据片段与**声明修订**的关系 | `asserts/supports/refutes/mentions`；不能只指向稳定 Claim |
-| `Topic` | 用户检索、浏览和讨论的容器 | 可有别名、相关/上下级关系、合并重定向 |
-| `Post` | 阶段 2 后的公开提问、回答或经验 | 材料投稿是 `Submission`；评论默认不算事实证据 |
-| `Assessment` | “仍准确”“疑似过期”“来源不符”“有帮助”等反馈 | 不提供简单五星“可靠度” |
-| `ConfidenceSnapshot` | 某算法版本、某时点对声明证据状态的解释 | 保存输入证据集合和各维度，不覆盖历史快照 |
-| `ModelRun` | 一次模型任务的输入、输出和版本记录 | 可重放、可审计，不能绕过审核写正式知识 |
-| `AuditEvent` | 编辑、合并、隐藏、认证、审核等动作 | 追加式、仅授权人员可看完整信息 |
+| 对象                      | 定义                                               | 关键约束                                                                       |
+| ------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `Account`                 | 平台账号                                           | 公开身份与后台实名信息隔离                                                     |
+| `VerificationAttestation` | 某认证方在一定期限内确认的身份/角色                | 只证明角色，不证明发言正确；支持到期和撤销                                     |
+| `Publisher`               | 学校部门、组织、公众号或个人等原始发布主体         | 与上传者、平台账号分开                                                         |
+| `PublisherAuthorityScope` | 发布主体在哪些主题/谓词上有直接权威                | “官方”不是跨领域的永久高权重                                                   |
+| `Artifact`                | 一篇网页、通知、邮件、图片或用户原创材料的逻辑对象 | 保存链接、来源类型、访问范围和转载/摘录权利模式                                |
+| `ArtifactRevision`        | 某次捕获到的不可变材料版本                         | 获权保存正文时用内容哈希去重；新版本追加而非覆盖                               |
+| `ProvenanceEdge`          | 材料间的转载、引用、派生关系                       | 用于识别同源转载，避免伪多源                                                   |
+| `EvidenceSpan`            | 材料中可引用的精确片段                             | 文本范围、PDF 页码、图片区域或音视频时间码；继承来源访问权限                   |
+| `LinkCitation`            | `link_only` 来源的未归档引用                       | 只含 URL、标题、发布日期和访问时间；无正文、哈希、向量，不能单独支撑高影响结论 |
+| `AnswerCard`              | 某话题下用于首屏回答问题的稳定发布对象             | 保存当前公开版本指针，不直接保存可编辑正文                                     |
+| `AnswerCardRevision`      | 答案卡的不可变版本                                 | 结论、适用范围、核验人与复核期限；每个事实句均有引用                           |
+| `ResearchIntake`          | 阶段 1 成年研究队列的短期私有问题/材料线索         | 纯人工处理、短 TTL，不成为公开作者内容                                         |
+| `Submission`              | 阶段 2 的正式投稿工作流                            | 作者确认与编辑批准分开；通过后才晋升为正式对象                                 |
+| `Entity`                  | 校区、学院、专业、课程、服务点、组织等稳定对象     | MVP 不建立普通学生实体；别名和合并可撤销                                       |
+| `PredicateSchema`         | 声明允许使用的谓词及类型约束                       | 有版本号，新增谓词需编辑审核                                                   |
+| `Claim`                   | 原子命题跨修订的稳定身份                           | 只保存当前**已确认**版本指针和生命周期，不重复保存命题正文                     |
+| `ClaimRevision`           | 可以被证据支持或反驳的不可变已确认命题版本         | 带类型化对象、限定范围和有效时间；审核留在 Proposal/ReviewCase                 |
+| `ClaimEvidence`           | 证据片段与**声明修订**的关系                       | `asserts/supports/refutes/mentions`；不能只指向稳定 Claim                      |
+| `Topic`                   | 用户检索、浏览和讨论的容器                         | 可有别名、相关/上下级关系、合并重定向                                          |
+| `Post`                    | 阶段 2 后的公开提问、回答或经验                    | 材料投稿是 `Submission`；评论默认不算事实证据                                  |
+| `Assessment`              | “仍准确”“疑似过期”“来源不符”“有帮助”等反馈         | 不提供简单五星“可靠度”                                                         |
+| `ConfidenceSnapshot`      | 某算法版本、某时点对声明证据状态的解释             | 保存输入证据集合和各维度，不覆盖历史快照                                       |
+| `ModelRun`                | 一次模型任务的输入、输出和版本记录                 | 可重放、可审计，不能绕过审核写正式知识                                         |
+| `AuditEvent`              | 编辑、合并、隐藏、认证、审核等动作                 | 追加式、仅授权人员可看完整信息                                                 |
 
 ### 4.4 答案卡结构（阶段 1 必需）
 
@@ -257,12 +257,12 @@ ClaimRevision = {
 
 ### 4.6 四种时间
 
-| 字段 | 含义 |
-|---|---|
-| `published_at` | 来源首次发布该版本的时间 |
-| `captured_at` | 平台获取或保存该版本的时间 |
-| `valid_from` / `valid_to` | 声明在现实世界中的有效区间 |
-| `recorded_at` | 平台写入或修正结构化记录的时间 |
+| 字段                      | 含义                           |
+| ------------------------- | ------------------------------ |
+| `published_at`            | 来源首次发布该版本的时间       |
+| `captured_at`             | 平台获取或保存该版本的时间     |
+| `valid_from` / `valid_to` | 声明在现实世界中的有效区间     |
+| `recorded_at`             | 平台写入或修正结构化记录的时间 |
 
 很多表面矛盾只是校区、届别、学期或有效期不同。系统不能在限定条件未对齐时自动判定冲突。
 
@@ -349,16 +349,16 @@ lifecycle_status:   active | superseded | invalidated
 
 面向用户展示以下独立维度：
 
-| 维度 | 说明 |
-|---|---|
-| 来源适配度 | 发布主体在这个具体领域是否有直接权威或一手经验 |
-| 直接性 | 原始通知、一手经历、转述或多次转载 |
-| 独立佐证 | 支持材料是否来自真正独立的来源家族 |
+| 维度       | 说明                                             |
+| ---------- | ------------------------------------------------ |
+| 来源适配度 | 发布主体在这个具体领域是否有直接权威或一手经验   |
+| 直接性     | 原始通知、一手经历、转述或多次转载               |
+| 独立佐证   | 支持材料是否来自真正独立的来源家族               |
 | 证据贴合度 | 原文片段是否明确支持当前声明，而非只提到同一主题 |
-| 时效性 | 是否在有效期内，多久未核验 |
-| 适用范围 | 是否与用户的校区、项目、届别和学期匹配 |
-| 人工复核 | 模型抽取、编辑确认或官方澄清的状态 |
-| 反驳与争议 | 是否有范围对齐的反证、撤回或未解决争议 |
+| 时效性     | 是否在有效期内，多久未核验                       |
+| 适用范围   | 是否与用户的校区、项目、届别和学期匹配           |
+| 人工复核   | 模型抽取、编辑确认或官方澄清的状态               |
+| 反驳与争议 | 是否有范围对齐的反证、撤回或未解决争议           |
 
 阶段 1 只展示卡片级 `evidence_coverage`、`dispute_status` 和是否逾期；以下声明级标签在阶段 2 来源家族与 Claim 模型上线后启用：
 
@@ -444,15 +444,15 @@ MVP 不展示百分比。若后续上线，统计单位必须是“某条内容�
 
 ### 7.4 权限角色
 
-| 角色 | 权限 |
-|---|---|
-| 访客 | 搜索、阅读公开内容 |
-| 成年试点参与者 | 私有问题线索、问题报告；不能直接改变公开内容 |
-| 已实名贡献者（阶段 2） | 提交材料、回答、建议修改，均进入审核 |
-| 种子编辑 | 审核低/中风险内容、确认模型候选、维护话题 |
-| 领域审核员 | 审核高影响领域、处理争议与复核 |
-| 信任与安全管理员 | 查看受限实名数据、处置账号和紧急事件 |
-| 系统管理员 | 基础设施权限，不默认拥有实名内容查看权 |
+| 角色                   | 权限                                         |
+| ---------------------- | -------------------------------------------- |
+| 访客                   | 搜索、阅读公开内容                           |
+| 成年试点参与者         | 私有问题线索、问题报告；不能直接改变公开内容 |
+| 已实名贡献者（阶段 2） | 提交材料、回答、建议修改，均进入审核         |
+| 种子编辑               | 审核低/中风险内容、确认模型候选、维护话题    |
+| 领域审核员             | 审核高影响领域、处理争议与复核               |
+| 信任与安全管理员       | 查看受限实名数据、处置账号和紧急事件         |
+| 系统管理员             | 基础设施权限，不默认拥有实名内容查看权       |
 
 权限使用 RBAC + 资源范围；任何查看敏感认证数据、批量导出、隐藏内容和账号处置都写入审计日志。
 
@@ -470,12 +470,12 @@ MVP 不展示百分比。若后续上线，统计单位必须是“某条内容�
 
 ### 8.1 风险分级
 
-| 等级 | 示例 | 发布策略 |
-|---|---|---|
-| P0 紧急 | 身份证/学号/联系方式泄露，人身威胁，明确违法内容 | 自动隔离，人工立即处置；必要时启动事件响应 |
-| P1 高风险 | 可识别个人的指控，考试违规信息，安全/医疗/财务关键建议 | MVP 原则上拒绝；误入内容发布前审核 |
-| P2 中风险 | 学术政策、截止日期、组织负面经历、商业利益冲突 | 发布前审核，要求来源与适用范围 |
-| P3 低风险 | 校园设施、交通、普通生活经验、一般纠错 | 试点期先审后发；成熟后可抽样后审 |
+| 等级      | 示例                                                   | 发布策略                                   |
+| --------- | ------------------------------------------------------ | ------------------------------------------ |
+| P0 紧急   | 身份证/学号/联系方式泄露，人身威胁，明确违法内容       | 自动隔离，人工立即处置；必要时启动事件响应 |
+| P1 高风险 | 可识别个人的指控，考试违规信息，安全/医疗/财务关键建议 | MVP 原则上拒绝；误入内容发布前审核         |
+| P2 中风险 | 学术政策、截止日期、组织负面经历、商业利益冲突         | 发布前审核，要求来源与适用范围             |
+| P3 低风险 | 校园设施、交通、普通生活经验、一般纠错                 | 试点期先审后发；成熟后可抽样后审           |
 
 普通学生不建立实体页；教职工只收录官方公开的职业信息，并且不开放人物打分。关于个人或组织的负面主张不能因为“实名发布”就自动通过。
 
@@ -493,11 +493,11 @@ MVP 不展示百分比。若后续上线，统计单位必须是“某条内容�
 
 AI 标识在阶段 3 按平台角色分别落地，并在法律评审后冻结 UI 与元数据动作：
 
-| 角色 | 产品动作 |
-|---|---|
-| 本平台提供生成/改写 | 在交互界面和适用的生成内容周边显示标识；下载/导出时按适用标准写入并保留元数据 |
-| 本平台传播外部内容 | 核验隐式标识和用户声明；检测到生成痕迹但无声明时显示“疑似 AI 生成”，按适用要求补传播平台与内容编号 |
-| 用户上传 AIGC | 投稿时主动声明，保留已有显式/隐式标识；协议说明标识方式并禁止恶意删除、篡改或伪造 |
+| 角色                | 产品动作                                                                                           |
+| ------------------- | -------------------------------------------------------------------------------------------------- |
+| 本平台提供生成/改写 | 在交互界面和适用的生成内容周边显示标识；下载/导出时按适用标准写入并保留元数据                      |
+| 本平台传播外部内容  | 核验隐式标识和用户声明；检测到生成痕迹但无声明时显示“疑似 AI 生成”，按适用要求补传播平台与内容编号 |
+| 用户上传 AIGC       | 投稿时主动声明，保留已有显式/隐式标识；协议说明标识方式并禁止恶意删除、篡改或伪造                  |
 
 不是所有人工辅助改写都预设采用完全相同的标识方式；以届时适用的平台角色、内容类型和强制标准为准。
 
@@ -607,17 +607,17 @@ flowchart LR
 
 ### 11.2 推荐技术栈与启用时机
 
-| 层 | 阶段 1 | 何时升级 |
-|---|---|---|
-| Web | Next.js + TypeScript；移动端优先、SSR、分享页 | 双语需求成立后扩展完整语言切换 |
-| API | FastAPI + Python 模块化单体 | 只有独立扩缩容或团队边界稳定后拆服务 |
-| 主数据库 | PostgreSQL；事务、审计、答案卡和全文字段 | 始终为权威数据源 |
-| 搜索 | PostgreSQL FTS + `pg_trgm` + 结构化过滤 | 离线评测证明召回改善后加入 pgvector；规模明显上升再评估 OpenSearch |
-| 定时任务 | 数据库任务表/cron 处理复核到期与链接检查 | 阶段 2 使用 outbox relay → Redis → Python worker；消费者按 event ID 幂等 |
-| 文件 | 默认不保存外部全文；获授权快照或受限证据才进 S3 私有桶 | 权利和病毒扫描流程成熟后扩大文件类型 |
-| OCR/LLM | 不进入阶段 1 关键路径 | 阶段 3 引入隔离 OCR、Embedding 和 LLM 适配器 |
-| 认证 | 编辑账号 MFA；试点参与者由线下研究招募产生短期成年证明 | 阶段 2 接手机号实名、最小年龄段核验和学校 SSO/邮箱凭证适配器 |
-| 可观测性 | 结构化日志、错误追踪、基础指标 | 异步/模型启用后接 OpenTelemetry 全链路追踪 |
+| 层       | 阶段 1                                                 | 何时升级                                                                 |
+| -------- | ------------------------------------------------------ | ------------------------------------------------------------------------ |
+| Web      | Next.js + TypeScript；移动端优先、SSR、分享页          | 双语需求成立后扩展完整语言切换                                           |
+| API      | FastAPI + Python 模块化单体                            | 只有独立扩缩容或团队边界稳定后拆服务                                     |
+| 主数据库 | PostgreSQL；事务、审计、答案卡和全文字段               | 始终为权威数据源                                                         |
+| 搜索     | PostgreSQL FTS + `pg_trgm` + 结构化过滤                | 离线评测证明召回改善后加入 pgvector；规模明显上升再评估 OpenSearch       |
+| 定时任务 | 数据库任务表/cron 处理复核到期与链接检查               | 阶段 2 使用 outbox relay → Redis → Python worker；消费者按 event ID 幂等 |
+| 文件     | 默认不保存外部全文；获授权快照或受限证据才进 S3 私有桶 | 权利和病毒扫描流程成熟后扩大文件类型                                     |
+| OCR/LLM  | 不进入阶段 1 关键路径                                  | 阶段 3 引入隔离 OCR、Embedding 和 LLM 适配器                             |
+| 认证     | 编辑账号 MFA；试点参与者由线下研究招募产生短期成年证明 | 阶段 2 接手机号实名、最小年龄段核验和学校 SSO/邮箱凭证适配器             |
+| 可观测性 | 结构化日志、错误追踪、基础指标                         | 异步/模型启用后接 OpenTelemetry 全链路追踪                               |
 
 ### 11.3 目标组件图（阶段 2–3）
 
@@ -666,64 +666,64 @@ flowchart TB
 
 ### 12.1 主要表
 
-| 表 | 关键字段/索引 |
-|---|---|
-| `resources` | `id`, `kind`; 为举报、评价、审计等通用目标提供真实外键 |
-| `resource_versions` | `id`, `resource_id`, `kind`, `created_at`; 各不可变版本表共享该主键，供检索/审核引用 |
-| `accounts` | `id`, `status`, `public_profile_id`, `created_at`; 状态索引 |
-| `account_identities` | `account_id`, `provider`, `provider_subject`, 加密标识, `verified_at`; provider 唯一索引 |
-| `verification_attestations` | `account_id`, `type`, `issuer`, `scope`, `issued_at`, `expires_at`, `revoked_at` |
-| `consent_records` | `account_id`, `notice_version`, `purpose`, `separate_consent`, `granted_at`, `withdrawn_at` |
-| `publishers` | `type`, 双语名称, `canonical_url`, `verification_status` |
-| `publisher_authority_scopes` | `publisher_id`, `domain/predicate`, `valid_from/to`, `reviewer_id` |
-| `artifacts` | `resource_id`, `type`, `publisher_id`, `canonical_url`, `moderation_status`, `current_public_revision_id` |
-| `artifact_revisions` | 以 `resource_version_id` 为 PK；`artifact_id`, `content_hash?`, `published_at`, `captured_at`, `visibility`, retention policy；`link_only` 时不存正文哈希 |
-| `artifact_assets` | `revision_id`, `kind`, `object_key?`, `visibility`, `expires_at`; 区分原件、脱敏文本、公开摘录 |
-| `artifact_revision_rights` / `artifact_asset_rights` | 强类型外键；`link_only`, `quote_allowed`, `snapshot_allowed`, `model_processing_allowed`, `expires_at`, `basis` |
-| `provenance_edges` | `from_revision_id`, `to_revision_id`, `relation`, `review_status` |
-| `source_lineage_clusters` / `memberships` | 聚类版本、算法版本、审核状态、revision 成员；不是简单连通分量 |
-| `evidence_spans` | `revision_id`, `asset_id?`, `locator_json`, `quote?`, `span_hash?`, `visibility` |
-| `link_citations` | `artifact_revision_id`, URL、标题、发布日期、访问时间；无正文、哈希或 embedding |
-| `answer_cards` | `resource_id`, `topic_id`, `publication_status`, `current_public_revision_id` |
-| `answer_card_revisions` | 以 `resource_version_id` 为 PK；`card_id`, parent, locale, summary, `as_of`, `verified_at`, `review_due_at`, owner, generation/evidence/dispute 状态 |
-| `answer_card_revision_scopes` | `card_revision_id`, `scope_id`; 强类型范围外键 |
-| `answer_card_sentence_citations` | `card_revision_id`, `sentence_key`, `evidence_span_id?`, `link_citation_id?`, `claim_revision_id?`, `ordinal`; CHECK 前两者恰有一个 |
-| `answer_card_claims` | 阶段 2：`card_revision_id`, `claim_revision_id`, `role`, `ordinal` |
-| `applicability_scopes` / `members` | `mode = universal/constrained/unknown`，规范化校区、项目、学年、学期和学生类型 |
-| `entities` | `resource_id`, `type`, 双语规范名, `status`; 合并不直接改写历史事实 |
-| `entity_aliases` | `entity_id`, `language`, `normalized_alias`; alias 索引 |
-| `predicate_schema_versions` | `predicate_key`, `schema_version`, `subject_types`, `object_kind`, `time_semantics` |
-| `claims` | `resource_id`, `current_confirmed_revision_id`, `lifecycle_status`; 不重复保存命题正文 |
-| `claim_revision_proposals` | 待审核的人工/模型命题修订；通过 `review_case` 后才创建正式修订 |
-| `claim_revisions` | 以 `resource_version_id` 为 PK；`claim_id`, parent, predicate schema version, subject, object kind/互斥强类型值, validity range；无可变审核状态 |
-| `claim_revision_scopes` | `claim_revision_id`, `scope_id`; 常用范围可索引 |
-| `claim_evidence` | `claim_revision_id`, `evidence_span_id`, `stance`, `review_status`; 联合唯一索引 |
-| `claim_relations` | `from_claim_id`, `to_claim_id`, `relation`, `review_status` |
-| `topics` | `resource_id`, `slug`, 双语标题, `status` |
-| `topic_aliases` | `topic_id`, `normalized_alias`, `language` |
-| `topic_claims` / `topic_posts` / `topic_artifacts` | 强类型外键关系，避免 `member_type/member_id` 孤儿；答案卡直接以 `topic_id` 归属单一话题 |
-| `merge_operations` / `merge_members` | source/target、移动投影、审核人与撤销信息；防自合并、循环和不可逆链 |
-| `canonical_resolutions` | `resource_id`, `canonical_resource_id`, `merge_operation_id`; 可重建当前重定向投影 |
-| `research_intakes` | 阶段 1：随机研究 ID、私有线索载荷、`expires_at`、编辑处理结果；不产生公开作者身份 |
-| `submissions` | 阶段 2：`resource_id`, `author_id`, 私有载荷引用, `workflow_status`, `visibility`, `expires_at` |
-| `extraction_runs` | `submission_id`, `model_run_id`, `schema_version`, `status` |
-| `candidates` | `id`, `kind`; 各候选表共享该主键 |
-| `claim_candidates` / `entity_link_candidates` / `topic_candidates` | `candidate_id` 强外键、内容、来源 run、版本与置信度；与正式表隔离 |
-| `candidate_confirmations` | `candidate_id` 外键, `author_decision`, `editor_decision`, actor 与时间 |
-| `review_cases` | `target_resource_id?`, `target_resource_version_id?`, `candidate_id?`, 风险、SLA、assignee、decision、rule version；CHECK 恰有一个目标 |
-| `posts` / `post_revisions` | 阶段 2：post 使用 `resource_id`，revision 使用 `resource_version_id`；type、author、topic、publication status |
-| `assessments` | `actor_id`, `target_resource_id`, `type`, `context`, `created_at`; 每窗口防重复 |
-| `confidence_snapshots` | `claim_revision_id`, `algorithm_version`, `features_json`, `labels`, `created_at` |
-| `confidence_snapshot_evidence` | `snapshot_id`, `claim_evidence_id`; 可复现当时证据集合 |
-| `search_documents` | `resource_version_id` 真外键, `kind`, `language`, `visibility`, `normalized_text`, `tsv`, tokenizer/index 版本 |
-| `embeddings` | `resource_version_id`, `field`, `visibility`, `model_version`, `dimensions`, `vector`; 多模型可并存 |
-| `model_runs` | 完整任务版本与参数、`visibility`, `output_json?`, `expires_at`, 审核人与结果 |
-| `reports` / `moderation_actions` / `appeals` | 风险、状态、规则版本、决定、处理人和时间 |
-| `audit_events` | actor、action、target、reason、request_id、受限 metadata、时间 |
-| `privacy_requests` / `external_rights_requests` | 本人及外部权利人请求、最小核验、状态、期限和决定 |
-| `retention_policies` / `legal_holds` | 数据类别、目的、最短期限、删除动作、法律保留范围与到期 |
-| `vendor_transfers` | 供应商、目的、字段、区域、子处理者、出境路径、删除和训练策略 |
-| `outbox_events` | event ID/schema、aggregate、payload、attempts、`next_attempt_at`, `locked_at`, `delivered_at`, `last_error` |
+| 表                                                                 | 关键字段/索引                                                                                                                                             |
+| ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `resources`                                                        | `id`, `kind`; 为举报、评价、审计等通用目标提供真实外键                                                                                                    |
+| `resource_versions`                                                | `id`, `resource_id`, `kind`, `created_at`; 各不可变版本表共享该主键，供检索/审核引用                                                                      |
+| `accounts`                                                         | `id`, `status`, `public_profile_id`, `created_at`; 状态索引                                                                                               |
+| `account_identities`                                               | `account_id`, `provider`, `provider_subject`, 加密标识, `verified_at`; provider 唯一索引                                                                  |
+| `verification_attestations`                                        | `account_id`, `type`, `issuer`, `scope`, `issued_at`, `expires_at`, `revoked_at`                                                                          |
+| `consent_records`                                                  | `account_id`, `notice_version`, `purpose`, `separate_consent`, `granted_at`, `withdrawn_at`                                                               |
+| `publishers`                                                       | `type`, 双语名称, `canonical_url`, `verification_status`                                                                                                  |
+| `publisher_authority_scopes`                                       | `publisher_id`, `domain/predicate`, `valid_from/to`, `reviewer_id`                                                                                        |
+| `artifacts`                                                        | `resource_id`, `type`, `publisher_id`, `canonical_url`, `moderation_status`, `current_public_revision_id`                                                 |
+| `artifact_revisions`                                               | 以 `resource_version_id` 为 PK；`artifact_id`, `content_hash?`, `published_at`, `captured_at`, `visibility`, retention policy；`link_only` 时不存正文哈希 |
+| `artifact_assets`                                                  | `revision_id`, `kind`, `object_key?`, `visibility`, `expires_at`; 区分原件、脱敏文本、公开摘录                                                            |
+| `artifact_revision_rights` / `artifact_asset_rights`               | 强类型外键；`link_only`, `quote_allowed`, `snapshot_allowed`, `model_processing_allowed`, `expires_at`, `basis`                                           |
+| `provenance_edges`                                                 | `from_revision_id`, `to_revision_id`, `relation`, `review_status`                                                                                         |
+| `source_lineage_clusters` / `memberships`                          | 聚类版本、算法版本、审核状态、revision 成员；不是简单连通分量                                                                                             |
+| `evidence_spans`                                                   | `revision_id`, `asset_id?`, `locator_json`, `quote?`, `span_hash?`, `visibility`                                                                          |
+| `link_citations`                                                   | `artifact_revision_id`, URL、标题、发布日期、访问时间；无正文、哈希或 embedding                                                                           |
+| `answer_cards`                                                     | `resource_id`, `topic_id`, `publication_status`, `current_public_revision_id`                                                                             |
+| `answer_card_revisions`                                            | 以 `resource_version_id` 为 PK；`card_id`, parent, locale, summary, `as_of`, `verified_at`, `review_due_at`, owner, generation/evidence/dispute 状态      |
+| `answer_card_revision_scopes`                                      | `card_revision_id`, `scope_id`; 强类型范围外键                                                                                                            |
+| `answer_card_sentence_citations`                                   | `card_revision_id`, `sentence_key`, `evidence_span_id?`, `link_citation_id?`, `claim_revision_id?`, `ordinal`; CHECK 前两者恰有一个                       |
+| `answer_card_claims`                                               | 阶段 2：`card_revision_id`, `claim_revision_id`, `role`, `ordinal`                                                                                        |
+| `applicability_scopes` / `members`                                 | `mode = universal/constrained/unknown`，规范化校区、项目、学年、学期和学生类型                                                                            |
+| `entities`                                                         | `resource_id`, `type`, 双语规范名, `status`; 合并不直接改写历史事实                                                                                       |
+| `entity_aliases`                                                   | `entity_id`, `language`, `normalized_alias`; alias 索引                                                                                                   |
+| `predicate_schema_versions`                                        | `predicate_key`, `schema_version`, `subject_types`, `object_kind`, `time_semantics`                                                                       |
+| `claims`                                                           | `resource_id`, `current_confirmed_revision_id`, `lifecycle_status`; 不重复保存命题正文                                                                    |
+| `claim_revision_proposals`                                         | 待审核的人工/模型命题修订；通过 `review_case` 后才创建正式修订                                                                                            |
+| `claim_revisions`                                                  | 以 `resource_version_id` 为 PK；`claim_id`, parent, predicate schema version, subject, object kind/互斥强类型值, validity range；无可变审核状态           |
+| `claim_revision_scopes`                                            | `claim_revision_id`, `scope_id`; 常用范围可索引                                                                                                           |
+| `claim_evidence`                                                   | `claim_revision_id`, `evidence_span_id`, `stance`, `review_status`; 联合唯一索引                                                                          |
+| `claim_relations`                                                  | `from_claim_id`, `to_claim_id`, `relation`, `review_status`                                                                                               |
+| `topics`                                                           | `resource_id`, `slug`, 双语标题, `status`                                                                                                                 |
+| `topic_aliases`                                                    | `topic_id`, `normalized_alias`, `language`                                                                                                                |
+| `topic_claims` / `topic_posts` / `topic_artifacts`                 | 强类型外键关系，避免 `member_type/member_id` 孤儿；答案卡直接以 `topic_id` 归属单一话题                                                                   |
+| `merge_operations` / `merge_members`                               | source/target、移动投影、审核人与撤销信息；防自合并、循环和不可逆链                                                                                       |
+| `canonical_resolutions`                                            | `resource_id`, `canonical_resource_id`, `merge_operation_id`; 可重建当前重定向投影                                                                        |
+| `research_intakes`                                                 | 阶段 1：随机研究 ID、私有线索载荷、`expires_at`、编辑处理结果；不产生公开作者身份                                                                         |
+| `submissions`                                                      | 阶段 2：`resource_id`, `author_id`, 私有载荷引用, `workflow_status`, `visibility`, `expires_at`                                                           |
+| `extraction_runs`                                                  | `submission_id`, `model_run_id`, `schema_version`, `status`                                                                                               |
+| `candidates`                                                       | `id`, `kind`; 各候选表共享该主键                                                                                                                          |
+| `claim_candidates` / `entity_link_candidates` / `topic_candidates` | `candidate_id` 强外键、内容、来源 run、版本与置信度；与正式表隔离                                                                                         |
+| `candidate_confirmations`                                          | `candidate_id` 外键, `author_decision`, `editor_decision`, actor 与时间                                                                                   |
+| `review_cases`                                                     | `target_resource_id?`, `target_resource_version_id?`, `candidate_id?`, 风险、SLA、assignee、decision、rule version；CHECK 恰有一个目标                    |
+| `posts` / `post_revisions`                                         | 阶段 2：post 使用 `resource_id`，revision 使用 `resource_version_id`；type、author、topic、publication status                                             |
+| `assessments`                                                      | `actor_id`, `target_resource_id`, `type`, `context`, `created_at`; 每窗口防重复                                                                           |
+| `confidence_snapshots`                                             | `claim_revision_id`, `algorithm_version`, `features_json`, `labels`, `created_at`                                                                         |
+| `confidence_snapshot_evidence`                                     | `snapshot_id`, `claim_evidence_id`; 可复现当时证据集合                                                                                                    |
+| `search_documents`                                                 | `resource_version_id` 真外键, `kind`, `language`, `visibility`, `normalized_text`, `tsv`, tokenizer/index 版本                                            |
+| `embeddings`                                                       | `resource_version_id`, `field`, `visibility`, `model_version`, `dimensions`, `vector`; 多模型可并存                                                       |
+| `model_runs`                                                       | 完整任务版本与参数、`visibility`, `output_json?`, `expires_at`, 审核人与结果                                                                              |
+| `reports` / `moderation_actions` / `appeals`                       | 风险、状态、规则版本、决定、处理人和时间                                                                                                                  |
+| `audit_events`                                                     | actor、action、target、reason、request_id、受限 metadata、时间                                                                                            |
+| `privacy_requests` / `external_rights_requests`                    | 本人及外部权利人请求、最小核验、状态、期限和决定                                                                                                          |
+| `retention_policies` / `legal_holds`                               | 数据类别、目的、最短期限、删除动作、法律保留范围与到期                                                                                                    |
+| `vendor_transfers`                                                 | 供应商、目的、字段、区域、子处理者、出境路径、删除和训练策略                                                                                              |
+| `outbox_events`                                                    | event ID/schema、aggregate、payload、attempts、`next_attempt_at`, `locked_at`, `delivered_at`, `last_error`                                               |
 
 ### 12.2 数据约束
 
@@ -740,43 +740,44 @@ flowchart TB
 
 ## 13. API 草案
 
-| 方法与路径 | 权限 | 作用 |
-|---|---|---|
-| `GET /v1/search` | 公开 | 查询话题、答案卡、声明和材料；支持范围过滤 |
-| `GET /v1/topics/{slug}` | 公开 | 读取摘要、声明、证据、时间线和讨论 |
-| `POST /v1/question-intake` | 成年试点参与者 | 私有选题线索；绝不直接创建公开问题 |
-| `POST /v1/material-intake` | 成年试点参与者 | 阶段 1 的短期私有链接/文本线索；纯人工处理 |
-| `POST /v1/topic-candidates` | 已实名贡献者（阶段 2） | 返回相似话题和新建建议，不直接创建 |
-| `POST /v1/submissions` | 已实名贡献者（阶段 2） | 提交链接或文本；受限证据附件使用独立审核端点 |
-| `POST /v1/submissions/{id}/confirm-extraction` | 作者（阶段 3） | 确认/修改模型候选，仍不能发布 |
-| `POST /v1/editor/answer-cards` | 编辑 | 创建答案卡草稿 |
-| `POST /v1/editor/answer-cards/{id}/revisions` | 编辑 | 创建带逐句引用的新版本，要求 `If-Match` |
-| `POST /v1/editor/answer-card-revisions/{id}/publish` | 对应审核角色 | 审核并原子切换公开版本 |
-| `POST /v1/claims/{id}/assessments` | 已实名贡献者（阶段 2） | 提交仍准确、过期、范围错误等结构化反馈 |
-| `POST /v1/reports` | 登录；紧急隐私举报可匿名 | 举报内容或账号 |
-| `POST /v1/external-rights-requests` | 公开 | 非用户、权利人或监护人提交隐私/名誉/版权/未成年人请求 |
-| `GET /v1/me/attestations` | 本人 | 查看角色凭证、到期和撤销状态 |
-| `POST /v1/me/privacy-requests` | 本人 | 访问、更正、导出、删除和撤回请求 |
-| `GET /v1/editor/review-queue` | 编辑 | 按风险与 SLA 读取审核任务 |
-| `POST /v1/editor/reviews/{id}/decision` | 对应审核角色 | 记录带规则版本和理由的决定 |
-| `POST /v1/editor/merge-candidates/{id}/decision` | 编辑 | 确认或拒绝可逆合并 |
+| 方法与路径                                           | 权限                     | 作用                                                                                        |
+| ---------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------- |
+| `POST /search/start`                                 | 公开                     | 以同源表单正文提交问题与范围；记录最小化事件后 303 到不透明结果视图，禁止把问题正文放进 URL |
+| `GET /search?v={sealed_view}`                        | 公开 / 当前试点会话      | 读取一小时有效的加密结果视图；正式参与者视图绑定签发时会话                                  |
+| `GET /v1/topics/{slug}`                              | 公开                     | 读取摘要、声明、证据、时间线和讨论                                                          |
+| `POST /v1/question-intake`                           | 成年试点参与者           | 私有选题线索；绝不直接创建公开问题                                                          |
+| `POST /v1/material-intake`                           | 成年试点参与者           | 阶段 1 的短期私有链接/文本线索；纯人工处理                                                  |
+| `POST /v1/topic-candidates`                          | 已实名贡献者（阶段 2）   | 返回相似话题和新建建议，不直接创建                                                          |
+| `POST /v1/submissions`                               | 已实名贡献者（阶段 2）   | 提交链接或文本；受限证据附件使用独立审核端点                                                |
+| `POST /v1/submissions/{id}/confirm-extraction`       | 作者（阶段 3）           | 确认/修改模型候选，仍不能发布                                                               |
+| `POST /v1/editor/answer-cards`                       | 编辑                     | 创建答案卡草稿                                                                              |
+| `POST /v1/editor/answer-cards/{id}/revisions`        | 编辑                     | 创建带逐句引用的新版本，要求 `If-Match`                                                     |
+| `POST /v1/editor/answer-card-revisions/{id}/publish` | 对应审核角色             | 审核并原子切换公开版本                                                                      |
+| `POST /v1/claims/{id}/assessments`                   | 已实名贡献者（阶段 2）   | 提交仍准确、过期、范围错误等结构化反馈                                                      |
+| `POST /v1/reports`                                   | 登录；紧急隐私举报可匿名 | 举报内容或账号                                                                              |
+| `POST /v1/external-rights-requests`                  | 公开                     | 非用户、权利人或监护人提交隐私/名誉/版权/未成年人请求                                       |
+| `GET /v1/me/attestations`                            | 本人                     | 查看角色凭证、到期和撤销状态                                                                |
+| `POST /v1/me/privacy-requests`                       | 本人                     | 访问、更正、导出、删除和撤回请求                                                            |
+| `GET /v1/editor/review-queue`                        | 编辑                     | 按风险与 SLA 读取审核任务                                                                   |
+| `POST /v1/editor/reviews/{id}/decision`              | 对应审核角色             | 记录带规则版本和理由的决定                                                                  |
+| `POST /v1/editor/merge-candidates/{id}/decision`     | 编辑                     | 确认或拒绝可逆合并                                                                          |
 
 所有写请求支持 `Idempotency-Key`；服务端按 `(actor, route, key)` 保存请求体哈希，重复 key 配不同载荷时拒绝。列表使用游标分页；候选确认、审核和版本发布要求对象版本或 `If-Match`；响应返回 `request_id`、对象版本和可解释状态。公开 API 不返回后台实名标识。
 
 ## 14. 安全设计
 
-| 威胁 | 控制 |
-|---|---|
-| 证件或隐私泄漏 | 不收原始证件；上传前提示 + OCR/规则检测；敏感数据隔离加密；最小权限 |
-| 人肉、诽谤、骚扰 | 不建普通人物页；个人负面内容隔离；举报和高风险先审；限制搜索引擎索引 |
-| 小号刷票、来源灌水 | 手机号实名、速率限制、设备/行为异常、来源家族去重、反馈不直接决定事实 |
-| 账号接管 | 短时会话、刷新令牌轮换、异常登录提醒、管理员强制 MFA |
-| 恶意附件 | 私有隔离桶、扩展名与 MIME 双检、大小限制、病毒扫描；只向授权审核员展示安全转码预览 |
-| Prompt injection | 正文作为不可信数据、固定 JSON Schema、工具白名单、模型无认证库权限 |
-| 模型越权写入 | 候选表/状态隔离、人工确认、应用服务授权、审计 |
-| 管理员滥用 | 职责分离、敏感查询审计、双人批准批量导出、定期权限复核 |
-| 批量爬取与关联识别 | 限流、分页上限、脱敏、robots/反爬策略、异常导出告警 |
-| 供应商数据外泄 | DPA/安全评估、国内可用区域、最小字段、传输加密、禁用训练、删除约定 |
+| 威胁               | 控制                                                                               |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| 证件或隐私泄漏     | 不收原始证件；上传前提示 + OCR/规则检测；敏感数据隔离加密；最小权限                |
+| 人肉、诽谤、骚扰   | 不建普通人物页；个人负面内容隔离；举报和高风险先审；限制搜索引擎索引               |
+| 小号刷票、来源灌水 | 手机号实名、速率限制、设备/行为异常、来源家族去重、反馈不直接决定事实              |
+| 账号接管           | 短时会话、刷新令牌轮换、异常登录提醒、管理员强制 MFA                               |
+| 恶意附件           | 私有隔离桶、扩展名与 MIME 双检、大小限制、病毒扫描；只向授权审核员展示安全转码预览 |
+| Prompt injection   | 正文作为不可信数据、固定 JSON Schema、工具白名单、模型无认证库权限                 |
+| 模型越权写入       | 候选表/状态隔离、人工确认、应用服务授权、审计                                      |
+| 管理员滥用         | 职责分离、敏感查询审计、双人批准批量导出、定期权限复核                             |
+| 批量爬取与关联识别 | 限流、分页上限、脱敏、robots/反爬策略、异常导出告警                                |
+| 供应商数据外泄     | DPA/安全评估、国内可用区域、最小字段、传输加密、禁用训练、删除约定                 |
 
 最低安全基线包括：TLS、静态加密、密钥轮换、依赖与镜像扫描、SAST、CSP/CSRF/XSS 防护、速率限制、数据库最小权限、集中审计、备份恢复和事件响应演练。
 
@@ -804,6 +805,8 @@ flowchart TB
 
 留存不能使用一个统一“永久审计”期限。至少分别定义：网络运行与安全日志的法定期限；若构成电子公告服务时内容/发布时间/网址等记录的适用期限；个人信息保护影响评估报告和处理记录的适用期限；以及内容、认证结果、受限附件、模型输出、缓存和备份的最短必要期限。任何法律保留都记录目的、范围和到期日。
 
+阶段 1 本地试点冻结为：会话令牌 28 天、私有研究线索 30 天、去标识化查询/曝光/打开/分享事件 120 天。主动撤回立即终止会话，清除幂等缓存、查询/线索关联、研究编号 HMAC 与邀请码摘要；正常到期在 120 天删除交互事件并清除剩余外部研究编号和邀请码映射。反向代理访问日志不得记录搜索正文或完整不透明视图参数。
+
 ## 16. 可观测性与运营
 
 ### 16.1 产品指标
@@ -811,6 +814,8 @@ flowchart TB
 北极星指标：
 
 > 每周完成的“有来源、被用户确认解决”的高意图查询数。
+
+阶段 1 的 `stage1-explicit-submit-v2` 口径把“成年正式参与者对非空问题明确点击一次搜索按钮”定义为一个高意图查询旅程；同一结果页上的范围细化复用该事件并更新检索状态，不以原问题哈希做跨会话文本去重，避免建立可猜测的查询指纹。未反馈固定留在分母；真实页面挂载后才记打开，成功调用系统分享或复制 canonical 答案链接才记分享。参与者分享率以冻结四周窗口内至少产生一次合格查询、且未撤回的去重正式参与者为分母，分享人数是其子集；退出一台设备不会追溯删减历史，撤回同意才会清理并排除对应研究记录。“无编辑提醒”由冻结的试点分发协议和线下记录判定，不能从点击事件臆测。
 
 辅助指标：
 
@@ -986,17 +991,17 @@ docs/
 
 ## 20. 仍需产品负责人决定的问题
 
-| 决策 | 推荐默认值 | 不决定的影响 |
-|---|---|---|
-| 运营主体是谁 | 开发前明确可承担备案、实名、审核和投诉责任的主体 | 无法公开上线 |
-| 首批内容领域 | 单一校区、单一入学届的新生到校与账号/办事 | 样本分母、种子内容和审核规则无法收敛 |
-| 是否获得校方合作 | 按“暂无合作”设计，所有内部来源需用户授权 | 决定 SSO、邮件和官方数据接入方式 |
-| 对公众名称与视觉 | 使用中性名称 + 醒目“非官方、无隶属或背书关系”；含“西浦/XJTLU”的名称另取书面或专业意见 | 可能造成官方混淆或商标风险 |
-| 试点开放程度 | 邀请制编辑 + 公开只读 | 直接决定审核与实名系统复杂度 |
-| 是否双语 | 数据模型双语，MVP 界面中文优先 | 后补双语会增加别名和搜索迁移成本 |
-| AI/存储供应商 | 优先满足本地部署、数据区域、禁用训练与删除要求 | 影响隐私评估和模型能力 |
-| 是否允许商业内容 | MVP 不允许广告、付费排名和教培评价 | 否则必须新增利益披露和排序隔离 |
-| 未成年人策略 | MVP 只允许核验为成年的人建立互动账号；准备完整流程后再扩大 | 影响准新生覆盖和合规设计 |
+| 决策             | 推荐默认值                                                                            | 不决定的影响                         |
+| ---------------- | ------------------------------------------------------------------------------------- | ------------------------------------ |
+| 运营主体是谁     | 开发前明确可承担备案、实名、审核和投诉责任的主体                                      | 无法公开上线                         |
+| 首批内容领域     | 单一校区、单一入学届的新生到校与账号/办事                                             | 样本分母、种子内容和审核规则无法收敛 |
+| 是否获得校方合作 | 按“暂无合作”设计，所有内部来源需用户授权                                              | 决定 SSO、邮件和官方数据接入方式     |
+| 对公众名称与视觉 | 使用中性名称 + 醒目“非官方、无隶属或背书关系”；含“西浦/XJTLU”的名称另取书面或专业意见 | 可能造成官方混淆或商标风险           |
+| 试点开放程度     | 邀请制编辑 + 公开只读                                                                 | 直接决定审核与实名系统复杂度         |
+| 是否双语         | 数据模型双语，MVP 界面中文优先                                                        | 后补双语会增加别名和搜索迁移成本     |
+| AI/存储供应商    | 优先满足本地部署、数据区域、禁用训练与删除要求                                        | 影响隐私评估和模型能力               |
+| 是否允许商业内容 | MVP 不允许广告、付费排名和教培评价                                                    | 否则必须新增利益披露和排序隔离       |
+| 未成年人策略     | MVP 只允许核验为成年的人建立互动账号；准备完整流程后再扩大                            | 影响准新生覆盖和合规设计             |
 
 ## 21. 最终建议
 

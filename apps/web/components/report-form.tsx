@@ -2,55 +2,62 @@
 
 import { Loader2, Send } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 
-import { Button, buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 
 type CardOption = { id: string; title: string };
 
 export function ReportForm({
   cards,
   defaultCardId = '',
+  defaultType = '',
+  pilotActive,
 }: {
   cards: CardOption[];
   defaultCardId?: string;
+  defaultType?: string;
+  pilotActive: boolean;
 }) {
   const [state, setState] = useState<'idle' | 'sending' | 'error'>('idle');
-  const [result, setResult] = useState<{ code: string } | null>(null);
-  const [reportType, setReportType] = useState('');
+  const [reportType, setReportType] = useState(defaultType);
+  const [cardId, setCardId] = useState(defaultCardId);
   const [message, setMessage] = useState('');
-  const key = useRef(crypto.randomUUID());
+  const attempt = useRef<{ fingerprint: string; key: string } | null>(null);
+  const router = useRouter();
 
   async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     setState('sending');
     setMessage('');
     const form = new FormData(event.currentTarget);
+    const payload = {
+      cardId: form.get('cardId') || null,
+      type: form.get('type'),
+      affectedArea: form.get('affectedArea') || null,
+    };
+    const fingerprint = JSON.stringify(payload);
+    if (!attempt.current || attempt.current.fingerprint !== fingerprint) {
+      attempt.current = { fingerprint, key: crypto.randomUUID() };
+    }
     try {
       const response = await fetch('/v1/reports', {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'idempotency-key': key.current,
+          'idempotency-key': attempt.current.key,
         },
-        body: JSON.stringify({
-          cardId: form.get('cardId') || null,
-          type: form.get('type'),
-          inviteSecret: form.get('inviteSecret') || '',
-          adultAttested: form.get('adultAttested') === 'on',
-        }),
+        body: JSON.stringify(payload),
       });
-      const payload = (await response.json()) as {
+      const result = (await response.json()) as {
         data?: { code: string };
         error?: { message: string };
       };
-      if (!response.ok || !payload.data)
-        throw new Error(payload.error?.message ?? 'submit_failed');
-      setResult(payload.data);
-      setState('idle');
+      if (!response.ok || !result.data)
+        throw new Error(result.error?.message ?? 'submit_failed');
+      router.replace(`/reports/${result.data.code}`);
     } catch (error) {
-      key.current = crypto.randomUUID();
       setMessage(
         error instanceof Error && error.message !== 'submit_failed'
           ? error.message
@@ -58,27 +65,6 @@ export function ReportForm({
       );
       setState('error');
     }
-  }
-
-  if (result) {
-    return (
-      <output className="block rounded-xl border border-emerald-800/15 bg-emerald-900/7 p-6">
-        <h2 className="font-heading text-2xl font-semibold">报告已收到</h2>
-        <p className="mt-3 leading-7 text-foreground/75">
-          报告编号为 <strong>{result.code}</strong>
-          。报告不会自动更改公开内容，编辑复核后再处理。
-        </p>
-        <Link
-          href={`/reports/${result.code}`}
-          className={cn(
-            buttonVariants({ variant: 'outline', size: 'lg' }),
-            'mt-5 min-h-11',
-          )}
-        >
-          查看处理状态
-        </Link>
-      </output>
-    );
   }
 
   return (
@@ -94,6 +80,7 @@ export function ReportForm({
           id="report-card"
           name="cardId"
           defaultValue={defaultCardId}
+          onChange={(event) => setCardId(event.target.value)}
           required={reportType !== '' && reportType !== 'privacy'}
           className="mt-2 min-h-12 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
         >
@@ -132,47 +119,72 @@ export function ReportForm({
           ))}
         </div>
       </fieldset>
-      {reportType && reportType !== 'privacy' ? (
-        <fieldset className="space-y-4 rounded-lg border border-border bg-muted/35 p-4">
-          <legend className="px-1 text-sm font-semibold">
-            受邀成年试点参与者确认
-          </legend>
-          <div>
-            <label
-              htmlFor="report-invite-secret"
-              className="text-sm font-medium"
-            >
-              邀请凭证
-            </label>
-            <input
-              id="report-invite-secret"
-              name="inviteSecret"
-              type="password"
-              required
-              autoComplete="off"
-              className="mt-2 min-h-11 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
-            />
-          </div>
-          <label className="flex items-start gap-3 text-sm leading-6">
-            <input
-              type="checkbox"
-              name="adultAttested"
-              required
-              className="mt-1 size-4 shrink-0 accent-primary"
-            />
-            我已通过招募方的线下流程确认成年。邀请凭证不会写入报告记录。
+      {reportType === 'privacy' && !cardId ? (
+        <div>
+          <label
+            htmlFor="report-affected-area"
+            className="text-sm font-semibold"
+          >
+            隐私问题出现在哪个区域
           </label>
-        </fieldset>
+          <select
+            id="report-affected-area"
+            name="affectedArea"
+            required
+            defaultValue=""
+            className="mt-2 min-h-12 w-full rounded-lg border border-input bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+          >
+            <option value="" disabled>
+              请选择功能区域
+            </option>
+            <option value="home">首页</option>
+            <option value="search">查找页（不要粘贴具体搜索链接）</option>
+            <option value="topics">话题页</option>
+            <option value="pilot">试点加入与撤回</option>
+            <option value="intake">私有线索</option>
+            <option value="reporting">报告流程</option>
+            <option value="other">其他公开页面</option>
+          </select>
+        </div>
+      ) : null}
+      {reportType && reportType !== 'privacy' ? (
+        <div className="rounded-lg border border-border bg-muted/35 p-4 text-sm leading-6">
+          {pilotActive ? (
+            <p className="font-medium text-emerald-900">
+              当前成年试点会话有效，可提交这类结构化报告。
+            </p>
+          ) : (
+            <p>
+              这类报告只向已加入试点的成年参与者开放。{' '}
+              <Link
+                href={`/pilot?returnTo=${encodeURIComponent(
+                  `/report?${new URLSearchParams({
+                    ...(cardId ? { card: cardId } : {}),
+                    ...(reportType ? { type: reportType } : {}),
+                  }).toString()}`,
+                )}`}
+                className="font-semibold text-primary underline underline-offset-4"
+              >
+                使用邀请代码加入
+              </Link>
+            </p>
+          )}
+        </div>
       ) : null}
       <div className="rounded-lg bg-muted/60 p-4 text-sm leading-6 text-muted-foreground">
-        阶段 1 只收集结构化选项，不收自由文本、账号、Cookie
-        或持久用户标识。隐私问题可匿名报告；其他类型只向受邀成年试点参与者开放。紧急人身安全事件请联系相应正式渠道。
+        阶段 1
+        只收集结构化选项，不收自由文本或账号信息。隐私问题不会关联试点研究 ID
+        或应用账号；网络安全日志仍按运营说明处理。其他类型会关联当前试点的随机研究
+        ID，以便去重和处理，但不会保存研究编号原文。紧急人身安全事件请联系相应正式渠道。
       </div>
       <Button
         type="submit"
         size="lg"
         className="min-h-12"
-        disabled={state === 'sending'}
+        disabled={
+          state === 'sending' ||
+          (reportType !== '' && reportType !== 'privacy' && !pilotActive)
+        }
       >
         {state === 'sending' ? <Loader2 className="animate-spin" /> : <Send />}
         提交报告

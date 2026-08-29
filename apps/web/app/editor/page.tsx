@@ -1,15 +1,21 @@
 import {
+  Activity,
   AlertTriangle,
   FileClock,
   Inbox,
+  MousePointerClick,
   Plus,
   ScrollText,
+  SearchX,
+  Target,
+  Users,
 } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { EditorAccessDenied } from '@/components/editor-access-denied';
 import { EditorNav } from '@/components/editor-nav';
+import { PilotInvitationManager } from '@/components/pilot-invitation-manager';
 import {
   IntakeActions,
   ReportActions,
@@ -17,9 +23,11 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { requireEditorPage } from '@/lib/authz';
+import { getPilotAdminSnapshot, type PilotMetricSet } from '@/lib/pilot';
 import {
   formatDate,
   formatDateTime,
+  reportAffectedAreaLabel,
   reportTypeLabel,
 } from '@/lib/presentation';
 import { getEditorDashboard } from '@/lib/repository';
@@ -31,7 +39,10 @@ export const metadata: Metadata = { title: '编辑工作台' };
 export default async function EditorDashboardPage() {
   const { user, allowed } = await requireEditorPage('/editor');
   if (!allowed) return <EditorAccessDenied email={user.email} />;
-  const dashboard = await getEditorDashboard(user.userId);
+  const [dashboard, pilot] = await Promise.all([
+    getEditorDashboard(user.userId),
+    getPilotAdminSnapshot(user.userId),
+  ]);
   const overdue = dashboard.cards.filter((card) => card.isOverdue);
   const drafts = dashboard.cards.filter((card) => card.hasUnpublishedDraft);
 
@@ -75,6 +86,143 @@ export default async function EditorDashboardPage() {
           label="待处理报告 / 线索"
           value={dashboard.reports.length + dashboard.intakes.length}
         />
+      </section>
+
+      <section aria-labelledby="pilot-metrics-heading" className="mt-10">
+        <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-4">
+          <div>
+            <h2
+              id="pilot-metrics-heading"
+              className="font-heading text-2xl font-semibold"
+            >
+              试点指标
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              仅“正式成年研究队列”用于继续 / 停止判断；未反馈按未解决。
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline">规则 explicit-submit-v2</Badge>
+            <Badge
+              variant={pilot.metricWindow.configured ? 'secondary' : 'outline'}
+            >
+              {pilot.metricWindow.configured &&
+              pilot.metricWindow.startAt !== null &&
+              pilot.metricWindow.endAt !== null
+                ? `${formatDate(pilot.metricWindow.startAt)}—${formatDate(
+                    pilot.metricWindow.endAt - 1,
+                  )}`
+                : '未冻结窗口 · 全部历史预览'}
+            </Badge>
+          </div>
+        </div>
+        {!pilot.metricWindow.configured ? (
+          <p className="mt-4 rounded-xl border border-amber-700/20 bg-amber-500/10 px-4 py-3 text-xs leading-5 text-amber-950">
+            尚未配置四周试点起止时间，下面数字只能用于本地探索，不能据此判断继续或停止。
+          </p>
+        ) : null}
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          <MetricCard
+            icon={Activity}
+            label="合格查询"
+            value={`${pilot.formal.queries} / 150`}
+            detail="明确提交且非测试流量"
+          />
+          <MetricCard
+            icon={SearchX}
+            label="零结果率"
+            value={ratio(pilot.formal.zeroResults, pilot.formal.completed)}
+            detail={`${pilot.formal.zeroResults} / ${pilot.formal.completed} 次完成检索`}
+          />
+          <MetricCard
+            icon={MousePointerClick}
+            label="反馈覆盖率"
+            value={ratio(pilot.formal.responded, pilot.formal.queries)}
+            detail={`${pilot.formal.responded} / ${pilot.formal.queries} 次查询`}
+          />
+          <MetricCard
+            icon={Target}
+            label="全查询解决率"
+            value={ratio(pilot.formal.resolved, pilot.formal.queries)}
+            detail={`${pilot.formal.resolved} / ${pilot.formal.queries} · 闸门 60%`}
+            tone={
+              pilot.metricWindow.configured &&
+              pilot.formal.queries > 0 &&
+              pilot.formal.resolved / pilot.formal.queries >= 0.6
+                ? 'positive'
+                : 'default'
+            }
+          />
+        </div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-6">
+          <MetricCard
+            icon={Users}
+            label="去重成年参与者"
+            value={`${pilot.participants} / 50`}
+            detail="窗口内有合格查询且未撤回"
+            compact
+          />
+          <MetricCard
+            icon={MousePointerClick}
+            label="答案打开率"
+            value={ratio(pilot.formal.opened, pilot.formal.queries)}
+            detail={`${pilot.formal.opened} / ${pilot.formal.queries}`}
+            compact
+          />
+          <MetricCard
+            icon={Activity}
+            label="参与者分享率"
+            value={ratio(pilot.sharingParticipants, pilot.participants)}
+            detail={`${pilot.sharingParticipants} / ${pilot.participants} 人 · ${pilot.formal.shared} 次查询分享 · 闸门 20%`}
+            tone={
+              pilot.metricWindow.configured &&
+              pilot.participants > 0 &&
+              pilot.sharingParticipants / pilot.participants >= 0.2
+                ? 'positive'
+                : 'default'
+            }
+            compact
+          />
+          <MetricCard
+            icon={Target}
+            label="Top 3 确认有效率"
+            value={ratio(pilot.formal.topThreeResolved, pilot.formal.queries)}
+            detail={`${pilot.formal.topThreeResolved} / ${pilot.formal.queries}`}
+            compact
+          />
+          <MetricCard
+            icon={Target}
+            label="回应者解决率"
+            value={ratio(pilot.formal.resolved, pilot.formal.responded)}
+            detail={`${pilot.formal.resolved} / ${pilot.formal.responded} · 仅诊断`}
+            compact
+          />
+          <MetricCard
+            icon={AlertTriangle}
+            label="检索错误率"
+            value={ratio(pilot.formal.retrievalErrors, pilot.formal.queries)}
+            detail={`${pilot.formal.retrievalErrors} / ${pilot.formal.queries}`}
+            compact
+          />
+        </div>
+        <AnonymousMetrics metrics={pilot.anonymous} />
+      </section>
+
+      <section aria-labelledby="pilot-invitations-heading" className="mt-12">
+        <div className="border-b border-border pb-4">
+          <h2
+            id="pilot-invitations-heading"
+            className="font-heading text-2xl font-semibold"
+          >
+            试点邀请
+          </h2>
+          <p className="mt-1 text-xs text-muted-foreground">
+            研究编号与邀请代码只在签发后显示一次；数据库不保存原文。
+          </p>
+        </div>
+        <div className="mt-5">
+          <PilotInvitationManager invitations={pilot.invitations} />
+        </div>
       </section>
 
       <section aria-labelledby="cards-heading" className="mt-10">
@@ -179,7 +327,9 @@ export default async function EditorDashboardPage() {
                       </p>
                       <h3 className="mt-1 font-semibold">
                         {reportTypeLabel(report.type)} ·{' '}
-                        {report.cardTitle ?? '全站'}
+                        {report.cardTitle ??
+                          reportAffectedAreaLabel(report.affectedArea) ??
+                          '全站'}
                       </h3>
                       <p className="mt-1 text-xs text-muted-foreground">
                         提交于 {formatDateTime(report.createdAt)}
@@ -348,4 +498,79 @@ function Empty({ text }: { text: string }) {
       {text}
     </div>
   );
+}
+
+function MetricCard({
+  icon: Icon,
+  label,
+  value,
+  detail,
+  compact = false,
+  tone = 'default',
+}: {
+  icon: typeof Activity;
+  label: string;
+  value: string;
+  detail: string;
+  compact?: boolean;
+  tone?: 'default' | 'positive';
+}) {
+  return (
+    <div
+      className={cn(
+        'rounded-xl border bg-card p-4',
+        tone === 'positive' ? 'border-emerald-700/25' : 'border-border',
+      )}
+    >
+      <Icon
+        aria-hidden="true"
+        className={cn(
+          'size-4',
+          tone === 'positive' ? 'text-emerald-700' : 'text-primary',
+        )}
+      />
+      <p
+        className={cn(
+          'mt-3 font-heading font-semibold',
+          compact ? 'text-2xl' : 'text-3xl',
+        )}
+      >
+        {value}
+      </p>
+      <p className="mt-1 text-sm font-semibold">{label}</p>
+      <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
+    </div>
+  );
+}
+
+function AnonymousMetrics({ metrics }: { metrics: PilotMetricSet }) {
+  return (
+    <details className="mt-4 rounded-xl border border-border bg-muted/35">
+      <summary className="min-h-12 cursor-pointer px-4 py-3 text-sm font-semibold">
+        公开匿名事件级诊断
+      </summary>
+      <div className="grid gap-3 border-t border-border p-4 text-sm sm:grid-cols-4">
+        <p>
+          查询 <strong>{metrics.queries}</strong>
+        </p>
+        <p>
+          零结果 <strong>{metrics.zeroResults}</strong>
+        </p>
+        <p>
+          有反馈 <strong>{metrics.responded}</strong>
+        </p>
+        <p>
+          已解决 <strong>{metrics.resolved}</strong>
+        </p>
+        <p className="text-xs text-muted-foreground sm:col-span-4">
+          这里只计算独立查询事件；不计算人数、复用率，也不建立公开用户画像。
+        </p>
+      </div>
+    </details>
+  );
+}
+
+function ratio(numerator: number, denominator: number) {
+  if (!denominator) return '—';
+  return `${((numerator / denominator) * 100).toFixed(1)}%`;
 }

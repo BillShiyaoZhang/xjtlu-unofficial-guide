@@ -8,7 +8,7 @@ export async function GET(
   context: { params: Promise<{ code: string }> },
 ) {
   try {
-    enforceRateLimit(request, 'report-status-read', 60, 600);
+    await enforceRateLimit(request, 'report-status-read', 60, 600);
   } catch (error) {
     return errorResponse(error);
   }
@@ -27,11 +27,14 @@ export async function GET(
       status: report.status,
       publicResponse: report.public_response,
       createdAt: report.created_at,
+      reviewingAt: report.reviewing_at,
+      updatedAt: report.updated_at,
       resolvedAt: report.resolved_at,
       card: report.card_slug
         ? { slug: report.card_slug, title: report.card_title }
         : null,
     },
+    object_version: report.lock_version,
     request_id: crypto.randomUUID(),
   });
 }

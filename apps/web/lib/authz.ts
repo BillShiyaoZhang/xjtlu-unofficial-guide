@@ -1,39 +1,41 @@
-import { getRuntimeValue } from '@/db';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 import {
-  getChatGPTUser,
-  requireChatGPTUser,
-  type ChatGPTUser,
-} from '@/app/chatgpt-auth';
-
-import { emailIsAllowlisted, parseEditorAllowlist } from './permissions';
+  getLocalEditorFromCookieHeader,
+  type LocalEditorUser,
+  parseEditorReturnTo,
+} from './editor-session';
 
 export type EditorAuthResult =
-  | { ok: true; user: ChatGPTUser }
+  | { ok: true; user: LocalEditorUser }
   | {
       ok: false;
       status: 401 | 403;
       code: 'sign_in_required' | 'editor_forbidden';
     };
 
-export function editorAllowlist(): Set<string> {
-  return parseEditorAllowlist(getRuntimeValue('EDITOR_EMAILS'));
-}
-
-export function isEditorEmail(email: string): boolean {
-  return emailIsAllowlisted(email, getRuntimeValue('EDITOR_EMAILS'));
-}
-
 export async function getEditorApiAuth(): Promise<EditorAuthResult> {
-  const user = await getChatGPTUser();
-  if (!user) return { ok: false, status: 401, code: 'sign_in_required' };
-  if (!isEditorEmail(user.email)) {
-    return { ok: false, status: 403, code: 'editor_forbidden' };
-  }
-  return { ok: true, user };
+  const requestHeaders = await headers();
+  const localUser = await getLocalEditorFromCookieHeader(
+    requestHeaders.get('cookie'),
+  );
+  if (localUser) return { ok: true, user: localUser };
+  return { ok: false, status: 401, code: 'sign_in_required' };
+}
+
+export async function getEditorUser(): Promise<LocalEditorUser | null> {
+  const auth = await getEditorApiAuth();
+  return auth.ok ? auth.user : null;
 }
 
 export async function requireEditorPage(returnTo: string) {
-  const user = await requireChatGPTUser(returnTo);
-  return { user, allowed: isEditorEmail(user.email) };
+  const requestHeaders = await headers();
+  const localUser = await getLocalEditorFromCookieHeader(
+    requestHeaders.get('cookie'),
+  );
+  if (localUser) return { user: localUser, allowed: true };
+
+  const safeReturnTo = parseEditorReturnTo(returnTo);
+  redirect(`/editor/login?returnTo=${encodeURIComponent(safeReturnTo)}`);
 }

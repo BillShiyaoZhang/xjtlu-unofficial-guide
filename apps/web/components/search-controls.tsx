@@ -1,7 +1,6 @@
 'use client';
 
 import { Filter, Search, X } from 'lucide-react';
-import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,12 +20,14 @@ type ScopeOption = { id: string; labelZh: string };
 
 export function SearchControls({
   query,
+  queryEventId,
   topic,
   selectedScopes,
   topics,
   scopes,
 }: {
   query: string;
+  queryEventId: string;
   topic: string;
   selectedScopes: string[];
   topics: TopicOption[];
@@ -40,7 +41,7 @@ export function SearchControls({
 
   return (
     <div className="mt-6 sm:mt-8">
-      <form action="/search" className="sm:hidden">
+      <form action="/search/start" method="post" className="sm:hidden">
         <div className="grid grid-cols-[minmax(0,1fr)_3.25rem] gap-2 rounded-2xl border border-border bg-card p-2 shadow-sm">
           <label htmlFor="search-page-query-mobile" className="sr-only">
             你想确认什么？
@@ -49,6 +50,8 @@ export function SearchControls({
             id="search-page-query-mobile"
             name="q"
             type="search"
+            autoComplete="off"
+            spellCheck={false}
             defaultValue={query}
             maxLength={160}
             enterKeyHint="search"
@@ -63,6 +66,8 @@ export function SearchControls({
             type="submit"
             size="icon-lg"
             aria-label="查找答案"
+            name="intent"
+            value="new"
             className="size-13 rounded-xl"
           >
             <Search aria-hidden="true" />
@@ -70,7 +75,11 @@ export function SearchControls({
         </div>
       </form>
 
-      <form action="/search" className="hidden sm:block">
+      <form action="/search/start" method="post" className="hidden sm:block">
+        {topic ? <input type="hidden" name="topic" value={topic} /> : null}
+        {selectedScopes.map((scope) => (
+          <input key={scope} type="hidden" name="scope" value={scope} />
+        ))}
         <div className="grid gap-3 rounded-xl border border-border bg-card p-3 shadow-sm sm:grid-cols-[minmax(0,1fr)_auto]">
           <div>
             <label htmlFor="search-page-query" className="sr-only">
@@ -80,6 +89,8 @@ export function SearchControls({
               id="search-page-query"
               name="q"
               type="search"
+              autoComplete="off"
+              spellCheck={false}
               defaultValue={query}
               maxLength={160}
               enterKeyHint="search"
@@ -87,13 +98,22 @@ export function SearchControls({
               placeholder="输入问题、系统名称或办事项"
             />
           </div>
-          <Button type="submit" size="lg" className="min-h-12 px-6">
+          <Button
+            type="submit"
+            name="intent"
+            value="new"
+            size="lg"
+            className="min-h-12 px-6"
+          >
             <Search aria-hidden="true" />
             查找答案
           </Button>
         </div>
+      </form>
+      <form action="/search/start" method="post" className="hidden sm:block">
+        <input type="hidden" name="q" value={query} />
+        <input type="hidden" name="queryEventId" value={queryEventId} />
         <DesktopFilterFields
-          query={query}
           topic={topic}
           selectedScopes={selectedScopes}
           topics={topics}
@@ -132,8 +152,13 @@ export function SearchControls({
                   选择一个话题，并按需限定适用范围。
                 </DrawerDescription>
               </DrawerHeader>
-              <form action="/search" className="flex min-h-0 flex-1 flex-col">
+              <form
+                action="/search/start"
+                method="post"
+                className="flex min-h-0 flex-1 flex-col"
+              >
                 {query ? <input type="hidden" name="q" value={query} /> : null}
+                <input type="hidden" name="queryEventId" value={queryEventId} />
                 <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5">
                   <FilterFields
                     topic={topic}
@@ -143,7 +168,13 @@ export function SearchControls({
                   />
                 </div>
                 <DrawerFooter className="border-t border-border bg-card pb-[max(1rem,env(safe-area-inset-bottom))] pt-4">
-                  <Button type="submit" size="lg" className="min-h-12">
+                  <Button
+                    type="submit"
+                    name="intent"
+                    value="refine"
+                    size="lg"
+                    className="min-h-12"
+                  >
                     应用筛选
                   </Button>
                   <DrawerClose
@@ -163,13 +194,12 @@ export function SearchControls({
             </DrawerContent>
           </Drawer>
           {activeCount ? (
-            <Link
-              href={searchHref(query)}
-              className="inline-flex min-h-11 items-center gap-1 rounded-full px-3 text-sm font-semibold text-muted-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
-            >
-              <X aria-hidden="true" className="size-4" />
-              清除
-            </Link>
+            <RefineButton
+              query={query}
+              queryEventId={queryEventId}
+              label="清除"
+              compact
+            />
           ) : null}
         </div>
         {activeCount ? (
@@ -180,18 +210,20 @@ export function SearchControls({
             {activeTopic ? (
               <FilterChip
                 label={activeTopic.titleZh}
-                href={searchHref(query, '', selectedScopes)}
+                query={query}
+                queryEventId={queryEventId}
+                topic=""
+                scopes={selectedScopes}
               />
             ) : null}
             {activeScopes.map((scope) => (
               <FilterChip
                 key={scope.id}
                 label={scope.labelZh}
-                href={searchHref(
-                  query,
-                  topic,
-                  selectedScopes.filter((id) => id !== scope.id),
-                )}
+                query={query}
+                queryEventId={queryEventId}
+                topic={topic}
+                scopes={selectedScopes.filter((id) => id !== scope.id)}
               />
             ))}
           </div>
@@ -202,14 +234,12 @@ export function SearchControls({
 }
 
 function DesktopFilterFields({
-  query,
   topic,
   selectedScopes,
   topics,
   scopes,
   activeCount,
 }: {
-  query: string;
   topic: string;
   selectedScopes: string[];
   topics: TopicOption[];
@@ -241,18 +271,22 @@ function DesktopFilterFields({
         <div className="mt-6 flex flex-wrap gap-2">
           <Button
             type="submit"
+            name="intent"
+            value="refine"
             variant="secondary"
             size="lg"
             className="min-h-11"
           >
             应用筛选
           </Button>
-          <Link
-            href={searchHref(query)}
+          <button
+            type="submit"
+            name="action"
+            value="clear"
             className="inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-semibold text-muted-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40"
           >
             清除筛选
-          </Link>
+          </button>
         </div>
       </div>
     </details>
@@ -346,23 +380,95 @@ function FilterOption({
   );
 }
 
-function FilterChip({ label, href }: { label: string; href: string }) {
+function FilterChip({
+  label,
+  query,
+  queryEventId,
+  topic,
+  scopes,
+}: {
+  label: string;
+  query: string;
+  queryEventId: string;
+  topic: string;
+  scopes: string[];
+}) {
   return (
-    <Link
-      href={href}
-      className="inline-flex min-h-9 shrink-0 items-center gap-1 rounded-full bg-primary/10 px-3 text-xs font-semibold text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
-    >
-      {label}
-      <X aria-hidden="true" className="size-3.5" />
-    </Link>
+    <form action="/search/start" method="post" className="shrink-0">
+      <SearchContextFields
+        query={query}
+        queryEventId={queryEventId}
+        topic={topic}
+        scopes={scopes}
+      />
+      <button
+        type="submit"
+        name="intent"
+        value="refine"
+        className="inline-flex min-h-9 items-center gap-1 rounded-full bg-primary/10 px-3 text-xs font-semibold text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+      >
+        {label}
+        <X aria-hidden="true" className="size-3.5" />
+      </button>
+    </form>
   );
 }
 
-function searchHref(query: string, topic = '', scopes: string[] = []) {
-  const params = new URLSearchParams();
-  if (query) params.set('q', query);
-  if (topic) params.set('topic', topic);
-  for (const scope of scopes) params.append('scope', scope);
-  const suffix = params.toString();
-  return suffix ? `/search?${suffix}` : '/search';
+function RefineButton({
+  query,
+  queryEventId,
+  label,
+  compact = false,
+}: {
+  query: string;
+  queryEventId: string;
+  label: string;
+  compact?: boolean;
+}) {
+  return (
+    <form action="/search/start" method="post">
+      <SearchContextFields
+        query={query}
+        queryEventId={queryEventId}
+        topic=""
+        scopes={[]}
+      />
+      <button
+        type="submit"
+        name="intent"
+        value="refine"
+        className={
+          compact
+            ? 'inline-flex min-h-11 items-center gap-1 rounded-full px-3 text-sm font-semibold text-muted-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/40'
+            : 'inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-semibold text-muted-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40'
+        }
+      >
+        {compact ? <X aria-hidden="true" className="size-4" /> : null}
+        {label}
+      </button>
+    </form>
+  );
+}
+
+function SearchContextFields({
+  query,
+  queryEventId,
+  topic,
+  scopes,
+}: {
+  query: string;
+  queryEventId: string;
+  topic: string;
+  scopes: string[];
+}) {
+  return (
+    <>
+      <input type="hidden" name="q" value={query} />
+      <input type="hidden" name="queryEventId" value={queryEventId} />
+      {topic ? <input type="hidden" name="topic" value={topic} /> : null}
+      {scopes.map((scope) => (
+        <input key={scope} type="hidden" name="scope" value={scope} />
+      ))}
+    </>
+  );
 }

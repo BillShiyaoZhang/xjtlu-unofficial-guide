@@ -53,6 +53,21 @@ export function reportTypeLabel(type: string): string {
   return labels[type] ?? type;
 }
 
+export function reportAffectedAreaLabel(area: string | null): string | null {
+  if (!area) return null;
+  return (
+    {
+      home: '首页',
+      search: '查找页',
+      topics: '话题页',
+      pilot: '试点加入与撤回',
+      intake: '私有线索',
+      reporting: '报告流程',
+      other: '其他公开页面',
+    }[area] ?? '其他公开页面'
+  );
+}
+
 export function reportStatusLabel(status: string): string {
   const labels: Record<string, string> = {
     received: '已收到',

@@ -1,13 +1,29 @@
 import migration0 from '@/drizzle/0000_flat_brood.sql?raw';
 import migration1 from '@/drizzle/0001_stage1-invariants.sql?raw';
 import migration2 from '@/drizzle/0002_breezy_cammi.sql?raw';
+import migration3 from '@/drizzle/0003_report_workflow_integrity.sql?raw';
+import migration4 from '@/drizzle/0004_report_initial_state.sql?raw';
+import migration5 from '@/drizzle/0005_pilot_query_measurement.sql?raw';
+import migration6 from '@/drizzle/0006_intake_query_origin.sql?raw';
+import migration7 from '@/drizzle/0007_pilot_security_hardening.sql?raw';
+import migration8 from '@/drizzle/0008_ordinary_champions.sql?raw';
 
 import { getD1, getRuntimeValue } from './index';
+import {
+  RESEARCH_EVENT_RETENTION_DAYS,
+  RESEARCH_EVENT_RETENTION_SQL,
+} from './retention';
 
 const migrations = [
   { id: '0000_flat_brood', sql: migration0 },
   { id: '0001_stage1_invariants', sql: migration1 },
   { id: '0002_workflow_operations', sql: migration2 },
+  { id: '0003_report_workflow_integrity', sql: migration3 },
+  { id: '0004_report_initial_state', sql: migration4 },
+  { id: '0005_pilot_query_measurement', sql: migration5 },
+  { id: '0006_intake_query_origin', sql: migration6 },
+  { id: '0007_pilot_security_hardening', sql: migration7 },
+  { id: '0008_share_and_report_context', sql: migration8 },
 ] as const;
 
 let bootstrapPromise: Promise<void> | undefined;
@@ -109,14 +125,17 @@ async function bootstrapDatabase() {
 async function performDatabaseMaintenance() {
   const d1 = getD1();
   const now = Math.floor(Date.now() / 1000);
+  const researchCutoff = now - RESEARCH_EVENT_RETENTION_DAYS * 86_400;
   const requestId = crypto.randomUUID();
   await d1.batch([
     d1
       .prepare(
         `UPDATE research_intakes
-         SET participant_ref_hash = 'purged', context_scope = '已按保留期限清理',
-             body = NULL, source_url = NULL, provenance_role = NULL,
-             status = 'expired', purged_at = ?
+         SET participant_ref_hash = 'purged', pilot_participant_id = NULL,
+             origin_query_event_id = NULL,
+             context_scope = '已按保留期限清理', body = NULL,
+             source_url = NULL, provenance_role = NULL, status = 'expired',
+             purged_at = ?
          WHERE expires_at <= ? AND purged_at IS NULL`,
       )
       .bind(now, now),
@@ -131,8 +150,77 @@ async function performDatabaseMaintenance() {
          WHERE changes() > 0`,
       )
       .bind(`audit-${requestId}`, `purge-${now}`, requestId, now),
+    ...RESEARCH_EVENT_RETENTION_SQL.map((sql) =>
+      d1.prepare(sql).bind(researchCutoff),
+    ),
+    d1
+      .prepare(
+        `INSERT INTO audit_events
+          (id, actor_id, action, target_type, target_id, reason, request_id,
+           metadata_json, created_at)
+         SELECT ?, 'system:retention', 'query_event.delete_expired',
+                'query_event_batch', ?, '按 120 天保留期限删除研究交互事件',
+                ?, json_object('deletedCount', changes()), ?
+         WHERE changes() > 0`,
+      )
+      .bind(`audit-query-${requestId}`, `query-purge-${now}`, requestId, now),
+    d1
+      .prepare(
+        `UPDATE pilot_sessions
+         SET token_hash = 'expired:' || id, revoked_at = COALESCE(revoked_at, ?)
+         WHERE expires_at <= ? AND revoked_at IS NULL`,
+      )
+      .bind(now, now),
     d1
       .prepare('DELETE FROM idempotency_records WHERE expires_at <= ?')
+      .bind(now),
+    d1
+      .prepare(
+        `UPDATE reports SET pilot_participant_id = NULL
+         WHERE created_at <= ? AND pilot_participant_id IS NOT NULL`,
+      )
+      .bind(researchCutoff),
+    d1
+      .prepare(
+        `UPDATE pilot_participants
+         SET participant_ref_hmac = NULL, participant_hint = 'retained'
+         WHERE status = 'active' AND created_at <= ?
+           AND participant_ref_hmac IS NOT NULL
+           AND NOT EXISTS (
+             SELECT 1 FROM pilot_sessions s
+             JOIN query_events q ON q.pilot_session_id = s.id
+             WHERE s.participant_id = pilot_participants.id
+           )
+           AND NOT EXISTS (
+             SELECT 1 FROM research_intakes r
+             WHERE r.pilot_participant_id = pilot_participants.id
+           )
+           AND NOT EXISTS (
+             SELECT 1 FROM reports r
+             WHERE r.pilot_participant_id = pilot_participants.id
+           )
+           AND NOT EXISTS (
+             SELECT 1 FROM pilot_sessions s
+             WHERE s.participant_id = pilot_participants.id
+               AND s.revoked_at IS NULL AND s.expires_at > ?
+           )`,
+      )
+      .bind(researchCutoff, now),
+    d1
+      .prepare(
+        `UPDATE pilot_invitations
+         SET token_hash = 'expired:' || id,
+             revoked_at = COALESCE(revoked_at, ?),
+             lock_version = CASE WHEN revoked_at IS NULL
+                                 THEN lock_version + 1 ELSE lock_version END
+         WHERE token_hash NOT LIKE 'expired:%'
+           AND token_hash NOT LIKE 'withdrawn:%'
+           AND participant_id IN (
+             SELECT id FROM pilot_participants
+             WHERE participant_ref_hmac IS NULL
+               AND participant_hint = 'retained'
+           )`,
+      )
       .bind(now),
   ]);
 }

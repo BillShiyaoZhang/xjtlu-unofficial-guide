@@ -14,21 +14,23 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === 'seatbelt';
 
 export default defineConfig(async ({ command, mode }) => {
   const runtimeEnv = loadEnv(mode, process.cwd(), '');
+  const localRuntimeValue = (name: string) =>
+    command === 'serve' ? (process.env[name] ?? runtimeEnv[name] ?? '') : '';
   const localBindingConfig = {
     main: 'vinext/server/fetch-handler',
     compatibility_flags: ['nodejs_compat'],
+    observability: { enabled: false },
     vars: {
-      EDITOR_EMAILS:
-        process.env.EDITOR_EMAILS ?? runtimeEnv.EDITOR_EMAILS ?? '',
-      RESEARCH_INTAKE_SECRET:
-        process.env.RESEARCH_INTAKE_SECRET ??
-        runtimeEnv.RESEARCH_INTAKE_SECRET ??
-        '',
-      MAINTENANCE_SECRET:
-        process.env.MAINTENANCE_SECRET ?? runtimeEnv.MAINTENANCE_SECRET ?? '',
+      EDITOR_EMAILS: localRuntimeValue('EDITOR_EMAILS'),
+      AUTH_PROXY_SECRET: localRuntimeValue('AUTH_PROXY_SECRET'),
+      EDITOR_LOGIN_SECRET: localRuntimeValue('EDITOR_LOGIN_SECRET'),
+      EDITOR_SESSION_SECRET: localRuntimeValue('EDITOR_SESSION_SECRET'),
+      PILOT_SECRET: localRuntimeValue('PILOT_SECRET'),
+      PILOT_WINDOW_START: localRuntimeValue('PILOT_WINDOW_START'),
+      PILOT_WINDOW_END: localRuntimeValue('PILOT_WINDOW_END'),
+      MAINTENANCE_SECRET: localRuntimeValue('MAINTENANCE_SECRET'),
       SEED_DEMO_CONTENT:
-        process.env.SEED_DEMO_CONTENT ??
-        runtimeEnv.SEED_DEMO_CONTENT ??
+        localRuntimeValue('SEED_DEMO_CONTENT') ||
         (command === 'serve' ? 'true' : 'false'),
     },
     d1_databases: d1

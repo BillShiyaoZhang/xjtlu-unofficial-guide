@@ -16,7 +16,7 @@ export function parseMobileTabContext(value: string | null | undefined) {
 export function parseMobileReturnTo(value: string | null | undefined) {
   if (
     !value ||
-    value.length > 512 ||
+    value.length > 1_500 ||
     !value.startsWith('/') ||
     value.startsWith('//')
   ) {
@@ -31,6 +31,25 @@ export function parseMobileReturnTo(value: string | null | undefined) {
       url.pathname === '/topics' ||
       url.pathname.startsWith('/topics/');
     return isAllowed ? `${url.pathname}${url.search}` : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+export function parsePilotReturnTo(value: string | null | undefined) {
+  if (
+    !value ||
+    value.length > 1_500 ||
+    !value.startsWith('/') ||
+    value.startsWith('//')
+  ) {
+    return undefined;
+  }
+  try {
+    const url = new URL(value, 'https://guide.local');
+    return ['/research-intake', '/report'].includes(url.pathname)
+      ? `${url.pathname}${url.search}`
+      : undefined;
   } catch {
     return undefined;
   }
@@ -59,6 +78,7 @@ export function isMobileNavItemActive(
         '/report',
         '/reports',
         '/research-intake',
+        '/pilot',
       ].some(
         (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
       );

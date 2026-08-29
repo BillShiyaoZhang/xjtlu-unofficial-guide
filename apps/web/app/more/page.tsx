@@ -1,6 +1,7 @@
 import {
   BookOpenCheck,
   ChevronRight,
+  FlaskConical,
   LockKeyhole,
   MessageSquareWarning,
   ShieldCheck,
@@ -13,6 +14,13 @@ import { InstallAppPanel } from '@/components/install-app-panel';
 export const metadata: Metadata = { title: '更多' };
 
 const entries = [
+  {
+    href: '/pilot',
+    title: '研究试点',
+    detail: '兑换邀请、查看会话或撤回同意',
+    icon: FlaskConical,
+    iconClassName: 'bg-[#dcebe5] text-[#0f594d]',
+  },
   {
     href: '/about',
     title: '方法与边界',

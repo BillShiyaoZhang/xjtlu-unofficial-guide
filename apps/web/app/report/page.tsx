@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
 import { ReportForm } from '@/components/report-form';
+import { REPORT_TYPES } from '@/lib/domain';
+import { getPilotSessionForPage } from '@/lib/pilot-server';
 import { searchAnswerCards } from '@/lib/repository';
 
 export const dynamic = 'force-dynamic';
@@ -13,7 +15,15 @@ export default async function ReportPage({
 }) {
   const params = await searchParams;
   const defaultCardId = typeof params.card === 'string' ? params.card : '';
-  const cards = await searchAnswerCards({ limit: 100 });
+  const defaultType =
+    typeof params.type === 'string' &&
+    REPORT_TYPES.includes(params.type as (typeof REPORT_TYPES)[number])
+      ? params.type
+      : '';
+  const [cards, pilotSession] = await Promise.all([
+    searchAnswerCards({ limit: 100 }),
+    getPilotSessionForPage(),
+  ]);
   return (
     <main
       id="main-content"
@@ -34,6 +44,8 @@ export default async function ReportPage({
         <ReportForm
           cards={cards.map((card) => ({ id: card.id, title: card.title }))}
           defaultCardId={defaultCardId}
+          defaultType={defaultType}
+          pilotActive={Boolean(pilotSession)}
         />
       </div>
     </main>

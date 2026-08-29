@@ -63,6 +63,7 @@ export function AnswerCardPreview({
             <CardTitle className="mt-2 font-heading text-lg font-semibold leading-snug tracking-tight sm:text-2xl">
               <Link
                 href={href}
+                prefetch={false}
                 className="rounded-sm outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/40"
               >
                 {card.title}

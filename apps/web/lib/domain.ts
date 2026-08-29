@@ -7,10 +7,20 @@ export const REPORT_TYPES = [
   'privacy',
 ] as const;
 export const FEEDBACK_OUTCOMES = ['resolved', 'unclear'] as const;
+export const REPORT_AFFECTED_AREAS = [
+  'home',
+  'search',
+  'topics',
+  'pilot',
+  'intake',
+  'reporting',
+  'other',
+] as const;
 
 export type ScopeMode = (typeof SCOPE_MODES)[number];
 export type DisputeStatus = (typeof DISPUTE_STATUSES)[number];
 export type ReportType = (typeof REPORT_TYPES)[number];
+export type ReportAffectedArea = (typeof REPORT_AFFECTED_AREAS)[number];
 export type FeedbackOutcome = (typeof FEEDBACK_OUTCOMES)[number];
 export type EvidenceCoverage =
   | 'linked_only'

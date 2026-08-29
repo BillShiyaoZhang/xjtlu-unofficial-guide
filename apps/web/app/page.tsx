@@ -54,13 +54,21 @@ export default async function Home() {
             className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             {quickQueries.map((item) => (
-              <Link
+              <form
                 key={item.query}
-                href={`/search?q=${encodeURIComponent(item.query)}`}
-                className="shrink-0 rounded-full border border-border bg-background/80 px-3 py-2 text-xs font-semibold text-foreground/80 outline-none active:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40"
+                action="/search/start"
+                method="post"
+                className="shrink-0"
               >
-                {item.label}
-              </Link>
+                <input type="hidden" name="q" value={item.query} />
+                <input type="hidden" name="intent" value="new" />
+                <button
+                  type="submit"
+                  className="rounded-full border border-border bg-background/80 px-3 py-2 text-xs font-semibold text-foreground/80 outline-none active:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40"
+                >
+                  {item.label}
+                </button>
+              </form>
             ))}
           </div>
         </div>

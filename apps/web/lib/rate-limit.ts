@@ -3,28 +3,36 @@ import { AppError } from './errors';
 type WindowEntry = { count: number; resetAt: number };
 
 const windows = new Map<string, WindowEntry>();
+const clientSalt = crypto.getRandomValues(new Uint8Array(16));
+let nextSweepAt = 0;
 
-export function enforceRateLimit(
+export async function enforceRateLimit(
   request: Request,
   scope: string,
   limit: number,
   windowSeconds: number,
 ) {
   const now = Date.now();
-  if (windows.size > 2_048) {
+  if (now >= nextSweepAt) {
     for (const [key, entry] of windows) {
       if (entry.resetAt <= now) windows.delete(key);
     }
+    nextSweepAt = now + 60_000;
   }
 
-  const client =
+  const claimedClient =
     request.headers.get('cf-connecting-ip') ??
     request.headers.get('x-real-ip') ??
     request.headers.get('x-forwarded-for')?.split(',', 1)[0]?.trim() ??
     'unknown-client';
+  const client = await ephemeralClientFingerprint(claimedClient);
   const key = `${scope}:${client}`;
   const current = windows.get(key);
   if (!current || current.resetAt <= now) {
+    if (!current && windows.size >= 2_048) {
+      const oldest = windows.keys().next().value;
+      if (oldest) windows.delete(oldest);
+    }
     windows.set(key, { count: 1, resetAt: now + windowSeconds * 1_000 });
     return;
   }
@@ -38,4 +46,17 @@ export function enforceRateLimit(
     });
   }
   current.count += 1;
+}
+
+async function ephemeralClientFingerprint(value: string) {
+  const encoded = new TextEncoder().encode(value.slice(0, 256));
+  const material = new Uint8Array(clientSalt.length + encoded.length);
+  material.set(clientSalt);
+  material.set(encoded, clientSalt.length);
+  const digest = new Uint8Array(
+    await crypto.subtle.digest('SHA-256', material),
+  );
+  return [...digest.subarray(0, 16)]
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('');
 }

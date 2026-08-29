@@ -8,7 +8,7 @@ import { enforceRateLimit } from '@/lib/rate-limit';
 export async function POST(request: Request) {
   const requestId = crypto.randomUUID();
   try {
-    enforceRateLimit(request, 'maintenance-run', 5, 600);
+    await enforceRateLimit(request, 'maintenance-run', 5, 600);
     const configured = getRuntimeValue('MAINTENANCE_SECRET');
     if (!configured) {
       throw new AppError(

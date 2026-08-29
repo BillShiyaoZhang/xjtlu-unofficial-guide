@@ -7,6 +7,8 @@ import {
   parseMobileTabContext,
 } from '@/lib/mobile-navigation';
 import { getAnswerBySlug } from '@/lib/repository';
+import { openSearchView } from '@/lib/pilot-crypto';
+import { getPilotSessionForPage } from '@/lib/pilot-server';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,5 +38,20 @@ export default async function AnswerPage({
   const returnTo = parseMobileReturnTo(
     typeof query.from === 'string' ? query.from : undefined,
   );
-  return <AnswerDetail card={card} sourceTab={sourceTab} returnTo={returnTo} />;
+  const pilotSession = await getPilotSessionForPage();
+  const searchUrl = new URL(returnTo ?? '/search', 'https://app.local');
+  const sealedView =
+    searchUrl.pathname === '/search' ? searchUrl.searchParams.get('v') : null;
+  const view = sealedView
+    ? await openSearchView(sealedView, pilotSession?.id ?? null)
+    : null;
+  const queryEventId = view?.queryEventId;
+  return (
+    <AnswerDetail
+      card={card}
+      sourceTab={sourceTab}
+      returnTo={returnTo}
+      queryEventId={queryEventId}
+    />
+  );
 }

@@ -1,5 +1,5 @@
 import { ensureDatabase } from '@/db/bootstrap';
-import { getD1, getRuntimeValue } from '@/db/index';
+import { getD1 } from '@/db/index';
 
 import {
   cleanPlainText,
@@ -11,6 +11,7 @@ import {
   isOneOf,
   isSafePublicUrl,
   normalizeSearchText,
+  REPORT_AFFECTED_AREAS,
   REPORT_TYPES,
   sha256,
   SCOPE_MODES,
@@ -24,6 +25,8 @@ import type {
   RevisionDraftInput,
 } from './types';
 import { AppError } from './errors';
+import { authorizeFeedbackQuery, isOwnedPilotQuery } from './measurement';
+import type { PilotSessionIdentity } from './pilot';
 
 export { AppError } from './errors';
 
@@ -42,6 +45,8 @@ type IdempotencyContext = {
 
 export async function submitFeedback(input: {
   cardRevisionId: string;
+  queryEventId: string | null;
+  pilotSession: PilotSessionIdentity | null;
   outcome: unknown;
   idempotencyKey: string | null;
 }): Promise<MutationResult<{ accepted: true }>> {
@@ -57,9 +62,38 @@ export async function submitFeedback(input: {
   if (!revisionId)
     throw new AppError(400, 'missing_revision', '缺少答案版本。');
 
-  const payload = { cardRevisionId: revisionId, outcome: input.outcome };
+  const queryContext = await authorizeFeedbackQuery({
+    queryEventId: input.queryEventId,
+    cardRevisionId: revisionId,
+    session: input.pilotSession,
+  });
+  if (queryContext.queryEventId) {
+    const existingFeedback = await getD1()
+      .prepare(
+        `SELECT outcome FROM feedback_events
+         WHERE query_event_id = ? AND card_revision_id = ? LIMIT 1`,
+      )
+      .bind(queryContext.queryEventId, revisionId)
+      .first<{ outcome: string }>();
+    if (existingFeedback) {
+      if (existingFeedback.outcome !== input.outcome) {
+        throw new AppError(
+          409,
+          'feedback_already_recorded',
+          '这次查询对该答案的反馈已经记录。',
+        );
+      }
+      return { data: { accepted: true }, replayed: true };
+    }
+  }
+
+  const payload = {
+    cardRevisionId: revisionId,
+    queryEventId: queryContext.queryEventId,
+    outcome: input.outcome,
+  };
   const idempotency = await prepareIdempotency(
-    'anonymous',
+    queryContext.actorScope,
     '/v1/feedback',
     input.idempotencyKey,
     payload,
@@ -78,13 +112,32 @@ export async function submitFeedback(input: {
     await d1.batch([
       d1
         .prepare(
-          `INSERT INTO feedback_events (id, card_revision_id, outcome, created_at)
-           VALUES (?, ?, ?, ?)`,
+          `INSERT INTO feedback_events
+            (id, card_revision_id, query_event_id, outcome, created_at)
+           VALUES (?, ?, ?, ?, ?)`,
         )
-        .bind(crypto.randomUUID(), revisionId, input.outcome, now),
+        .bind(
+          crypto.randomUUID(),
+          revisionId,
+          queryContext.queryEventId,
+          input.outcome,
+          now,
+        ),
       idempotencyInsert(d1, idempotency, 201, response, now + 86_400),
     ]);
   } catch (error) {
+    if (queryContext.queryEventId) {
+      const racedFeedback = await d1
+        .prepare(
+          `SELECT outcome FROM feedback_events
+           WHERE query_event_id = ? AND card_revision_id = ? LIMIT 1`,
+        )
+        .bind(queryContext.queryEventId, revisionId)
+        .first<{ outcome: string }>();
+      if (racedFeedback?.outcome === input.outcome) {
+        return { data: response, replayed: true };
+      }
+    }
     return resolveMutationRaceOrThrow(idempotency, error);
   }
   return { data: response, replayed: false };
@@ -93,8 +146,8 @@ export async function submitFeedback(input: {
 export async function submitReport(input: {
   cardId: string | null;
   type: unknown;
-  inviteSecret: string;
-  adultAttested: boolean;
+  affectedArea: unknown;
+  pilotSession: PilotSessionIdentity | null;
   idempotencyKey: string | null;
 }): Promise<MutationResult<{ code: string; status: 'received' }>> {
   await ensureDatabase();
@@ -105,35 +158,39 @@ export async function submitReport(input: {
   if (!cardId && input.type !== 'privacy') {
     throw new AppError(400, 'missing_card', '请选择需要报告的答案卡。');
   }
+  const affectedArea = isOneOf(input.affectedArea, REPORT_AFFECTED_AREAS)
+    ? input.affectedArea
+    : null;
+  if (input.type === 'privacy' && !cardId && !affectedArea) {
+    throw new AppError(
+      400,
+      'affected_area_required',
+      '请选择隐私问题出现在哪个功能区域。',
+    );
+  }
+  if (input.type !== 'privacy' && input.affectedArea != null) {
+    throw new AppError(
+      400,
+      'affected_area_not_allowed',
+      '只有隐私问题可以提交功能区域。',
+    );
+  }
 
   if (input.type !== 'privacy') {
-    const configuredSecret = getRuntimeValue('RESEARCH_INTAKE_SECRET');
-    if (!configuredSecret) {
+    if (!input.pilotSession) {
       throw new AppError(
-        503,
-        'invited_reports_closed',
-        '非隐私问题报告仅向受邀成年试点参与者开放，当前入口未配置。',
-      );
-    }
-    if (!(await secretsEqual(input.inviteSecret, configuredSecret))) {
-      throw new AppError(
-        403,
-        'invalid_invitation',
-        '非隐私问题报告需要有效的试点邀请凭证。',
-      );
-    }
-    if (!input.adultAttested) {
-      throw new AppError(
-        403,
-        'adult_attestation_required',
-        '非隐私问题报告只面向已在线下流程确认成年的受邀参与者。',
+        401,
+        'pilot_session_required',
+        '非隐私问题报告只向已加入的成年试点参与者开放。',
       );
     }
   }
 
-  const payload = { cardId, type: input.type };
+  const payload = { cardId, type: input.type, affectedArea };
   const idempotency = await prepareIdempotency(
-    input.type === 'privacy' ? 'anonymous-privacy' : 'invited-adult',
+    input.type === 'privacy'
+      ? 'anonymous-privacy'
+      : `pilot-session:${input.pilotSession?.id}`,
     '/v1/reports',
     input.idempotencyKey,
     payload,
@@ -170,11 +227,22 @@ export async function submitReport(input: {
       d1
         .prepare(
           `INSERT INTO reports
-            (id, public_code, target_card_id, type, status, public_response,
-             created_at, resolved_at)
-           VALUES (?, ?, ?, ?, 'received', NULL, ?, NULL)`,
+            (id, public_code, target_card_id, pilot_participant_id,
+             affected_area, type,
+             status, public_response, created_at, reviewing_at, updated_at,
+             resolved_at)
+           VALUES (?, ?, ?, ?, ?, ?, 'received', NULL, ?, NULL, ?, NULL)`,
         )
-        .bind(id, code, cardId, input.type, now),
+        .bind(
+          id,
+          code,
+          cardId,
+          input.type === 'privacy' ? null : input.pilotSession?.participantId,
+          affectedArea,
+          input.type,
+          now,
+          now,
+        ),
       idempotencyInsert(d1, idempotency, 201, response, now + 86_400),
     ]);
   } catch (error) {
@@ -184,9 +252,8 @@ export async function submitReport(input: {
 }
 
 export async function submitResearchIntake(input: {
-  inviteSecret: string;
-  participantRef: string;
-  adultAttested: boolean;
+  pilotSession: PilotSessionIdentity | null;
+  originQueryEventId: string | null;
   kind: unknown;
   contextScope: string;
   body?: string | null;
@@ -195,22 +262,11 @@ export async function submitResearchIntake(input: {
   idempotencyKey: string | null;
 }): Promise<MutationResult<{ reference: string; expiresAt: string }>> {
   await ensureDatabase();
-  const configuredSecret = getRuntimeValue('RESEARCH_INTAKE_SECRET');
-  if (!configuredSecret) {
+  if (!input.pilotSession) {
     throw new AppError(
-      503,
-      'intake_closed',
-      '私有线索入口尚未配置，当前只保留匿名结构化反馈。',
-    );
-  }
-  if (!(await secretsEqual(input.inviteSecret, configuredSecret))) {
-    throw new AppError(403, 'invalid_invitation', '邀请凭证无效或已失效。');
-  }
-  if (!input.adultAttested) {
-    throw new AppError(
-      403,
-      'adult_attestation_required',
-      '该研究入口仅面向已线下确认成年的受邀参与者。',
+      401,
+      'pilot_session_required',
+      '私有研究线索只向已加入的成年试点参与者开放。',
     );
   }
   if (!isOneOf(input.kind, ['question', 'material'] as const)) {
@@ -221,12 +277,15 @@ export async function submitResearchIntake(input: {
     );
   }
 
-  const participantRef = cleanPlainText(input.participantRef, 80);
-  if (!/^[A-Za-z0-9_-]{6,80}$/u.test(participantRef)) {
+  const originQueryEventId = input.originQueryEventId?.trim() ?? '';
+  if (
+    originQueryEventId &&
+    !(await isOwnedPilotQuery(originQueryEventId, input.pilotSession))
+  ) {
     throw new AppError(
-      400,
-      'invalid_participant_ref',
-      '请输入招募方提供的随机研究编号。',
+      403,
+      'query_context_unavailable',
+      '原始查询上下文已失效，请重新搜索后提交。',
     );
   }
   const contextScope = cleanPlainText(input.contextScope, 160);
@@ -279,9 +338,8 @@ export async function submitResearchIntake(input: {
     );
   }
 
-  const participantRefHash = await sha256(participantRef);
   const payload = {
-    participantRefHash,
+    originQueryEventId: originQueryEventId || null,
     kind: input.kind,
     contextScope,
     body,
@@ -289,7 +347,7 @@ export async function submitResearchIntake(input: {
     provenanceRole,
   };
   const idempotency = await prepareIdempotency(
-    `research:${participantRefHash.slice(0, 20)}`,
+    `pilot-session:${input.pilotSession.id}`,
     '/v1/research-intakes',
     input.idempotencyKey,
     payload,
@@ -318,13 +376,15 @@ export async function submitResearchIntake(input: {
       d1
         .prepare(
           `INSERT INTO research_intakes
-            (id, participant_ref_hash, kind, context_scope, body, source_url,
+            (id, participant_ref_hash, pilot_participant_id,
+             origin_query_event_id, kind, context_scope, body, source_url,
              provenance_role, status, submitted_at, expires_at, purged_at)
-           VALUES (?, ?, ?, ?, ?, ?, ?, 'submitted', ?, ?, NULL)`,
+           VALUES (?, 'managed', ?, ?, ?, ?, ?, ?, ?, 'submitted', ?, ?, NULL)`,
         )
         .bind(
           reference,
-          participantRefHash,
+          input.pilotSession.participantId,
+          originQueryEventId || null,
           input.kind,
           contextScope,
           body,
@@ -343,7 +403,7 @@ export async function submitResearchIntake(input: {
         )
         .bind(
           `audit-${id}`,
-          `research:${participantRefHash.slice(0, 20)}`,
+          `pilot-session:${input.pilotSession.id}`,
           reference,
           id,
           now,
@@ -825,7 +885,12 @@ export async function updateReport(input: {
   expectedVersion: number;
   idempotencyKey: string | null;
 }): Promise<
-  MutationResult<{ code: string; status: string; lockVersion: number }>
+  MutationResult<{
+    code: string;
+    status: string;
+    lockVersion: number;
+    updatedAt: number;
+  }>
 > {
   await ensureDatabase();
   const code = cleanPlainText(input.publicCode, 50).toLocaleUpperCase();
@@ -849,6 +914,7 @@ export async function updateReport(input: {
         code: string;
         status: string;
         lockVersion: number;
+        updatedAt: number;
       },
       replayed: true,
     };
@@ -872,6 +938,41 @@ export async function updateReport(input: {
       },
     );
   }
+  if (report.status === input.status) {
+    throw new AppError(
+      409,
+      'status_unchanged',
+      '报告已经处于该状态，请刷新后继续。',
+    );
+  }
+  const allowedTransition =
+    (report.status === 'received' && input.status === 'reviewing') ||
+    (report.status === 'reviewing' &&
+      (input.status === 'resolved' || input.status === 'closed'));
+  if (!allowedTransition) {
+    throw new AppError(
+      409,
+      'invalid_status_transition',
+      '请先开始复核，再发布最终处理结果。',
+    );
+  }
+  if (input.status === 'reviewing' && response) {
+    throw new AppError(
+      400,
+      'reviewing_response_not_allowed',
+      '处理中状态不能提前发布处理说明。',
+    );
+  }
+  if (
+    (input.status === 'resolved' || input.status === 'closed') &&
+    (!response || response.length < 10)
+  ) {
+    throw new AppError(
+      400,
+      'public_response_required',
+      '发布最终结果前，请填写至少 10 个字符的公开处理说明。',
+    );
+  }
 
   const now = nowSeconds();
   const requestId = crypto.randomUUID();
@@ -880,6 +981,7 @@ export async function updateReport(input: {
     code,
     status: input.status,
     lockVersion: input.expectedVersion + 1,
+    updatedAt: now,
   };
   const d1 = getD1();
   try {
@@ -898,7 +1000,9 @@ export async function updateReport(input: {
       d1
         .prepare(
           `UPDATE reports
-           SET status = ?, public_response = ?, resolved_at = ?,
+           SET status = ?, public_response = ?,
+               reviewing_at = CASE WHEN ? = 'reviewing' THEN ? ELSE reviewing_at END,
+               resolved_at = ?, updated_at = ?,
                lock_version = lock_version + 1,
                last_workflow_operation_id = ?
            WHERE id = ?`,
@@ -906,7 +1010,10 @@ export async function updateReport(input: {
         .bind(
           input.status,
           response,
+          input.status,
+          now,
           input.status === 'resolved' || input.status === 'closed' ? now : null,
+          now,
           operationId,
           report.id,
         ),
@@ -1740,6 +1847,22 @@ function translateDatabaseError(error: unknown): Error {
       ),
     ],
     [
+      'report_update_requires_status_change',
+      new AppError(409, 'status_unchanged', '报告已经处于该状态。'),
+    ],
+    [
+      'report_resolution_requires_public_response',
+      new AppError(
+        400,
+        'public_response_required',
+        '发布最终结果前必须填写公开处理说明。',
+      ),
+    ],
+    [
+      'invalid_report_reviewing_state',
+      new AppError(409, 'invalid_report_state', '报告处理状态不完整。'),
+    ],
+    [
       'invalid_research_intake_status_transition',
       new AppError(
         409,
@@ -1764,19 +1887,6 @@ function translateDatabaseError(error: unknown): Error {
     if (message.includes(needle)) return mapped;
   }
   return error instanceof Error ? error : new Error(message);
-}
-
-async function secretsEqual(left: string, right: string): Promise<boolean> {
-  const [leftHash, rightHash] = await Promise.all([
-    sha256(left),
-    sha256(right),
-  ]);
-  if (leftHash.length !== rightHash.length) return false;
-  let difference = 0;
-  for (let index = 0; index < leftHash.length; index += 1) {
-    difference |= leftHash.charCodeAt(index) ^ rightHash.charCodeAt(index);
-  }
-  return difference === 0;
 }
 
 function decodeUrlForScreening(value: string): string {
