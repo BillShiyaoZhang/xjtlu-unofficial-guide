@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1787959065395,
+      "tag": "0000_flat_brood",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1787959076860,
+      "tag": "0001_stage1-invariants",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1787962442584,
+      "tag": "0002_breezy_cammi",
+      "breakpoints": true
+    }
+  ]
+}
