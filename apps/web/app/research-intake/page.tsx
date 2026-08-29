@@ -9,17 +9,17 @@ export default function ResearchIntakePage() {
   return (
     <main
       id="main-content"
-      className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8"
+      className="mx-auto max-w-3xl px-4 py-7 sm:px-6 sm:py-12 lg:px-8"
     >
       <header>
         <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
           <LockKeyhole className="size-4" />
           Private research intake
         </div>
-        <h1 className="mt-3 font-heading text-4xl font-semibold tracking-tight">
+        <h1 className="mt-3 font-heading text-[2rem] font-semibold tracking-tight sm:text-4xl">
           受邀参与者的私有线索
         </h1>
-        <p className="mt-4 leading-7 text-muted-foreground">
+        <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
           这里提交的是供编辑选题的私有线索，不是公开提问。入口只面向已通过线下流程确认成年的受邀参与者；平台不保存证件或出生日期。
         </p>
       </header>

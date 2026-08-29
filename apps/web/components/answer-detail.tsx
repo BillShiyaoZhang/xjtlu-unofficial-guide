@@ -3,6 +3,7 @@ import {
   ArrowUpRight,
   CalendarCheck,
   CalendarRange,
+  ChevronDown,
   ExternalLink,
   FileWarning,
   History,
@@ -54,7 +55,7 @@ export function AnswerDetail({
   return (
     <main
       id="main-content"
-      className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8"
+      className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-14 lg:px-8"
     >
       <div className="mx-auto max-w-5xl">
         <Link
@@ -86,21 +87,39 @@ export function AnswerDetail({
           </div>
         ) : null}
 
-        <header className="mt-6 border-b border-border pb-8">
+        <header className="mt-4 border-b border-border pb-6 sm:mt-6 sm:pb-8">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{card.topicTitle}</Badge>
             <Badge variant="outline">版本 {card.versionNumber}</Badge>
             <StatusBadge status={card.status} />
           </div>
-          <h1 className="mt-5 max-w-4xl text-balance font-heading text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+          <h1 className="mt-4 max-w-4xl text-balance font-heading text-[2rem] font-semibold leading-[1.18] tracking-tight sm:mt-5 sm:text-5xl">
             {card.title}
           </h1>
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-muted-foreground">
+          <div className="mt-5 grid grid-cols-2 overflow-hidden rounded-2xl border border-border bg-card/80 lg:hidden">
+            <div className="border-r border-border p-3.5">
+              <p className="text-[11px] font-semibold text-muted-foreground">
+                适用于
+              </p>
+              <p className="mt-1 text-sm font-semibold leading-5">
+                {scopeLabel(card.scopeMode, card.scopes)}
+              </p>
+            </div>
+            <div className="p-3.5">
+              <p className="text-[11px] font-semibold text-muted-foreground">
+                信息截至
+              </p>
+              <p className="mt-1 text-sm font-semibold leading-5">
+                {formatDate(card.asOf)}
+              </p>
+            </div>
+          </div>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:mt-5">
             公开结论只在下方“核验后的简答”中逐句展示，并直接关联来源。
           </p>
         </header>
 
-        <div className="grid gap-10 pt-8 lg:grid-cols-[minmax(0,1fr)_290px] lg:items-start">
+        <div className="grid gap-10 pt-6 sm:pt-8 lg:grid-cols-[minmax(0,1fr)_290px] lg:items-start">
           <article>
             <section aria-labelledby="answer-heading">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
@@ -112,7 +131,7 @@ export function AnswerDetail({
               >
                 核验后的简答
               </h2>
-              <div className="mt-6 space-y-5">
+              <div className="mt-5 space-y-5 sm:mt-6">
                 {card.sentences.map((sentence) => (
                   <p
                     key={sentence.key}
@@ -126,7 +145,7 @@ export function AnswerDetail({
                         <a
                           key={`${sentence.key}-${citation.id}-${citation.ordinal}`}
                           href={`#source-${citation.id}`}
-                          className="inline-flex min-h-8 min-w-8 items-center justify-center rounded-full bg-primary/10 align-middle text-xs font-bold text-primary outline-none hover:bg-primary/15 focus-visible:ring-3 focus-visible:ring-ring/40"
+                          className="inline-flex min-h-10 min-w-10 items-center justify-center rounded-full bg-primary/10 align-middle text-xs font-bold text-primary outline-none hover:bg-primary/15 focus-visible:ring-3 focus-visible:ring-ring/40"
                           aria-label={`来源 ${number}：${citation.title}`}
                         >
                           {number}
@@ -144,7 +163,10 @@ export function AnswerDetail({
               ) : null}
             </section>
 
-            <section aria-labelledby="sources-heading" className="mt-14">
+            <section
+              aria-labelledby="sources-heading"
+              className="mt-11 sm:mt-14"
+            >
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
                 Sources
               </p>
@@ -168,55 +190,30 @@ export function AnswerDetail({
               </ol>
             </section>
 
-            <section
-              aria-labelledby="history-heading"
-              className="mt-14 border-t border-border pt-8"
-            >
-              <h2
-                id="history-heading"
-                className="font-heading text-2xl font-semibold"
-              >
-                修改历史
-              </h2>
-              <ol className="mt-5 space-y-3">
-                {card.history.map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex flex-col justify-between gap-2 rounded-lg border border-border/80 bg-card/65 p-4 sm:flex-row sm:items-center"
-                  >
-                    <div>
-                      <p className="font-semibold">
-                        v{item.versionNumber} · {item.title}
-                      </p>
-                      <p className="mt-1 text-xs text-muted-foreground">
-                        信息截至 {formatDate(item.asOf)} · 发布于{' '}
-                        {formatDateTime(item.publishedAt)}
-                      </p>
-                    </div>
-                    {item.isCurrent ? (
-                      <Badge variant="secondary">当前版本</Badge>
-                    ) : (
-                      <Link
-                        href={`/answers/${card.slug}/versions/${item.versionNumber}`}
-                        className={cn(
-                          buttonVariants({ variant: 'ghost', size: 'sm' }),
-                          'min-h-9',
-                        )}
-                      >
-                        查看历史版本
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </section>
+            <details className="group mt-8 rounded-2xl border border-border bg-card/75 lg:hidden">
+              <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 font-heading font-semibold outline-none focus-visible:ring-3 focus-visible:ring-ring/40">
+                完整核验档案
+                <ChevronDown
+                  aria-hidden="true"
+                  className="size-4 text-muted-foreground transition-transform group-open:rotate-180"
+                />
+              </summary>
+              <div className="border-t border-border p-4">
+                <VerificationRecord
+                  card={card}
+                  linkedSentenceCount={linkedSentenceCount}
+                  evidenceSentenceCount={evidenceSentenceCount}
+                  factualSentenceCount={factualSentences.length}
+                />
+              </div>
+            </details>
 
             {canCollectFeedback ? (
-              <section className="mt-12 rounded-xl border border-primary/15 bg-card p-5 sm:p-6">
+              <section className="mt-8 rounded-2xl border border-primary/15 bg-card p-4 sm:mt-12 sm:rounded-xl sm:p-6">
                 <FeedbackButtons revisionId={card.revisionId} />
                 <div className="mt-5 border-t border-border pt-4 text-sm text-muted-foreground">
                   <Link
-                    className="font-semibold text-primary underline-offset-4 hover:underline"
+                    className="inline-flex min-h-11 items-center font-semibold text-primary underline-offset-4 hover:underline"
                     href={`/report?card=${card.id}`}
                   >
                     报告过期、范围、来源或隐私问题
@@ -224,58 +221,38 @@ export function AnswerDetail({
                 </div>
               </section>
             ) : null}
+
+            <section className="mt-8 border-t border-border pt-6 sm:mt-14 sm:pt-8">
+              <details className="group lg:hidden">
+                <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 font-heading text-xl font-semibold outline-none focus-visible:ring-3 focus-visible:ring-ring/40">
+                  修改历史
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="size-4 text-muted-foreground transition-transform group-open:rotate-180"
+                  />
+                </summary>
+                <HistoryList card={card} className="mt-4" />
+              </details>
+              <div className="hidden lg:block">
+                <h2 className="font-heading text-2xl font-semibold">
+                  修改历史
+                </h2>
+                <HistoryList card={card} className="mt-5" />
+              </div>
+            </section>
           </article>
 
           <aside
             aria-label="答案卡元数据"
-            className="rounded-xl border border-border bg-card/85 p-5 shadow-sm lg:sticky lg:top-28"
+            className="hidden rounded-xl border border-border bg-card/85 p-5 shadow-sm lg:sticky lg:top-28 lg:block"
           >
             <h2 className="font-heading text-lg font-semibold">核验档案</h2>
-            <dl className="mt-5 space-y-5 text-sm">
-              <Meta
-                icon={MapPin}
-                label="适用于"
-                value={scopeLabel(card.scopeMode, card.scopes)}
-              />
-              <Meta
-                icon={CalendarRange}
-                label="信息截至"
-                value={formatDate(card.asOf)}
-              />
-              <Meta
-                icon={CalendarCheck}
-                label="人工核验"
-                value={formatDate(card.verifiedAt)}
-              />
-              <Meta
-                icon={CalendarRange}
-                label="下次复核"
-                value={formatDate(card.reviewDueAt)}
-              />
-              <Meta
-                icon={UserRoundCheck}
-                label="复核负责人"
-                value={card.reviewOwnerLabel}
-              />
-              <Meta
-                icon={Quote}
-                label="证据覆盖"
-                value={evidenceCoverageLabel(card.evidenceCoverage)}
-              />
-              <Meta
-                icon={Quote}
-                label="来源链接覆盖"
-                value={`${linkedSentenceCount}/${factualSentences.length} 个事实句`}
-              />
-              <Meta
-                icon={Quote}
-                label="可定位证据覆盖"
-                value={`${evidenceSentenceCount}/${factualSentences.length} 个事实句`}
-              />
-            </dl>
-            <p className="mt-6 border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
-              本指南不提供“可靠度分数”。请结合来源、范围、日期和警示自行判断。
-            </p>
+            <VerificationRecord
+              card={card}
+              linkedSentenceCount={linkedSentenceCount}
+              evidenceSentenceCount={evidenceSentenceCount}
+              factualSentenceCount={factualSentences.length}
+            />
           </aside>
         </div>
       </div>
@@ -307,10 +284,10 @@ function SourceItem({
   return (
     <li
       id={`source-${source.id}`}
-      className="scroll-mt-28 rounded-xl border border-border bg-card p-5 shadow-sm"
+      className="scroll-mt-24 rounded-2xl border border-border bg-card p-4 shadow-sm sm:scroll-mt-28 sm:rounded-xl sm:p-5"
     >
       <div className="flex items-start gap-3">
-        <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
           {number}
         </span>
         <div className="min-w-0 flex-1">
@@ -370,7 +347,7 @@ function SourceItem({
             )}
           </a>
           <a
-            className="ml-2 text-xs text-muted-foreground underline-offset-4 hover:underline"
+            className="ml-1 inline-flex min-h-11 items-center px-2 text-xs text-muted-foreground underline-offset-4 hover:underline"
             href="#answer-heading"
           >
             返回答案
@@ -378,6 +355,110 @@ function SourceItem({
         </div>
       </div>
     </li>
+  );
+}
+
+function VerificationRecord({
+  card,
+  linkedSentenceCount,
+  evidenceSentenceCount,
+  factualSentenceCount,
+}: {
+  card: AnswerCardDetail;
+  linkedSentenceCount: number;
+  evidenceSentenceCount: number;
+  factualSentenceCount: number;
+}) {
+  return (
+    <>
+      <dl className="mt-5 space-y-5 text-sm first:mt-0">
+        <Meta
+          icon={MapPin}
+          label="适用于"
+          value={scopeLabel(card.scopeMode, card.scopes)}
+        />
+        <Meta
+          icon={CalendarRange}
+          label="信息截至"
+          value={formatDate(card.asOf)}
+        />
+        <Meta
+          icon={CalendarCheck}
+          label="人工核验"
+          value={formatDate(card.verifiedAt)}
+        />
+        <Meta
+          icon={CalendarRange}
+          label="下次复核"
+          value={formatDate(card.reviewDueAt)}
+        />
+        <Meta
+          icon={UserRoundCheck}
+          label="复核负责人"
+          value={card.reviewOwnerLabel}
+        />
+        <Meta
+          icon={Quote}
+          label="证据覆盖"
+          value={evidenceCoverageLabel(card.evidenceCoverage)}
+        />
+        <Meta
+          icon={Quote}
+          label="来源链接覆盖"
+          value={`${linkedSentenceCount}/${factualSentenceCount} 个事实句`}
+        />
+        <Meta
+          icon={Quote}
+          label="可定位证据覆盖"
+          value={`${evidenceSentenceCount}/${factualSentenceCount} 个事实句`}
+        />
+      </dl>
+      <p className="mt-6 border-t border-border pt-4 text-xs leading-5 text-muted-foreground">
+        本指南不提供“可靠度分数”。请结合来源、范围、日期和警示自行判断。
+      </p>
+    </>
+  );
+}
+
+function HistoryList({
+  card,
+  className,
+}: {
+  card: AnswerCardDetail;
+  className?: string;
+}) {
+  return (
+    <ol className={cn('space-y-3', className)}>
+      {card.history.map((item) => (
+        <li
+          key={item.id}
+          className="flex flex-col justify-between gap-2 rounded-xl border border-border/80 bg-card/65 p-4 sm:flex-row sm:items-center"
+        >
+          <div>
+            <p className="font-semibold">
+              v{item.versionNumber} · {item.title}
+            </p>
+            <p className="mt-1 text-xs leading-5 text-muted-foreground">
+              信息截至 {formatDate(item.asOf)} · 发布于{' '}
+              {formatDateTime(item.publishedAt)}
+            </p>
+          </div>
+          {item.isCurrent ? (
+            <Badge variant="secondary">当前版本</Badge>
+          ) : (
+            <Link
+              href={`/answers/${card.slug}/versions/${item.versionNumber}`}
+              className={cn(
+                buttonVariants({ variant: 'ghost', size: 'sm' }),
+                'min-h-11 justify-start sm:justify-center',
+              )}
+            >
+              查看历史版本
+            </Link>
+          )}
+        </li>
+      ))}
+    </ol>
   );
 }
 

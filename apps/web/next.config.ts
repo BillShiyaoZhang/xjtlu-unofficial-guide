@@ -8,15 +8,27 @@ const contentSecurityPolicy = [
   "form-action 'self'",
   "frame-ancestors 'none'",
   "img-src 'self' blob: data:",
+  "manifest-src 'self'",
   "object-src 'none'",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ''}`,
   "style-src 'self' 'unsafe-inline'",
+  "worker-src 'self'",
   `connect-src 'self'${isDevelopment ? ' ws: wss:' : ''}`,
 ].join('; ');
 
 const nextConfig: NextConfig = {
   async headers() {
     return [
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+          { key: 'Service-Worker-Allowed', value: '/' },
+        ],
+      },
       {
         source: '/(.*)',
         headers: [

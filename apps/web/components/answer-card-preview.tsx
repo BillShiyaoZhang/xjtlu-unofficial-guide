@@ -1,8 +1,7 @@
-import { ArrowUpRight, CalendarClock, MapPin, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, CalendarClock, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,11 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import {
-  evidenceCoverageLabel,
-  formatDate,
-  scopeLabel,
-} from '@/lib/presentation';
+import { formatDate, scopeLabel } from '@/lib/presentation';
 import type { AnswerCardSummary } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
@@ -22,7 +17,7 @@ import { StatusBadge } from './status-badge';
 
 export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
   return (
-    <Card className="relative gap-0 border-0 bg-card/95 py-0 shadow-[0_10px_35px_rgb(40_47_43/7%)] ring-1 ring-foreground/10 transition-transform hover:-translate-y-0.5">
+    <Card className="group relative gap-0 border-0 bg-card/95 py-0 shadow-[0_8px_28px_rgb(40_47_43/6%)] ring-1 ring-foreground/10 transition-[box-shadow] hover:shadow-[0_12px_35px_rgb(40_47_43/10%)] hover:ring-primary/25">
       <div
         aria-hidden="true"
         className={cn(
@@ -40,7 +35,7 @@ export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
         <CardTitle className="font-heading text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
           <Link
             href={`/answers/${card.slug}`}
-            className="rounded-sm outline-none underline-offset-4 hover:underline focus-visible:ring-3 focus-visible:ring-ring/40"
+            className="rounded-sm outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/40"
           >
             {card.title}
           </Link>
@@ -50,7 +45,7 @@ export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
         <p className="text-[15px] leading-7 text-foreground/80">
           {card.summary}
         </p>
-        <dl className="mt-5 grid gap-3 text-xs text-muted-foreground sm:grid-cols-3">
+        <dl className="mt-5 grid grid-cols-2 gap-3 text-xs text-muted-foreground">
           <div className="flex items-start gap-2">
             <MapPin
               aria-hidden="true"
@@ -73,34 +68,19 @@ export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
               <dd className="mt-0.5 leading-5">{formatDate(card.asOf)}</dd>
             </div>
           </div>
-          <div className="flex items-start gap-2">
-            <ShieldCheck
-              aria-hidden="true"
-              className="mt-0.5 size-3.5 shrink-0 text-primary"
-            />
-            <div>
-              <dt className="font-semibold text-foreground/70">证据覆盖</dt>
-              <dd className="mt-0.5 leading-5">
-                {evidenceCoverageLabel(card.evidenceCoverage)}
-              </dd>
-            </div>
-          </div>
         </dl>
       </CardContent>
       <CardFooter className="justify-between gap-3 rounded-b-xl border-t border-border/80 bg-muted/40 p-4 pl-5 sm:pl-6">
         <span className="text-xs text-muted-foreground">
           人工核验：{formatDate(card.verifiedAt)}
         </span>
-        <Link
-          href={`/answers/${card.slug}`}
-          className={cn(
-            buttonVariants({ variant: 'ghost', size: 'sm' }),
-            'min-h-9',
-          )}
-        >
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
           查看答案与来源
-          <ArrowUpRight aria-hidden="true" />
-        </Link>
+          <ArrowUpRight
+            aria-hidden="true"
+            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </span>
       </CardFooter>
     </Card>
   );

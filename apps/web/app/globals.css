@@ -60,6 +60,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
@@ -78,6 +79,30 @@ body {
       transparent 1px
     );
   background-size: 32px 32px;
+}
+
+@media (max-width: 767px) {
+  body {
+    background-image: none;
+  }
+}
+
+a,
+button,
+input,
+summary,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (pointer: coarse) {
+  a,
+  button,
+  summary,
+  label {
+    touch-action: manipulation;
+  }
 }
 
 ::selection {

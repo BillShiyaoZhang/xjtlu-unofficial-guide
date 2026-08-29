@@ -44,12 +44,12 @@ export function FeedbackButtons({ revisionId }: { revisionId: string }) {
       <p className="font-heading text-sm font-semibold">
         这张答案卡解决了你的问题吗？
       </p>
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-3 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
         <Button
           type="button"
           variant="outline"
           size="lg"
-          className="min-h-11"
+          className="min-h-12 w-full sm:w-auto"
           disabled={state === 'sending'}
           onClick={() => void submit('resolved')}
         >
@@ -64,7 +64,7 @@ export function FeedbackButtons({ revisionId }: { revisionId: string }) {
           type="button"
           variant="outline"
           size="lg"
-          className="min-h-11"
+          className="min-h-12 w-full sm:w-auto"
           disabled={state === 'sending'}
           onClick={() => void submit('unclear')}
         >

@@ -17,16 +17,16 @@ export default async function ReportPage({
   return (
     <main
       id="main-content"
-      className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8"
+      className="mx-auto max-w-3xl px-4 py-7 sm:px-6 sm:py-12 lg:px-8"
     >
       <header>
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
           Report an issue
         </p>
-        <h1 className="mt-2 font-heading text-4xl font-semibold tracking-tight">
+        <h1 className="mt-2 font-heading text-[2rem] font-semibold tracking-tight sm:text-4xl">
           报告答案问题
         </h1>
-        <p className="mt-4 leading-7 text-muted-foreground">
+        <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
           只提交结构化问题类型并获得可追踪编号。报告不会直接更改公开内容，也不参与“可信度投票”。
         </p>
       </header>

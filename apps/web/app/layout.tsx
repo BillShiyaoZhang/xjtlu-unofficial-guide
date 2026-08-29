@@ -1,6 +1,8 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Geist } from 'next/font/google';
 
+import { MobileBottomNav } from '@/components/mobile-bottom-nav';
+import { PwaRuntime } from '@/components/pwa-runtime';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 
@@ -13,12 +15,34 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://xjtlu-guide.example'),
+  applicationName: '西浦非官方指南',
+  manifest: '/manifest.webmanifest',
   title: {
     default: '西浦非官方指南｜先核对来源，再做决定',
     template: '%s｜西浦非官方指南',
   },
   description:
     '编辑维护、公开只读的校园信息核验指南；每张答案标出适用范围、核验时间和来源。',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      {
+        url: '/icons/apple-touch-icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+    ],
+  },
+  appleWebApp: {
+    capable: true,
+    title: '西浦非官方指南',
+    statusBarStyle: 'default',
+  },
+  other: { 'mobile-web-app-capable': 'yes' },
   robots: { index: false, follow: false },
   openGraph: {
     title: '西浦非官方指南',
@@ -29,15 +53,25 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#f7f3ea',
+  colorScheme: 'light',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${geist.variable} min-h-screen antialiased`}>
+      <body className={`${geist.variable} min-h-screen min-h-dvh antialiased`}>
         <SiteHeader />
+        <PwaRuntime />
         {children}
         <SiteFooter />
+        <MobileBottomNav />
       </body>
     </html>
   );
