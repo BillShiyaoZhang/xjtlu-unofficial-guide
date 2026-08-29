@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { AnswerCardPreview } from '@/components/answer-card-preview';
 import { buttonVariants } from '@/components/ui/button';
 import { listTopics, searchAnswerCards } from '@/lib/repository';
+import { topicVisualFor } from '@/lib/topic-presentation';
 import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
@@ -32,6 +33,8 @@ export default async function TopicPage({
   ]);
   const topic = topics.find((item) => item.slug === slug);
   if (!topic) notFound();
+  const visual = topicVisualFor(topic.slug);
+  const Icon = visual.icon;
   return (
     <main
       id="main-content"
@@ -47,34 +50,41 @@ export default async function TopicPage({
         <ArrowLeft aria-hidden="true" />
         全部主题
       </Link>
-      <header className="max-w-3xl border-b border-border pb-8">
-        <p
-          lang="en"
-          className="text-xs font-semibold uppercase tracking-[0.16em] text-primary"
+      <header
+        className={cn(
+          'mt-1 max-w-3xl rounded-[1.75rem] p-5 sm:p-8',
+          visual.surfaceClassName,
+        )}
+      >
+        <span
+          className={cn(
+            'grid size-12 place-items-center rounded-2xl shadow-sm sm:size-14',
+            visual.iconClassName,
+          )}
         >
-          {topic.titleEn ?? 'Topic'}
-        </p>
-        <h1 className="mt-2 font-heading text-[2rem] font-semibold tracking-tight sm:text-5xl">
+          <Icon aria-hidden="true" className="size-6 sm:size-7" />
+        </span>
+        <h1 className="mt-6 font-heading text-[2rem] font-semibold tracking-tight sm:text-5xl">
           {topic.titleZh}
         </h1>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-lg sm:leading-8">
+        <p className="mt-3 hidden text-base leading-7 text-foreground/65 sm:block">
           {topic.description}
         </p>
       </header>
-      <section aria-labelledby="topic-answers" className="mt-9">
+      <section aria-labelledby="topic-answers" className="mt-7 sm:mt-9">
         <div className="flex items-baseline justify-between gap-3">
           <h2
             id="topic-answers"
             className="font-heading text-2xl font-semibold"
           >
-            当前答案
+            答案
           </h2>
           <p className="text-sm text-muted-foreground">{cards.length} 张</p>
         </div>
         {cards.length ? (
           <div className="mt-5 grid gap-5 lg:grid-cols-2">
             {cards.map((card) => (
-              <AnswerCardPreview key={card.id} card={card} />
+              <AnswerCardPreview key={card.id} card={card} sourceTab="topics" />
             ))}
           </div>
         ) : (

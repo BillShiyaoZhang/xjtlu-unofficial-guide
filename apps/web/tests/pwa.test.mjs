@@ -5,6 +5,8 @@ import test from 'node:test';
 import manifestFactory from '../app/manifest.ts';
 import {
   isMobileNavItemActive,
+  parseMobileReturnTo,
+  parseMobileTabContext,
   shouldShowMobileNav,
 } from '../lib/mobile-navigation.ts';
 
@@ -46,6 +48,11 @@ test('PWA raster icons have their declared dimensions', async () => {
   await assertPngSize('public/icons/icon-512.png', 512, 512);
   await assertPngSize('public/icons/icon-maskable-512.png', 512, 512);
   await assertPngSize('public/icons/apple-touch-icon.png', 180, 180);
+  const homeVisual = await readFile(
+    new URL('public/home-verification-journey.webp', projectUrl),
+  );
+  assert.equal(homeVisual.subarray(0, 4).toString('ascii'), 'RIFF');
+  assert.equal(homeVisual.subarray(8, 12).toString('ascii'), 'WEBP');
 });
 
 test('service worker only keeps a static offline fallback', async () => {
@@ -68,8 +75,30 @@ test('mobile navigation highlights public routes and stays out of editor auth', 
   assert.equal(isMobileNavItemActive('/', 'home'), true);
   assert.equal(isMobileNavItemActive('/search?q=bridge', 'search'), true);
   assert.equal(isMobileNavItemActive('/topics/systems', 'topics'), true);
-  assert.equal(isMobileNavItemActive('/report', 'report'), true);
-  assert.equal(isMobileNavItemActive('/reports/XG-123', 'report'), false);
+  assert.equal(isMobileNavItemActive('/report', 'more'), true);
+  assert.equal(isMobileNavItemActive('/reports/XG-123', 'more'), true);
+  assert.equal(isMobileNavItemActive('/research-intake', 'more'), true);
+  assert.equal(isMobileNavItemActive('/about', 'more'), true);
+  assert.equal(isMobileNavItemActive('/answers/example', 'search'), true);
+  assert.equal(isMobileNavItemActive('/answers/example', 'home', 'home'), true);
+  assert.equal(
+    isMobileNavItemActive('/answers/example', 'topics', 'topics'),
+    true,
+  );
+  assert.equal(
+    isMobileNavItemActive('/answers/example', 'search', 'home'),
+    false,
+  );
+  assert.equal(parseMobileTabContext('topics'), 'topics');
+  assert.equal(parseMobileTabContext('unknown'), undefined);
+  assert.equal(
+    parseMobileReturnTo('/search?q=Learning+Mall&scope=campus'),
+    '/search?q=Learning+Mall&scope=campus',
+  );
+  assert.equal(parseMobileReturnTo('/topics/arrival'), '/topics/arrival');
+  assert.equal(parseMobileReturnTo('https://example.com'), undefined);
+  assert.equal(parseMobileReturnTo('//example.com/search'), undefined);
+  assert.equal(parseMobileReturnTo('/editor'), undefined);
   assert.equal(shouldShowMobileNav('/editor'), false);
   assert.equal(shouldShowMobileNav('/editor/cards/one'), false);
   assert.equal(shouldShowMobileNav('/signin-with-chatgpt'), false);

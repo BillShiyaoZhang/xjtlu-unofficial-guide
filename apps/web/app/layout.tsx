@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist } from 'next/font/google';
 
+import { InstallAppRuntime } from '@/components/install-app-panel';
 import { MobileBottomNav } from '@/components/mobile-bottom-nav';
 import { PwaRuntime } from '@/components/pwa-runtime';
 import { SiteFooter } from '@/components/site-footer';
@@ -68,6 +69,7 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={`${geist.variable} min-h-screen min-h-dvh antialiased`}>
         <SiteHeader />
+        <InstallAppRuntime />
         <PwaRuntime />
         {children}
         <SiteFooter />

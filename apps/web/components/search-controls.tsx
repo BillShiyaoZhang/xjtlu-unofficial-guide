@@ -128,7 +128,7 @@ export function SearchControls({
                 <DrawerTitle className="font-heading text-xl font-semibold">
                   筛选答案
                 </DrawerTitle>
-                <DrawerDescription className="text-left leading-6">
+                <DrawerDescription className="sr-only">
                   选择一个话题，并按需限定适用范围。
                 </DrawerDescription>
               </DrawerHeader>

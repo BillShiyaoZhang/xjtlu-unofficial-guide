@@ -1,19 +1,22 @@
 'use client';
 
 import {
-  CircleAlert,
+  Ellipsis,
   House,
   LayoutGrid,
   Search,
   type LucideIcon,
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 import {
   isMobileNavItemActive,
+  parseMobileTabContext,
   shouldShowMobileNav,
   type MobileNavKey,
+  type MobileTabContext,
 } from '@/lib/mobile-navigation';
 import { cn } from '@/lib/utils';
 
@@ -42,10 +45,10 @@ const items: Array<{
     key: 'topics',
   },
   {
-    href: '/report',
-    label: '反馈',
-    icon: CircleAlert,
-    key: 'report',
+    href: '/more',
+    label: '更多',
+    icon: Ellipsis,
+    key: 'more',
   },
 ];
 
@@ -59,33 +62,64 @@ export function MobileBottomNav() {
         aria-hidden="true"
         className="h-[calc(4.75rem+env(safe-area-inset-bottom))] md:hidden"
       />
-      <nav
-        aria-label="移动端主导航"
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-border/80 bg-card/94 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-1.5 shadow-[0_-12px_36px_rgb(31_44_37/10%)] backdrop-blur-xl md:hidden"
-      >
-        <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
-          {items.map((item) => {
-            const Icon = item.icon;
-            const isActive = isMobileNavItemActive(pathname, item.key);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive ? 'page' : undefined}
+      <Suspense fallback={<MobileBottomNavBar pathname={pathname} />}>
+        <MobileBottomNavWithContext pathname={pathname} />
+      </Suspense>
+    </>
+  );
+}
+
+function MobileBottomNavWithContext({ pathname }: { pathname: string }) {
+  const searchParams = useSearchParams();
+  const context = parseMobileTabContext(searchParams.get('tab'));
+  return <MobileBottomNavBar pathname={pathname} context={context} />;
+}
+
+function MobileBottomNavBar({
+  pathname,
+  context,
+}: {
+  pathname: string;
+  context?: MobileTabContext;
+}) {
+  return (
+    <nav
+      aria-label="移动端主导航"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-border/70 bg-card/94 px-2 pb-[max(0.45rem,env(safe-area-inset-bottom))] pt-1 shadow-[0_-10px_30px_rgb(31_44_37/9%)] backdrop-blur-xl md:hidden"
+    >
+      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
+        {items.map((item) => {
+          const Icon = item.icon;
+          const isActive = isMobileNavItemActive(pathname, item.key, context);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={isActive ? 'page' : undefined}
+              className={cn(
+                'group flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-xl px-2 text-[11px] font-semibold outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/40',
+                isActive
+                  ? 'text-primary'
+                  : 'text-muted-foreground active:bg-muted active:text-foreground',
+              )}
+            >
+              <span
                 className={cn(
-                  'flex min-h-14 flex-col items-center justify-center gap-1 rounded-xl px-2 text-[11px] font-semibold outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/40',
-                  isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground active:bg-muted active:text-foreground',
+                  'grid h-7 w-12 place-items-center rounded-full transition-colors',
+                  isActive && 'bg-primary text-primary-foreground shadow-sm',
                 )}
               >
-                <Icon aria-hidden="true" className="size-5" strokeWidth={2.1} />
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
-    </>
+                <Icon
+                  aria-hidden="true"
+                  className="size-[1.15rem]"
+                  strokeWidth={isActive ? 2.5 : 2.1}
+                />
+              </span>
+              {item.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
   );
 }

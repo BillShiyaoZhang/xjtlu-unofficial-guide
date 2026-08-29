@@ -1,7 +1,10 @@
+import { Layers3 } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { listTopics } from '@/lib/repository';
+import { topicVisualFor } from '@/lib/topic-presentation';
+import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 export const metadata: Metadata = { title: '主题' };
@@ -11,40 +14,53 @@ export default async function TopicsPage() {
   return (
     <main
       id="main-content"
-      className="mx-auto max-w-5xl px-4 py-7 sm:px-6 sm:py-12 lg:px-8"
+      className="mx-auto max-w-5xl px-4 pb-8 pt-6 sm:px-6 sm:py-12 lg:px-8"
     >
-      <header className="max-w-2xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-          浏览
-        </p>
-        <h1 className="mt-2 font-heading text-[2rem] font-semibold tracking-tight sm:text-4xl">
-          主题目录
-        </h1>
-        <p className="mt-3 text-sm leading-6 text-muted-foreground sm:mt-4 sm:text-base sm:leading-7">
-          话题只用于导航，不代表现实世界中的事实。公开话题由编辑根据试点范围维护。
-        </p>
+      <header className="flex items-center gap-3">
+        <span className="grid size-12 place-items-center rounded-2xl bg-primary text-primary-foreground shadow-sm">
+          <Layers3 aria-hidden="true" className="size-6" />
+        </span>
+        <div>
+          <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-4xl">
+            主题
+          </h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">按常见任务浏览</p>
+        </div>
       </header>
+
       <div className="mt-7 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-4">
-        {topics.map((topic) => (
-          <Link
-            key={topic.id}
-            href={`/topics/${topic.slug}`}
-            className="rounded-2xl border border-border bg-card p-4 outline-none transition-colors hover:border-primary/30 focus-visible:ring-3 focus-visible:ring-ring/40 sm:rounded-xl sm:p-6"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-              {topic.titleEn}
-            </p>
-            <h2 className="mt-2 font-heading text-lg font-semibold sm:text-2xl">
-              {topic.titleZh}
-            </h2>
-            <p className="mt-2 line-clamp-3 text-xs leading-5 text-muted-foreground sm:mt-3 sm:text-sm sm:leading-6">
-              {topic.description}
-            </p>
-            <p className="mt-4 text-xs font-semibold text-primary sm:mt-5">
-              {topic.cardCount} 张当前答案
-            </p>
-          </Link>
-        ))}
+        {topics.map((topic) => {
+          const visual = topicVisualFor(topic.slug);
+          const Icon = visual.icon;
+          return (
+            <Link
+              key={topic.id}
+              href={`/topics/${topic.slug}`}
+              className={cn(
+                'min-h-40 rounded-2xl p-4 outline-none transition-transform active:scale-[.98] focus-visible:ring-3 focus-visible:ring-ring/40 sm:min-h-52 sm:p-6',
+                visual.surfaceClassName,
+              )}
+            >
+              <span
+                className={cn(
+                  'grid size-11 place-items-center rounded-2xl shadow-sm sm:size-13',
+                  visual.iconClassName,
+                )}
+              >
+                <Icon aria-hidden="true" className="size-5 sm:size-6" />
+              </span>
+              <h2 className="mt-5 font-heading text-lg font-semibold sm:mt-7 sm:text-2xl">
+                {topic.titleZh}
+              </h2>
+              <p className="mt-1 text-xs font-semibold text-foreground/60">
+                {topic.cardCount} 张答案
+              </p>
+              <p className="mt-3 hidden text-sm leading-6 text-foreground/65 sm:block">
+                {topic.description}
+              </p>
+            </Link>
+          );
+        })}
       </div>
     </main>
   );

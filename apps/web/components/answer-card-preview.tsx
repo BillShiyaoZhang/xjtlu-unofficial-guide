@@ -1,7 +1,6 @@
-import { ArrowUpRight, CalendarClock, MapPin } from 'lucide-react';
+import { CalendarClock, ChevronRight, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
-import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
@@ -10,12 +9,29 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { formatDate, scopeLabel } from '@/lib/presentation';
+import { topicVisualFor } from '@/lib/topic-presentation';
 import type { AnswerCardSummary } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 import { StatusBadge } from './status-badge';
 
-export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
+export function AnswerCardPreview({
+  card,
+  sourceTab,
+  returnTo,
+}: {
+  card: AnswerCardSummary;
+  sourceTab?: 'home' | 'search' | 'topics';
+  returnTo?: string;
+}) {
+  const visual = topicVisualFor(card.topicSlug);
+  const Icon = visual.icon;
+  const context = new URLSearchParams();
+  if (sourceTab) context.set('tab', sourceTab);
+  if (returnTo) context.set('from', returnTo);
+  const contextQuery = context.toString();
+  const href = `/answers/${card.slug}${contextQuery ? `?${contextQuery}` : ''}`;
+
   return (
     <Card className="group relative gap-0 border-0 bg-card/95 py-0 shadow-[0_8px_28px_rgb(40_47_43/6%)] ring-1 ring-foreground/10 transition-[box-shadow] hover:shadow-[0_12px_35px_rgb(40_47_43/10%)] hover:ring-primary/25">
       <div
@@ -27,25 +43,43 @@ export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
           card.status.tone === 'danger' && 'bg-red-700',
         )}
       />
-      <CardHeader className="gap-3 p-5 pb-3 sm:p-6 sm:pb-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant="secondary">{card.topicTitle}</Badge>
-          <StatusBadge status={card.status} compact />
-        </div>
-        <CardTitle className="font-heading text-xl font-semibold leading-snug tracking-tight sm:text-2xl">
-          <Link
-            href={`/answers/${card.slug}`}
-            className="rounded-sm outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/40"
+      <CardHeader className="gap-0 p-4 pb-3 sm:p-6 sm:pb-3">
+        <div className="flex items-start gap-3">
+          <span
+            className={cn(
+              'grid size-10 shrink-0 place-items-center rounded-2xl shadow-sm',
+              visual.iconClassName,
+            )}
           >
-            {card.title}
-          </Link>
-        </CardTitle>
+            <Icon aria-hidden="true" className="size-5" />
+          </span>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-semibold text-muted-foreground">
+                {card.topicTitle}
+              </span>
+              <StatusBadge status={card.status} compact />
+            </div>
+            <CardTitle className="mt-2 font-heading text-lg font-semibold leading-snug tracking-tight sm:text-2xl">
+              <Link
+                href={href}
+                className="rounded-sm outline-none after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-3 focus-visible:after:ring-ring/40"
+              >
+                {card.title}
+              </Link>
+            </CardTitle>
+          </div>
+          <ChevronRight
+            aria-hidden="true"
+            className="mt-2 size-5 shrink-0 text-muted-foreground sm:hidden"
+          />
+        </div>
       </CardHeader>
-      <CardContent className="p-5 pt-0 sm:p-6 sm:pt-0">
-        <p className="text-[15px] leading-7 text-foreground/80">
+      <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+        <p className="line-clamp-2 text-sm leading-6 text-foreground/75 sm:text-[15px] sm:leading-7">
           {card.summary}
         </p>
-        <dl className="mt-5 grid grid-cols-2 gap-3 text-xs text-muted-foreground">
+        <dl className="mt-4 grid grid-cols-2 gap-3 text-xs text-muted-foreground sm:mt-5">
           <div className="flex items-start gap-2">
             <MapPin
               aria-hidden="true"
@@ -70,15 +104,15 @@ export function AnswerCardPreview({ card }: { card: AnswerCardSummary }) {
           </div>
         </dl>
       </CardContent>
-      <CardFooter className="justify-between gap-3 rounded-b-xl border-t border-border/80 bg-muted/40 p-4 pl-5 sm:pl-6">
+      <CardFooter className="hidden justify-between gap-3 rounded-b-xl border-t border-border/80 bg-muted/40 px-4 py-3 sm:flex sm:px-6 sm:py-4">
         <span className="text-xs text-muted-foreground">
-          人工核验：{formatDate(card.verifiedAt)}
+          {formatDate(card.verifiedAt)} 核验
         </span>
         <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary">
-          查看答案与来源
-          <ArrowUpRight
+          打开
+          <ChevronRight
             aria-hidden="true"
-            className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            className="size-4 transition-transform group-hover:translate-x-0.5"
           />
         </span>
       </CardFooter>

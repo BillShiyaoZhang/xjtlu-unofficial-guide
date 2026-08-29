@@ -27,7 +27,7 @@ export function SearchBox({ defaultValue = '', compact = false }) {
           defaultValue={defaultValue}
           maxLength={160}
           className="min-h-13 border-0 bg-transparent px-3 text-base shadow-none focus-visible:ring-0 sm:min-h-12 sm:text-base"
-          placeholder="例如：在哪里查 Learning Mall 的操作帮助？"
+          placeholder="搜问题、系统或办事项"
           autoComplete="off"
           enterKeyHint="search"
         />

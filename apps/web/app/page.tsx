@@ -1,25 +1,18 @@
-import {
-  ArrowRight,
-  Clock3,
-  FileCheck2,
-  Layers3,
-  SearchCheck,
-} from 'lucide-react';
+import { ArrowRight, ChevronRight, Compass } from 'lucide-react';
 import Link from 'next/link';
 
-import { AnswerCardPreview } from '@/components/answer-card-preview';
 import { SearchBox } from '@/components/search-box';
-import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
+import { formatDate } from '@/lib/presentation';
 import { listTopics, searchAnswerCards } from '@/lib/repository';
+import { topicVisualFor } from '@/lib/topic-presentation';
 import { cn } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
 const quickQueries = [
-  { label: 'e-Bridge 登录', query: 'e-Bridge 登录' },
+  { label: 'e-Bridge', query: 'e-Bridge 登录' },
   { label: 'Learning Mall', query: 'Learning Mall 帮助' },
-  { label: '学生服务入口', query: '学生服务入口' },
+  { label: '学生服务', query: '学生服务入口' },
 ];
 
 export default async function Home() {
@@ -27,154 +20,161 @@ export default async function Home() {
     listTopics(),
     searchAnswerCards({ limit: 4 }),
   ]);
+
   return (
-    <main id="main-content">
-      <section className="relative overflow-hidden border-b border-border/70">
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 top-10 size-80 rounded-full bg-primary/7 blur-3xl"
-        />
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-9 pt-7 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,.65fr)] lg:items-end lg:px-8 lg:py-24">
-          <div className="relative max-w-3xl">
-            <Badge
-              variant="outline"
-              className="mb-4 border-primary/20 bg-card/70 px-3 py-1 text-primary sm:mb-6"
-            >
-              人工核验 · 逐句来源 · 公开只读
-            </Badge>
-            <h1 className="max-w-3xl text-balance font-heading text-[2.35rem] font-semibold leading-[1.08] tracking-[-0.025em] sm:text-6xl lg:text-7xl">
-              先核对来源，
-              <br className="hidden sm:block" />
-              再做决定
-            </h1>
-            <p className="mt-4 max-w-2xl text-[15px] leading-7 text-muted-foreground sm:mt-6 sm:text-lg sm:leading-8">
-              查找新生到校、校园账号和办事入口。每张答案都标出适用范围、核验时间、复核期限和逐句来源。
+    <main
+      id="main-content"
+      className="mx-auto max-w-7xl px-4 pb-5 pt-4 sm:px-6 sm:pt-8 lg:px-8"
+    >
+      <section className="grid gap-4 lg:grid-cols-[minmax(0,.9fr)_minmax(420px,1.1fr)] lg:items-stretch lg:gap-6">
+        <div className="relative min-h-[12.5rem] overflow-hidden rounded-[1.75rem] border border-primary/10 bg-[#e8eee6] shadow-[0_12px_36px_rgb(31_55_46/8%)] sm:min-h-[18rem]">
+          <img
+            src="/home-verification-journey.webp"
+            alt="学生的问题依次经过两份来源，最终得到核验结果"
+            className="absolute inset-0 size-full object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#183b33]/85 via-[#183b33]/45 to-transparent px-5 pb-4 pt-14 text-white sm:px-7 sm:pb-6">
+            <p className="flex items-center gap-2 text-sm font-semibold sm:text-base">
+              <Compass aria-hidden="true" className="size-4" />
+              从问题，到有来源的答案
             </p>
-            <div className="mt-6 max-w-2xl sm:mt-9">
-              <p className="mb-2 text-sm font-semibold text-foreground">
-                今天想确认什么？
-              </p>
-              <SearchBox />
-              <div
-                aria-label="常用搜索"
-                className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
-                <span className="shrink-0 py-2 text-xs text-muted-foreground">
-                  试试
-                </span>
-                {quickQueries.map((item) => (
-                  <Link
-                    key={item.query}
-                    href={`/search?q=${encodeURIComponent(item.query)}`}
-                    className="shrink-0 rounded-full border border-border bg-card/75 px-3 py-2 text-xs font-semibold text-foreground/80 outline-none active:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
           </div>
-          <aside className="relative hidden border-l-2 border-primary/25 pl-6 lg:mb-2 lg:block">
-            <p className="font-heading text-xl font-semibold leading-8">
-              不是另一个信息流，
-              <br />
-              而是一套核验路径。
-            </p>
-            <ol className="mt-5 space-y-4 text-sm text-muted-foreground">
-              <li className="flex gap-3">
-                <SearchCheck className="mt-0.5 size-4 shrink-0 text-primary" />
-                先按问题和范围查找
-              </li>
-              <li className="flex gap-3">
-                <FileCheck2 className="mt-0.5 size-4 shrink-0 text-primary" />
-                再读结论与逐句来源
-              </li>
-              <li className="flex gap-3">
-                <Clock3 className="mt-0.5 size-4 shrink-0 text-primary" />
-                最后检查核验与复核日期
-              </li>
-            </ol>
-          </aside>
+        </div>
+
+        <div className="rounded-[1.75rem] border border-border bg-card/90 p-4 shadow-[0_10px_32px_rgb(40_47_43/6%)] sm:p-7 lg:flex lg:flex-col lg:justify-center">
+          <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-4xl">
+            今天想确认什么？
+          </h1>
+          <div className="mt-4 sm:mt-6">
+            <SearchBox />
+          </div>
+          <div
+            aria-label="常用搜索"
+            className="-mx-1 mt-3 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {quickQueries.map((item) => (
+              <Link
+                key={item.query}
+                href={`/search?q=${encodeURIComponent(item.query)}`}
+                className="shrink-0 rounded-full border border-border bg-background/80 px-3 py-2 text-xs font-semibold text-foreground/80 outline-none active:bg-muted focus-visible:ring-3 focus-visible:ring-ring/40"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section
-        aria-labelledby="topics-heading"
-        className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8"
-      >
-        <div className="flex items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              常用入口
-            </p>
-            <h2
-              id="topics-heading"
-              className="mt-2 font-heading text-2xl font-semibold tracking-tight sm:text-3xl"
-            >
-              从常见任务开始
-            </h2>
-          </div>
+      <section aria-labelledby="topics-heading" className="py-8 sm:py-12">
+        <div className="flex items-center justify-between gap-3">
+          <h2
+            id="topics-heading"
+            className="font-heading text-xl font-semibold tracking-tight sm:text-3xl"
+          >
+            常用主题
+          </h2>
           <Link
             href="/topics"
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'min-h-11 px-2 text-sm',
-            )}
+            className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
           >
-            查看全部 <ArrowRight />
+            全部 <ArrowRight aria-hidden="true" className="size-4" />
           </Link>
         </div>
-        <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {topics.map((topic, index) => (
-            <Link
-              key={topic.id}
-              href={`/topics/${topic.slug}`}
-              className="group min-h-40 rounded-2xl border border-border bg-card/80 p-4 shadow-sm outline-none transition-colors hover:border-primary/35 hover:bg-card focus-visible:ring-3 focus-visible:ring-ring/40 sm:min-h-44 sm:rounded-xl sm:p-5"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-muted-foreground">
-                  0{index + 1}
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-6 lg:grid-cols-4">
+          {topics.slice(0, 4).map((topic) => {
+            const visual = topicVisualFor(topic.slug);
+            const Icon = visual.icon;
+            return (
+              <Link
+                key={topic.id}
+                href={`/topics/${topic.slug}`}
+                className={cn(
+                  'group min-h-32 rounded-2xl p-4 outline-none transition-transform active:scale-[.98] focus-visible:ring-3 focus-visible:ring-ring/40 sm:min-h-44 sm:p-5',
+                  visual.surfaceClassName,
+                )}
+              >
+                <span
+                  className={cn(
+                    'grid size-10 place-items-center rounded-2xl shadow-sm sm:size-12',
+                    visual.iconClassName,
+                  )}
+                >
+                  <Icon aria-hidden="true" className="size-5 sm:size-6" />
                 </span>
-                <Layers3
-                  aria-hidden="true"
-                  className="size-4 text-primary transition-transform group-hover:rotate-6"
-                />
-              </div>
-              <h3 className="mt-5 font-heading text-lg font-semibold sm:mt-7 sm:text-xl">
-                {topic.titleZh}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                {topic.description}
-              </p>
-              <p className="mt-4 text-xs font-semibold text-primary">
-                {topic.cardCount} 张当前答案
-              </p>
-            </Link>
-          ))}
+                <h3 className="mt-4 font-heading text-lg font-semibold sm:mt-6 sm:text-xl">
+                  {topic.titleZh}
+                </h3>
+                <p className="mt-1 text-xs font-semibold text-foreground/60">
+                  {topic.cardCount} 张答案
+                </p>
+                <p className="mt-2 hidden text-sm leading-6 text-foreground/65 sm:block">
+                  {topic.description}
+                </p>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section
-        aria-labelledby="recent-heading"
-        className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8"
-      >
-        <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-            Reviewed answers
-          </p>
+      <section aria-labelledby="recent-heading" className="pb-8 sm:pb-12">
+        <div className="flex items-center justify-between gap-3">
           <h2
             id="recent-heading"
-            className="mt-2 font-heading text-3xl font-semibold tracking-tight"
+            className="font-heading text-xl font-semibold tracking-tight sm:text-3xl"
           >
-            最近核验的答案
+            最近核验
           </h2>
-          <p className="mt-3 leading-7 text-muted-foreground">
-            当前为本地阶段 1 演示种子内容；外部来源均明确标出是否归档。
-          </p>
+          <Link
+            href="/search"
+            className="inline-flex min-h-11 items-center gap-1 rounded-lg px-2 text-sm font-semibold text-primary outline-none focus-visible:ring-3 focus-visible:ring-ring/40"
+          >
+            查看全部 <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
         </div>
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+        <div className="mt-4 overflow-hidden rounded-2xl bg-card shadow-[0_8px_28px_rgb(40_47_43/6%)] ring-1 ring-foreground/10 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-px sm:bg-border">
           {cards.map((card) => (
-            <AnswerCardPreview key={card.id} card={card} />
+            <Link
+              key={card.id}
+              href={`/answers/${card.slug}?tab=home`}
+              className="group flex min-h-24 items-center gap-3 border-b border-border bg-card px-4 py-4 outline-none last:border-b-0 focus-visible:z-10 focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/40 sm:min-h-32 sm:border-b-0 sm:p-5"
+            >
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'size-2.5 shrink-0 rounded-full ring-4',
+                  card.status.tone === 'current' &&
+                    'bg-emerald-700 ring-emerald-700/10',
+                  card.status.tone === 'warning' &&
+                    'bg-amber-600 ring-amber-600/10',
+                  card.status.tone === 'danger' && 'bg-red-700 ring-red-700/10',
+                )}
+              />
+              <span className="min-w-0 flex-1">
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-semibold text-muted-foreground">
+                  <span>{card.topicTitle}</span>
+                  <span aria-hidden="true">·</span>
+                  <span
+                    className={cn(
+                      card.status.tone === 'current' && 'text-emerald-800',
+                      card.status.tone === 'warning' && 'text-amber-800',
+                      card.status.tone === 'danger' && 'text-red-800',
+                    )}
+                  >
+                    {card.status.label}
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span>{formatDate(card.verifiedAt)} 核验</span>
+                </span>
+                <span className="mt-1.5 line-clamp-2 block font-heading text-[15px] font-semibold leading-6 sm:text-lg">
+                  {card.title}
+                </span>
+              </span>
+              <ChevronRight
+                aria-hidden="true"
+                className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+              />
+            </Link>
           ))}
         </div>
       </section>
