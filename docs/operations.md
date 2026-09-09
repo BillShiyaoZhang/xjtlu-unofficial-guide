@@ -1,5 +1,7 @@
 # 阶段 1 本地运行与运维手册
 
+> 历史资料：以下描述旧 Vinext/D1 应用，不是当前运行入口。当前手册见 [底座运行与迁移](platform-runtime.md)。旧源码基线保留于 [b110fa9 的 apps/web](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/tree/b110fa955931a7679413662b462e0da28fd96586/apps/web)，本地旧目录仅供迁移对照及回滚资料保管。
+
 - 状态：可运行基线 v1
 - 更新日期：2026-08-29
 - 适用范围：低风险、编辑驱动的阶段 1 产品

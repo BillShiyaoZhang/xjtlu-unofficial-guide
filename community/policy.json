@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/tree/b110fa955931a7679413662b462e0da28fd96586/apps/web (lib/domain.ts, db/schema.ts, lib/mutations.ts)",
+  "demo": { "seedMarker": "stage1-demo-v1", "publicOrigin": "http://localhost:4317", "recordedAt": "2026-08-29T00:00:00Z", "requiresExplicitPublication": true },
+  "reportTypes": ["stale", "scope_error", "source_mismatch", "privacy"],
+  "reportAffectedAreas": ["home", "search", "topics", "pilot", "intake", "reporting", "other"],
+  "feedbackOutcomes": ["resolved", "unclear"],
+  "intakeTypes": ["question", "material"],
+  "intakeTerminalStates": ["actioned", "rejected"],
+  "intakeActionedDecisions": ["draft_created", "linked_existing"],
+  "intakeRejectedDecisions": ["rejected_out_of_scope", "rejected_insufficient", "duplicate"],
+  "intakeRequiresContentLinkInState": ["actioned"],
+  "reportRequiresContentLinkForDecision": ["corrected"],
+  "anonymousReportType": "privacy",
+  "researchEventFields": ["kind", "queryLengthBand", "queryEventId", "revisionId", "outcome"],
+  "participantManagementPermission": "guide:participants:manage",
+  "publicRevisionFields": ["summary", "asOf", "verifiedAt", "reviewDueAt", "reviewOwnerLabel", "scopeMode", "scopeIds", "evidenceCoverage", "disputeStatus", "evidenceNote", "locale", "demo"]
+}

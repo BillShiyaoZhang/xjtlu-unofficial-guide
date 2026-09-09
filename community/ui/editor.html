@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>审核工作台 | 西浦非官方指南</title>
+  <link rel="stylesheet" href="/extensions/editor.css">
+  <script type="module" src="/extensions/editor.js"></script>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/"><img src="/extensions/brand.svg" width="36" height="36" alt=""><span>西浦非官方指南</span></a>
+    <nav aria-label="工作台导航"><a href="/">公开指南</a><a href="/runtime-editor">平台管理</a></nav>
+  </header>
+  <main>
+    <div class="page-heading"><h1>审核工作台</h1><div id="session-bar" hidden><span id="operator"></span><button id="refresh" type="button" class="icon secondary" title="刷新工作台" aria-label="刷新工作台">&#8635;</button><button id="logout" type="button" class="secondary">退出</button></div></div>
+    <p id="message" role="status" aria-live="polite" hidden></p>
+    <section id="login-section" aria-labelledby="login-title">
+      <h2 id="login-title">具名账户登录</h2>
+      <form id="login-form" class="login-form">
+        <label>账户 ID<input name="accountId" autocomplete="username" required maxlength="120"></label>
+        <label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="1024"></label>
+        <label>双重验证码<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></label>
+        <button type="submit">登录</button>
+      </form>
+    </section>
+    <div id="workspace" hidden>
+      <div class="view-tabs" role="tablist" aria-label="审核视图"><button id="queue-tab" type="button" role="tab" aria-selected="true" aria-controls="queue-view">私件队列</button><button id="content-tab" type="button" role="tab" aria-selected="false" aria-controls="content-view">内容审核</button></div>
+      <section id="queue-view" role="tabpanel" aria-labelledby="queue-tab">
+        <div class="queue-toolbar">
+          <label>分类<select id="type-filter"><option value="">全部分类</option></select></label>
+          <label>状态<select id="status-filter"><option value="">全部状态</option></select></label>
+          <label>排序<select id="sort-filter"><option value="priority">优先级与处理时限</option><option value="oldest">最早收到</option><option value="newest">最新收到</option><option value="updated">最近更新</option></select></label>
+          <p id="queue-count" class="muted"></p>
+        </div>
+        <div class="review-layout">
+          <section class="queue-column" aria-label="私件列表">
+            <div id="record-list"></div>
+            <div class="pagination"><button id="previous-page" type="button" class="icon secondary" title="上一页" aria-label="上一页">&#8592;</button><span id="page-label">0 / 0</span><button id="next-page" type="button" class="icon secondary" title="下一页" aria-label="下一页">&#8594;</button></div>
+          </section>
+          <section id="detail-pane" class="detail-column" aria-labelledby="detail-title">
+            <p id="detail-empty" class="empty">未选择私件</p>
+            <div id="record-detail" hidden>
+              <div class="detail-heading"><h2 id="detail-title"></h2><span id="detail-status" class="tag"></span></div>
+              <dl id="detail-meta" class="metadata"></dl>
+              <h3>提交正文</h3><div id="payload" class="payload"></div>
+              <h3>内部备注</h3><div id="internal-notes"></div>
+              <form id="transition-form">
+                <h3>处理决定</h3>
+                <div class="field-grid"><label>状态<select name="status" required></select></label><label>决定码<select name="decisionCode"><option value="">无</option></select></label></div>
+                <div class="field-grid"><label>关联内容 ID<input name="entityId" maxlength="120"></label><label>关联修订 ID<input name="revisionId" maxlength="120"></label></div>
+                <label>负责人 ID<input name="assignee" maxlength="120"></label>
+                <label>新增内部备注<textarea name="note" rows="4" minlength="4" maxlength="1000"></textarea></label>
+                <button type="submit">提交处理</button>
+              </form>
+              <p id="record-closed" class="muted" hidden>该状态没有可用处理操作。</p>
+            </div>
+          </section>
+        </div>
+      </section>
+      <section id="content-view" role="tabpanel" aria-labelledby="content-tab" hidden>
+        <div class="content-layout">
+          <section aria-labelledby="review-title"><h2 id="review-title">发布与可见性</h2>
+            <form id="content-form">
+              <label>操作<select name="action"><option value="publish">发布修订</option><option value="hide">隐藏或恢复内容</option><option value="source">来源处置</option></select></label>
+              <label>内容 / 来源 ID<input name="entityId" required maxlength="120"></label>
+              <label id="publish-revision-field">修订 ID<input name="revisionId" maxlength="120" required></label>
+              <label>当前实体版本<input name="expectedVersion" type="number" required min="0" step="1"></label>
+              <label id="hidden-field" hidden>可见性<select name="hidden"><option value="true">隐藏</option><option value="false">恢复</option></select></label>
+              <label id="disposition-field" hidden>来源状态<select name="disposition"><option value="withdrawn">已撤回</option><option value="rights-expired">使用权到期</option><option value="active">有效</option></select></label>
+              <label>审核理由<textarea name="reason" required minlength="8" maxlength="400" rows="4"></textarea></label>
+              <div class="form-actions"><button type="submit">提交审核</button><button id="review-history" type="button" class="secondary">读取审核记录</button></div>
+            </form>
+          </section>
+          <section aria-labelledby="revision-title"><h2 id="revision-title">修订核对</h2>
+            <form id="revision-form" class="revision-search"><label>修订 ID<input name="revisionId" required maxlength="120"></label><button type="submit" class="secondary">读取修订</button></form>
+            <div id="revision-result" class="payload"></div>
+            <h3>审核记录</h3><div id="review-history-result"></div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

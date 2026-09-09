@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "contentProfileFile": "content-profile.json",
+  "lifecycleFile": "lifecycle.json",
+  "catalogFile": "catalog.json",
+  "policyFile": "policy.json",
+  "consentFile": "consent.json",
+  "research": {
+    "enabled": false,
+    "batchId": "stage1-runtime-v1",
+    "startAt": null,
+    "endAt": null
+  },
+  "participants": {
+    "role": "participant",
+    "invitationTtlMs": 86400000,
+    "sessionTtlMs": 86400000,
+    "idleTtlMs": 3600000,
+    "selfService": {
+      "actions": ["consent", "create", "withdraw", "logout", "list"],
+      "types": ["question", "material", "report", "research_event"]
+    }
+  },
+  "anonymousReports": {
+    "type": "privacy_report",
+    "fields": {
+      "type": { "maxLength": 80, "required": true },
+      "cardId": { "maxLength": 120 },
+      "affectedArea": { "maxLength": 80 }
+    },
+    "rateLimit": { "max": 20, "windowMs": 60000 },
+    "receiptTtlMs": 2592000000
+  },
+  "roles": {
+    "content_editor": ["content:read", "content:edit"],
+    "content_reviewer": ["content:read", "content:publish", "content:visibility"],
+    "pilot_operator": ["guide:participants:manage"],
+    "safety_reviewer": ["lifecycle:manage", "content:visibility"],
+    "account_admin": ["accounts:manage"],
+    "operations_admin": ["operations:manage"],
+    "participant": ["lifecycle:self"]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "workflows": {
+    "question": {
+      "initialState": "submitted",
+      "states": ["submitted", "screening", "actioned", "rejected", "expired"],
+      "transitions": { "submitted": ["screening", "submitted"], "screening": ["actioned", "rejected", "screening"], "actioned": ["actioned"], "rejected": ["rejected"], "expired": [] },
+      "terminalStates": ["actioned", "rejected"],
+      "decisionCodes": ["draft_created", "linked_existing", "rejected_out_of_scope", "rejected_insufficient", "duplicate"],
+      "publicResults": {
+        "draft_created": { "code": "draft_created", "label": "已形成编辑草稿，尚不代表公开发布。" },
+        "linked_existing": { "code": "linked_existing", "label": "已关联现有答案，请以公开页面和来源为准。" },
+        "rejected_out_of_scope": { "code": "rejected_out_of_scope", "label": "不在本阶段的处理范围内。" },
+        "rejected_insufficient": { "code": "rejected_insufficient", "label": "当前材料不足，未采用该线索。" },
+        "duplicate": { "code": "duplicate", "label": "已与重复线索合并处理。" }
+      },
+      "retentionMs": 2592000000,
+      "requireConsent": true,
+      "purpose": "stage1_research",
+      "consentVersion": "stage1-runtime-v1-2026-09-09",
+      "eligibilityFields": ["adult", "eligible"]
+    },
+    "material": {
+      "initialState": "submitted",
+      "states": ["submitted", "screening", "actioned", "rejected", "expired"],
+      "transitions": { "submitted": ["screening", "submitted"], "screening": ["actioned", "rejected", "screening"], "actioned": ["actioned"], "rejected": ["rejected"], "expired": [] },
+      "terminalStates": ["actioned", "rejected"],
+      "decisionCodes": ["draft_created", "linked_existing", "rejected_out_of_scope", "rejected_insufficient", "duplicate"],
+      "publicResults": {
+        "draft_created": { "code": "draft_created", "label": "已形成编辑草稿，尚不代表公开发布。" },
+        "linked_existing": { "code": "linked_existing", "label": "已关联现有答案，请以公开页面和来源为准。" },
+        "rejected_out_of_scope": { "code": "rejected_out_of_scope", "label": "不在本阶段的处理范围内。" },
+        "rejected_insufficient": { "code": "rejected_insufficient", "label": "当前材料不足，未采用该线索。" },
+        "duplicate": { "code": "duplicate", "label": "已与重复线索合并处理。" }
+      },
+      "retentionMs": 2592000000,
+      "requireConsent": true,
+      "purpose": "stage1_research",
+      "consentVersion": "stage1-runtime-v1-2026-09-09",
+      "eligibilityFields": ["adult", "eligible"]
+    },
+    "report": {
+      "initialState": "received",
+      "states": ["received", "reviewing", "resolved", "closed"],
+      "transitions": { "received": ["reviewing", "received"], "reviewing": ["resolved", "closed", "reviewing"], "resolved": ["resolved"], "closed": ["closed"] },
+      "terminalStates": ["resolved", "closed"],
+      "decisionCodes": ["corrected", "hidden", "no_change", "duplicate", "invalid"],
+      "publicResults": {
+        "corrected": { "code": "corrected", "label": "已完成信息更正，请核对当前公开页面。" },
+        "hidden": { "code": "hidden", "label": "相关内容已暂停公开。" },
+        "no_change": { "code": "no_change", "label": "已完成复核，本次未调整公开内容。" },
+        "duplicate": { "code": "duplicate", "label": "已按重复报告处理。" },
+        "invalid": { "code": "invalid", "label": "现有信息不足以支持调整，报告已关闭。" }
+      },
+      "retentionMs": 2592000000,
+      "requireConsent": true,
+      "purpose": "stage1_research",
+      "consentVersion": "stage1-runtime-v1-2026-09-09",
+      "eligibilityFields": ["adult", "eligible"]
+    },
+    "privacy_report": {
+      "initialState": "received",
+      "states": ["received", "reviewing", "resolved", "closed"],
+      "transitions": { "received": ["reviewing", "received"], "reviewing": ["resolved", "closed", "reviewing"], "resolved": ["resolved"], "closed": ["closed"] },
+      "terminalStates": ["resolved", "closed"],
+      "decisionCodes": ["corrected", "hidden", "no_change", "duplicate", "invalid"],
+      "publicResults": {
+        "corrected": { "code": "corrected", "label": "已完成信息更正，请核对当前公开页面。" },
+        "hidden": { "code": "hidden", "label": "相关内容已暂停公开。" },
+        "no_change": { "code": "no_change", "label": "已完成复核，本次未调整公开内容。" },
+        "duplicate": { "code": "duplicate", "label": "已按重复报告处理。" },
+        "invalid": { "code": "invalid", "label": "现有信息不足以支持调整，报告已关闭。" }
+      },
+      "retentionMs": 2592000000,
+      "requireConsent": false,
+      "eligibilityFields": []
+    },
+    "research_event": {
+      "initialState": "recorded",
+      "states": ["recorded"],
+      "transitions": { "recorded": [] },
+      "terminalStates": [],
+      "decisionCodes": [],
+      "publicResults": {},
+      "retentionMs": 10368000000,
+      "requireConsent": true,
+      "purpose": "stage1_research",
+      "consentVersion": "stage1-runtime-v1-2026-09-09",
+      "eligibilityFields": ["adult", "eligible"]
+    }
+  }
+}

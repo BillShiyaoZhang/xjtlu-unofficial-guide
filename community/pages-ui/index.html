@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="西浦非官方指南的公开示范内容。查阅校园信息、原始来源和核验时间。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>西浦非官方指南</title>
+  <link rel="icon" href="./brand.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <header>
+    <a class="brand" href="#/answers"><img src="./brand.svg" width="40" height="40" alt=""><span>西浦非官方指南</span></a>
+    <nav aria-label="主导航"><a id="answers-nav" href="#/answers">答案目录</a><a id="about-nav" href="#/about">关于本指南</a></nav>
+  </header>
+  <div class="edition"><span>公开只读演示</span><span>示范内容，不代表学校官方信息</span></div>
+  <main>
+    <p id="message" role="status" aria-live="polite">正在读取公开内容</p>
+    <button id="retry" type="button" class="secondary" hidden>重新加载</button>
+    <section id="answers-view" class="view" aria-labelledby="directory-title" hidden>
+      <div class="section-title"><h1 id="directory-title">西浦非官方指南</h1><span id="count" class="muted" aria-live="polite"></span></div>
+      <form id="search" role="search"><label class="search-label" for="query">查找校园信息</label><div class="search-row"><input id="query" name="query" type="search" autocomplete="off" maxlength="200" placeholder="搜索答案、主题或来源"><button type="submit">搜索</button></div></form>
+      <div class="filters"><label>主题<select id="topic"><option value="">全部主题</option></select></label><p id="topic-description" class="muted"></p></div>
+      <div id="answer-list" class="answer-list"></div>
+    </section>
+    <section id="detail-view" class="view" hidden>
+      <a class="back" id="back-to-list" href="#/answers">返回答案目录</a>
+      <article id="answer-detail"></article>
+    </section>
+    <section id="about-view" class="view prose" aria-labelledby="about-title" hidden>
+      <p class="eyebrow">项目说明</p><h1 id="about-title">关于本指南</h1>
+      <p>西浦非官方指南是独立的校园信息整理项目，与西交利物浦大学没有官方隶属关系，也不代表学校作出承诺或解释。</p>
+      <h2>示范内容</h2><p>本页公开展示项目中的示范答案及其原始来源。示范答案尚不代表真实试点的正式审核结果，不能作为选课、入学或其他重要决定的唯一依据。具体事项请向学校相关部门核实。</p>
+      <h2>来源与适用范围</h2><p>每条答案保留来源链接、适用范围及核验时间。来源与答案表述不一致时，以最新的官方原文和直接答复为准。标有待复核或争议提示的内容尤其需要重新核对。</p>
+      <h2>公开快照</h2><p>此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。</p>
+      <dl class="snapshot-info"><dt>快照生成时间</dt><dd id="about-generated-at"></dd><dt>项目</dt><dd><a href="https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide" target="_blank" rel="noopener noreferrer">xjtlu-unofficial-guide</a></dd></dl>
+    </section>
+    <section id="missing-view" class="view" hidden><h1>未找到这条公开答案</h1><p class="muted">该内容不在当前公开快照中。</p><a href="#/answers">返回答案目录</a></section>
+  </main>
+  <footer><span>独立项目 · 非学校官方渠道</span><span id="generated-at"></span></footer>
+</body>
+</html>

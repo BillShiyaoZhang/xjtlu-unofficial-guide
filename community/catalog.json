@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    { "id": "topic-systems", "slug": "accounts-and-systems", "titleZh": "账号与系统", "titleEn": "Accounts & systems", "description": "查找登录入口、平台说明和操作帮助。", "status": "active", "aliases": ["账号", "系统", "登录", "e-bridge", "learning mall"] },
+    { "id": "topic-arrival", "slug": "arrival", "titleZh": "到校准备", "titleEn": "Arrival", "description": "集中核对新生到校前后常见事项与官方入口。", "status": "active", "aliases": ["新生", "到校", "入学", "报到"] },
+    { "id": "topic-services", "slug": "student-services", "titleZh": "校园办事", "titleEn": "Student services", "description": "从官方聚合页找到当前可用的学生服务入口。", "status": "active", "aliases": ["办事", "服务", "current students", "学生入口"] },
+    { "id": "topic-method", "slug": "using-this-guide", "titleZh": "使用本指南", "titleEn": "Using this guide", "description": "理解来源、适用范围、核验时间和待复核标记。", "status": "active", "aliases": ["来源", "核验", "待复核", "可信"] }
+  ],
+  "scopes": [
+    { "id": "scope-campus-suzhou", "dimension": "campus", "code": "suzhou", "labelZh": "苏州校区", "labelEn": "Suzhou campus", "sortOrder": 10, "status": "active" },
+    { "id": "scope-audience-new", "dimension": "audience", "code": "new-student", "labelZh": "新生", "labelEn": "New students", "sortOrder": 10, "status": "active" },
+    { "id": "scope-year-2026", "dimension": "academic_year", "code": "2026", "labelZh": "2026 入学届", "labelEn": "2026 intake", "sortOrder": 10, "status": "active" }
+  ],
+  "publishers": [
+    { "id": "publisher-xjtlu", "type": "university", "nameZh": "西交利物浦大学", "nameEn": "Xi'an Jiaotong-Liverpool University", "canonicalUrl": "https://www.xjtlu.edu.cn/", "verificationStatus": "source_verified" },
+    { "id": "publisher-guide", "type": "platform", "nameZh": "西浦非官方指南编辑组", "nameEn": "Unofficial Guide Editorial Team", "canonicalUrl": "http://localhost:4317/about", "verificationStatus": "platform_owned" }
+  ]
+}

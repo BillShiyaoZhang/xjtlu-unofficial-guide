@@ -1,1 +1,12 @@
 .DS_Store
+/apps/web/
+/node_modules/
+/community/.runtime/
+/community/.demo-runtime/
+/community/dist/
+/community/pages-dist/
+/community/.dev-secrets.json
+/community/runtime.demo.json
+/community/.demo-server*.log
+/community/.browser-qa/
+/*.private.json

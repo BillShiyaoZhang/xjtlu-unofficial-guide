@@ -1,0 +1,151 @@
+import { copyFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { contentModule, importContent, publishContent, projectPublic, readPublicRevision } from '@information-community/runtime';
+
+const assets = ['index.html', 'app.js', 'style.css', 'brand.svg'];
+const outputs = [...assets, 'public.json', '.nojekyll'];
+const pick = (value, names) => Object.fromEntries(names.filter(name => value[name] !== undefined).map(name => [name, value[name]]));
+const fail = message => { throw new Error(`Pages build: ${message}`); };
+const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
+
+function uniqueIds(values, name) {
+  if (!Array.isArray(values) || !values.length || values.some(value => typeof value !== 'string' || !value) || new Set(values).size !== values.length) fail(`${name} requires explicit, unique revision IDs`);
+  return new Set(values);
+}
+
+function deployment(config, overrides) {
+  const origin = overrides.origin ?? config.origin;
+  const basePath = overrides.basePath ?? config.basePath;
+  let url;
+  try { url = new URL(origin); } catch { fail('origin must be an HTTPS origin'); }
+  if (url.protocol !== 'https:' || url.username || url.password || url.pathname !== '/' || url.search || url.hash || ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) fail('origin must be a public HTTPS origin without a path');
+  if (typeof basePath !== 'string' || !/^\/(?:[a-zA-Z0-9._-]+\/)*$/u.test(basePath) || basePath.split('/').some(part => part === '.' || part === '..')) fail('basePath must be an absolute directory path without traversal');
+  return { origin: url.origin, basePath, publicUrl: url.origin + basePath };
+}
+
+function publicUrl(value, site) {
+  if (value === 'http://localhost:4317/about#method' || value === 'http://localhost:4317/about') return site.publicUrl + '#/about';
+  let url;
+  try { url = new URL(value); } catch { fail('public source URLs must be absolute HTTPS URLs'); }
+  if (url.protocol !== 'https:' || url.username || url.password || ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) fail('public source URLs must be HTTPS and must not contain local addresses or credentials');
+  return url.href;
+}
+
+function unrestricted(value) {
+  if (!value || typeof value !== 'object') return;
+  if (value.hidden === true || value.private === true || value.draft === true ||
+      (value.visibility !== undefined && value.visibility !== 'public') ||
+      (value.disposition !== undefined && value.disposition !== 'active') ||
+      (value.publicationStatus !== undefined && value.publicationStatus !== 'published')) fail('allowlisted demo content contains restricted or unpublished state');
+}
+
+/** Build only an explicitly reviewed Git demo bundle, never a runtime backup. */
+export function createPagesData({ config, profile, content: input, catalog, now = new Date().toISOString(), ...overrides }) {
+  if (config.schemaVersion !== 1 || config.mode !== 'public-demo' || typeof config.siteName !== 'string' || !config.siteName.trim()) fail('an explicit public-demo config is required');
+  if (!Number.isFinite(Date.parse(now))) fail('now must be a valid date');
+  if (input.schemaVersion !== 1 || Object.keys(input).some(key => !['schemaVersion', 'entities', 'revisions', 'citations', 'links'].includes(key))) fail('only content interchange is accepted, never a state backup');
+  const site = deployment(config, overrides);
+  const published = uniqueIds(config.publishedRevisionIds, 'publishedRevisionIds');
+  const allowedSources = uniqueIds(config.sourceRevisionIds, 'sourceRevisionIds');
+  const revisions = new Map(input.revisions.map(value => [value.id, value]));
+  const entities = new Map(input.entities.map(value => [value.id, value]));
+  if (revisions.size !== input.revisions.length || entities.size !== input.entities.length) fail('duplicate input IDs');
+  const roles = new Map(profile.entityTypes.map(value => [value.id, value.role]));
+  const selected = [...published].map(id => {
+    const revision = revisions.get(id);
+    if (!revision || roles.get(entities.get(revision.entityId)?.type) !== 'content' || revision.data?.demo !== true) fail(`allowlisted revision ${id} must be an existing demo content revision`);
+    return revision;
+  });
+  const citations = input.citations.filter(value => published.has(value.revisionId));
+  const requiredSources = new Set(citations.map(value => value.sourceRevisionId));
+  const sources = [...requiredSources].map(id => {
+    const revision = revisions.get(id);
+    if (!allowedSources.has(id) || !revision || roles.get(entities.get(revision.entityId)?.type) !== 'source') fail(`source revision ${id} is not explicitly allowed`);
+    if (revision.data.rights?.expiresAt !== undefined) fail('time-limited sources cannot be copied to permanent static Pages artifacts');
+    return revision;
+  });
+  const selectedRevisions = structuredClone([...selected, ...sources]);
+  const selectedEntityIds = new Set(selectedRevisions.map(value => value.entityId));
+  for (const revision of selectedRevisions) {
+    for (const value of [revision, revision.data, revision.extensions, entities.get(revision.entityId), entities.get(revision.entityId)?.extensions]) unrestricted(value);
+    if (revision.parentRevisionId && !selectedRevisions.some(value => value.id === revision.parentRevisionId)) fail('a selected revision references an unapproved parent revision');
+    if (roles.get(entities.get(revision.entityId).type) === 'source') revision.data.url = publicUrl(revision.data.url, site);
+  }
+  const bundle = {
+    schemaVersion: 1,
+    entities: input.entities.filter(value => selectedEntityIds.has(value.id)),
+    revisions: selectedRevisions,
+    citations,
+    links: [],
+  };
+  let content = importContent(contentModule.initialState({ profile }), bundle);
+  for (const revision of [...selected].sort((left, right) => left.number - right.number)) {
+    const entity = content.entities.find(value => value.id === revision.entityId);
+    content = publishContent(content, { entityId: entity.id, revisionId: revision.id, expectedVersion: entity.version, now });
+  }
+  const topics = catalog.topics.filter(value => value.status !== 'hidden').map(value => pick(value, ['id', 'slug', 'titleZh', 'description']));
+  const scopes = catalog.scopes.filter(value => value.status !== 'hidden').map(value => pick(value, ['id', 'dimension', 'code', 'labelZh']));
+  const publishers = catalog.publishers.map(value => ({ ...pick(value, ['id', 'nameZh']), ...(value.canonicalUrl ? { canonicalUrl: publicUrl(value.canonicalUrl, site) } : {}) }));
+  const graph = projectPublic(content, { now });
+  const answers = graph.nodes.map(node => {
+    const revision = selected.find(value => value.id === node.revisionId);
+    const entity = entities.get(node.id);
+    const data = revision.data;
+    const topic = topics.find(value => value.id === (data.topicId ?? entity.topicId ?? entity.extensions?.topicId));
+    const history = selected.filter(value => value.entityId === node.id).map(value => readPublicRevision(content, value.id, { now })).filter(Boolean)
+      .map(value => ({ id: value.revisionId, number: value.revisionNumber, title: value.title }));
+    return {
+      ...pick(node, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'citations', 'scope', 'warnings']),
+      slug: data.slug ?? entity.slug ?? entity.extensions?.slug ?? entity.id,
+      demo: true,
+      ...pick(data, ['summary', 'asOf', 'verifiedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote']),
+      topic: topic ? { id: topic.id, slug: topic.slug, title: topic.titleZh } : null,
+      history,
+    };
+  });
+  if (answers.length !== new Set(selected.map(value => value.entityId)).size) fail('not every selected answer passes the public projection');
+  return {
+    schemaVersion: 1,
+    mode: 'public-demo',
+    generatedAt: new Date(now).toISOString(),
+    site: { name: config.siteName, basePath: site.basePath, publicUrl: site.publicUrl },
+    catalog: { topics, scopes, publishers },
+    search: { aliases: structuredClone(profile.search.aliases) },
+    answers,
+  };
+}
+
+export async function buildPages({ root = resolve('.'), now, origin, basePath } = {}) {
+  const community = resolve(root, 'community');
+  const config = await jsonFile(resolve(community, 'pages.config.json'));
+  const profile = await jsonFile(resolve(community, 'content-profile.json'));
+  const content = await jsonFile(resolve(community, 'content.json'));
+  const catalog = await jsonFile(resolve(community, 'catalog.json'));
+  const data = createPagesData({ config, profile, content, catalog, now, origin, basePath });
+  const source = resolve(community, 'pages-ui');
+  for (const name of assets) {
+    const stat = await lstat(resolve(source, name));
+    if (!stat.isFile() || stat.isSymbolicLink()) fail(`UI asset ${name} must be a regular file`);
+  }
+  const output = resolve(community, 'pages-dist');
+  try {
+    const stat = await lstat(output);
+    if (!stat.isDirectory() || stat.isSymbolicLink()) fail('output must be a regular directory');
+    for (const name of await readdir(output)) {
+      if (!outputs.includes(name)) fail(`unexpected output ${name}; refusing to retain or overwrite an unknown artifact`);
+      const entry = await lstat(resolve(output, name));
+      if (!entry.isFile() || entry.isSymbolicLink()) fail(`output ${name} must be a regular file`);
+    }
+  } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  await mkdir(output, { recursive: true });
+  for (const name of assets) await copyFile(resolve(source, name), resolve(output, name));
+  await writeFile(resolve(output, 'public.json'), JSON.stringify(data, null, 2) + '\n');
+  await writeFile(resolve(output, '.nojekyll'), '');
+  return { output, answerCount: data.answers.length };
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const result = await buildPages({ origin: process.env.PAGES_ORIGIN, basePath: process.env.PAGES_BASE_PATH });
+  console.log(`Built ${result.answerCount} allowlisted public demo answers: ${result.output}`);
+}

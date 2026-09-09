@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f5c50">
+  <title>西浦非官方指南</title>
+  <link rel="icon" href="/extensions/brand.svg">
+  <link rel="stylesheet" href="/extensions/guide.css">
+  <script type="module" src="/extensions/guide.js"></script>
+</head>
+<body>
+  <header><a class="brand" href="/"><img src="/extensions/brand.svg" alt="" width="38" height="38"><span>西浦非官方指南</span></a><nav aria-label="主导航"><a href="/#answers">查答案</a><a href="/#participate">参与试点</a><a href="/#report">报告问题</a><a href="/#about">关于</a></nav></header>
+  <main>
+    <p id="message" role="status" hidden></p>
+    <section id="answers" class="view">
+      <div class="section-title"><div><p class="eyebrow">校园信息</p><h1>查找与核对</h1></div><span id="count" class="muted"></span></div>
+      <form id="search" class="search"><input name="query" aria-label="搜索答案" placeholder="搜索账号、系统、校园办事" maxlength="500" type="search"><button type="submit">搜索</button></form>
+      <div class="filters"><label>话题<select id="topic"><option value="">全部话题</option></select></label><div id="scope-filters"></div></div>
+      <div id="answer-list" class="answer-list" aria-live="polite"></div>
+    </section>
+    <section id="detail" class="view" hidden><a href="/#answers" class="back">返回答案列表</a><div id="answer-detail"></div></section>
+    <section id="participate" class="view" hidden>
+      <div class="section-title"><div><p class="eyebrow">邀请制研究</p><h1>参与试点</h1></div><span id="participant-state" class="muted">未加入</span></div>
+      <div id="notice"></div>
+      <form id="redeem"><label>一次性邀请<input name="token" required autocomplete="off" spellcheck="false" maxlength="100"></label><button>兑换邀请</button></form>
+      <form id="consent" hidden><label class="check"><input name="accepted" type="checkbox" required><span id="consent-text"></span></label><button>同意并参与</button></form>
+      <div id="participant-tools" hidden>
+        <h2>私有线索</h2>
+        <form id="intake"><label>类型<select name="type"><option value="question">问题线索</option><option value="material">材料线索</option></select></label><label>适用背景<input name="contextScope" required maxlength="160"></label><label>内容<textarea name="body" required minlength="10" maxlength="1500" rows="4"></textarea></label><div id="material-fields" hidden><label>来源网址（可选）<input name="sourceUrl" type="url" maxlength="1500"></label><label>你与材料的关系<select name="provenanceRole"><option value="">请选择</option><option value="original_author">原作者</option><option value="reteller">转述者</option><option value="lead_only">仅提供线索</option></select></label></div><button>提交线索</button></form>
+        <div class="section-title"><h2>我的活动</h2><button id="refresh-activity" class="secondary">刷新</button></div><div id="activity"></div>
+      </div>
+      <div id="session-actions" class="actions" hidden><button id="logout" class="secondary">退出当前设备</button><button id="withdraw" class="danger">撤回同意</button></div>
+    </section>
+    <section id="report" class="view" hidden>
+      <p class="eyebrow">问题闭环</p><h1>报告问题</h1>
+      <form id="report-form"><label>问题类型<select name="type"><option value="privacy">隐私问题</option><option value="stale">信息过期</option><option value="scope_error">适用范围有误</option><option value="source_mismatch">来源不匹配</option></select></label><label>相关答案<select name="cardId" id="report-card"><option value="">未指定答案</option></select></label><label>功能区域<select name="affectedArea"><option value="reporting">问题报告</option><option value="home">首页</option><option value="search">搜索</option><option value="topics">话题</option><option value="pilot">试点</option><option value="intake">私有线索</option><option value="other">其他</option></select></label><button>提交报告</button></form>
+      <div id="receipt-result" hidden><h2>报告回执</h2><output id="receipt"></output></div>
+      <form id="receipt-form"><h2>查询状态</h2><label>回执<input name="receipt" required autocomplete="off" spellcheck="false" maxlength="100"></label><button class="secondary">查询状态</button></form><p id="report-status" aria-live="polite"></p>
+    </section>
+    <section id="about" class="view" hidden><p class="eyebrow">关于本项目</p><h1>西浦非官方指南</h1><p>这是一个独立维护的校园信息指南，并非学校官方网站。信息应以当前官方来源为准。</p><h2 id="method">来源与复核</h2><p>每张公开答案都必须标出适用范围、信息截至日期、人工核验时间、复核期限和来源。待复核内容会显示警示。</p><p>本仓库提供的种子内容仅用于演示。真实试点前，运营方应确认内容、资格、研究说明及值班责任。</p><a href="/editor">编辑工作台</a></section>
+  </main>
+  <footer><span>西浦非官方指南</span><a href="/editor">编辑工作台</a><span>来源优先 · 人工复核</span></footer>
+</body>
+</html>

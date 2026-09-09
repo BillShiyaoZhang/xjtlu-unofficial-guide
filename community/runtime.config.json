@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "mode": "server",
+  "communityId": "xjtlu-unofficial-guide",
+  "site": { "brand": "西浦非官方指南" },
+  "businessFile": "business.json",
+  "contentFile": "content.json",
+  "uiDirectory": "ui",
+  "extensions": ["review-records.mjs"],
+  "dataDirectory": ".runtime",
+  "maintenanceIntervalMs": 60000
+}
