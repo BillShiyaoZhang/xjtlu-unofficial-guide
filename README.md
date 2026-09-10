@@ -47,6 +47,8 @@ npm run preview:pages
 
 访问 <http://127.0.0.1:4318/>。此命令只展示构建后的公开产物；代码和话题配置需要经仓库部署流程更新线上版本。
 
+本地已有 36 条带来源的冷启动话题：16 条官方来源整理、20 条纸条社区整理，加上 3 条编辑提问共 39 条。首页“从公开来源整理”可查看摘要和原文，目录搜索也可检索。纸条已通过公开 GET 接口读取；`npm run collect:zhitiao -- --pages 3` 可限量采集候选，使用方法见 [抓取记录](docs/research/zhitiao-collection.md)。小红书要求登录，按用户选择暂缓。独立测试预览 `npm run preview:cold-start` 位于 <http://127.0.0.1:4319/>，提供 10 个合成话题、11 条讨论及 11 条回复，覆盖报名、改期、取消与后续状态；它不会进入正式构建。批次和使用方法见 [冷启动数据说明](docs/cold-start-data.md)。
+
 读者页现提供「分支图 / 列表」切换：按话题展开不同陈述，并在每条陈述下面展开补充信息和后续补充，分别保留来源、适用范围和核验状态。正文旁可定位当前陈述、跳转父陈述，或发起「补充这条信息」投稿。详见 [话题分支图与不同说法的收录](docs/topic-branches.md)。
 
 [公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。76 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；读者可直接在页面填写补充、更正及个人经验，再跳转到已填好标题和正文的 GitHub Issue 页面确认提交，界面明确提示需要 GitHub 账号。

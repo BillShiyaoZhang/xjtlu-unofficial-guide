@@ -1,7 +1,7 @@
 import { renderContribution as renderContributionForm, mountQuickContribution } from './contributions.js';
 import { renderBranches } from './branches.js';
 import { withBranchAncestors } from './branch-model.js';
-import { searchAnswers, scopeText } from './search.js';
+import { searchAnswers, searchCollections, scopeText } from './search.js';
 import { validateTopicsConfig } from './topic-model.js';
 import { mountCommunity, communityTopics } from './community.js';
 
@@ -101,6 +101,30 @@ function renderEdition() {
     : '此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。';
 }
 
+function renderCollectionResults(collections) {
+  let section = $('collection-results');
+  if (!section) {
+    section = make('section'); section.id = 'collection-results';
+    section.setAttribute('aria-labelledby', 'collection-results-title');
+    $('answer-list').after(section);
+  }
+  section.replaceChildren();
+  section.hidden = !collections.length;
+  if (!collections.length) return;
+  const heading = make('h2', '来源整理'); heading.id = 'collection-results-title';
+  const count = make('p', `${collections.length} 条相关话题`, 'muted'); count.setAttribute('aria-live', 'polite');
+  const list = make('div', undefined, 'topic-grid');
+  for (const topic of collections) {
+    const item = make('article', undefined, 'topic-card collection-result');
+    const title = make('h3'), link = make('a', topic.title);
+    link.href = '#/topics/' + encodeURIComponent(topic.id); title.append(link);
+    item.append(make('p', snapshot.catalog.topics.find(row => row.id === topic.catalogTopicId)?.titleZh ?? '校园信息', 'eyebrow'),
+      title, make('p', topic.prompt, 'topic-prompt'), make('p', `${topic.sources.length} 项来源 · 待人工核验`, 'metadata'));
+    list.append(item);
+  }
+  section.append(heading, count, list);
+}
+
 function renderList(parameters) {
   const view = parameters.get('view') === 'list' ? 'list' : 'branches';
   const query = parameters.get('query') ?? '', topic = parameters.get('topic') ?? '';
@@ -109,6 +133,7 @@ function renderList(parameters) {
   const selectedTopic = snapshot.catalog.topics.find(value => value.id === $('topic').value);
   $('topic-description').textContent = selectedTopic?.description ?? '';
   const answers = searchAnswers(snapshot, query, $('topic').value);
+  const collections = searchCollections(snapshot, topicsConfig, query, $('topic').value);
   $('count').textContent = `${answers.length} 条答案`;
   $('branches-mode').setAttribute('aria-pressed', String(view === 'branches'));
   $('list-mode').setAttribute('aria-pressed', String(view === 'list'));
@@ -138,9 +163,10 @@ function renderList(parameters) {
   }
   if (!answers.length && view === 'list') {
     const empty = make('div', undefined, 'empty');
-    empty.append(make('p', '暂无符合条件的公开答案。试试换个关键词，也可以把问题留下来。'));
+    empty.append(make('p', collections.length ? '暂无符合条件的公开答案，下方有相关来源整理话题。' : '暂无符合条件的公开答案。试试换个关键词，也可以把问题留下来。'));
     const ask = make('a', '去话题里问问 →'); ask.href = '#/share'; empty.append(ask); $('answer-list').append(empty);
   }
+  renderCollectionResults(collections);
   show('answers');
 }
 

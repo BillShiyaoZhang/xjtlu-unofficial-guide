@@ -113,9 +113,11 @@ test('home exposes three real editorial questions and allows mobile and keyboard
     const { page, goto } = await fixture(t, { viewport });
     await goto('#/discover');
     await waitFeed(page, '还没有读到');
-    assert.equal(await page.locator('#community-home .topic-card').count(), 3);
+    const prompts = site.config.topics.filter(topic => topic.kind === 'question' && !topic.collection);
+    assert.equal(prompts.length, 3);
+    assert.equal(await page.locator('#community-home .topic-card[data-collection="false"]').count(), 3);
     await assertFits(page);
-    for (const topic of site.config.topics) {
+    for (const topic of prompts) {
       const title = page.locator('#community-home .topic-card h3 a').filter({ hasText: topic.title });
       await title.focus();
       await page.keyboard.press('Enter');
@@ -128,6 +130,37 @@ test('home exposes three real editorial questions and allows mobile and keyboard
       await page.locator('#discover-view').waitFor({ state: 'visible' });
       assert.equal(await page.locator('#community-home .topic-card h3 a').filter({ hasText: topic.title }).evaluate(node => node === document.activeElement), true);
     }
+  }
+});
+
+test('sourced cold-start topics display provenance on desktop and mobile without inventing contributions', async t => {
+  const collected = site.config.topics.filter(topic => topic.collection);
+  assert.ok(collected.length >= 16);
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+    const { page, goto } = await fixture(t, { viewport });
+    await goto('#/discover');
+    assert.equal(await page.locator('.source-collection .topic-card').count(), collected.length);
+    assert.equal(await page.locator('.source-collection > .topic-grid .topic-card').count(), 3);
+    const first = collected[0];
+    await page.locator('.source-collection h3 a').filter({ hasText: first.title }).click();
+    await page.locator('#topic-view').waitFor({ state: 'visible' });
+    await waitFeed(page, '还没有读到');
+    assert.equal(await page.locator('.topic-source-link').count(), first.sources.length);
+    assert.match(await page.locator('.topic-sources').innerText(), /尚未经过人工核验/u);
+    assert.match(await page.locator('.topic-source[data-access-status="unavailable"]').innerText(), /本次未读到正文/u);
+    for (const source of first.sources) {
+      assert.equal(await page.locator('.topic-source-link').filter({ hasText: source.title }).getAttribute('href'), source.url);
+    }
+    assert.equal(await page.locator('.discussion-post').count(), 0);
+    assert.equal(await page.getByRole('link', { name: '前往报名', exact: true }).count(), 0);
+    await assertFits(page);
+    await goto('#/topics/collected-library-floor-plan');
+    assert.match(await page.locator('.source-summary').innerText(), /楼层图/u);
+    await assertFits(page);
+    await goto('#/topics/collected-international-day-2026');
+    assert.match(await page.locator('#community-topic .event-state').innerText(), /计划结束时间已过，举办情况待确认/u);
+    assert.equal(await page.getByRole('link', { name: '前往报名', exact: true }).count(), 0);
+    await assertFits(page);
   }
 });
 

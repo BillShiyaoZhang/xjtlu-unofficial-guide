@@ -677,3 +677,13 @@ main {
 .discussion-context { font-size: 13px; color: #607064; white-space: pre-wrap; }
 .discussion-original { font-size: 13px; color: #607064; margin: 14px 0; }
 .discussion-original-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.collected-topics>.muted { margin-bottom: 18px; }
+.source-provenance { color: #607064; font-size: 12px; line-height: 1.7; }
+.topic-card .source-provenance { margin: 12px 0; }
+.topic-sources { margin: 24px 0; }
+.topic-sources>h2 { font-size: 20px; margin-bottom: 8px; }
+.topic-source { padding: 18px 0; border-bottom: 1px solid #dce4de; overflow-wrap: anywhere; }
+.topic-source h3 { font-size: 16px; margin: 5px 0 10px; }
+.topic-source p { margin: 6px 0; }
+.topic-source .source-summary { white-space: pre-wrap; line-height: 1.85; margin: 12px 0; }
+.source-unavailable { color: #76551e; }

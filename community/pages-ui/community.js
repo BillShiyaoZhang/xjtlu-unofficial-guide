@@ -86,14 +86,39 @@ function stateBlock(topic, target, { compact = false, signal } = {}) {
     signal.addEventListener('abort', () => clearTimeout(timer), { once: true });
   }
 }
+function sourceBlock(topic, target) {
+  if (!topic.sources?.length) return;
+  const section = el('section', undefined, 'topic-sources');
+  section.append(el('h2', '来源与整理说明'), el('p', '下方摘要由 AI 辅助整理，保留原文链接，尚未经过人工核验。读取时间表示本次访问来源的时间。', 'muted'));
+  for (const source of topic.sources) {
+    const row = el('article', undefined, 'topic-source');
+    row.dataset.accessStatus = source.accessStatus;
+    const title = el('h3'); title.append(link(`${source.title} ↗`, source.url, 'topic-source-link'));
+    row.append(el('p', `${source.category === 'official' ? '学校官方来源' : '社区公开来源'} · ${source.publisher}`, 'source-provenance'), title);
+    if (source.accessStatus === 'read') {
+      if (source.summary) row.append(el('p', source.summary, 'source-summary'));
+      row.append(el('p', `资料读取于 ${timestamp(source.accessedAt)}（北京时间）`, 'muted'));
+    } else {
+      row.append(el('p', '本次未读到正文，仅保留原文链接，内容待补充。', 'source-unavailable'));
+      row.append(el('p', `尝试读取于 ${timestamp(source.accessedAt)}（北京时间）`, 'muted'));
+    }
+    row.append(el('p', source.publishedOn ? `原文日期：${source.publishedOn}` : '原文日期：未注明', 'muted'));
+    section.append(row);
+  }
+  target.append(section);
+}
 function editorialCard(topic, signal) {
   const card = el('article', undefined, 'topic-card');
-  card.append(el('p', topic.kind === 'event' ? '校园活动' : topic.kind === 'incident' ? '校园情况' : '编辑发起 · 邀你回答', 'eyebrow'));
+  card.dataset.collection = String(topic.collection === true);
+  const kindLabel = topic.kind === 'event' ? '校园活动' : topic.kind === 'incident' ? '校园情况' : '编辑发起 · 邀你回答';
+  card.append(el('p', topic.collection ? `公开来源整理 · ${topic.kind === 'question' ? '问题与经验' : kindLabel}` : kindLabel, 'eyebrow'));
   const title = el('h3'); title.append(link(topic.title, topicHref(topic))); card.append(title);
   card.append(el('p', topic.prompt, 'topic-prompt'));
   stateBlock(topic, card, { compact: true, signal });
+  if (topic.sources?.length) card.append(el('p', topic.sources.every(source => source.accessStatus === 'unavailable')
+    ? '原文待读取 · 仅保留链接线索' : 'AI 辅助整理 · 待人工核验', 'source-provenance'));
   const foot = el('div', undefined, 'topic-card-foot');
-  foot.append(link(topic.kind === 'question' ? '我知道一点 →' : '看消息与后续 →', topicHref(topic), 'text-action'));
+  foot.append(link(topic.collection ? '看整理与来源 →' : topic.kind === 'question' ? '我知道一点 →' : '看消息与后续 →', topicHref(topic), 'text-action'));
   if (topic.answerCount) foot.append(el('span', `${topic.answerCount} 篇相关资料`, 'muted'));
   card.append(foot); return card;
 }
@@ -229,7 +254,8 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
         status.textContent = allPosts.size
           ? `已读到 ${allPosts.size} 条投稿${result.hasMore ? '，还有更早的页面可读取' : '，已到当前记录末尾'}。读取于 ${timestamp(result.fetchedAt)}。`
           : result.hasMore ? '已读取的页面没有匹配投稿，可以继续读取更早的页面。' : currentTopic ? '还没有读到这个话题的公开投稿。你可以先写一句自己的经历。' : '还没有读到这些话题的公开投稿。选一个熟悉的问题，先留下一点经历吧。';
-        if (stage) stage.textContent = allPosts.size ? '讨论正在积累 · 原始回答保留在下方' : result.hasMore ? '正在查找已有回答' : '编辑提问 · 等你分享第一条经历';
+        if (stage) stage.textContent = currentTopic?.collection ? '公开来源整理 · 待人工核验'
+          : allPosts.size ? '讨论正在积累 · 原始回答保留在下方' : result.hasMore ? '正在查找已有回答' : '编辑提问 · 等你分享第一条经历';
         if (!requestedFocused && requested && /^issue-\d+$/u.test(requested)) {
           const selected = [...list.children].find(row => row.id === requested);
           if (selected) {
@@ -262,18 +288,44 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
     const row = el('div', undefined, 'search-row'); const submit = el('button', '找信息'); submit.type = 'submit'; row.append(input, submit); search.append(label, row);
     search.addEventListener('submit', event => { event.preventDefault(); location.hash = '#/answers?' + new URLSearchParams({ view: 'list', query: input.value }); });
     intro.append(search); target.append(intro);
-    const featured = topicCards(snapshot, config).filter(row => row.kind === 'question');
+    const cards = topicCards(snapshot, config);
+    const featured = cards.filter(row => row.kind === 'question' && !row.collection);
     const section = el('section', undefined, 'home-section');
     const heading = el('div', undefined, 'section-title'); heading.append(el('h2', '这些问题，想听听你的经历'), link('找已有整理 →', '#/answers?view=list')); section.append(heading);
     if (featured.length) { const grid = el('div', undefined, 'topic-grid'); featured.forEach(row => grid.append(editorialCard(row, signal))); section.append(grid); }
     else section.append(el('p', '共建问题正在准备中，也可以从资料目录找到话题，补充自己的经历。', 'muted'));
     target.append(section);
-    const happenings = topicCards(snapshot, config).filter(row => row.kind !== 'question');
+    const isHistory = row => row.kind === 'event' ? eventPresentation(row.event).history
+      : row.kind === 'incident' ? incidentPresentation(row.incident).history : false;
+    const collections = cards.filter(row => row.collection);
+    if (collections.length) {
+      const collected = el('section', undefined, 'home-section collected-topics source-collection');
+      collected.append(el('h2', '从公开来源整理'), el('p', '校园活动、办事消息与社区经验，保留出处和读取状态。欢迎带着自己的情况补充。', 'muted'));
+      const current = collections.filter(row => !isHistory(row));
+      if (current.length) {
+        const grid = el('div', undefined, 'topic-grid');
+        current.slice(0, 3).forEach(row => grid.append(editorialCard(row, signal))); collected.append(grid);
+      }
+      if (current.length > 3) {
+        const more = el('details', undefined, 'happenings-history');
+        more.append(el('summary', `查看更多 ${current.length - 3} 条来源整理`));
+        const grid = el('div', undefined, 'topic-grid');
+        current.slice(3).forEach(row => grid.append(editorialCard(row, signal))); more.append(grid); collected.append(more);
+      }
+      const historical = collections.filter(isHistory);
+      if (historical.length) {
+        const history = el('details', undefined, 'happenings-history');
+        history.append(el('summary', `查看 ${historical.length} 条往期来源整理`));
+        const grid = el('div', undefined, 'topic-grid');
+        historical.forEach(row => grid.append(editorialCard(row, signal))); history.append(grid); collected.append(history);
+      }
+      target.append(collected);
+    }
+    const happenings = cards.filter(row => row.kind !== 'question' && !row.collection);
     const updates = el('section', undefined, 'home-section');
     const updatesHeading = el('div', undefined, 'section-title'); updatesHeading.append(el('h2', '校园近况与新回答'));
     if (topics.some(row => row.id === updatesTopic.id)) updatesHeading.append(link('发个校园消息 →', topicHref(updatesTopic), 'text-action'));
     updates.append(updatesHeading, el('p', '活动、临时变化，也有值得留下的经过。消息的发生时间和讨论更新时间分别显示。', 'muted'));
-    const isHistory = row => (row.kind === 'event' ? eventPresentation(row.event) : incidentPresentation(row.incident)).history;
     const current = happenings.filter(row => !isHistory(row)), historical = happenings.filter(isHistory);
     if (current.length) { const grid = el('div', undefined, 'topic-grid'); current.forEach(row => grid.append(editorialCard(row, signal))); updates.append(grid); }
     if (historical.length) {
@@ -287,9 +339,10 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
     browse.append(categories); target.append(browse);
   } else {
     target.append(link('← 回到校园共建', '#/discover', 'back'));
-    const stage = el('p', topic.editorial ? '编辑发起的共建话题' : '资料与公开讨论', 'eyebrow topic-stage');
+    const stage = el('p', topic.collection ? '公开来源整理 · 待人工核验' : topic.editorial ? '编辑发起的共建话题' : '资料与公开讨论', 'eyebrow topic-stage');
     target.append(stage, el('h1', topic.title), el('p', topic.prompt, 'topic-intro'));
     stateBlock(topic, target, { signal });
+    sourceBlock(topic, target);
     if (topic.createdAt) target.append(el('p', `话题发布于 ${timestamp(topic.createdAt)}（北京时间）`, 'muted'));
     const topActions = el('div', undefined, 'topic-jumps');
     const composerTarget = el('section'); composerTarget.id = 'topic-composer';

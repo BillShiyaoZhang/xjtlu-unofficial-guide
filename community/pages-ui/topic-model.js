@@ -43,6 +43,13 @@ function timestamp(value, label) {
   return value;
 }
 
+function calendarDate(value, label) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/u.test(value)) throw new TypeError(`${label} must be a calendar date`);
+  // The temporary timestamp validates the calendar only; it is never returned or published.
+  timestamp(`${value}T00:00:00Z`, label);
+  return value;
+}
+
 /** Return a normalized public HTTPS URL, or null. No network or DNS lookup is performed. */
 export function safePublicHttpsUrl(value) {
   if (typeof value !== 'string' || /[\s\\\u0000-\u001f\u007f]/u.test(value)) return null;
@@ -62,12 +69,42 @@ function optionalTimes(input, output, fields, label) {
   for (const field of fields) if (own(input, field)) output[field] = timestamp(input[field], `${label}.${field}`);
 }
 
+function validateSources(input) {
+  if (!Array.isArray(input) || !input.length || input.length > 20) throw new TypeError('sources requires 1 to 20 public source records');
+  const seen = new Set();
+  return input.map(source => {
+    record(source, ['url', 'title', 'publisher', 'category', 'accessedAt', 'summary', 'accessStatus', 'publishedOn'], 'source');
+    const url = safePublicHttpsUrl(source.url);
+    if (!url) throw new TypeError('source.url must be a public HTTPS URL');
+    if (seen.has(url)) throw new TypeError('duplicate source URL');
+    seen.add(url);
+    if (!['official', 'community'].includes(source.category)) throw new TypeError('source.category is unknown');
+    if (!['read', 'unavailable'].includes(source.accessStatus)) throw new TypeError('source.accessStatus is unknown');
+    const result = { url, title: string(source.title, 'source.title', 240), publisher: string(source.publisher, 'source.publisher', 240),
+      category: source.category, accessedAt: timestamp(source.accessedAt, 'source.accessedAt'), accessStatus: source.accessStatus };
+    if (own(source, 'summary')) {
+      if (source.accessStatus !== 'read') throw new TypeError('an unavailable source cannot have a summary');
+      result.summary = string(source.summary, 'source.summary', 2000);
+    }
+    if (own(source, 'publishedOn')) {
+      result.publishedOn = calendarDate(source.publishedOn, 'source.publishedOn');
+    }
+    return result;
+  });
+}
+
 function validateEvent(input) {
-  record(input, ['startsAt', 'endsAt', 'registrationStartsAt', 'registrationEndsAt', 'registrationStatus',
+  record(input, ['startsAt', 'endsAt', 'startsOn', 'endsOn', 'registrationStartsAt', 'registrationEndsAt', 'registrationStatus',
     'status', 'registrationUrl', 'previousStartsAt', 'confirmedAt'], 'event');
   if (!eventStatuses.has(input.status)) throw new TypeError('event.status is unknown');
   const result = { status: input.status };
   optionalTimes(input, result, ['startsAt', 'endsAt', 'registrationStartsAt', 'registrationEndsAt', 'previousStartsAt', 'confirmedAt'], 'event');
+  for (const field of ['startsOn', 'endsOn']) if (own(input, field)) result[field] = calendarDate(input[field], `event.${field}`);
+  if ((result.startsOn || result.endsOn) && ['startsAt', 'endsAt', 'previousStartsAt'].some(field => own(input, field))) {
+    throw new TypeError('event calendar dates and exact start/end timestamps cannot be mixed');
+  }
+  if (result.endsOn && !result.startsOn) throw new TypeError('event.endsOn requires startsOn');
+  if (result.endsOn && result.endsOn < result.startsOn) throw new TypeError('event ends before it starts');
   if (own(input, 'registrationStatus')) {
     if (!registrationStatuses.has(input.registrationStatus)) throw new TypeError('event.registrationStatus is unknown');
     result.registrationStatus = input.registrationStatus;
@@ -81,7 +118,7 @@ function validateEvent(input) {
   if (result.registrationStartsAt && result.registrationEndsAt && Date.parse(result.registrationEndsAt) <= Date.parse(result.registrationStartsAt)) {
     throw new TypeError('registration must end after it starts');
   }
-  if (result.status === 'rescheduled' && !result.startsAt) throw new TypeError('a rescheduled event needs its new startsAt');
+  if (result.status === 'rescheduled' && !result.startsAt && !result.startsOn) throw new TypeError('a rescheduled event needs its new startsAt or startsOn');
   if (result.status === 'rescheduled' && result.previousStartsAt && Date.parse(result.previousStartsAt) === Date.parse(result.startsAt)) {
     throw new TypeError('a rescheduled event must have a different new time');
   }
@@ -110,7 +147,7 @@ export function validateTopicsConfig(input, catalog) {
   }
   const seen = new Set();
   const topics = input.topics.map(inputTopic => {
-    record(inputTopic, ['id', 'catalogTopicId', 'title', 'prompt', 'kind', 'editorial', 'createdAt', 'event', 'incident'], 'topic');
+    record(inputTopic, ['id', 'catalogTopicId', 'title', 'prompt', 'kind', 'editorial', 'createdAt', 'event', 'incident', 'collection', 'sources'], 'topic');
     const id = identifier(inputTopic.id, 'topic.id');
     if (seen.has(id)) throw new TypeError(`duplicate topic ${id}`);
     seen.add(id);
@@ -119,6 +156,11 @@ export function validateTopicsConfig(input, catalog) {
     if (!kinds.has(inputTopic.kind) || inputTopic.editorial !== true) throw new TypeError('invalid topic kind or editorial attribution');
     const result = { id, catalogTopicId, title: string(inputTopic.title, 'topic.title', 240),
       prompt: string(inputTopic.prompt, 'topic.prompt', 4000), kind: inputTopic.kind, editorial: true };
+    if (own(inputTopic, 'sources')) result.sources = validateSources(inputTopic.sources);
+    if (own(inputTopic, 'collection')) {
+      if (inputTopic.collection !== true || !result.sources?.length) throw new TypeError('collection must be true with explicit sources');
+      result.collection = true;
+    }
     optionalTimes(inputTopic, result, ['createdAt'], 'topic');
     if (own(inputTopic, 'event')) {
       if (result.kind !== 'event') throw new TypeError('event metadata requires event kind');
@@ -161,6 +203,29 @@ function nowValue(value) {
 
 const dateFormatter = new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 const formatTime = value => dateFormatter.format(new Date(value)) + '（北京时间）';
+const dayFormatter = new Intl.DateTimeFormat('en', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+/** Inclusive calendar dates retain their precision; daily opening hours remain unknown. */
+function calendarEventPresentation(event, current) {
+  const parts = Object.fromEntries(dayFormatter.formatToParts(new Date(current)).map(part => [part.type, part.value]));
+  const today = `${parts.year.padStart(4, '0')}-${parts.month}-${parts.day}`;
+  const pastEnd = Boolean(event.endsOn && today > event.endsOn);
+  const started = today >= event.startsOn;
+  const range = `${event.startsOn}${event.endsOn ? ` 至 ${event.endsOn}` : ' 起，结束日期待补'}`;
+  const timeLabel = `${range}（北京时间；每日开放时段待确认）`;
+  const result = { label: event.status === 'rescheduled' ? '已改期，按新日期安排' : '按计划日期安排',
+    timeLabel, registrationLabel: '每日开放时段待确认，报名信息请看原文',
+    canRegister: false, registrationUrl: null, history: false, needsConfirmation: true };
+  if (event.status === 'cancelled') return { ...result, label: '已取消', registrationLabel: '活动已取消，停止报名', history: true };
+  if (event.status === 'postponed') return { ...result, label: '已延期，新时间待定',
+    timeLabel: `原计划日期：${range}（北京时间）；新日期待定`, registrationLabel: '活动延期，暂停报名' };
+  if (pastEnd) return { ...result, label: '计划结束日期已过，举办情况待确认',
+    registrationLabel: '已过计划活动日期，不再提供报名', history: true };
+  if (started) result.label = `${event.status === 'rescheduled' ? '已改期，' : ''}计划开始日期已到，现场情况待确认`;
+  if (event.registrationEndsAt && current >= Date.parse(event.registrationEndsAt)) result.registrationLabel = '已到报名截止时间';
+  else if (event.registrationStatus === 'closed') result.registrationLabel = '报名已关闭';
+  return result;
+}
 
 /**
  * history means cancelled or past the planned end; it never asserts an event took place.
@@ -173,6 +238,7 @@ export function eventPresentation(event, now = Date.now()) {
   try { checked = validateEvent(event); } catch { return unknown; }
   const current = nowValue(now);
   if (current === null) return unknown;
+  if (checked.startsOn) return calendarEventPresentation(checked, current);
   const starts = checked.startsAt ? Date.parse(checked.startsAt) : null;
   const ends = checked.endsAt ? Date.parse(checked.endsAt) : null;
   const confirmed = checked.confirmedAt && Date.parse(checked.confirmedAt) <= current;

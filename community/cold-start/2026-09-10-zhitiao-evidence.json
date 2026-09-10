@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "method": "public-json-get",
+  "school": "XJTLU",
+  "credentialsUsed": false,
+  "discovery": {
+    "attempts": [
+      {
+        "url": "https://api.zhitiaox.com/message/latest",
+        "accessedAt": "2026-09-10T14:53:51.230Z",
+        "httpStatus": 200,
+        "status": "read",
+        "received": 15
+      },
+      {
+        "url": "https://api.zhitiaox.com/message/latest?updatedAt=2026-09-10T14%3A31%3A25.416Z",
+        "accessedAt": "2026-09-10T14:53:52.609Z",
+        "httpStatus": 200,
+        "status": "read",
+        "received": 15
+      },
+      {
+        "url": "https://api.zhitiaox.com/message/latest?updatedAt=2026-09-10T14%3A08%3A38.017Z",
+        "accessedAt": "2026-09-10T14:53:53.947Z",
+        "httpStatus": 200,
+        "status": "read",
+        "received": 15
+      },
+      {
+        "url": "https://api.zhitiaox.com/message/hot",
+        "accessedAt": "2026-09-10T14:53:55.192Z",
+        "httpStatus": 200,
+        "status": "read",
+        "received": 15
+      }
+    ],
+    "received": 60,
+    "candidateCount": 55,
+    "omitted": 4,
+    "duplicates": 1
+  },
+  "selectedCount": 20,
+  "editorialSelection": "AI selected, original summaries; not human fact verification or transferred user accounts",
+  "records": [
+    {
+      "id": "6aa2be3c0777423839bf8647",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2be3c0777423839bf8647",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2be3c0777423839bf8647",
+      "createdAt": "2026-09-10T14:27:08.091Z",
+      "accessedAt": "2026-09-10T14:54:47.133Z",
+      "contentSha256": "a06c44ef309bbb4e20ab424c1d9004bb13a1c78c0617dfee56013679a0a9cc4e"
+    },
+    {
+      "id": "6aa2c33bbbfc85382f860035",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2c33bbbfc85382f860035",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2c33bbbfc85382f860035",
+      "createdAt": "2026-09-10T14:48:27.485Z",
+      "accessedAt": "2026-09-10T14:54:48.484Z",
+      "contentSha256": "421bbc01b9de1769a4d0ff7d14b7ca0d17c39e64e68344b80f59b244519649b9"
+    },
+    {
+      "id": "6aa2c321bbfc85382f85fec9",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2c321bbfc85382f85fec9",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2c321bbfc85382f85fec9",
+      "createdAt": "2026-09-10T14:48:01.882Z",
+      "accessedAt": "2026-09-10T14:54:49.730Z",
+      "contentSha256": "9005878ad2660f1a2a10105ab55696a203e5334d5e251e7716938e7590983f32"
+    },
+    {
+      "id": "6aa2bfdf0777423839bf946b",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2bfdf0777423839bf946b",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2bfdf0777423839bf946b",
+      "createdAt": "2026-09-10T14:34:07.382Z",
+      "accessedAt": "2026-09-10T14:54:50.979Z",
+      "contentSha256": "cb31c3f36935f6396a9f6c5fb991ff460859069e0bde7f029444f6c794b80a56"
+    },
+    {
+      "id": "6aa2c0a60777423839bf9c35",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2c0a60777423839bf9c35",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2c0a60777423839bf9c35",
+      "createdAt": "2026-09-10T14:37:26.502Z",
+      "accessedAt": "2026-09-10T14:54:52.226Z",
+      "contentSha256": "5c71095fce33f7d8118861aaf45fa36bac87c54742b60f838b53b1da40eb2188"
+    },
+    {
+      "id": "6aa299ff0777423839be5af9",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa299ff0777423839be5af9",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa299ff0777423839be5af9",
+      "createdAt": "2026-09-10T11:52:31.869Z",
+      "accessedAt": "2026-09-10T14:54:53.506Z",
+      "contentSha256": "a4145c2ddc3285ce94a85c04706110e06fe2d438721769bb3a2029f5f2a778c1"
+    },
+    {
+      "id": "6aa2c02c0777423839bf977f",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2c02c0777423839bf977f",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2c02c0777423839bf977f",
+      "createdAt": "2026-09-10T14:35:24.923Z",
+      "accessedAt": "2026-09-10T14:54:54.848Z",
+      "contentSha256": "8088af1d3fc20e4ec4c42666c4f097eb3a5cb4e91915f4772d0ad7d201ac2ff0"
+    },
+    {
+      "id": "6aa2bf0c0777423839bf8d24",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2bf0c0777423839bf8d24",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2bf0c0777423839bf8d24",
+      "createdAt": "2026-09-10T14:30:36.361Z",
+      "accessedAt": "2026-09-10T14:54:56.109Z",
+      "contentSha256": "eb571e20570f2e07f7edf60f0b598192292a3cf364bf6da4a86ff5eb85715632"
+    },
+    {
+      "id": "6aa2bd4fbbfc85382f85c99c",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2bd4fbbfc85382f85c99c",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2bd4fbbfc85382f85c99c",
+      "createdAt": "2026-09-10T14:23:11.575Z",
+      "accessedAt": "2026-09-10T14:54:57.357Z",
+      "contentSha256": "bed11103b0477463c2227926569705b75ca07388b5dd1c5e9d1f3907794a6621"
+    },
+    {
+      "id": "6aa2bbdc0777423839bf7487",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2bbdc0777423839bf7487",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2bbdc0777423839bf7487",
+      "createdAt": "2026-09-10T14:17:00.007Z",
+      "accessedAt": "2026-09-10T14:54:58.605Z",
+      "contentSha256": "46519c950373bbbcc43d6ba284e62c253891ffa86f77ef4bbb36c5c659c48892"
+    },
+    {
+      "id": "6aa2bc4ebbfc85382f85c226",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2bc4ebbfc85382f85c226",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2bc4ebbfc85382f85c226",
+      "createdAt": "2026-09-10T14:18:54.102Z",
+      "accessedAt": "2026-09-10T14:54:59.847Z",
+      "contentSha256": "d3c1c803f92adb448bcba120e597ec7ddaa2bc374601dc65862e3182f65925f6"
+    },
+    {
+      "id": "6aa2b91b0777423839bf655c",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2b91b0777423839bf655c",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2b91b0777423839bf655c",
+      "createdAt": "2026-09-10T14:05:15.328Z",
+      "accessedAt": "2026-09-10T14:55:01.095Z",
+      "contentSha256": "f7d5f84031305f4c0f4efe50645e3b96890257c0168d82513828bdf5bdd9d861"
+    },
+    {
+      "id": "6aa2b8650777423839bf5fea",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2b8650777423839bf5fea",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2b8650777423839bf5fea",
+      "createdAt": "2026-09-10T14:02:13.894Z",
+      "accessedAt": "2026-09-10T14:55:02.338Z",
+      "contentSha256": "5fe2ab479afce23ec4a017e6479478245aa21099ea013a6da62b2e08094c9f11"
+    },
+    {
+      "id": "6aa2aede0777423839bf0fac",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2aede0777423839bf0fac",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2aede0777423839bf0fac",
+      "createdAt": "2026-09-10T13:21:34.618Z",
+      "accessedAt": "2026-09-10T14:55:03.582Z",
+      "contentSha256": "39f0052ecf7115a4808ac7318e4ae43a023fc3e60dd32e9bbb587d986f09da2b"
+    },
+    {
+      "id": "6aa2ae200777423839bf08ed",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2ae200777423839bf08ed",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2ae200777423839bf08ed",
+      "createdAt": "2026-09-10T13:18:24.645Z",
+      "accessedAt": "2026-09-10T14:55:04.828Z",
+      "contentSha256": "789934fe83fff7eb141c928682777201f4697676602c27f0c8af79528299c138"
+    },
+    {
+      "id": "6a982d93bbfc85382f4c5fca",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a982d93bbfc85382f4c5fca",
+      "apiUrl": "https://api.zhitiaox.com/message/6a982d93bbfc85382f4c5fca",
+      "createdAt": "2026-09-02T14:07:15.918Z",
+      "accessedAt": "2026-09-10T14:55:06.074Z",
+      "contentSha256": "293628900306f8a1e217c12a906f0bb8f75771597a29ce0b0a34d1fa21892a82"
+    },
+    {
+      "id": "6aa238930777423839ba6dbc",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa238930777423839ba6dbc",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa238930777423839ba6dbc",
+      "createdAt": "2026-09-10T04:56:51.170Z",
+      "accessedAt": "2026-09-10T14:55:07.315Z",
+      "contentSha256": "e066f893da26b90a5f29b00f4bd7e84924e9e38c908b16b45d760fce520a9afb"
+    },
+    {
+      "id": "6aa11d60bbfc85382f7b014e",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa11d60bbfc85382f7b014e",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa11d60bbfc85382f7b014e",
+      "createdAt": "2026-09-09T08:48:32.046Z",
+      "accessedAt": "2026-09-10T14:55:08.562Z",
+      "contentSha256": "2e8746f53154c9df60ae0a7738a54321e29d146c51019c528228ea6d0ccb0376"
+    },
+    {
+      "id": "6a9ff7280777423839a9a1b8",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9ff7280777423839a9a1b8",
+      "apiUrl": "https://api.zhitiaox.com/message/6a9ff7280777423839a9a1b8",
+      "createdAt": "2026-09-08T11:53:12.325Z",
+      "accessedAt": "2026-09-10T14:55:09.817Z",
+      "contentSha256": "5b64ba9dc9070c6354fe8a7c7829bc10e7a507a38b476bf4f4152e7205a9d2a5"
+    },
+    {
+      "id": "6aa2b7a2bbfc85382f859da9",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2b7a2bbfc85382f859da9",
+      "apiUrl": "https://api.zhitiaox.com/message/6aa2b7a2bbfc85382f859da9",
+      "createdAt": "2026-09-10T13:58:58.467Z",
+      "accessedAt": "2026-09-10T14:55:11.075Z",
+      "contentSha256": "ab2ed25daae95c099628eac794e5c48e1bc6d03641975f1984ed5eadfee6b25a"
+    }
+  ]
+}

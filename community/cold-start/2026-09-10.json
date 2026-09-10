@@ -1,0 +1,401 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "id": "collected-aolns-doctoral-talk-20260911",
+      "catalogTopicId": "topic-research",
+      "title": "9 月 11 日：分子创新与先进材料博士生报告",
+      "prompt": "学校活动列表公布的时间为 9 月 11 日 14:00–15:00，地点为中校区理科楼 SB152。报告详情页本次未读到；参加条件与报名方式待确认。了解具体安排的同学欢迎补充。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events",
+          "title": "学校活动索引（详情待核）",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "生命与自然科学学院的分子创新与先进材料主题博士生报告列在 2026 年 9 月 11 日 14:00–15:00，地点为中校区理科楼 SB152。仅核对了列表，讲题与参与条件未知。"
+        },
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/09/aolns-doctoraltalk-miam-week1",
+          "title": "AoLNS 博士生学术报告——分子创新与先进材料主题 Week1",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "unavailable"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsAt": "2026-09-11T14:00:00+08:00",
+        "endsAt": "2026-09-11T15:00:00+08:00",
+        "registrationStatus": "unknown"
+      }
+    },
+    {
+      "id": "collected-ibss-job-fair-20261021",
+      "catalogTopicId": "topic-careers",
+      "title": "10 月 21 日：西浦国际商学院秋季校园双选会",
+      "prompt": "官方列表计划于 10 月 21 日 13:00–17:00 在 BS G 层举行双选会。企业名单、适用年级与跨学院参加条件还需查看后续通知。欢迎分享参会准备与原始通知。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events",
+          "title": "学校活动索引（详情待核）",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "国际商学院 2026 秋季校园双选会在学校列表中的时间是 10 月 21 日 13:00–17:00，地点为 BS G 层；列表未单列校区。详情本次未读取。"
+        },
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/09/2026-ibss-autumn-job-fair",
+          "title": "西浦国际商学院 2026 秋季校园双选会",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "unavailable"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsAt": "2026-10-21T13:00:00+08:00",
+        "endsAt": "2026-10-21T17:00:00+08:00",
+        "registrationStatus": "unknown"
+      }
+    },
+    {
+      "id": "collected-library-libai-migration",
+      "catalogTopicId": "topic-library",
+      "title": "图书馆 AI 工具换入口了，你的新入口能正常用吗？",
+      "prompt": "图书馆 8 月 27 日通知将原独立 AI 工具整合到 LibAI Portal，计划 8 月 30 日上线。可以从图书馆主页查找新入口。这里征集迁移后遇到的实际问题；尚未验证登录后的功能及历史数据迁移结果。",
+      "kind": "incident",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://lib.xjtlu.edu.cn/node/2015",
+          "title": "图书馆 AI 工具统一迁入 LibAI Portal",
+          "publisher": "西交利物浦大学图书馆",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "通知将聊天、检索、数据库导航、阅读和引用功能集中到统一入口。原独立服务于 2026 年 8 月 27 日 18:00 停止，通知预计 8 月 30 日上线新平台，并说明将迁移 LibAI Read 历史数据；未验证迁移完成情况。",
+          "publishedOn": "2026-08-27"
+        }
+      ],
+      "collection": true,
+      "incident": {
+        "status": "unknown",
+        "occurredAt": "2026-08-27T18:00:00+08:00",
+        "updatedAt": "2026-09-10T14:13:10Z",
+        "summary": "入口变更有官方通知；当前功能和每个账户的数据迁移结果尚待使用者确认。"
+      }
+    },
+    {
+      "id": "collected-textbooks-2026-s1",
+      "catalogTopicId": "topic-study",
+      "title": "2026–27 第一学期：错过集中领书后去哪里领？",
+      "prompt": "本学期图书馆通知保留了后续领书安排，园区与太仓的时间不同。欢迎按校区补充现场办理经历；正常工作时间与房间位置应再向教材服务中心核对。",
+      "kind": "incident",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://lib.xjtlu.edu.cn/node/2016",
+          "title": "2026–27 第一学期教材领取通知",
+          "publisher": "西交利物浦大学图书馆",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "错过集中发书后，园区同学可在第 1–10 周正常工作时间领取；太仓为第 1 周正常工作时间，以及第 2–10 周周三 13:00–17:00。分别到所在校区教材服务中心。本次只使用通知文字，未读取集中发书图片表格。",
+          "publishedOn": "2026-08-28"
+        }
+      ],
+      "collection": true,
+      "incident": {
+        "status": "unknown",
+        "updatedAt": "2026-09-10T14:13:10Z",
+        "summary": "仅适用于 2026–27 第一学期；具体房间、正常工作时间及个人教材是否备齐需另行核对。"
+      }
+    },
+    {
+      "id": "collected-anniversary-exhibition-2026",
+      "catalogTopicId": "topic-campus",
+      "title": "西浦 20 周年展览：看见学校二十年的变化",
+      "prompt": "官方展期为 2026 年 5 月 20 日至 12 月 31 日，地点为西浦多媒体中心 GA-2001。每日开放时段、预约与访客要求未注明。去看过的同学，可以分享参观路线和印象。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/05/xjtlu-20th-anniversary-exhibition",
+          "title": "西交利物浦大学 20 周年线下展览",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "展览通过人物经历、历史影像和互动装置呈现大学二十年的发展，地点为 GA-2001。官方列出 2026 年 5 月 20 日至 12 月 31 日的展期，但未给每日开放时段或明确校区。"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsOn": "2026-05-20",
+        "endsOn": "2026-12-31",
+        "registrationStatus": "unknown"
+      }
+    },
+    {
+      "id": "collected-future-ecosystem-exhibition-2026",
+      "catalogTopicId": "topic-research",
+      "title": "生命科学楼的融合生态特展，有哪些值得看？",
+      "prompt": "展览计划从 2026 年 3 月 31 日持续到 12 月 31 日，地点为生命科学楼 G 层大厅。想了解学校教学、科研与产业合作的同学可先读原页；具体开放时段待补充。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/03/in-sync-with-the-future",
+          "title": "与未来同频 · 西浦产学研政社融合生态战略特展",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "展览介绍学校在教学、科研、产业与社会合作方面的实践。场地为生命科学楼 G 层大厅，官方展期为 2026 年 3 月 31 日至 12 月 31 日；页面未单列校区或每日开放时间。"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsOn": "2026-03-31",
+        "endsOn": "2026-12-31",
+        "registrationStatus": "unknown"
+      }
+    },
+    {
+      "id": "collected-campus-memory-2026",
+      "catalogTopicId": "topic-community",
+      "title": "二十周年校史征集：哪些校园记忆值得留下？",
+      "prompt": "博物馆在 2026 年开展校史藏品征集，支持从原页面了解线上线下渠道。材料要求与使用许可应以主办方说明为准。欢迎讨论有代表性的校园物件与经历，并带上记忆对应的年份与校区。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2025/12/the-global-collection-program",
+          "title": "“廿载融新·西浦印记”全球征集计划",
+          "publisher": "西交利物浦大学博物馆",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "大学博物馆面向西浦共同体征集校史记忆材料。页面列出的活动范围为 2026 年 1 月 1 日至 12 月 31 日，并显示结束时刻 00:00；这里只保留日期说明，不推断全天受理。材料条件与提交渠道见原页。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-student-union-entry",
+      "catalogTopicId": "topic-clubs",
+      "title": "想参与学生会，先了解哪些部门？",
+      "prompt": "Student Engagement 的学生会页面介绍校园服务、同学权益和文化交流工作，标注校区为苏州。当前招新时间与加入条件还需看最新通知。参加过的同学可以补充自己了解的工作内容。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://engage.xjtlu.edu.cn/zh/club/160",
+          "title": "西交利物浦大学学生会",
+          "publisher": "西浦 Student Engagement",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "学校学生组织页面介绍学生会的行政、发展、文体、宣传与权益五个部门，标注苏州校区。可从原页查找组织入口；本次不将页面中的历史活动或搜索摘要当作正在开放的招新。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-club-fair-followup-2026",
+      "catalogTopicId": "topic-clubs",
+      "title": "错过 9 月 4 日社团招新，还能怎样了解社团？",
+      "prompt": "学校 9 月 7 日报道了在苏州南校区中心湖广场举行的招新活动。现场已经过去，各社团后续招新是否开放需要分别核对。你找到社团的方式、面试准备或后续通知，都欢迎补充。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/news/2026/09/2026xipushetuanzhaoxin",
+          "title": "162 个社团齐聚，在西浦找到你的同频伙伴！",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "学校报道 2026 年 9 月 4 日的社团招新活动在苏州南校区中心湖广场举行，展位覆盖学术、艺术、体育、公益、兴趣及功能性组织。报道可帮助了解社团方向，不能据此认定后续报名仍开放。",
+          "publishedOn": "2026-09-07"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-practical-chinese-autumn-2026",
+      "catalogTopicId": "topic-language",
+      "title": "2026 秋季实用中文课程适合谁？",
+      "prompt": "官方页面公布的课程周期为 2026 年 9 月 7 日至 2027 年 1 月 8 日，学习地点为苏州。它属于单独的中文课程项目；在读学位生能否参加、费用和本期余位需再咨询。欢迎分享学习目标与选课问题。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/study/othercourses/chinese-language-course",
+          "title": "实用中文秋季课程 2026",
+          "publisher": "西交利物浦大学全球文化与语言学苑现代语言中心",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "项目提供零起点至高级课程，共 16 个教学周，每周 12 小时、分四个工作日线下学习。页面面向希望强化中文的学习者，包括苏州外籍人士及准备在中国继续学习的人群；不据此推断所有在校生可免费参加。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-library-floor-plan",
+      "catalogTopicId": "topic-library",
+      "title": "第一次找打印机或研讨室，图书馆楼层图怎么看？",
+      "prompt": "图书馆提供楼层导航，可先查设施位置，再确认地图对应的馆舍。你找过哪些设备、走过哪些容易认错的路线？欢迎带上馆舍和楼层补充；设备实时状态与预约条件另需核对。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://lib.xjtlu.edu.cn/graphicmap",
+          "title": "图书馆 FLOOR PLAN 楼层图",
+          "publisher": "西交利物浦大学图书馆",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "楼层图列出服务台、自助借还、检索区域、打印复印扫描设备和团队研讨室等设施。已读文字未单列馆舍对应校区，使用前应核对所在图书馆；地图不表示设备当前可用或免预约。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-induction-resource-followup-2026",
+      "catalogTopicId": "topic-arrival",
+      "title": "入学教育结束后，你还想弄清哪些校园资源？",
+      "prompt": "学校 9 月 2 日报道了“西浦何为”入学教育的提问与对话，也提到校园导览、学术衔接和社团活动。这是回顾材料。刚入学的同学可以补充自己仍在找的入口或尚未解决的问题。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/news/2026/09/xipuheweiruxuejiaoyu",
+          "title": "“西浦何为”入学教育：从单边传递到双向对话",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "2026 级入学教育通过提问与对话介绍学习选择和学生支持，迎新周还有校园导览、学术衔接与社团相关活动。报道未给各场完整时段和校区，不能作为仍在开放的迎新报名日程。",
+          "publishedOn": "2026-09-02"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-iot-activity-discovery-2026",
+      "catalogTopicId": "topic-research",
+      "title": "26/27 学年物联网学院活动，可以从哪里继续跟进？",
+      "prompt": "学校活动索引收录了物联网学院学年活动预告，显示 2026 年 9 月至 12 月的范围。本次没读到详情，单场主题、时间和校区均需逐项核对。知道新安排的同学可以分享原始通知。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events",
+          "title": "学校活动索引（详情待核）",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "学校活动索引收录“26/27 学年物联网学院活动预告”，范围为 2026 年 9 月 1 日至 12 月 31 日，地点字段为西交利物浦大学；单项活动安排尚未读取。"
+        },
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/09/26-27%E5%AD%A6%E5%B9%B4%E7%89%A9%E8%81%94%E7%BD%91%E5%AD%A6%E9%99%A2%E6%B4%BB%E5%8A%A8%E9%A2%84%E5%91%8A",
+          "title": "26/27 学年物联网学院活动预告",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "unavailable"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-sports-day-memories-2026",
+      "catalogTopicId": "topic-sport",
+      "title": "春季运动会之后，哪些校园运动值得继续参加？",
+      "prompt": "学校 4 月 30 日回顾了 4 月 25 日在苏州南校区运动场举行的春季田径运动会。这里只作为既往校园活动背景，欢迎分享平时运动的方式与参与经历；下一届赛程尚未收录。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/news/2026/04/2026tianjingyundonghui",
+          "title": "2026 西浦春季田径运动会回顾",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "报道中的运动会设置短跑、中长跑、接力与跳跃项目，并有趣味运动市集。学校报道本届刷新六项校纪录。该文是 2026 年 4 月活动回顾，不提供下一届报名与赛程依据。",
+          "publishedOn": "2026-04-30"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-international-day-2026",
+      "catalogTopicId": "topic-international",
+      "title": "往期记录：2026 年第四届西浦国际日",
+      "prompt": "官方预告原定 5 月 24 日 15:00–20:00，在苏州中校区中心楼与基础楼之间开展文化交流。计划时间已过；参加过的同学可以分享经历，帮助补充实际举办情况。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/05/the-4th-xjtlu-international-day",
+          "title": "西浦第四届国际日",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "活动预告安排文化摊位、美食市集和校庆互动，也有学院、社团及附属学校参与。这里只据预告保留原定时间与内容；没有据此确认每个环节最终举办，也未收录下一届安排。"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsAt": "2026-05-24T15:00:00+08:00",
+        "endsAt": "2026-05-24T20:00:00+08:00",
+        "registrationStatus": "unknown"
+      }
+    },
+    {
+      "id": "collected-ime-life-festival-2026",
+      "catalogTopicId": "topic-life",
+      "title": "往期记录：太仓智造生态学院生活节",
+      "prompt": "官方预告计划在 5 月 28 日 11:00 至 5 月 30 日 17:00 举行，校区为太仓。计划时间已经过去。欢迎参加者补充实际体验，不把这份旧预告当作当前报名安排。",
+      "kind": "event",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://www.xjtlu.edu.cn/zh/events/2026/05/ime-life-festival",
+          "title": "智造生态学院生活节",
+          "publisher": "西交利物浦大学",
+          "category": "official",
+          "accessedAt": "2026-09-10T14:13:10Z",
+          "accessStatus": "read",
+          "summary": "预告将咖啡、智能设备体验、产业交流、教育成果展示与社交空间结合，并计划把部分互动延伸至太仓市区。来源是活动预告，不能据此认定每个规划环节最终落地或推断下一届日期。"
+        }
+      ],
+      "collection": true,
+      "event": {
+        "status": "scheduled",
+        "startsAt": "2026-05-28T11:00:00+08:00",
+        "endsAt": "2026-05-30T17:00:00+08:00",
+        "registrationStatus": "unknown"
+      }
+    }
+  ]
+}

@@ -42,3 +42,25 @@ export function searchAnswers(snapshot, query = '', topicId = '') {
     return { answer, score, index };
   }).filter(row => row.score >= 0).sort((a, b) => Number(a.answer.demo) - Number(b.answer.demo) || b.score - a.score || a.index - b.index).map(row => row.answer);
 }
+
+// Source collections remain topics, with their own results and count outside the handbook.
+export function searchCollections(snapshot, config, query = '', topicId = '') {
+  const terms = groups(query, snapshot.search?.aliases);
+  if (!terms.length) return [];
+  return (config.topics ?? []).map((topic, index) => {
+    if (!topic.collection || (topicId && topic.catalogTopicId !== topicId)) return { topic, score: -1, index };
+    const fields = [
+      [topic.title, 12], [topic.prompt, 6],
+      [(topic.sources ?? []).map(source => source.title).join(' '), 3],
+      [(topic.sources ?? []).map(source => source.summary).join(' '), 2],
+    ].map(([text, weight]) => [normalize(text), weight]);
+    let score = 0;
+    for (const alternatives of terms) {
+      const match = Math.max(0, ...fields.flatMap(([text, weight]) => alternatives.map(term => text.includes(term) ? weight : 0)));
+      if (!match) return { topic, score: -1, index };
+      score += match;
+    }
+    if (normalize(topic.title).includes(normalize(query))) score += 5;
+    return { topic, score, index };
+  }).filter(row => row.score >= 0).sort((a, b) => b.score - a.score || a.index - b.index).map(row => row.topic);
+}

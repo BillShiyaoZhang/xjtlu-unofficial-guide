@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import { searchAnswers } from '../community/pages-ui/search.js';
+import { searchAnswers, searchCollections } from '../community/pages-ui/search.js';
 
 const snapshot = JSON.parse(await readFile(new URL('../community/pages-reviewed.json', import.meta.url), 'utf8'));
 const answer = id => snapshot.answers.find(row => row.id === id);
@@ -80,4 +80,45 @@ test('relevance sorting leaves source scope, evidence, review state and original
   }
   assert.deepEqual(snapshot, before);
   assert.deepEqual(answer('handbook-surf-research-start').scope.audience, ['undergraduate']);
+});
+
+const collections = JSON.parse(await readFile(new URL('../community/community-topics.json', import.meta.url), 'utf8'));
+
+test('source collections are discoverable by title, prompt and source text without becoming handbook answers', () => {
+  const cases = [
+    ['双选会', 'collected-ibss-job-fair-20261021'],
+    ['跨学院参加条件', 'collected-ibss-job-fair-20261021'],
+    ['数据库导航', 'collected-library-libai-migration'],
+    ['ＬｉｂＡＩ', 'collected-library-libai-migration'],
+  ];
+  const before = structuredClone({ snapshot, collections });
+  for (const [query, expectedId] of cases) {
+    assert.ok(ids(searchCollections(snapshot, collections, query)).includes(expectedId), query);
+  }
+  assert.deepEqual(searchAnswers(snapshot, '双选会'), []);
+  assert.equal(searchAnswers(snapshot).length, before.snapshot.answers.length);
+  assert.deepEqual({ snapshot, collections }, before);
+});
+
+test('collection search respects catalog filters, every query term and the empty directory state', () => {
+  const career = searchCollections(snapshot, collections, '双选会', 'topic-careers');
+  assert.equal(career[0]?.id, 'collected-ibss-job-fair-20261021');
+  assert.ok(career.every(row => row.catalogTopicId === 'topic-careers'));
+  assert.deepEqual(searchCollections(snapshot, collections, '双选会', 'topic-library'), []);
+  assert.deepEqual(searchCollections(snapshot, collections, '双选会 不存在的词987654'), []);
+  assert.deepEqual(searchCollections(snapshot, collections, '不存在的词987654'), []);
+  assert.deepEqual(searchCollections(snapshot, collections, ' \n '), []);
+  assert.deepEqual(searchCollections(snapshot, collections), []);
+  assert.ok(searchCollections(snapshot, collections, '图书馆').every(row => row.collection));
+});
+
+test('collection relevance prioritizes titles, preserves ties and shares query aliases', () => {
+  const config = { topics: [
+    { id: 'source-match', collection: true, title: '来源中的线索', sources: [{ summary: '暑期科研 参加准备' }] },
+    { id: 'title-match', collection: true, title: '暑期科研', sources: [] },
+    { id: 'title-tie', collection: true, title: '暑期科研', sources: [] },
+    { id: 'editorial-prompt', title: '暑期科研', sources: [] },
+  ] };
+  assert.deepEqual(ids(searchCollections(snapshot, config, '暑研')), ['title-match', 'title-tie', 'source-match']);
+  assert.deepEqual(ids(searchCollections(snapshot, config, '暑研 准备')), ['source-match']);
 });

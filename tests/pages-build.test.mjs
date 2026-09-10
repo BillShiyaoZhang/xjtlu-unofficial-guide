@@ -135,7 +135,8 @@ test('the production Pages build contains exactly the 76 real articles and no de
   const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
   const data = JSON.parse(await readFile(resolve(result.output, 'public.json'), 'utf8'));
   assert.equal(result.answerCount, 76);
-  assert.equal(result.topicCount, 3);
+  assert.equal(result.topicCount, 39);
+  assert.equal((await readJson('community-topics.json')).topics.filter(topic => topic.collection).length, 36);
   assert.deepEqual(JSON.parse(await readFile(resolve(result.output, 'community-topics.json'), 'utf8')), await readJson('community-topics.json'));
   assert.ok(data.answers.every(answer => answer.demo === false && answer.reviewStatus === 'collected'));
   const handbook = await readJson('handbook/runtime-import.json');
@@ -151,7 +152,7 @@ test('Pages topics round-trip independently of public answers and only refer to 
   const topics = await readJson('community-topics.json');
   await writeFile(fixture.topicsFile, JSON.stringify(topics));
   const result = await buildPages({ root: fixture.root, now: fixture.input.now });
-  assert.equal(result.topicCount, 3);
+  assert.equal(result.topicCount, topics.topics.length);
   assert.equal(result.answerCount, 4, 'editorial topics do not create published answer revisions');
   assert.deepEqual(JSON.parse(await readFile(resolve(result.output, 'community-topics.json'), 'utf8')), topics);
   const catalog = structuredClone(fixture.input.catalog);

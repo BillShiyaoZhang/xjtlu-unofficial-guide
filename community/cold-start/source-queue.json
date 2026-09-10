@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Retrieval follow-up only; not copied into the public Pages build.",
+  "sources": [
+    {
+      "id": "zhitiao-user-example",
+      "platform": "纸条",
+      "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa2b70ebbfc85382f8595d6",
+      "accessStatus": "read",
+      "observedAt": "2026-09-10T15:00:18.787Z",
+      "observation": "H5 浏览器和 web 读取未得到正文；随后从公开 H5 JavaScript 确认详情 GET 路径，未附认证信息的公开接口返回 HTTP 200 和正文。这里只记录通路成功，示例未被选入校园信息批次，未保留发布者资料。",
+      "nextStep": "通路已验证。20 条经筛选的其他校园帖子已通过相同公开 GET 方式读取，并整理为 2026-09-10-zhitiao.json。"
+    },
+    {
+      "id": "xiaohongshu-xipu-search",
+      "platform": "小红书",
+      "url": "https://www.xiaohongshu.com/search_result?keyword=%E8%A5%BF%E6%B5%A6&source=web_explore_feed",
+      "accessStatus": "unavailable",
+      "observedAt": "2026-09-10T14:48:10Z",
+      "observation": "再次访问时浏览器明确显示“登录后查看搜索结果”。公开搜索未获得可核验笔记正文。用户选择先继续其他公开来源，本轮暂缓小红书。",
+      "nextStep": "后续用户完成正常登录或提供具体可读笔记后继续；搜索入口不作为学生经验来源。"
+    }
+  ]
+}
