@@ -2,6 +2,7 @@ import { copyFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/pr
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentModule, importContent, publishContent, projectPublic, readPublicRevision } from '@information-community/runtime';
+import { validateReviewedPagesData } from './pages-snapshot.mjs';
 
 const assets = ['index.html', 'app.js', 'style.css', 'brand.svg'];
 const outputs = [...assets, 'public.json', '.nojekyll'];
@@ -119,10 +120,19 @@ export function createPagesData({ config, profile, content: input, catalog, now 
 export async function buildPages({ root = resolve('.'), now, origin, basePath } = {}) {
   const community = resolve(root, 'community');
   const config = await jsonFile(resolve(community, 'pages.config.json'));
-  const profile = await jsonFile(resolve(community, 'content-profile.json'));
-  const content = await jsonFile(resolve(community, 'content.json'));
-  const catalog = await jsonFile(resolve(community, 'catalog.json'));
-  const data = createPagesData({ config, profile, content, catalog, now, origin, basePath });
+  let data;
+  try {
+    const snapshotFile = resolve(community, 'pages-reviewed.json');
+    const stat = await lstat(snapshotFile);
+    if (!stat.isFile() || stat.isSymbolicLink()) fail('reviewed snapshot must be a regular file');
+    data = validateReviewedPagesData(await jsonFile(snapshotFile), { config, now, origin, basePath });
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+    const profile = await jsonFile(resolve(community, 'content-profile.json'));
+    const content = await jsonFile(resolve(community, 'content.json'));
+    const catalog = await jsonFile(resolve(community, 'catalog.json'));
+    data = createPagesData({ config, profile, content, catalog, now, origin, basePath });
+  }
   const source = resolve(community, 'pages-ui');
   for (const name of assets) {
     const stat = await lstat(resolve(source, name));
@@ -147,5 +157,5 @@ export async function buildPages({ root = resolve('.'), now, origin, basePath } 
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const result = await buildPages({ origin: process.env.PAGES_ORIGIN, basePath: process.env.PAGES_BASE_PATH });
-  console.log(`Built ${result.answerCount} allowlisted public demo answers: ${result.output}`);
+  console.log(`Built ${result.answerCount} public answers: ${result.output}`);
 }

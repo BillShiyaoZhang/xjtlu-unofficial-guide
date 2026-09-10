@@ -1,3 +1,5 @@
+import { createArticleReview, reviewDecisionLabels } from './batch-review.js';
+
 const $ = selector => document.querySelector(selector);
 const sessionKey = 'guide-editor-session';
 const pageSize = 8;
@@ -16,6 +18,9 @@ let page = 0;
 let workflows = {};
 let permissions = [];
 const retries = new Map();
+let suspendedReview = null;
+let resumingReview = null;
+const articleReview = createArticleReview({ api, mutate, message, errorMessage, getPermissions: () => permissions });
 
 function message(text = '', kind = 'status') {
   $('#message').textContent = text;
@@ -42,6 +47,9 @@ function clearSensitive() {
   rows = [];
   page = 0;
   retries.clear();
+  suspendedReview = null;
+  resumingReview = null;
+  articleReview.clear();
   clearDetail();
   for (const id of ['record-list', 'queue-count', 'revision-result', 'review-history-result']) $(`#${id}`).replaceChildren();
   for (const form of ['login-form', 'content-form', 'revision-form']) $(`#${form}`).reset();
@@ -69,11 +77,16 @@ function errorMessage(error) {
     UNAUTHENTICATED: '会话已失效，请重新登录。', INVALID_CREDENTIALS: '账户、密码或验证码不正确。',
     FORBIDDEN: '当前账户没有执行此操作的权限。', RECORD_EXPIRED: '该私件已到期或撤回，详情已清除。',
     VERSION_CONFLICT: '私件已被其他操作更新，请刷新后重新核对。',
-    CONFLICT: '实体版本已变化，请刷新并核对当前版本。',
+    CONFLICT: '内容版本或审核记录已变化，请刷新后重新核对。',
     IDEMPOTENCY_CONFLICT: '重复请求的内容不一致，请刷新后重新核对。',
     RATE_LIMITED: '尝试次数过多，请稍后重试。',
     PERSONAL_DATA: '内部备注不能包含邮箱、电话、学号或证件号。',
-    GUIDE_REASON: '终态处理需要至少 8 字的内部理由。',
+    GUIDE_REASON: '审核理由需要 8 至 400 字；请检查所填内容。',
+    GUIDE_REVIEW_MODE: '工作台已更新为通过并发布，请重新加载页面后核对并提交。',
+    CONTENT_HIDDEN: '所选文章已隐藏，请先处理可见性再审核发布；本批未保存。',
+    SOURCE_UNAVAILABLE: '所选文章的引用来源已隐藏、撤回或使用权到期；本批未保存，请核对来源。',
+    POLICY_REJECTED: '所选文章尚不满足发布规则；本批未保存。高影响内容仍需相应审核流程。',
+    EVIDENCE_REQUIRED: '所选文章有事实句缺少有效引用；本批未保存，请补齐引用后重审。',
     GUIDE_DECISION: '处理中不能提前记录结案结果。',
     GUIDE_RESULT_LINK: '请核对结果关联的答案与精确版本；隐藏结论须关联已隐藏答案。',
     GUIDE_RESULT_IMMUTABLE: '追加备注不能改变已经记录的决定与结果关联。',
@@ -217,6 +230,9 @@ function showView(name) {
     revisionGeneration++;
     historyGeneration++;
     retries.clear();
+    suspendedReview = null;
+    resumingReview = null;
+    articleReview.clear();
     clearDetail();
     $('#revision-result').replaceChildren();
     $('#review-history-result').replaceChildren();
@@ -231,8 +247,9 @@ function showView(name) {
   }
 }
 
-async function refreshWorkspace() {
+async function refreshWorkspace(savedReview = null) {
   clearSensitive();
+  resumingReview = savedReview;
   message();
   $('#workspace').hidden = false;
   const config = await api('/api/guide/editor-config');
@@ -247,10 +264,17 @@ async function refreshWorkspace() {
   $('#review-history').disabled = !['content:read', 'content:visibility'].some(permission => permissions.includes(permission));
   if (!canQueue || $('#content-tab').getAttribute('aria-selected') === 'true') showView('content');
   else showView('queue');
+  const current = generation, currentPrincipal = principal?.id;
   if (canQueue) {
     rows = await api('/api/private/list');
     renderQueue();
   }
+  if ($('#content-tab').getAttribute('aria-selected') === 'true') {
+    await articleReview.load(savedReview?.review ?? null);
+    if (current !== generation || currentPrincipal !== principal?.id) return;
+    for (const [fingerprint, key] of savedReview?.retries ?? []) retries.set(fingerprint, key);
+  }
+  if (current === generation && currentPrincipal === principal?.id) resumingReview = null;
 }
 
 async function loadDetail(id) {
@@ -335,7 +359,11 @@ $('#logout').addEventListener('click', async () => {
   } catch { message('本地会话已清除；服务端退出未确认。', 'error'); }
 });
 $('#refresh').addEventListener('click', () => refreshWorkspace().catch(errorMessage));
-for (const view of ['queue', 'content']) $(`#${view}-tab`).addEventListener('click', () => showView(view));
+for (const view of ['queue', 'content']) $(`#${view}-tab`).addEventListener('click', () => {
+  const changed = $(`#${view}-tab`).getAttribute('aria-selected') !== 'true';
+  showView(view);
+  if (changed && view === 'content') articleReview.load().catch(errorMessage);
+});
 $('#type-filter').addEventListener('change', () => { clearDetail(); configureFilters(); page = 0; renderQueue(); });
 for (const name of ['status-filter', 'sort-filter']) $(`#${name}`).addEventListener('change', () => { clearDetail(); page = 0; renderQueue(); });
 $('#previous-page').addEventListener('click', () => { clearDetail(); page--; renderQueue(); });
@@ -390,6 +418,8 @@ async function loadHistory(entityId) {
     if (entry.outcome) {
       const outcome = document.createElement('p');
       const labels = [];
+      if (entry.action === 'content.review' && entry.outcome.decision) labels.push(`审核结论：${reviewDecisionLabels[entry.outcome.decision] ?? entry.outcome.decision}`);
+      if (entry.outcome.publishedRevisionId) labels.push(`本次审核发布修订 ${entry.outcome.publishedRevisionId}`);
       if (typeof entry.outcome.hidden === 'boolean') labels.push(entry.outcome.hidden ? '已隐藏' : '未隐藏');
       if (entry.action === 'content.source' && entry.outcome.disposition) labels.push(({ active: '来源有效', withdrawn: '来源已撤回', 'rights-expired': '来源使用权到期' })[entry.outcome.disposition] ?? entry.outcome.disposition);
       if (entry.outcome.publicRevisionId) labels.push(`公开修订 ${entry.outcome.publicRevisionId}`);
@@ -417,7 +447,7 @@ $('#content-form').addEventListener('submit', event => {
     form.elements.expectedVersion.value = result.version;
     form.elements.reason.value = '';
     if (['content:read', 'content:visibility'].some(permission => permissions.includes(permission))) await loadHistory(input.entityId);
-    message(`审核已保存，当前实体版本 ${result.version}。`);
+    message(`操作已执行，当前实体版本 ${result.version}。`);
   });
 });
 
@@ -431,20 +461,30 @@ $('#revision-form').addEventListener('submit', event => {
   });
 });
 
-async function restoreSession() {
+async function restoreSession(savedReview = null) {
   if (!token) return;
+  resumingReview = savedReview;
   try {
     principal = await api('/api/auth/me');
     showSession();
-    await refreshWorkspace();
+    await refreshWorkspace(savedReview?.principalId === principal.id ? savedReview : null);
   } catch (error) { errorMessage(error); }
 }
 
 window.addEventListener('pagehide', clearSensitive);
 window.addEventListener('pageshow', event => { if (event.persisted) restoreSession(); });
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { clearSensitive(); $('#workspace').hidden = true; }
-  else if (token) restoreSession();
+  if (document.hidden) {
+    const review = articleReview.snapshot();
+    const savedReview = $('#content-tab').getAttribute('aria-selected') === 'true' ? review ? {
+      review, principalId: principal?.id,
+      retries: [...retries].filter(([fingerprint]) => fingerprint.startsWith('["/api/guide/reviews/batch",')),
+    } : suspendedReview ?? resumingReview : null;
+    clearSensitive(); suspendedReview = savedReview; $('#workspace').hidden = true;
+  } else if (token) {
+    const savedReview = suspendedReview; suspendedReview = null;
+    restoreSession(savedReview);
+  }
 });
 setInterval(() => {
   if (selected && Number(selected.expiresAt) <= Date.now()) {

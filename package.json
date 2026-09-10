@@ -11,6 +11,8 @@
     "start": "node server/guide.mjs",
     "build": "node scripts/build.mjs",
     "build:pages": "node scripts/build-pages.mjs",
+    "export:pages": "node scripts/export-pages.mjs",
+    "sync:pages": "node scripts/sync-pages.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:platform": "node --test docs/platform-probes/runtime-0.3.0-*.test.mjs",
     "test:browser": "node --test --test-timeout=60000 tests/browser/*.test.mjs",

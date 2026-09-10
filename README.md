@@ -32,11 +32,13 @@ npm run dev
 
 完整操作、密钥管理、私有迁移、研究聚合和备份检查见 [底座运行手册](docs/platform-runtime.md)。编辑工作台是 `/editor`，平台通用入口保留为 `/runtime-editor`。没有迁移真实数据库或替上游提交代码；研究采集默认关闭。
 
+在 `/editor` 的「内容审核」中，审核人可以同时展开多篇正文、查看逐句来源、跨页勾选文章，并批量提交结论与逐篇意见。选择「通过并发布」会在同次提交中生成经过人工确认的新修订并公开；原稿、逐句引用和审核记录保留。其余结论只保存意见。操作步骤见 [逐篇勾选与批量审核](docs/handbook-maintenance.md#逐篇勾选与批量审核)。
+
 ## GitHub Pages
 
-[公开只读演示指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布。仅包含仓库内显式允许的演示答案、搜索及来源，不包含登录、投稿、编辑、研究采集或数据库。完整业务入口仍需独立 Node 服务。
+[公开只读指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布。在本地工作台完成「通过并发布」后，可以同步已审核的公开内容到 Pages。站点提供目录、搜索、正文和来源，不包含登录、投稿、编辑、研究采集或数据库。
 
-Pages 不需要迁移数据库，也不能托管 SQLite 后端。静态发布清单、内容边界、自动检查和重新部署说明见 [Pages 部署](docs/github-pages.md)。
+审核工作台继续在本地 Node 服务中运行；本地读者页立即更新，Pages 则在同步并完成 GitHub Actions 部署后更新。导出的 `community/pages-reviewed.json` 只包含获准公开的正文、引用与展示信息；账户、密码、内部意见和运行库不会进入静态站点。首次导出前保留四张演示卡，首次导出后改用审核快照，即使快照为空也不回退到演示内容。操作步骤与命令见 [Pages 同步](docs/github-pages.md)。
 
 公开 UGC、高影响内容和 AI 自动发布仍默认关闭。**没有、也不计划部署到 OpenAI Sites**；真实试点只能使用运营方负责的基础设施，并先完成内容、责任和研究说明审核。产品判断与历史设计见：
 

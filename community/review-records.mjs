@@ -1,4 +1,4 @@
-const actions = ['content.publish', 'content.hide', 'content.source'];
+const actions = ['content.publish', 'content.hide', 'content.source', 'content.review'];
 const fields = ['id', 'actorId', 'action', 'entityId', 'revisionId', 'version', 'createdAt', 'payload'];
 const id = value => typeof value === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,119}$/u.test(value);
 const fail = () => { throw Object.assign(new Error('Invalid guide editorial review record'), { code: 'GUIDE_REVIEW_STATE' }); };
@@ -14,6 +14,7 @@ export default {
       if (!row || Object.keys(row).some(key => !fields.includes(key)) || fields.some(key => !Object.hasOwn(row, key)) ||
           !id(row.id) || seen.has(row.id) || !id(row.actorId) || !id(row.entityId) ||
           !(row.revisionId === null || id(row.revisionId)) || !actions.includes(row.action) ||
+          (row.action === 'content.review' && row.revisionId === null) ||
           !Number.isSafeInteger(row.version) || row.version < 0 || !Number.isSafeInteger(row.createdAt) || row.createdAt < 0) fail();
       const payload = row.payload;
       if (!payload || payload.contextId !== row.id || payload.version !== 1 ||

@@ -6,7 +6,7 @@
 
 ## 运行边界
 
-使用 Node 24.12.x、npm，以及固定的 core 0.2.0 / runtime 0.3.0 分发包。运行 `npm ci --ignore-scripts`、`npm test`、`npm run test:platform`、`npm run build`。此构建只生成服务端界面文件，不把私有状态打包为静态网页；完整业务必须运行 Node 服务。另有 `npm run build:pages` 专门发布显式允许的只读演示内容，见 [Pages 部署](github-pages.md)，不能替代本手册的服务端流程。
+使用 Node 24.12.x、npm，以及固定的 core 0.2.0 / runtime 0.3.0 分发包。运行 `npm ci --ignore-scripts`、`npm test`、`npm run test:platform`、`npm run build`。此构建只生成服务端界面文件，不把私有状态打包为静态网页；完整业务必须运行 Node 服务。另有 `npm run build:pages` 构建已导出的公开审核快照；首次导出前使用显式允许的演示内容。见 [Pages 同步](github-pages.md)，静态页面不能替代本手册的登录、审核及持久化流程。
 
 - `npm run dev`：仅本机演示，独立 `.demo-runtime`，密钥在忽略的 `.dev-secrets.json`。只在首次初始化发布明确标注的种子修订。不得承载真实研究数据。
 - `npm start`：生产模式，不自动发布种子答案。需要 `RUNTIME_MFA_KEY`（32 字节十六进制）及 `RUNTIME_KEYRING`（平台 keyring JSON）。通过密钥管理系统注入，不能提交到 Git 或放进 UI 目录。
@@ -26,6 +26,12 @@
 当前页面研究记录为 `query -> open -> feedback`，只保存查询长度档与随机关联 ID，不保存搜索正文。长度沿用旧版 NFKC、标点及空白归一化，分为不超过 8 字、9–40 字、超过 40 字；分享事件契约可供业务客户端调用。新版事件结构不是旧版完整实验埋点，**新旧数据不可直接混作同一批实验结果**。只有搜索后在当前页面会话打开的答案才显示关联反馈。
 
 `/editor` 是薄业务工作台：具名登录、队列筛选分页、授权私件详情、内部备注、处置和内容审核；`/runtime-editor` 保留平台原生维护及内容导入。所有操作仍经过指南网关及平台权限/事务。发布、隐藏及来源处置需要 8–400 字审核理由，同一事务以平台 SDK 加密保存为 `guide-reviews` 业务记录；审核记录不会公开。内部备注为 4–1000 字，进入终态至少 8 字并检查结果关联。试点运营没有全局私有正文读取权限。
+
+内容审核提供全文、逐句来源、筛选与跨页勾选，可一次提交最多 100 篇文章的不同结论及意见。`GET /api/guide/review-articles` 需要 `content:read`；`POST /api/guide/reviews/batch` 需要 `content:publish` 和幂等键，请求为 `{ mode: "review-and-publish", items: [...] }`，每项绑定文章 ID、最新修订、当前实体版本及上次审核记录 ID。旧版工作台未明确发送此模式的请求会被拒绝，需重新加载页面，避免旧界面把「只保存」误当作发布。
+
+`approved` 对应「通过并发布」：按所查看的最新修订追加人工确认版本，保留原文、引用及原始来源类型，记录审核人、原稿修订与审核时间，再通过平台 SDK 发布。原始修订保持不可变，其余决定只保存意见。审核结果以 `content.review` 追加到现有加密审核记录；记录与所有发布操作在同一事务内完成。任一项版本冲突、权限或发布校验失败时整批回滚；同一幂等键重试不会重复发布。新批量操作使用 `guide.reviews.batch.v2` 审计与幂等命名空间，保留旧记录。响应包含 `publishedCount` 和每项 `publishedRevisionId`，供界面明确显示实际发布结果。
+
+当前服务的公开读者接口立即读取新的发布指针，仓库种子保持不变。随后可显式导出获准公开的内容并同步到 GitHub Pages；审核和账户管理继续在本地执行，Pages 只读取导出的公开快照。隐藏或撤回后需重新同步。操作步骤见 [逐篇勾选与批量审核](handbook-maintenance.md#逐篇勾选与批量审核)和 [Pages 同步](github-pages.md#本地审核后同步)。
 
 目录与范围维护改为受审查的 `catalog.json`、`content-profile.json` 配置及内容导入，不保留旧 CRUD 页面。配置变更需版本控制评审；内容 profile 的实际数据库变更必须显式执行平台 `configure-content`。不能把示例宽权限账户直接用于招募人员。
 

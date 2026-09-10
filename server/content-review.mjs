@@ -5,6 +5,13 @@ import {
 } from '@information-community/runtime';
 import { containsLikelyPersonalData } from './business-validation.mjs';
 
+export function reviewReason(value) {
+  const reason = typeof value === 'string' ? value.normalize('NFKC').replace(/[\u0000-\u001f\u007f]/gu, ' ').trim() : '';
+  if (reason.length < 8 || reason.length > 400) throw new RuntimeError('GUIDE_REASON', '审核理由需要 8 至 400 字。');
+  if (containsLikelyPersonalData(reason)) throw new RuntimeError('PERSONAL_DATA', '审核理由不得包含邮箱、电话、学号或证件号。');
+  return reason;
+}
+
 export function recordReview(state, principal, { action, entity, reason, now, keyring }) {
   const recordId = randomUUID();
   state.modules['guide-reviews'].records.push({
@@ -35,9 +42,7 @@ export function reviewContent(store, token, command, input, options) {
   return executeAuthorized(store, token, { ...auth, permission, action: `content.${command}`, input }, (state, principal) => {
     if (Object.keys(input).some(field => !fields.includes(field))) throw new RuntimeError('GUIDE_FIELD', '不支持的审核字段。');
     if (!auth.key) throw new RuntimeError('IDEMPOTENCY_KEY_REQUIRED', '写入需要幂等键。');
-    const reason = typeof input.reason === 'string' ? input.reason.normalize('NFKC').replace(/[\u0000-\u001f\u007f]/gu, ' ').trim() : '';
-    if (reason.length < 8 || reason.length > 400) throw new RuntimeError('GUIDE_REASON', '审核理由需要 8 至 400 字。');
-    if (containsLikelyPersonalData(reason)) throw new RuntimeError('PERSONAL_DATA', '审核理由不得包含邮箱、电话、学号或证件号。');
+    const reason = reviewReason(input.reason);
     const { reason: omitted, ...operation } = input;
     state.modules.content = apply(state.modules.content, { ...operation, now: new Date(auth.now).toISOString() });
     const entity = getEntity(state.modules.content, input.entityId);

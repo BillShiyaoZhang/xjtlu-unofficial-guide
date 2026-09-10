@@ -36,7 +36,33 @@ function safeLink(value) {
 }
 
 function warnings(target, answer) {
-  for (const text of answer.warnings ?? []) target.append(make('p', text, 'warning'));
+  const values = [...(answer.warnings ?? [])];
+  const due = Date.parse(answer.reviewDueAt);
+  if (Number.isFinite(due) && Date.now() > due && !values.some(text => /待复核|已超过维护周期|已超过复核期限/u.test(text))) {
+    values.push('待复核：已超过维护周期，请先核对原站。');
+  }
+  for (const text of values) target.append(make('p', text, 'warning'));
+}
+
+function renderEdition() {
+  const reviewed = snapshot.mode === 'public-reviewed';
+  const approved = reviewed && snapshot.answers.some(answer => answer.reviewStatus === 'approved');
+  const demos = snapshot.answers.some(answer => answer.demo);
+  const empty = reviewed && !snapshot.answers.length;
+  $('edition-label').textContent = approved || empty ? '公开只读指南' : '公开只读演示';
+  $('edition-note').textContent = empty ? '暂无已发布内容' : approved
+    ? demos ? '含审核文章和演示内容 · 非学校官方信息' : '经人工审核 · 非学校官方信息'
+    : '示范内容，不代表学校官方信息';
+  $('about-content-title').textContent = empty ? '暂无已发布内容' : approved ? demos ? '审核文章与演示内容' : '已审核内容' : '示范内容';
+  $('about-content-description').textContent = empty ? '目前没有可供阅读的已发布文章。'
+    : approved
+      ? '这里收录已由编辑审核并发布的校园信息，保留逐句来源、适用范围和复核时间。AI 辅助整理的内容在详情中注明。'
+        + (demos ? '其中标有「演示内容」的文章，请结合其单独说明阅读。' : '')
+        + '编辑审核不代替学校的正式通知，具体事项请向相关部门核实。'
+      : '本页公开展示项目中的示范答案及其原始来源。示范答案尚不代表真实试点的正式审核结果，不能作为选课、入学或其他重要决定的唯一依据。具体事项请向学校相关部门核实。';
+  $('about-snapshot-description').textContent = reviewed
+    ? '这是从本地已发布内容同步的公开快照。后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处只提供阅读，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
+    : '此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。';
 }
 
 function searchTerms(query) {
@@ -89,7 +115,8 @@ function renderDetail(answer) {
     if (text) metadata.append(make('span', text));
   }
   target.append(metadata);
-  if (answer.demo) target.append(make('p', '演示内容，真实试点前需重新审核。', 'warning'));
+  if (answer.demo) target.append(make('p', answer.reviewStatus === 'approved' ? '演示内容，已完成人工审核。' : '演示内容，真实试点前需重新审核。', 'warning'));
+  if (answer.originalOrigin === 'ai_draft') target.append(make('p', '内容来源：AI 辅助初稿，经人工审核确认。', 'muted'));
   warnings(target, answer);
   const scope = Object.entries(answer.scope ?? {}).flatMap(([dimension, values]) => values.map(value => snapshot.catalog.scopes.find(item => item.dimension === dimension && (item.id === value || item.code === value))?.labelZh ?? value));
   target.append(make('p', `适用范围：${scope.join(' · ') || '尚未明确'}`, 'muted'));
@@ -160,8 +187,9 @@ async function load() {
     const response = await fetch('./public.json', { credentials: 'omit' });
     if (!response.ok) throw new Error('Snapshot unavailable');
     const value = await response.json();
-    if (value.schemaVersion !== 1 || value.mode !== 'public-demo' || !Array.isArray(value.answers) || !value.catalog || !Array.isArray(value.catalog.topics) || !Array.isArray(value.catalog.scopes) || typeof value.site?.name !== 'string') throw new Error('Unsupported snapshot');
+    if (value.schemaVersion !== 1 || !['public-demo', 'public-reviewed'].includes(value.mode) || !Array.isArray(value.answers) || !value.catalog || !Array.isArray(value.catalog.topics) || !Array.isArray(value.catalog.scopes) || typeof value.site?.name !== 'string') throw new Error('Unsupported snapshot');
     snapshot = value;
+    renderEdition();
     $('topic').replaceChildren(make('option', '全部主题'));
     $('topic').firstElementChild.value = '';
     for (const topic of snapshot.catalog.topics) { const option = make('option', topic.titleZh); option.value = topic.id; $('topic').append(option); }

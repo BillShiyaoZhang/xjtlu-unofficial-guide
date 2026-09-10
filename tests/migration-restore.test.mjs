@@ -114,7 +114,7 @@ test('legacy five-module artifacts explicitly initialize only empty guide review
   assert.equal(result.migrationWarnings.length, 1);
   assert.match(result.migrationWarnings[0], /guide-reviews.*initialized empty/);
   assert.equal(await readFile(artifactFile, 'utf8'), before);
-  for (const name of ['review-records.mjs', 'ui/editor.html', 'ui/editor.js', 'ui/editor.css']) {
+  for (const name of ['review-records.mjs', 'ui/editor.html', 'ui/editor.js', 'ui/editor.css', 'ui/batch-review.js']) {
     assert.deepEqual(await readFile(join(target, name)), await readFile(join(communityRoot, name)));
   }
   const runtime = await openRuntime({ root: target, seed: false });

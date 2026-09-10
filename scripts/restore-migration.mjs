@@ -63,7 +63,7 @@ export async function restoreMigration({ artifactFile, target, reviewFile, templ
   for (const name of ['policy.json', 'consent.json']) await copyFile(join(templateRoot, name), join(root, name));
   for (const name of extensions) await copyFile(join(templateRoot, name), join(root, name));
   await mkdir(join(root, 'ui'));
-  for (const name of ['index.html', 'guide.css', 'guide.js', 'brand.svg', 'editor.html', 'editor.js', 'editor.css']) await copyFile(join(templateRoot, 'ui', name), join(root, 'ui', name));
+  for (const name of ['index.html', 'guide.css', 'guide.js', 'brand.svg', 'editor.html', 'editor.js', 'editor.css', 'batch-review.js']) await copyFile(join(templateRoot, 'ui', name), join(root, 'ui', name));
   const runtime = await openRuntime({ root, seed: false });
   let restored;
   try { restored = runtime.store.restore(backup, review); }

@@ -45,7 +45,7 @@ jobs:
           PLAYWRIGHT_PACKAGE: ${{ runner.temp }}/pages-browser/node_modules/playwright/package.json
           PLAYWRIGHT_CHANNEL: chromium
         run: npm run test:pages-browser
-      - name: Build fresh public demo snapshot after browser fixtures
+      - name: Build fresh public snapshot after browser fixtures
         run: npm run build:pages
       - name: Upload only the public site
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'

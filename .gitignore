@@ -9,4 +9,5 @@
 /community/runtime.demo.json
 /community/.demo-server*.log
 /community/.browser-qa/
+/community/.pages-reviewed-*.tmp
 /*.private.json

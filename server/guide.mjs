@@ -7,6 +7,7 @@ import {
   lifecycleCommand, issueParticipantInvitation, submitAnonymousReport, readAuthorized,
 } from '@information-community/runtime';
 import { reviewContent, readReviews } from './content-review.mjs';
+import { readReviewArticles, submitArticleReviews } from './article-review.mjs';
 import { validateGuideCreate, validateGuideAnonymousReport, validateGuideTransition, researchAvailability } from './business-validation.mjs';
 
 const fail = (code, message, status = 400) => { throw new RuntimeError(code, message, status); };
@@ -16,13 +17,13 @@ const send = (res, status, data) => {
   res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
   res.end(JSON.stringify(data));
 };
-async function bodyOf(req) {
+async function bodyOf(req, maxBytes = 32768) {
   if (!req.headers['content-type']?.toLowerCase().startsWith('application/json')) fail('UNSUPPORTED_MEDIA_TYPE', '需要 JSON 请求。', 415);
   let size = 0;
   const chunks = [];
   for await (const chunk of req) {
     size += chunk.length;
-    if (size > 32768) fail('PAYLOAD_TOO_LARGE', '请求过大。', 413);
+    if (size > maxBytes) fail('PAYLOAD_TOO_LARGE', '请求过大。', 413);
     chunks.push(chunk);
   }
   try {
@@ -73,6 +74,15 @@ export function createGuideServer({ store, business, catalog, keyring, mfaKey, a
         const input = await bodyOf(req), now = clock();
         return send(res, 200, reviewContent(store, tokenOf(req), path.split('/').at(-1), input, {
           policy, provider, participantsConfig: business.participants, keyring, now, key: req.headers['idempotency-key'],
+        }));
+      }
+      if (req.method === 'GET' && path === '/api/guide/review-articles') return send(res, 200, readReviewArticles(store, tokenOf(req), {
+        policy, provider, participantsConfig: business.participants, keyring, catalog, now: clock(),
+      }));
+      if (req.method === 'POST' && path === '/api/guide/reviews/batch') {
+        const input = await bodyOf(req, 524288);
+        return send(res, 200, submitArticleReviews(store, tokenOf(req), input, {
+          policy, provider, participantsConfig: business.participants, keyring, now: clock(), key: req.headers['idempotency-key'],
         }));
       }
       if (req.method === 'GET' && path === '/api/guide/reviews') return send(res, 200, readReviews(store, tokenOf(req), url.searchParams.get('entityId'), {

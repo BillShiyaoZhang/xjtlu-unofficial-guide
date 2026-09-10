@@ -60,6 +60,38 @@
         </div>
       </section>
       <section id="content-view" role="tabpanel" aria-labelledby="content-tab" hidden>
+        <section id="article-review" aria-labelledby="article-review-title">
+          <div class="article-review-heading"><div><h2 id="article-review-title">文章审核</h2><p class="muted">展开核对正文与来源，勾选多篇后一次提交。「通过并发布」会立即公开文章，并保留原稿和审核记录。</p></div><p id="article-total" class="tag"></p></div>
+          <div class="article-filters">
+            <label class="article-search-label">搜索文章<input id="article-search" type="search" placeholder="标题、正文或文章 ID" autocomplete="off"></label>
+            <label>章节<select id="article-topic-filter"><option value="">全部章节</option></select></label>
+            <label>审核状态<select id="article-status-filter"><option value="pending">待审核</option><option value="">全部状态</option><option value="approved">审核通过</option><option value="changes-requested">需修改</option><option value="needs-verification">待核</option><option value="excluded">不收录</option></select></label>
+          </div>
+          <p id="article-permission" class="muted" hidden></p>
+          <div class="article-review-layout">
+            <div class="article-review-main">
+              <div class="article-list-toolbar"><label class="checkbox-label"><input id="article-select-page" type="checkbox">勾选本页</label><span id="article-result-count" class="muted"></span><button id="article-expand-page" type="button" class="secondary">展开本页正文</button></div>
+              <div id="article-list" aria-live="polite"></div>
+              <div class="pagination article-pagination"><button id="article-previous-page" type="button" class="secondary" aria-label="文章上一页">上一页</button><span id="article-page-label">0 / 0</span><button id="article-next-page" type="button" class="secondary" aria-label="文章下一页">下一页</button></div>
+            </div>
+            <aside class="batch-review-panel" aria-labelledby="batch-review-title">
+              <h3 id="batch-review-title">本次审核</h3>
+              <p id="article-selection-count" class="selection-count" aria-live="polite">已勾选 0 篇</p>
+              <p class="muted">勾选跨页保留。可逐篇填写意见，也可将共同意见应用到已选文章后再调整。</p>
+              <form id="batch-review-form">
+                <label>共同结论<select id="batch-decision"><option value="">选择共同结论</option><option value="approved">通过并发布</option><option value="changes-requested">需修改</option><option value="needs-verification">待核</option><option value="excluded">不收录</option></select></label>
+                <label>共同意见<textarea id="batch-reason" rows="4" maxlength="400" placeholder="说明核对依据或具体问题（8–400 字）"></textarea></label>
+                <button id="batch-apply" type="button" class="secondary">应用到已选文章</button>
+                <p id="batch-apply-status" class="muted" role="status" hidden></p>
+                <div id="batch-selection-summary" class="batch-selection-summary"></div>
+                <button id="batch-submit" type="submit" disabled>提交已选 0 篇的审核</button>
+                <button id="batch-clear" type="button" class="secondary" disabled>清空勾选</button>
+              </form>
+              <p class="batch-review-footnote muted">「通过并发布」生成经过人工确认的新修订，立即显示在本机读者页；其他结论只保存意见。审核完成后，在项目目录运行 <code>npm run sync:pages</code>，将公开内容同步至 GitHub Pages；等待 GitHub Actions 部署完成后上线。</p>
+            </aside>
+          </div>
+        </section>
+        <div class="advanced-content-heading"><h2>发布操作与修订查询</h2><p class="muted">按精确修订执行发布、隐藏或来源处置，也可查询原始修订和历史记录。</p></div>
         <div class="content-layout">
           <section aria-labelledby="review-title"><h2 id="review-title">发布与可见性</h2>
             <form id="content-form">
@@ -70,7 +102,7 @@
               <label id="hidden-field" hidden>可见性<select name="hidden"><option value="true">隐藏</option><option value="false">恢复</option></select></label>
               <label id="disposition-field" hidden>来源状态<select name="disposition"><option value="withdrawn">已撤回</option><option value="rights-expired">使用权到期</option><option value="active">有效</option></select></label>
               <label>审核理由<textarea name="reason" required minlength="8" maxlength="400" rows="4"></textarea></label>
-              <div class="form-actions"><button type="submit">提交审核</button><button id="review-history" type="button" class="secondary">读取审核记录</button></div>
+              <div class="form-actions"><button type="submit">执行操作</button><button id="review-history" type="button" class="secondary">读取审核记录</button></div>
             </form>
           </section>
           <section aria-labelledby="revision-title"><h2 id="revision-title">修订核对</h2>
