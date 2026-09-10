@@ -139,6 +139,10 @@ export function createArticleReview({ api, mutate, message, errorMessage, getPer
       ['修订序号', article.revisionNumber ?? '未记录'],
     ]) metadata.append(make('dt', '', label), make('dd', '', String(value)));
     if (article.reviewedFromRevisionId) metadata.append(make('dt', '', '审核原稿'), make('dd', '', article.reviewedFromRevisionId));
+    if (article.supplement) {
+      metadata.append(make('dt', '', '补充的原陈述'), make('dd', '', `${article.supplement.title}（${article.supplement.entityId || '关联无效'}）`));
+      metadata.append(make('dt', '', '原陈述状态'), make('dd', '', article.supplement.hidden ? '已隐藏，补充分支暂不展示' : article.supplement.publicRevisionId ? '有公开修订，请核对与本条补充的关系' : '尚未在本地公开；若原陈述已按清单收录到 Pages，补充可独立审核并同步。原陈述的核验状态保持独立。'));
+    }
     content.append(metadata);
     if (article.evidenceNote) content.append(make('p', 'article-evidence-note', `资料核对说明：${article.evidenceNote}`));
     const sentences = make('div', 'article-sentences');

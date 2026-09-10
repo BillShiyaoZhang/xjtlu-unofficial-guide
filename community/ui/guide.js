@@ -1,3 +1,6 @@
+import { renderBranches } from './branches.js';
+import { withBranchAncestors } from './branch-model.js';
+
 const $ = id => document.getElementById(id);
 const create = (tag, text, className) => {
   const node = document.createElement(tag);
@@ -7,7 +10,9 @@ const create = (tag, text, className) => {
 };
 let token = sessionStorage.getItem('guide-participant') ?? '';
 let epoch = Number(sessionStorage.getItem('guide-consent-epoch') ?? 0);
-let catalog, notice, answers = [];
+let catalog, notice, answers = [], contextAnswers = [], links = [];
+let readerView = 'branches';
+const answerHref = answer => '/answers/' + encodeURIComponent(answer.slug);
 let queryEventId = null;
 let routeGeneration = 0, searchGeneration = 0;
 const pendingRequests = new Map();
@@ -75,6 +80,11 @@ function show(view) {
 function renderAnswers() {
   const visible = answers.filter(answer => !$('topic').value || answer.topic?.id === $('topic').value);
   $('count').textContent = `${visible.length} 条答案`;
+  $('answer-list').hidden = readerView !== 'list';
+  $('answer-branches').hidden = readerView !== 'branches';
+  $('branches-view').setAttribute('aria-pressed', String(readerView === 'branches'));
+  $('list-view').setAttribute('aria-pressed', String(readerView === 'list'));
+  renderBranches($('answer-branches'), { answers: withBranchAncestors([...answers, ...contextAnswers], visible), topics: catalog.topics, links, topicId: $('topic').value, scopes: catalog.scopes, answerHref, expandTopics: Boolean($('search').elements.query.value.trim()) });
   $('answer-list').replaceChildren();
   if (!visible.length) $('answer-list').append(create('p', '暂无符合条件的可公开答案。', 'empty'));
   for (const answer of visible) {
@@ -108,9 +118,9 @@ async function refreshAnswers(record = false) {
   const query = new FormData($('search')).get('query');
   const scope = {};
   for (const input of $('scope-filters').querySelectorAll('select')) if (input.value) scope[input.name] = [input.value];
-  const result = await api('/api/guide/answers?q=' + encodeURIComponent(query) + '&scope=' + encodeURIComponent(JSON.stringify(scope)), { auth: '' });
+  const result = await api('/api/guide/branches?q=' + encodeURIComponent(query) + '&scope=' + encodeURIComponent(JSON.stringify(scope)), { auth: '' });
   if (generation !== searchGeneration) return;
-  answers = result;
+  answers = result.answers; contextAnswers = result.contextAnswers ?? []; links = result.links;
   renderAnswers();
   if (record && participant && token === participant && epoch && query.trim() && researchActive()) {
     const normalized = query.normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/[\p{P}\p{S}]+/gu, ' ').replace(/\s+/g, ' ').trim();
@@ -123,6 +133,7 @@ async function detail(slug, revision, generation) {
   const answer = await api('/api/guide/answers/' + encodeURIComponent(slug) + (revision ? '?revision=' + encodeURIComponent(revision) : ''), { auth: '' });
   if (generation !== routeGeneration) return;
   const target = $('answer-detail'); target.replaceChildren(create('p', answer.topic?.title ?? '', 'eyebrow'), create('h1', answer.title));
+  const parentContext = create('p', undefined, 'supplement-parent'); parentContext.hidden = true; target.append(parentContext);
   const metadata = create('div', undefined, 'detail-meta');
   for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`, `人工核验 ${date(answer.verifiedAt)}`, `复核期限 ${date(answer.reviewDueAt)}`, answer.reviewOwnerLabel]) if (text) metadata.append(create('span', text));
   target.append(metadata);
@@ -155,9 +166,23 @@ async function detail(slug, revision, generation) {
     const link = create('a', `第 ${version.number} 版`); link.href = '?revision=' + encodeURIComponent(version.id);
     link.addEventListener('click', event => { event.preventDefault(); history.pushState({}, '', link.href); route(); }); versions.append(link);
   }
-  target.append(versions, create('h2', '同话题答案'));
-  const related = answers.filter(item => item.id !== answer.id && item.topic?.id === answer.topic?.id);
-  for (const item of related) { const link = create('a', item.title); link.href = '/answers/' + encodeURIComponent(item.slug); const p = create('p'); p.append(link); target.append(p); }
+  target.append(versions, create('h2', '同话题的陈述与补充'));
+  // Detail navigation always uses the full public set, independent of directory search.
+  const branches = create('div'); target.append(branches);
+  const related = await api('/api/guide/branches', { auth: '' });
+  if (generation !== routeGeneration) return;
+  related.answers = related.answers.filter(item => item.topic?.id === answer.topic?.id);
+  const parent = related.answers.find(item => item.id === answer.supplementTo && item.id !== answer.id);
+  if (parent) {
+    const link = create('a', parent.title); link.href = answerHref(parent);
+    parentContext.append(document.createTextNode('这条信息补充了：'), link); parentContext.hidden = false;
+  }
+  if (related.answers.some(item => item.id === answer.id && item.revisionId === answer.revisionId)) {
+    renderBranches(branches, { ...related, topics: catalog.topics, scopes: catalog.scopes, selectedId: answer.id, topicId: answer.topic?.id, answerHref });
+  } else {
+    renderBranches(branches, { ...related, topics: catalog.topics, scopes: catalog.scopes, topicId: answer.topic?.id, answerHref });
+    branches.prepend(create('p', '正在阅读历史修订。分支图展示各条陈述的当前公开版本。', 'muted'));
+  }
   show('detail');
   if (token && epoch && queryEventId && researchActive()) {
     try {
@@ -206,6 +231,14 @@ async function route() {
 }
 $('search').addEventListener('submit', event => { event.preventDefault(); action(event.target, () => refreshAnswers(true)); });
 $('topic').addEventListener('change', renderAnswers);
+for (const view of ['branches', 'list']) $(view + '-view').addEventListener('click', () => { readerView = view; renderAnswers(); });
+document.addEventListener('click', event => {
+  const link = event.target.closest('#answer-branches a, #answer-detail .guide-branches a, #answer-detail .supplement-parent a');
+  if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const url = new URL(link.href);
+  if (url.origin !== location.origin || !url.pathname.startsWith('/answers/')) return;
+  event.preventDefault(); history.pushState({}, '', link.href); route();
+});
 $('scope-filters').addEventListener('change', () => refreshAnswers().catch(error => message(error.message)));
 $('redeem').addEventListener('submit', event => {
   event.preventDefault(); action(event.target, async () => {

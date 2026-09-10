@@ -9,6 +9,7 @@
   <title>西浦非官方指南</title>
   <link rel="icon" href="./brand.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./branches.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
@@ -24,11 +25,15 @@
       <div class="section-title"><h1 id="directory-title">西浦非官方指南</h1><span id="count" class="muted" aria-live="polite"></span></div>
       <form id="search" role="search"><label class="search-label" for="query">查找校园信息</label><div class="search-row"><input id="query" name="query" type="search" autocomplete="off" maxlength="200" placeholder="搜索答案、主题或来源"><button type="submit">搜索</button></div></form>
       <div class="filters"><label>主题<select id="topic"><option value="">全部主题</option></select></label><p id="topic-description" class="muted"></p></div>
-      <div id="answer-list" class="answer-list"></div>
+      <div class="directory-display" role="group" aria-label="目录显示方式"><button id="branches-mode" type="button" aria-pressed="true" aria-controls="directory-branches">分支图</button><button id="list-mode" type="button" aria-pressed="false" aria-controls="answer-list">列表</button></div>
+      <p id="branches-description" class="muted">展开话题，阅读不同陈述及其补充信息。</p>
+      <div id="directory-branches"></div>
+      <div id="answer-list" class="answer-list" hidden></div>
     </section>
     <section id="detail-view" class="view" hidden>
       <a class="back" id="back-to-list" href="#/answers">返回答案目录</a>
       <article id="answer-detail"></article>
+      <section class="related" aria-labelledby="related-branches-title"><h2 id="related-branches-title">同话题分支</h2><p class="muted">查看同话题的不同陈述及其补充信息，也可继续补充任一条信息。</p><div id="answer-branches"></div></section>
     </section>
     <section id="contribute-view" class="view" aria-labelledby="contribute-title" hidden>
       <p class="eyebrow">一起完善手册</p><h1 id="contribute-title">补充信息</h1>
@@ -37,7 +42,8 @@
       <div id="contribution-context" class="contribution-context" hidden></div>
       <p id="contribution-unavailable" class="muted" hidden>投稿入口暂未开放，请稍后再来。</p>
       <form id="contribution-form" class="contribution-form">
-        <label for="contribution-type">投稿类型<select id="contribution-type" name="type"><option value="new">新增 / 补充信息</option><option value="correction">更正 / 报告过期</option><option value="experience">分享个人经验</option></select></label>
+        <label for="contribution-type">投稿类型<select id="contribution-type" name="type"><option value="new">新增 / 补充信息</option><option value="supplement">补充当前陈述</option><option value="correction">更正 / 报告过期</option><option value="experience">分享个人经验</option></select></label>
+        <p id="contribution-supplement-help" class="muted">要为某条陈述添加补充分支，请先在<a href="#/answers?view=branches">分支图</a>中选择“补充这条信息”。</p>
         <p id="contribution-type-description" class="muted"></p>
         <label for="contribution-title">标题 <span class="required-note">必填</span><input id="contribution-title" name="title" required maxlength="100" placeholder="用一句话说明你想补充的内容"></label>
         <label for="contribution-content"><span id="contribution-content-label">信息正文</span> <span class="required-note">必填</span><textarea id="contribution-content" name="content" rows="7" required aria-describedby="contribution-content-help"></textarea></label>

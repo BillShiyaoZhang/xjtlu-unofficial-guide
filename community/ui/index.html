@@ -7,6 +7,7 @@
   <title>西浦非官方指南</title>
   <link rel="icon" href="/extensions/brand.svg">
   <link rel="stylesheet" href="/extensions/guide.css">
+  <link rel="stylesheet" href="/extensions/branches.css">
   <script type="module" src="/extensions/guide.js"></script>
 </head>
 <body>
@@ -17,9 +18,11 @@
       <div class="section-title"><div><p class="eyebrow">校园信息</p><h1>查找与核对</h1></div><span id="count" class="muted"></span></div>
       <form id="search" class="search"><input name="query" aria-label="搜索答案" placeholder="搜索账号、系统、校园办事" maxlength="500" type="search"><button type="submit">搜索</button></form>
       <div class="filters"><label>话题<select id="topic"><option value="">全部话题</option></select></label><div id="scope-filters"></div></div>
-      <div id="answer-list" class="answer-list" aria-live="polite"></div>
+      <div class="branch-view-switch" role="group" aria-label="阅读视图"><button id="branches-view" type="button" aria-pressed="true">分支图</button><button id="list-view" type="button" aria-pressed="false" class="secondary">列表</button></div>
+      <div id="answer-branches"></div>
+      <div id="answer-list" class="answer-list" aria-live="polite" hidden></div>
     </section>
-    <section id="detail" class="view" hidden><a href="/#answers" class="back">返回答案列表</a><div id="answer-detail"></div></section>
+    <section id="detail" class="view" hidden><a href="/#answers" class="back">返回答案目录</a><div id="answer-detail"></div></section>
     <section id="participate" class="view" hidden>
       <div class="section-title"><div><p class="eyebrow">邀请制研究</p><h1>参与试点</h1></div><span id="participant-state" class="muted">未加入</span></div>
       <div id="notice"></div>

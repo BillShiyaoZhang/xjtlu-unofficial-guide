@@ -1,0 +1,55 @@
+.guide-branches{--branch-line:#cadbd1;--branch-ink:#1f5c50;min-width:0;margin:22px 0 32px;overflow-wrap:anywhere}
+.guide-branch-intro{border-left:3px solid #83a994;background:#edf4ef;padding:13px 18px;margin-bottom:18px}
+.guide-branch-note{font-size:15px;margin:0 0 4px;color:#355e4c}
+.guide-branch-hint{font-size:13px;color:#66776f;margin:0}
+.guide-branch-controls{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.guide-branches .guide-branch-button{color:var(--branch-ink);background:#fff;border:1px solid #becfc4;min-height:44px;padding:8px 14px;border-radius:5px;font-size:13px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.guide-branches .guide-branch-button:hover{background:#edf4ef;border-color:#759c85}
+.guide-branches .guide-branch-button:disabled{opacity:1;cursor:default}
+.guide-branches a:focus-visible,.guide-branches button:focus-visible,.guide-branches summary:focus-visible{outline:3px solid #e4b96d;outline-offset:3px}
+.guide-branch-path{font-size:13px;color:#4d6859;margin:12px 0 20px}
+.guide-branch-path-divider{color:#849b8d}
+.guide-branch-tree,.guide-branch-children{list-style:none;margin:0;padding:0;min-width:0}
+.guide-branch-node{position:relative;min-width:0}
+.guide-branch-root{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#1f5c50;color:#fff;border-radius:6px;padding:16px 20px}
+.guide-branch-root strong{font-size:17px;font-weight:600}
+.guide-branch-root span{font-size:12px;color:#deede4}
+.guide-branch-children{margin-left:20px;padding:18px 0 0 22px;border-left:1px solid var(--branch-line)}
+.guide-branch-children>.guide-branch-node{margin-bottom:16px}
+.guide-branch-children>.guide-branch-node:last-child{margin-bottom:0}
+.guide-branch-children>.guide-branch-node:before{content:"";position:absolute;left:-23px;top:25px;width:22px;border-top:1px solid var(--branch-line)}
+.guide-branch-topic-heading{border:1px solid #cddbd2;border-radius:6px;background:#f0f5f2;padding:4px 7px}
+.guide-branches .guide-branch-topic-toggle{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 7px;font-size:16px;font-weight:600;border:0;background:transparent}
+.guide-branches .guide-branch-topic-toggle:hover{background:#e4eee7}
+.guide-branches .guide-branch-topic-toggle:disabled:hover{background:transparent}
+.guide-branch-chevron{font-size:20px;font-weight:400;line-height:1;width:19px;flex-shrink:0;text-align:center}
+.guide-branch-topic-count{margin-left:auto;flex-shrink:0;font-size:12px;font-weight:400;color:#617b6b}
+.guide-branch-topic-description{margin:0 7px 10px 36px;font-size:13px;color:#66776f}
+.guide-branch-answer{padding:18px 21px;background:#fff;border:1px solid #d4dfd8;border-radius:6px;min-width:0}
+.guide-branch-answer.is-current{border-color:#568e70;box-shadow:inset 3px 0 0 #568e70;background:#f8fcf9}
+.guide-branch-kind{font-size:11px;letter-spacing:.04em;color:#60836d;margin:0 0 8px}
+.guide-branch-answer.is-current .guide-branch-kind{font-weight:600;color:#1f5c50}
+.guide-branch-supplement{background:#fbfcf9;border-color:#d0dcc8}
+.guide-branch-answer[data-branch-context=true]{border-style:dashed}
+.guide-branch-parent{font-size:12px;color:#637759;margin:0 0 12px}
+.guide-branches .guide-branch-supplement-toggle{display:block;margin-top:12px;text-align:left}
+.guide-branch-contribute{display:inline-flex;align-items:center;min-height:44px;margin:5px 0 0 18px;font-size:13px}
+.guide-branch-empty-supplements{font-size:12px;color:#66776f;margin:8px 0 0}
+/* Keep the semantic nested list while capping visual indentation on deep chains. */
+.guide-branch-node-deep>.guide-branch-children{margin-left:0;padding-left:0;border-left:0}
+.guide-branch-node-deep>.guide-branch-children>.guide-branch-node:before{display:none}
+.guide-branch-answer h3{font-size:17px;line-height:1.55;margin:0 0 10px;font-weight:600}
+.guide-branch-answer h3 a{color:#263b2f;text-decoration:none}
+.guide-branch-answer h3 a:hover{color:#1f5c50;text-decoration:underline}
+.guide-branch-summary{font-size:14px;color:#53675c;margin:8px 0 13px;white-space:pre-wrap}
+.guide-branch-metadata,.guide-branch-scope{font-size:12px;color:#66776f;margin:6px 0}
+.guide-branch-warning{color:#866117;background:#fff6df;border-left:3px solid #c79639;padding:8px 11px;font-size:13px;margin:10px 0}
+.guide-branch-answer>.guide-branch-read{display:inline-flex;align-items:center;min-height:44px;margin-top:5px;font-size:13px}
+.guide-branch-footer{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-top:18px;margin-top:20px;border-top:1px solid #dce4df}
+.guide-branch-related{border:1px solid #d4dfd8;border-radius:6px;padding:12px 18px;margin-top:24px;font-size:14px;background:#fff}
+.guide-branch-related summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;color:#395e4b;font-weight:600}
+.guide-branch-related ul{list-style:none;padding:0;margin:12px 0 0}
+.guide-branch-related li{padding:12px 0;border-top:1px solid #e2e9e4;overflow-wrap:anywhere}
+.guide-branch-related li p{margin:6px 0 0;color:#66776f;font-size:13px;white-space:pre-wrap}
+@media(max-width:720px){.guide-branches{margin-top:18px}.guide-branch-intro{padding:12px 14px}.guide-branch-controls{gap:7px}.guide-branches .guide-branch-button{padding:8px 11px}.guide-branch-root{padding:14px 16px;gap:4px 12px}.guide-branch-children{margin-left:10px;padding-left:12px;padding-top:14px}.guide-branch-children>.guide-branch-node:before{left:-13px;width:12px}.guide-branches .guide-branch-topic-toggle{gap:6px;padding:8px 4px;font-size:15px;flex-wrap:wrap}.guide-branch-topic-toggle>span:nth-child(2){flex:1;min-width:0}.guide-branch-topic-count{font-size:11px}.guide-branch-topic-description{margin-left:29px;margin-right:4px}.guide-branch-answer{padding:15px 14px}.guide-branch-answer h3{font-size:16px}.guide-branch-summary{font-size:13px}.guide-branch-related{padding:10px 14px}}
+@media(max-width:720px){.guide-branch-node-deep>.guide-branch-children,.guide-branch-node[data-branch-depth="3"]>.guide-branch-children{margin-left:0;padding-left:0;border-left:0}.guide-branch-node[data-branch-depth="3"]>.guide-branch-children>.guide-branch-node:before{display:none}.guide-branch-contribute{margin-left:0;margin-right:14px}.guide-branch-answer>.guide-branch-read{margin-right:14px}.guide-branch-topic-count{flex-shrink:1}.guide-branch-parent{font-size:11px}}

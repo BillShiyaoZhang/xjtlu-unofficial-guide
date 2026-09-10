@@ -1,13 +1,16 @@
 import { copyFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentModule, importContent, publishContent, projectPublic, readPublicRevision } from '@information-community/runtime';
 import { pagesSite, validateReviewedPagesData } from './pages-snapshot.mjs';
 import { sourceCategories } from '../community/source-categories.mjs';
 import { publicSourceMetadata } from '../community/source-registry.mjs';
+import { branchBrowserAssets } from './branch-assets.mjs';
+import { connectedSupplements, supplementMetadata } from '../community/supplements.mjs';
 
 const assets = ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg'];
-const outputs = [...assets, 'public.json', '.nojekyll'];
+const branchAssets = ['branches.js', 'branch-model.js', 'branches.css', 'core/index.js', 'core/branches.js', 'core/LICENSE'];
+const outputs = [...assets, ...branchAssets, 'public.json', '.nojekyll'];
 const pick = (value, names) => Object.fromEntries(names.filter(name => value[name] !== undefined).map(name => [name, value[name]]));
 const fail = message => { throw new Error(`Pages build: ${message}`); };
 const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
@@ -80,7 +83,7 @@ export function createPagesData({ config, profile, content: input, catalog, now 
     entities: input.entities.filter(value => selectedEntityIds.has(value.id)),
     revisions: selectedRevisions,
     citations,
-    links: [],
+    links: input.links.filter(link => selectedEntityIds.has(link.from) && selectedEntityIds.has(link.to)),
   };
   let content = importContent(contentModule.initialState({ profile }), bundle);
   for (const revision of [...selected].sort((left, right) => left.number - right.number)) {
@@ -106,10 +109,12 @@ export function createPagesData({ config, profile, content: input, catalog, now 
       demo: true,
       ...pick(data, ['summary', 'asOf', 'verifiedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote']),
       topic: topic ? { id: topic.id, slug: topic.slug, title: topic.titleZh } : null,
+      ...supplementMetadata(data),
       history,
     };
   });
   if (answers.length !== new Set(selected.map(value => value.entityId)).size) fail('not every selected answer passes the public projection');
+  const visibleAnswers = connectedSupplements(answers), visible = new Set(visibleAnswers.map(answer => answer.id));
   return {
     schemaVersion: 1,
     mode: 'public-demo',
@@ -117,7 +122,7 @@ export function createPagesData({ config, profile, content: input, catalog, now 
     site: pagesSite(config, overrides),
     catalog: { topics, scopes, publishers },
     search: { aliases: structuredClone(profile.search.aliases) },
-    answers,
+    answers: visibleAnswers, links: graph.edges.filter(edge => visible.has(edge.from) && visible.has(edge.to)),
   };
 }
 
@@ -144,17 +149,30 @@ export async function buildPages({ root = resolve('.'), now, origin, basePath } 
     if (!stat.isFile() || stat.isSymbolicLink()) fail(`UI asset ${name} must be a regular file`);
   }
   const output = resolve(community, 'pages-dist');
+  const shared = await branchBrowserAssets();
+  async function inspectOutput(directory, prefix = '') {
+    for (const name of await readdir(directory)) {
+      const relative = prefix + name, path = resolve(directory, name);
+      const entry = await lstat(path);
+      if (relative === 'core' && entry.isDirectory() && !entry.isSymbolicLink()) {
+        await inspectOutput(path, 'core/');
+        continue;
+      }
+      if (!outputs.includes(relative)) fail(`unexpected output ${relative}; refusing to retain or overwrite an unknown artifact`);
+      if (!entry.isFile() || entry.isSymbolicLink()) fail(`output ${relative} must be a regular file`);
+    }
+  }
   try {
     const stat = await lstat(output);
     if (!stat.isDirectory() || stat.isSymbolicLink()) fail('output must be a regular directory');
-    for (const name of await readdir(output)) {
-      if (!outputs.includes(name)) fail(`unexpected output ${name}; refusing to retain or overwrite an unknown artifact`);
-      const entry = await lstat(resolve(output, name));
-      if (!entry.isFile() || entry.isSymbolicLink()) fail(`output ${name} must be a regular file`);
-    }
+    await inspectOutput(output);
   } catch (error) { if (error.code !== 'ENOENT') throw error; }
   await mkdir(output, { recursive: true });
   for (const name of assets) await copyFile(resolve(source, name), resolve(output, name));
+  for (const [name, body] of Object.entries(shared)) {
+    await mkdir(dirname(resolve(output, name)), { recursive: true });
+    await writeFile(resolve(output, name), body);
+  }
   await writeFile(resolve(output, 'public.json'), JSON.stringify(data, null, 2) + '\n');
   await writeFile(resolve(output, '.nojekyll'), '');
   return { output, answerCount: data.answers.length };

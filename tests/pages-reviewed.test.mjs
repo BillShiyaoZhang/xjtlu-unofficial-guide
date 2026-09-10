@@ -257,7 +257,7 @@ test('Pages build prefers the reviewed snapshot and emits no private runtime or 
   assert.equal(emitted.mode, 'public-reviewed');
   assert.deepEqual(emitted.answers, snapshot.answers);
   assert.equal(emitted.contentHash, snapshot.contentHash);
-  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'contributions.js', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'branch-model.js', 'branches.css', 'branches.js', 'brand.svg', 'contributions.js', 'core', 'index.html', 'public.json', 'style.css']);
   const serialized = JSON.stringify(emitted);
   assert.equal(serialized.includes('PRIVATE_RUNTIME_DATABASE_SENTINEL'), false);
   assert.equal(serialized.includes('PRIVATE_REVIEWER_LOGIN_SENTINEL'), false);

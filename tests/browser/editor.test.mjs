@@ -32,6 +32,7 @@ test('editor and reader work across desktop and mobile without leaking stale pri
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(h.base);
+    await page.locator('#list-view').click();
     await page.locator('#answer-list .answer-item').first().waitFor();
     assert.ok(await page.getByText('该答案收到争议报告', { exact: false }).count());
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);

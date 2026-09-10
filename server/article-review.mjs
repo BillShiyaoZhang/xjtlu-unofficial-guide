@@ -4,6 +4,7 @@ import {
   encryptPrivatePayload, decryptPrivatePayload, importContent, publishContent, getEntity,
 } from '@information-community/runtime';
 import { reviewReason } from './content-review.mjs';
+import { assertPublishedSupplements } from './supplements.mjs';
 
 const decisions = ['approved', 'changes-requested', 'needs-verification', 'excluded'];
 const itemFields = ['entityId', 'revisionId', 'expectedVersion', 'expectedReviewId', 'decision', 'reason'];
@@ -73,6 +74,12 @@ export function readReviewArticles(store, token, options) {
       return {
         entityId: entity.id, revisionId: revision.id, revisionNumber: revision.number, version: entity.version,
         title: data.title, summary: data.summary ?? '', topicId: data.topicId ?? entity.topicId ?? entity.extensions?.topicId ?? '',
+        ...(Object.hasOwn(data, 'supplementTo') ? { supplement: {
+          entityId: typeof data.supplementTo === 'string' ? data.supplementTo : '',
+          title: index.latest.get(data.supplementTo)?.data.title ?? '未找到原陈述',
+          publicRevisionId: index.entities.get(data.supplementTo)?.publicRevisionId ?? null,
+          hidden: index.entities.get(data.supplementTo)?.hidden ?? false,
+        } } : {}),
         scope: scopeLabel(data.scope, catalog, content.profile),
         origin: data.origin, demo: data.demo === true, impact: data.impact,
         originalOrigin: data.originalOrigin ?? data.origin, reviewedFromRevisionId: data.reviewedFromRevisionId ?? null,
@@ -195,6 +202,7 @@ export function submitArticleReviews(store, token, input, options) {
         publicRevisionId: entity.publicRevisionId, publishedRevisionId, version: entity.version,
       };
     });
+    if (confirmations.size) assertPublishedSupplements(state.modules.content, [...confirmations.keys()]);
     return { batchId, records, count: records.length, publishedCount: confirmations.size };
   });
 }

@@ -12,6 +12,10 @@ import { guideIdentityProvider, localPasswordLogin, loopbackLoginRequest } from 
 import { validateGuideCreate, validateGuideAnonymousReport, validateGuideTransition, researchAvailability } from './business-validation.mjs';
 import { sourceCategories } from '../community/source-categories.mjs';
 import { publicSourceMetadata } from '../community/source-registry.mjs';
+import { coreBrowserAssets } from '../scripts/branch-assets.mjs';
+import { connectedSupplements, supplementContext, supplementMetadata } from '../community/supplements.mjs';
+
+const branchCore = await coreBrowserAssets();
 
 const fail = (code, message, status = 400) => { throw new RuntimeError(code, message, status); };
 const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
@@ -51,10 +55,14 @@ export function guideAnswer(state, node, catalog) {
     verifiedAt: data.verifiedAt ?? null, reviewDueAt: data.reviewDueAt ?? null,
     reviewOwnerLabel: data.reviewOwnerLabel ?? '', disputeStatus: data.disputeStatus ?? 'none',
     evidenceNote: data.evidenceNote ?? null,
+    ...supplementMetadata(data),
     topic: topic ? { id: topic.id, slug: topic.slug, title: topic.titleZh ?? topic.title_zh ?? topic.title } : null,
   };
 }
 export function createGuideServer({ store, business, catalog, keyring, mfaKey, assets = {}, clock = Date.now, provider, localPasswordOnly = false }) {
+  assets = { ...assets, ...Object.fromEntries(Object.entries(branchCore).map(([name, body]) => [
+    `/extensions/${name}`, { body, type: name.endsWith('.js') ? 'text/javascript; charset=utf-8' : 'text/plain; charset=utf-8' },
+  ])) };
   provider = guideIdentityProvider(provider, localPasswordOnly);
   const policy = business.roles;
   const lifecycle = { config: business.lifecycle, keyring, participants: business.participants, provider, policy };
@@ -102,12 +110,20 @@ export function createGuideServer({ store, business, catalog, keyring, mfaKey, a
       if (req.method === 'GET' && path === '/api/guide/reviews') return send(res, 200, readReviews(store, tokenOf(req), url.searchParams.get('entityId'), {
         policy, provider, participantsConfig: business.participants, keyring, now: clock(),
       }));
-      if (req.method === 'GET' && path === '/api/guide/answers') {
+      if (req.method === 'GET' && ['/api/guide/answers', '/api/guide/branches'].includes(path)) {
         let scope = {};
         try { scope = JSON.parse(url.searchParams.get('scope') ?? '{}'); } catch { fail('INVALID_SCOPE', '范围无效。'); }
         const state = store.read();
-        const graph = projectPublic(state.modules.content, { query: url.searchParams.get('q') ?? '', scope, now: new Date(clock()).toISOString() });
-        return send(res, 200, graph.nodes.map(node => guideAnswer(state, node, catalog)));
+        const now = new Date(clock()).toISOString(), query = url.searchParams.get('q') ?? '';
+        const matches = projectPublic(state.modules.content, { query, scope, now });
+        const graph = query || Object.keys(scope).length ? projectPublic(state.modules.content, { now }) : matches;
+        const allAnswers = connectedSupplements(graph.nodes.map(node => guideAnswer(state, node, catalog)));
+        const matchedIds = new Set(matches.nodes.map(node => node.id));
+        const answers = allAnswers.filter(answer => matchedIds.has(answer.id));
+        const contextAnswers = supplementContext(allAnswers, answers);
+        const visible = new Set([...answers, ...contextAnswers].map(answer => answer.id));
+        const links = graph.edges.filter(edge => visible.has(edge.from) && visible.has(edge.to));
+        return send(res, 200, path === '/api/guide/branches' ? { answers, contextAnswers, links } : answers);
       }
       if (req.method === 'GET' && path.startsWith('/api/guide/answers/')) {
         const slug = decodeURIComponent(path.slice('/api/guide/answers/'.length));
@@ -117,9 +133,17 @@ export function createGuideServer({ store, business, catalog, keyring, mfaKey, a
         if (/^\d+$/u.test(id ?? '')) id = content.revisions.find(item => item.entityId === entity?.id && item.number === Number(id))?.id;
         const node = id && readPublicRevision(content, id, { now: new Date(clock()).toISOString() });
         if (!node || node.id !== entity?.id) fail('NOT_FOUND', '答案目前不可公开。', 404);
+        const currentAnswers = connectedSupplements(projectPublic(content, { now: new Date(clock()).toISOString() }).nodes.map(item => guideAnswer(state, item, catalog)));
+        const allowed = item => {
+          const answer = guideAnswer(state, item, catalog);
+          return currentAnswers.some(value => value.id === answer.id) && connectedSupplements([
+            ...currentAnswers.filter(value => value.id !== answer.id), answer,
+          ]).some(value => value.id === answer.id);
+        };
+        if (!allowed(node)) fail('NOT_FOUND', '答案目前不可公开。', 404);
         const history = content.revisions.filter(item => item.entityId === entity.id)
           .map(item => readPublicRevision(content, item.id, { now: new Date(clock()).toISOString() }))
-          .filter(Boolean).map(item => ({ id: item.revisionId, number: item.revisionNumber, title: item.title }));
+          .filter(item => item && allowed(item)).map(item => ({ id: item.revisionId, number: item.revisionNumber, title: item.title }));
         return send(res, 200, { ...guideAnswer(state, node, catalog), history });
       }
       if (req.method === 'POST' && path === '/api/guide/invitations') {

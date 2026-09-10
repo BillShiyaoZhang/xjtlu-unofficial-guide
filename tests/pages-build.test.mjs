@@ -92,7 +92,8 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   await writeFile(resolve(directory, '.dev-secrets.json'), 'PRIVATE_SECRETS_SENTINEL');
   const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
   assert.equal(result.answerCount, 4);
-  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'contributions.js', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'branch-model.js', 'branches.css', 'branches.js', 'brand.svg', 'contributions.js', 'core', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(resolve(result.output, 'core'))).sort(), ['LICENSE', 'branches.js', 'index.js']);
   const serialized = await readFile(resolve(result.output, 'public.json'), 'utf8');
   assert.ok(!serialized.includes('PRIVATE_DATABASE_SENTINEL'));
   assert.ok(!serialized.includes('PRIVATE_SECRETS_SENTINEL'));

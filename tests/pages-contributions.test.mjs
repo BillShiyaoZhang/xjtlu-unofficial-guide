@@ -34,6 +34,23 @@ test('drafts use only current public article context and ignore forged route val
   }
 });
 
+test('supplement drafts require a public parent and describe its current version as a child branch', () => {
+  const parameters = new URLSearchParams({ article: 'article-1', revision: 'forged-private-version', type: 'supplement' });
+  const article = contributionArticle(snapshot, parameters);
+  const draft = buildContributionDraft({ repository, values: { ...values, type: 'supplement' }, article });
+  assert.equal(draft.title, `[补充] ${values.title}`);
+  assert.match(draft.body, /### 补充内容/u);
+  assert.match(draft.body, /补充父陈述 ID：article-1/u);
+  assert.match(draft.body, /父陈述公开版本：article-1-v2（第 2 版）/u);
+  assert.match(draft.body, /作为其下级分支/u);
+  assert.doesNotMatch(draft.body, /forged-private-version/u);
+  assert.equal(new URL(draft.url).searchParams.get('body'), draft.body);
+  for (const invalid of [null, { answer: {} }, { answer: { id: 'article-1', revisionId: '', revisionNumber: 1 } }, { answer: { id: 'article-1', revisionId: 'article-1-v2', revisionNumber: 0 } }]) {
+    assert.throws(() => buildContributionDraft({ repository, values: { ...values, type: 'supplement' }, article: invalid }), /选择要补充的陈述/u);
+  }
+  assert.throws(() => buildContributionDraft({ repository, values: { ...values, type: 'supplement', source: '' }, article }), /必填/u);
+});
+
 test('drafts require fields and public confirmation, with source optional only for corrections', () => {
   for (const field of ['title', 'content', 'source', 'campus', 'audience', 'time', 'ai']) assert.throws(() => buildContributionDraft({ repository, values: { ...values, [field]: '  ' } }), /必填/u);
   assert.throws(() => buildContributionDraft({ repository, values: { ...values, public: false } }), /可以公开/u);

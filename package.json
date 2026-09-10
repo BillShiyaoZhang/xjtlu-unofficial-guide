@@ -24,7 +24,7 @@
     "research:report": "node scripts/research-report.mjs"
   },
   "dependencies": {
-    "@information-community/core": "file:vendor/information-community-core-0.2.0.tgz",
-    "@information-community/runtime": "file:vendor/information-community-runtime-0.3.0.tgz"
+    "@information-community/core": "file:vendor/information-community-core-0.3.0.tgz",
+    "@information-community/runtime": "file:vendor/information-community-runtime-0.3.0-branches.tgz"
   }
 }

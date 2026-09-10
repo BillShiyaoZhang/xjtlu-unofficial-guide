@@ -3,6 +3,7 @@ import { configureContent, publishContent, projectPublic, decryptPrivatePayload 
 import { isSafePublicUrl } from '../server/business-validation.mjs';
 import { SOURCE_CATEGORIES, sourceCategories } from '../community/source-categories.mjs';
 import { publicSourceMetadata } from '../community/source-registry.mjs';
+import { connectedSupplements, supplementMetadata } from '../community/supplements.mjs';
 
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const pick = (value, fields) => Object.fromEntries(fields.filter(key => value[key] !== undefined).map(key => [key, value[key]]));
@@ -47,7 +48,7 @@ function publicUrl(value, site) {
 
 /** This is a public DTO, not a content import or a database backup. */
 export function validateReviewedPagesData(input, { config, ...overrides } = {}) {
-  exact(input, ['schemaVersion', 'mode', 'generatedAt', 'contentHash', 'site', 'catalog', 'search', 'answers']);
+  exact(input, ['schemaVersion', 'mode', 'generatedAt', 'contentHash', 'site', 'catalog', 'search', 'answers', 'links']);
   if (input.schemaVersion !== 1 || !['public-reviewed', 'public-guide'].includes(input.mode)) fail('expected public guide snapshot, never a runtime backup');
   date(input.generatedAt);
   if (!/^[a-f0-9]{64}$/u.test(input.contentHash) || pagesContentHash(input) !== input.contentHash) fail('content hash mismatch');
@@ -79,8 +80,9 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
   distinct(input.answers.map(answer => answer?.revisionId));
   for (const answer of input.answers) {
     exact(answer, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'citations', 'scope', 'warnings', 'slug', 'demo',
-      'summary', 'asOf', 'verifiedAt', 'researchedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote', 'topic', 'history', 'origin', 'originalOrigin', 'reviewStatus', 'sourceCategories']);
+      'summary', 'asOf', 'verifiedAt', 'researchedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote', 'topic', 'history', 'origin', 'originalOrigin', 'reviewStatus', 'sourceCategories', 'supplementTo']);
     id(answer.id); id(answer.revisionId); text(answer.title, 160, 1); text(answer.slug, 200, 1);
+    if (Object.hasOwn(answer, 'supplementTo')) id(answer.supplementTo);
     if (!Number.isSafeInteger(answer.revisionNumber) || answer.revisionNumber < 1 || typeof answer.demo !== 'boolean') fail('invalid public content version');
     if (answer.demo && !config.publishedRevisionIds?.length) fail('demo content is not selected for this release');
     if (answer.reviewStatus === 'collected') {
@@ -148,6 +150,16 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
     exact(history, ['id', 'number', 'title']);
     if (history.id !== answer.revisionId || history.number !== answer.revisionNumber || history.title !== answer.title) fail('history differs from published version');
   }
+  if (connectedSupplements(input.answers).length !== input.answers.length) fail('supplements require an acyclic chain of visible parents in the same topic');
+  if (input.links !== undefined) {
+    list(input.links); distinct(input.links.map(link => link?.id));
+    const visible = new Set(input.answers.map(answer => answer.id));
+    for (const link of input.links) {
+      exact(link, ['id', 'from', 'to', 'type', 'reason']);
+      id(link.id); id(link.from); id(link.to); text(link.reason, 500, 1);
+      if (link.type !== 'related' || link.from === link.to || !visible.has(link.from) || !visible.has(link.to)) fail('links must connect two visible articles');
+    }
+  }
   if ((input.mode === 'public-guide') !== input.answers.some(answer => answer.reviewStatus === 'collected')) fail('snapshot mode must describe its collected content');
   return structuredClone(input);
 }
@@ -155,7 +167,7 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
 /** An explicit Pages release of exact draft revisions; never write or relax the runtime policy. */
 function collectedNodes(content, config, latestReviews, now) {
   const selected = collectedRevisionIds(config);
-  if (!selected.size) return [];
+  if (!selected.size) return { nodes: [], edges: [] };
   const revisions = new Map(content.revisions.map(row => [row.id, row]));
   const entities = new Map(content.entities.map(row => [row.id, row]));
   const roles = new Map(content.profile.entityTypes.map(row => [row.id, row.role]));
@@ -176,7 +188,7 @@ function collectedNodes(content, config, latestReviews, now) {
     if (sources.some(source => source.data.rights?.expiresAt !== undefined)) fail('time-limited sources cannot enter permanent static artifacts');
     candidates.push(revision);
   }
-  if (!candidates.length) return [];
+  if (!candidates.length) return { nodes: [], edges: [] };
   const profile = structuredClone(content.profile);
   profile.publication.blockedValues.origin = (profile.publication.blockedValues.origin ?? []).filter(value => value !== 'ai_draft');
   let projection = configureContent(content, profile);
@@ -191,7 +203,8 @@ function collectedNodes(content, config, latestReviews, now) {
       if (error.code !== 'SOURCE_UNAVAILABLE') throw error;
     }
   }
-  return projectPublic(projection, { now }).nodes.filter(node => visible.has(node.revisionId));
+  const graph = projectPublic(projection, { now });
+  return { nodes: graph.nodes.filter(node => visible.has(node.revisionId)), edges: graph.edges };
 }
 
 export function createReviewedPagesData({ state, catalog, config, keyring, now = new Date().toISOString() }) {
@@ -209,12 +222,14 @@ export function createReviewedPagesData({ state, catalog, config, keyring, now =
     if (payload.outcome?.decision === 'approved' && payload.outcome.publishedRevisionId) approved.set(payload.outcome.publishedRevisionId, record);
     latestReviews.set(record.entityId, { revisionId: record.revisionId, decision: payload.outcome?.decision });
   }
-  const collected = collectedNodes(content, config, latestReviews, now);
+  const collectionGraph = collectedNodes(content, config, latestReviews, now);
+  const collected = collectionGraph.nodes;
+  const publicGraph = projectPublic(content, { now });
   const collectedIds = new Set(collected.map(node => node.revisionId));
   // Removing a demo from the release also excludes later approved revisions of it.
   // Old local stores may retain immutable demo history; it must never republish itself.
   const demoEntities = new Set((config.publishedRevisionIds ?? []).map(id => revisions.get(id)?.entityId).filter(Boolean));
-  const answers = [...projectPublic(content, { now }).nodes, ...collected]
+  const answers = connectedSupplements([...publicGraph.nodes, ...collected]
     .filter(node => revisions.get(node.revisionId).data.demo !== true || demoEntities.has(node.id)).map(node => {
     const revision = revisions.get(node.revisionId), data = revision.data, entity = entities.get(node.id);
     const legacyDemo = data.demo === true && config.publishedRevisionIds?.includes(revision.id);
@@ -241,12 +256,16 @@ export function createReviewedPagesData({ state, catalog, config, keyring, now =
       ...Object.fromEntries(['summary', 'asOf', 'verifiedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote'].map(key => [key, data[key] ?? ''])),
       ...(collection ? { researchedAt: data.researchedAt, reviewOwnerLabel: '尚未人工核验' } : {}),
       topic: topic ? { id: topic.id, slug: topic.slug, title: topic.titleZh } : null,
+      ...supplementMetadata(data),
       history: [{ id: revision.id, number: revision.number, title: data.title }],
     };
-  });
+  }));
+  const visible = new Set(answers.map(answer => answer.id));
+  const links = [...new Map([...publicGraph.edges, ...collectionGraph.edges].map(edge => [edge.id, edge])).values()]
+    .filter(edge => visible.has(edge.from) && visible.has(edge.to));
   const snapshot = {
-    schemaVersion: 1, mode: collected.length ? 'public-guide' : 'public-reviewed', generatedAt: new Date(now).toISOString(), site,
-    catalog: { topics, scopes, publishers }, search: { aliases: structuredClone(content.profile.search.aliases) }, answers,
+    schemaVersion: 1, mode: answers.some(answer => answer.reviewStatus === 'collected') ? 'public-guide' : 'public-reviewed', generatedAt: new Date(now).toISOString(), site,
+    catalog: { topics, scopes, publishers }, search: { aliases: structuredClone(content.profile.search.aliases) }, answers, links,
   };
   snapshot.contentHash = pagesContentHash(snapshot);
   return validateReviewedPagesData(snapshot, { config });

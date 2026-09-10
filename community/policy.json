@@ -14,5 +14,5 @@
   "anonymousReportType": "privacy",
   "researchEventFields": ["kind", "queryLengthBand", "queryEventId", "revisionId", "outcome"],
   "participantManagementPermission": "guide:participants:manage",
-  "publicRevisionFields": ["summary", "asOf", "verifiedAt", "reviewDueAt", "reviewOwnerLabel", "scopeMode", "scopeIds", "evidenceCoverage", "disputeStatus", "evidenceNote", "locale", "demo"]
+  "publicRevisionFields": ["summary", "asOf", "verifiedAt", "reviewDueAt", "reviewOwnerLabel", "scopeMode", "scopeIds", "evidenceCoverage", "disputeStatus", "evidenceNote", "locale", "demo", "supplementTo"]
 }

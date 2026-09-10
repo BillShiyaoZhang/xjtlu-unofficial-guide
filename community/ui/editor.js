@@ -83,6 +83,7 @@ function errorMessage(error) {
     RATE_LIMITED: '尝试次数过多，请稍后重试。',
     PERSONAL_DATA: '内部备注不能包含邮箱、电话、学号或证件号。',
     GUIDE_REASON: '审核理由需要 8 至 400 字；请检查所填内容。',
+    GUIDE_SUPPLEMENT: '补充信息需关联同话题的有效陈述，不能形成循环。本批未保存，请核对原陈述及补充关系。',
     GUIDE_REVIEW_MODE: '工作台已更新为通过并发布，请重新加载页面后核对并提交。',
     CONTENT_HIDDEN: '所选文章已隐藏，请先处理可见性再审核发布；本批未保存。',
     SOURCE_UNAVAILABLE: '所选文章的引用来源已隐藏、撤回或使用权到期；本批未保存，请核对来源。',

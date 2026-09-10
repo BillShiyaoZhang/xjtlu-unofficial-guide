@@ -1,4 +1,6 @@
 import { renderContribution as renderContributionForm } from './contributions.js';
+import { renderBranches } from './branches.js';
+import { withBranchAncestors } from './branch-model.js';
 
 const $ = id => document.getElementById(id);
 const make = (tag, text, className) => {
@@ -8,14 +10,21 @@ const make = (tag, text, className) => {
   return element;
 };
 let snapshot;
-let listHash = '#/answers';
+let listHash = '#/answers?view=branches';
 const date = value => {
   if (!value) return '未注明';
   const parsed = new Date(typeof value === 'number' && value < 1e12 ? value * 1000 : value);
   return Number.isFinite(parsed.getTime()) ? parsed.toLocaleDateString('zh-CN') : '未注明';
 };
 const normalize = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').trim();
-const answerHash = answer => '#/answers/' + encodeURIComponent(answer.id);
+const answerHash = answer => '#/answers/' + encodeURIComponent(answer.id) + listHash.slice(listHash.indexOf('?'));
+const supplementHash = answer => '#/contribute?' + new URLSearchParams({ article: answer.id, revision: answer.revisionId, type: 'supplement' });
+function directoryParameters(parameters) {
+  const result = new URLSearchParams({ view: parameters.get('view') === 'list' ? 'list' : 'branches' });
+  if (parameters.get('query')?.trim()) result.set('query', parameters.get('query'));
+  if (snapshot.catalog.topics.some(topic => topic.id === parameters.get('topic'))) result.set('topic', parameters.get('topic'));
+  return result;
+}
 const sourceLabels = { university_official: '学校官方', user_provided: '用户提供', web: '网络资料' };
 const universalScopeLabels = { campus: '两校区通用入口', audience: '学生通用入口', academic_year: '不限学年' };
 function renderSourceCategories(answer) {
@@ -105,6 +114,7 @@ function matches(answer, alternatives) {
 }
 
 function renderList(parameters) {
+  const view = parameters.get('view') === 'list' ? 'list' : 'branches';
   const query = parameters.get('query') ?? '', topic = parameters.get('topic') ?? '';
   $('query').value = query;
   $('topic').value = snapshot.catalog.topics.some(value => value.id === topic) ? topic : '';
@@ -114,8 +124,18 @@ function renderList(parameters) {
   const answers = snapshot.answers.filter(answer => (!$('topic').value || answer.topic?.id === $('topic').value) && (!query.trim() || matches(answer, terms)))
     .sort((left, right) => Number(left.demo) - Number(right.demo));
   $('count').textContent = `${answers.length} 条答案`;
+  $('branches-mode').setAttribute('aria-pressed', String(view === 'branches'));
+  $('list-mode').setAttribute('aria-pressed', String(view === 'list'));
+  $('directory-branches').hidden = view !== 'branches';
+  $('branches-description').hidden = view !== 'branches';
+  $('answer-list').hidden = view !== 'list';
   $('answer-list').replaceChildren();
-  for (const answer of answers) {
+  $('directory-branches').replaceChildren();
+  if (view === 'branches') renderBranches($('directory-branches'), {
+    answers: withBranchAncestors(snapshot.answers, answers), topics: snapshot.catalog.topics, links: snapshot.links ?? [],
+    answerHref: answerHash, contributionHref: supplementHash, topicId: $('topic').value, scopes: snapshot.catalog.scopes, expandTopics: Boolean(query.trim()),
+  });
+  for (const answer of view === 'list' ? answers : []) {
     const item = make('article', undefined, 'answer-item');
     item.dataset.reviewStatus = answer.reviewStatus ?? (answer.demo ? 'demo' : '');
     const link = make('a'); link.href = answerHash(answer);
@@ -129,13 +149,20 @@ function renderList(parameters) {
     warnings(item, answer);
     $('answer-list').append(item);
   }
-  if (!answers.length) $('answer-list').append(make('p', '暂无符合条件的公开答案。', 'empty'));
+  if (!answers.length && view === 'list') $('answer-list').append(make('p', '暂无符合条件的公开答案。', 'empty'));
   show('answers');
 }
 
 function renderDetail(answer) {
   const target = $('answer-detail');
   target.replaceChildren(make('p', answer.topic?.title ?? '校园信息', 'eyebrow'), make('h1', answer.title));
+  const parent = snapshot.answers.find(value => value.id === answer.supplementTo && value.id !== answer.id && value.topic?.id === answer.topic?.id);
+  if (parent) {
+    const context = make('p', '这条信息补充了：', 'supplement-parent');
+    const link = make('a', parent.title); link.href = answerHash(parent);
+    context.append(link);
+    target.append(context);
+  }
   const metadata = make('div', undefined, 'detail-meta');
   const collected = answer.reviewStatus === 'collected';
   for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`,
@@ -173,9 +200,13 @@ function renderDetail(answer) {
     }
   }
   const contribution = make('section', undefined, 'contribution-prompt');
-  const contributionLink = make('a', '补充/更正这篇', 'contribution-link');
+  const supplementLink = make('a', '补充这条信息', 'contribution-link');
+  supplementLink.href = supplementHash(answer);
+  const contributionLink = make('a', '补充/更正这篇', 'contribution-link secondary');
   contributionLink.href = '#/contribute?' + new URLSearchParams({ article: answer.id, revision: answer.revisionId });
-  contribution.append(make('h2', '补充这篇文章'), make('p', '欢迎提供更正、补充来源或分享不同的办理经验。'), contributionLink);
+  const actions = make('div', undefined, 'contribution-actions');
+  actions.append(supplementLink, contributionLink);
+  contribution.append(make('h2', '补充这篇文章'), make('p', '提供进一步说明或补充来源，经编辑核对后可作为这条陈述的下级分支。也欢迎更正内容或分享不同经历。'), actions);
   target.append(contribution);
   if (answer.history?.length) {
     target.append(make('h2', '公开版本记录'));
@@ -183,12 +214,11 @@ function renderDetail(answer) {
     for (const revision of answer.history) history.append(make('span', `第 ${revision.number} 版${revision.id === answer.revisionId ? ' · 当前快照' : ''}`));
     target.append(history);
   }
-  const related = snapshot.answers.filter(value => value.id !== answer.id && value.topic?.id === answer.topic?.id);
-  if (related.length) {
-    const section = make('section', undefined, 'related'); section.append(make('h2', '同话题答案'));
-    for (const value of related) { const paragraph = make('p'), link = make('a', value.title); link.href = answerHash(value); paragraph.append(link); section.append(paragraph); }
-    target.append(section);
-  }
+  renderBranches($('answer-branches'), {
+    answers: snapshot.answers.filter(value => value.topic?.id === answer.topic?.id),
+    topics: snapshot.catalog.topics, links: snapshot.links ?? [], selectedId: answer.id,
+    answerHref: answerHash, contributionHref: supplementHash, topicId: answer.topic?.id, scopes: snapshot.catalog.scopes,
+  });
   $('back-to-list').href = listHash;
   show('detail');
 }
@@ -210,20 +240,24 @@ function route({ scroll = true } = {}) {
   } else if (path === '/contribute') {
     renderContribution(parameters); document.title = `补充信息 | ${snapshot.site.name}`;
   } else if (path === '/answers' || path === '/') {
-    listHash = '#' + raw;
+    listHash = '#/answers?' + directoryParameters(parameters);
     renderList(parameters); document.title = snapshot.site.name;
   } else {
     let id;
     try { id = path.startsWith('/answers/') ? decodeURIComponent(path.slice('/answers/'.length)) : null; } catch { id = null; }
     const answer = snapshot.answers.find(value => value.id === id);
-    if (answer) { renderDetail(answer); document.title = `${answer.title} | ${snapshot.site.name}`; }
+    if (answer) {
+      if (['view', 'query', 'topic'].some(key => parameters.has(key))) listHash = '#/answers?' + directoryParameters(parameters);
+      renderDetail(answer); document.title = `${answer.title} | ${snapshot.site.name}`;
+    }
     else { $('answer-detail').replaceChildren(); show('missing'); document.title = `未找到公开答案 | ${snapshot.site.name}`; }
   }
+  $('answers-nav').href = listHash;
   if (scroll) window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
-function search() {
-  const parameters = new URLSearchParams();
+function search(view) {
+  const parameters = new URLSearchParams({ view: typeof view === 'string' ? view : $('list-mode').getAttribute('aria-pressed') === 'true' ? 'list' : 'branches' });
   if ($('query').value.trim()) parameters.set('query', $('query').value);
   if ($('topic').value) parameters.set('topic', $('topic').value);
   const target = '#/answers' + (parameters.size ? '?' + parameters : '');
@@ -263,6 +297,8 @@ $('query').addEventListener('compositionstart', () => { composing = true; });
 $('query').addEventListener('compositionend', () => { composing = false; search(); });
 $('query').addEventListener('input', () => { if (!composing) search(); });
 $('topic').addEventListener('change', search);
+$('branches-mode').addEventListener('click', () => search('branches'));
+$('list-mode').addEventListener('click', () => search('list'));
 $('retry').addEventListener('click', load);
 window.addEventListener('hashchange', () => route());
 load();

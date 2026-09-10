@@ -112,6 +112,8 @@ async function staticSite(t, { production = false, reviewed = false, empty = fal
   const assets = new Map();
   for (const [name, type] of [
     ['index.html', 'text/html; charset=utf-8'], ['app.js', 'text/javascript; charset=utf-8'], ['contributions.js', 'text/javascript; charset=utf-8'],
+    ['branches.js', 'text/javascript; charset=utf-8'], ['branch-model.js', 'text/javascript; charset=utf-8'],
+    ['core/index.js', 'text/javascript; charset=utf-8'], ['core/branches.js', 'text/javascript; charset=utf-8'], ['branches.css', 'text/css; charset=utf-8'],
     ['style.css', 'text/css; charset=utf-8'], ['brand.svg', 'image/svg+xml'], ['public.json', 'application/json; charset=utf-8'],
   ]) assets.set(basePath + (name === 'index.html' ? '' : name), { body: await readFile(join(output, name)), type });
   const requests = [];
@@ -142,6 +144,152 @@ async function assertPageFits(page) {
   assert.equal(await page.locator('img').evaluateAll(images => images.filter(image => !image.complete || image.naturalWidth === 0).length), 0);
 }
 
+test('Pages branches group independent statements and preserve reading context across desktop and mobile', async t => {
+  const site = await staticSite(t, { reviewed: true, collectedCount: 1, includeDemo: true });
+  const data = structuredClone(site.data);
+  // Older public snapshots have no relationship field. Their articles still form topic branches.
+  delete data.links;
+  const [first, second] = data.answers;
+  first.sourceCategories = ['university_official'];
+  second.sourceCategories = ['user_provided'];
+  second.reviewStatus = 'collected';
+  second.researchedAt = '2026-09-10';
+  second.verifiedAt = '';
+  const siblings = data.answers.filter(answer => answer.topic?.id === first.topic.id);
+  assert.ok(siblings.length > 1);
+  for (const [name, viewport] of [['desktop', { width: 1440, height: 1040 }], ['mobile', { width: 390, height: 844 }]]) {
+    const context = await site.browser.newContext({ viewport });
+    const page = await context.newPage(), errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
+    await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
+    await page.goto(site.base);
+    await page.locator('body[data-ready=true]').waitFor();
+    assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#answer-list').isVisible(), false);
+    const topicToggle = page.locator('#directory-branches').getByRole('button', { name: '展开话题：' + first.topic.title, exact: true });
+    assert.equal(await topicToggle.getAttribute('aria-expanded'), 'false');
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-branches-overview.png`), fullPage: true });
+    await topicToggle.click();
+    const expandedToggle = page.locator('#directory-branches').getByRole('button', { name: '收起话题：' + first.topic.title, exact: true });
+    assert.equal(await expandedToggle.getAttribute('aria-expanded'), 'true');
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), siblings.length);
+    const firstCard = page.locator(`#directory-branches .guide-branch-answer[data-answer-id="${first.id}"]`);
+    const secondCard = page.locator(`#directory-branches .guide-branch-answer[data-answer-id="${second.id}"]`);
+    assert.match(await firstCard.innerText(), /学校官方/u);
+    assert.match(await firstCard.innerText(), /人工审核|人工核验|已审核/u);
+    assert.match(await secondCard.innerText(), /用户提供/u);
+    assert.match(await secondCard.innerText(), /待人工核验/u);
+    for (const card of [firstCard, secondCard]) {
+      assert.equal(await card.locator('.guide-branch-warning').count(), 1, 'overdue warnings are computed from the current date without duplicating existing warnings');
+      assert.match(await card.locator('.guide-branch-warning').innerText(), /待复核/u);
+    }
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-branches-expanded.png`), fullPage: true });
+    await expandedToggle.click();
+    assert.equal(await firstCard.isVisible(), false);
+    await topicToggle.focus();
+    await topicToggle.press('Enter');
+    await firstCard.getByRole('link', { name: first.title, exact: true }).click();
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#answer-detail h1').innerText(), first.title);
+    assert.equal(await page.locator('#answer-detail .answer-body').innerText(), first.sentences[0].text);
+    assert.equal(await page.locator('#answer-branches a[aria-current=true]').innerText(), first.title);
+    await page.locator('#answer-branches').getByRole('link', { name: second.title, exact: true }).click();
+    await page.locator('#answer-detail h1').filter({ hasText: second.title }).waitFor();
+    assert.equal(await page.locator('#answer-detail h1').innerText(), second.title);
+    assert.equal(await page.locator('#answer-branches a[aria-current=true]').innerText(), second.title);
+    assert.match(await page.locator('#answer-detail').innerText(), /尚未逐条人工核验/u);
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-branches-detail.png`), fullPage: true });
+    await page.locator('#back-to-list').click();
+    await page.locator('#answers-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'true');
+    await page.locator('#topic').selectOption(first.topic.id);
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), siblings.length);
+    await page.locator('#query').fill(first.title);
+    assert.equal(await page.locator('#count').innerText(), '1 条答案');
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), 1);
+    await firstCard.getByRole('link', { name: first.title, exact: true }).click();
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    const parameters = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+    assert.equal(parameters.get('view'), 'branches');
+    assert.equal(parameters.get('query'), first.title);
+    assert.equal(parameters.get('topic'), first.topic.id);
+    assert.equal(await page.locator('#answer-branches .guide-branch-answer:visible').count(), siblings.length, 'detail shows the other topic statements beyond the search result');
+    await page.reload();
+    await page.locator('body[data-ready=true]').waitFor();
+    assert.equal(await page.locator('#answer-branches a[aria-current=true]').innerText(), first.title);
+    await page.locator('#back-to-list').click();
+    await page.locator('#answers-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#query').inputValue(), first.title);
+    assert.equal(await page.locator('#topic').inputValue(), first.topic.id);
+    assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'true');
+    await page.locator('#list-mode').click();
+    assert.equal(await page.locator('#directory-branches').isVisible(), false);
+    assert.equal(await page.locator('#answer-list .answer-item').count(), 1);
+    await page.locator('#answer-list a').click();
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    await page.reload();
+    await page.locator('body[data-ready=true]').waitFor();
+    await page.locator('#back-to-list').click();
+    await page.locator('#answers-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#list-mode').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('#query').inputValue(), first.title);
+    assert.equal(await page.locator('#topic').inputValue(), first.topic.id);
+    await page.locator('#branches-mode').click();
+    await page.locator('#query').fill('synthetic-query-with-no-matching-answer');
+    assert.equal(await page.locator('#count').innerText(), '0 条答案');
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), 0);
+    await page.locator('#topic').selectOption('');
+    await page.locator('#query').fill(first.title);
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), 1, 'search expands a matching topic without an explicit topic filter');
+    await page.locator('#directory-branches').getByRole('button', { name: '收起话题：' + first.topic.title, exact: true }).click();
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), 0, 'search results can still be collapsed manually');
+    await assertPageFits(page);
+    assert.deepEqual(errors, []);
+    assert.deepEqual(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length })), { local: 0, session: 0 });
+    await context.close();
+  }
+  assert.ok(site.requests.every(request => request.method === 'GET' && request.path.startsWith(basePath) && !request.path.includes('/api/')));
+});
+
+test('Pages branches show explicit public relationships as escaped cross links and locate the current statement', async t => {
+  const site = await staticSite(t, { reviewed: true });
+  const data = structuredClone(site.data);
+  const [first, second] = data.answers;
+  const reason = '合成关联理由：补充另一种经验。<img src=x onerror="window.__branchInjection=true">';
+  data.links = [
+    { id: 'synthetic-related', from: first.id, to: second.id, type: 'related', reason },
+    { id: 'synthetic-hidden-endpoint', from: first.id, to: 'not-a-public-answer', type: 'related', reason: '不可见端点的合成理由' },
+  ];
+  const context = await site.browser.newContext({ viewport: { width: 390, height: 844 } });
+  t.after(() => context.close());
+  const page = await context.newPage(), errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
+  await page.goto(site.base);
+  await page.locator('body[data-ready=true]').waitFor();
+  const related = page.locator('#directory-branches .guide-branch-related');
+  assert.equal(await related.getAttribute('open'), null);
+  assert.equal(await related.locator('summary').innerText(), '横向关联 · 1 条');
+  await related.locator('summary').click();
+  assert.ok((await related.innerText()).includes(reason));
+  assert.doesNotMatch(await page.locator('#directory-branches').innerText(), /不可见端点|not-a-public-answer/u);
+  assert.equal(await related.locator('img').count(), 0);
+  assert.equal(await page.evaluate(() => window.__branchInjection), undefined);
+  await assertPageFits(page);
+  await page.screenshot({ path: join(screenshots, 'mobile-pages-branches-relationships.png'), fullPage: true });
+  await related.getByRole('link', { name: second.title, exact: true }).click();
+  await page.locator('#detail-view').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#answer-detail h1').innerText(), second.title);
+  await page.locator('#answer-branches .guide-branch-locate').click();
+  assert.equal(await page.locator('#answer-branches a[aria-current=true]').evaluate(link => document.activeElement === link), true);
+  await assertPageFits(page);
+  assert.deepEqual(errors, []);
+});
+
 test('the production guide contains 76 collected articles and no demo pages on desktop and mobile', async t => {
   const site = await staticSite(t, { production: true });
   assert.equal(site.data.mode, 'public-guide');
@@ -152,13 +300,25 @@ test('the production guide contains 76 collected articles and no demo pages on d
     const context = await site.browser.newContext({ viewport });
     const page = await context.newPage(), errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
     assert.equal(await page.locator('#count').innerText(), '76 条答案');
     assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 76);
     assert.equal(await page.locator('#answer-list [data-review-status=demo], .demo').count(), 0);
     assert.doesNotMatch(await page.locator('#answer-list').innerText(), /演示内容/u);
+    await assertPageFits(page);
+    await page.locator('#branches-mode').click();
+    assert.match(await page.locator('#directory-branches .guide-branch-root').innerText(), /76 条独立陈述/u);
+    await page.locator('#directory-branches').getByRole('button', { name: '展开所有话题', exact: true }).click();
+    assert.ok(await page.locator('#directory-branches .guide-branch-answer:visible').count() < 76);
+    for (let batch = 0; batch < 4 && await page.locator('#directory-branches .guide-branch-more').count(); batch++) {
+      await page.locator('#directory-branches .guide-branch-more').click();
+    }
+    assert.equal(await page.locator('#directory-branches .guide-branch-answer:visible').count(), 76);
+    assert.equal(new Set(await page.locator('#directory-branches .guide-branch-answer').evaluateAll(cards => cards.map(card => card.dataset.answerId))).size, 76);
+    assert.equal(await page.locator('#directory-branches .guide-branch-more').count(), 0);
+    assert.doesNotMatch(await page.locator('#directory-branches').innerText(), /演示内容/u);
     await assertPageFits(page);
     await page.locator('#about-nav').click();
     await page.locator('#about-view').waitFor({ state: 'visible' });
@@ -183,7 +343,7 @@ test('public Pages reader works on a project subpath across desktop and mobile w
     const errors = [], requests = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('request', request => requests.push({ url: request.url(), method: request.method() }));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.length);
     assert.equal(await page.getByText('公开只读演示', { exact: true }).count(), 1);
@@ -204,10 +364,11 @@ test('public Pages reader works on a project subpath across desktop and mobile w
     await page.locator('#query').fill('');
     await page.locator('#topic').selectOption(first.topic.id);
     assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.filter(answer => answer.topic?.id === first.topic.id).length);
-    await page.locator(`#answer-list a[href="#/answers/${encodeURIComponent(first.id)}"]`).click();
+    await page.locator(`#answer-list a[href^="#/answers/${encodeURIComponent(first.id)}?"]`).click();
     await page.locator('#detail-view').waitFor({ state: 'visible' });
     assert.equal(new URL(page.url()).pathname, basePath);
-    assert.equal(new URL(page.url()).hash, '#/answers/' + encodeURIComponent(first.id));
+    assert.equal(new URL(page.url()).hash.split('?')[0], '#/answers/' + encodeURIComponent(first.id));
+    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('view'), 'list');
     assert.equal(await page.locator('#answer-detail h1').innerText(), first.title);
     assert.ok(await page.locator('#answer-detail .answer-body').count() > 0);
     assert.ok(await page.locator('#answer-detail .citation').count() > 0);
@@ -257,7 +418,7 @@ test('public DTO text is escaped, unsafe citation URLs are inert, and long words
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
-  await page.goto(site.base);
+  await page.goto(site.base + '#/answers?view=list');
   await page.locator('body[data-ready=true]').waitFor();
   assert.match(await page.locator('#answer-list').innerText(), /<img src=x/u);
   assert.equal(await page.locator('#answer-list img').count(), 0);
@@ -285,7 +446,7 @@ test('reviewed Pages show AI confirmation and recompute overdue warnings across 
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
     assert.equal(await page.locator('#edition-note').innerText(), '经人工审核 · 非学校官方信息');
@@ -344,7 +505,7 @@ test('an empty reviewed Pages snapshot remains an empty directory without demo f
   t.after(() => context.close());
   const page = await context.newPage(), errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto(site.base);
+  await page.goto(site.base + '#/answers?view=list');
   await page.locator('body[data-ready=true]').waitFor();
   assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
   assert.equal(await page.locator('#edition-note').innerText(), '暂无已发布内容');
@@ -371,7 +532,7 @@ test('reviewed snapshots keep demo-only and mixed-edition labels accurate', asyn
     const context = await site.browser.newContext({ viewport: { width: 390, height: 844 } });
     const page = await context.newPage(), errors = [];
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#edition-label').innerText(), onlyDemo ? '公开只读演示' : '公开只读指南');
     if (onlyDemo) assert.doesNotMatch(await page.locator('.edition').innerText(), /经人工审核/u);
@@ -427,7 +588,7 @@ test('Pages drafts all contribution types on site and prefills GitHub without su
     await context.route('https://github.com/**', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Synthetic GitHub Form</title><p>Submission remains a manual GitHub action.</p>' }));
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     await page.locator('#contribute-nav').click();
     await page.locator('#contribute-view').waitFor({ state: 'visible' });
@@ -596,7 +757,7 @@ test('public guide distinguishes collected, approved, and demo articles on deskt
     const page = await context.newPage(), errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
     assert.equal(await page.locator('#edition-note').innerText(), '资料整理内容待人工核验 · 非学校官方信息');
@@ -614,7 +775,7 @@ test('public guide distinguishes collected, approved, and demo articles on deskt
     await page.screenshot({ path: join(screenshots, `${name}-pages-collected-reader.png`), fullPage: true });
     await page.locator('#topic').selectOption(collected.topic.id);
     assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.filter(answer => answer.reviewStatus === 'collected' && answer.topic?.id === collected.topic.id).length);
-    await page.locator(`#answer-list a[href="#/answers/${encodeURIComponent(collected.id)}"]`).click();
+    await page.locator(`#answer-list a[href^="#/answers/${encodeURIComponent(collected.id)}?"]`).click();
     await page.locator('#detail-view').waitFor({ state: 'visible' });
     const text = await page.locator('#answer-detail').innerText();
     assert.match(text, /资料整理 2026\/9\/10/u);
@@ -659,7 +820,7 @@ test('all 69 collected fixture articles remain searchable among 73 public answer
   t.after(() => context.close());
   const page = await context.newPage(), errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto(site.base);
+  await page.goto(site.base + '#/answers?view=list');
   await page.locator('body[data-ready=true]').waitFor();
   assert.equal(await page.locator('#count').innerText(), '73 条答案');
   assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 69);
@@ -699,7 +860,7 @@ test('all three source categories appear in article cards and citations independ
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     const card = page.locator('.answer-item').filter({ has: page.getByRole('heading', { name: answer.title, exact: true }) });
     assert.deepEqual(await card.locator('.source-category').allTextContents(), ['学校官方', '用户提供', '网络资料']);

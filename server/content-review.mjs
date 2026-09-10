@@ -4,6 +4,7 @@ import {
   publishContent, hideContent, setSourceDisposition, getEntity, encryptPrivatePayload, decryptPrivatePayload,
 } from '@information-community/runtime';
 import { containsLikelyPersonalData } from './business-validation.mjs';
+import { assertPublishedSupplements } from './supplements.mjs';
 
 export function reviewReason(value) {
   const reason = typeof value === 'string' ? value.normalize('NFKC').replace(/[\u0000-\u001f\u007f]/gu, ' ').trim() : '';
@@ -45,6 +46,7 @@ export function reviewContent(store, token, command, input, options) {
     const reason = reviewReason(input.reason);
     const { reason: omitted, ...operation } = input;
     state.modules.content = apply(state.modules.content, { ...operation, now: new Date(auth.now).toISOString() });
+    if (command === 'publish') assertPublishedSupplements(state.modules.content, [input.entityId]);
     const entity = getEntity(state.modules.content, input.entityId);
     const reviewId = recordReview(state, principal, { action: `content.${command}`, entity, reason, now: auth.now, keyring });
     return { entityId: entity.id, version: entity.version, publicRevisionId: entity.publicRevisionId ?? null, reviewId };

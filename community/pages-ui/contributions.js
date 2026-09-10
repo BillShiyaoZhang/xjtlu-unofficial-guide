@@ -2,6 +2,7 @@
 // lets readers review one complete draft without filling a second form.
 export const contributionTypes = {
   new: { title: '新增 / 补充信息', prefix: '新资料', label: '信息正文', description: '补充手册尚未覆盖的事项、办理入口、流程变化或可靠资料。', help: '写清主要内容、适用条件，以及仍待确认的部分。' },
+  supplement: { title: '补充当前陈述', prefix: '补充', label: '补充内容', description: '为当前陈述增加说明、来源或细节，经编辑核对后作为它的下级分支，保留独立来源与核验状态。', help: '写清补充哪一点、新增的信息及适用条件。也可以继续补充已有的补充信息。' },
   correction: { title: '更正 / 报告过期', prefix: '纠错', label: '哪里需要更正', description: '指出过时内容、失效链接或表述错误；暂时没有依据也可以先报告问题。', help: '说明原来的说法或位置、遇到的问题，以及你建议如何更正。' },
   experience: { title: '分享个人经验', prefix: '个人经验', label: '你的经历', description: '分享亲历过程，也欢迎提供与现有手册不同的经历。', help: '说明当时的场景、处理过程和结果，并区分亲历、听说和推测。' },
 };
@@ -29,6 +30,10 @@ export function buildContributionDraft({ repository, values, article = null }) {
   if (!validContributionsRepository(repository)) throw new Error('投稿入口暂未开放。');
   const kind = Object.hasOwn(contributionTypes, values.type) ? contributionTypes[values.type] : null;
   if (!kind) throw new Error('请选择投稿类型。');
+  if (values.type === 'supplement' && (!article?.answer || typeof article.answer.id !== 'string' || !article.answer.id.trim()
+    || typeof article.answer.revisionId !== 'string' || !article.answer.revisionId.trim() || !Number.isInteger(article.answer.revisionNumber) || article.answer.revisionNumber < 1)) {
+    throw new Error('请先从公开文章的“补充这条信息”入口选择要补充的陈述。');
+  }
   const fields = ['title', 'content', 'source', 'campus', 'audience', 'time', 'ai'];
   const data = Object.fromEntries(fields.map(field => [field, String(values[field] ?? '').trim()]));
   if (fields.some(field => !data[field] && !(field === 'source' && values.type === 'correction'))) throw new Error('请完整填写必填内容。');
@@ -38,6 +43,7 @@ export function buildContributionDraft({ repository, values, article = null }) {
     ['适用校区', data.campus], ['适用人群', data.audience], ['发生或有效时间', data.time], ['AI 参与说明', data.ai],
   ];
   if (article) sections.push(['关联文章', [article.answer.title, article.url, `文章 ID：${article.answer.id}`, `阅读版本：${article.answer.revisionId}（第 ${article.answer.revisionNumber} 版）`].filter(Boolean).join('\n')]);
+  if (values.type === 'supplement') sections.push(['补充分支', `补充父陈述 ID：${article.answer.id}\n父陈述公开版本：${article.answer.revisionId}（第 ${article.answer.revisionNumber} 版）\n关系：补充当前陈述，作为其下级分支；请编辑核对后再纳入公开指南。`]);
   sections.push(['公开提交确认', '我知道此投稿及附件会公开，确认未包含个人资料、账号密码或非公开内部材料。']);
   const body = sections.map(([label, value]) => `### ${label}\n\n${value}`).join('\n\n');
   const title = `[${kind.prefix}] ${data.title}`;
@@ -143,7 +149,8 @@ export function renderContribution(snapshot, parameters) {
   const repository = snapshot.site.contributionsRepository;
   const enabled = validContributionsRepository(repository);
   const article = contributionArticle(snapshot, parameters);
-  const key = article ? `article:${article.answer.id}` : 'general';
+  const requestedType = parameters.get('type');
+  const key = (article ? `article:${article.answer.id}` : 'general') + (article && requestedType === 'supplement' ? ':supplement' : '');
   const draft = drafts.get(key);
   form.reset();
   for (const field of form.querySelectorAll('input, textarea, select')) field.setCustomValidity('');
@@ -152,7 +159,12 @@ export function renderContribution(snapshot, parameters) {
       if (name !== 'public') form.elements.namedItem(name).value = value;
     }
     $('contribution-public').checked = draft.public && draft.revision === article?.answer.revisionId;
+  } else if (Object.hasOwn(contributionTypes, requestedType) && (requestedType !== 'supplement' || article)) {
+    $('contribution-type').value = requestedType;
   }
+  $('contribution-type').querySelector('option[value="supplement"]').disabled = !article;
+  if (!article && $('contribution-type').value === 'supplement') $('contribution-type').value = 'new';
+  $('contribution-supplement-help').hidden = Boolean(article);
   current = { repository, article, key };
   const context = $('contribution-context');
   context.replaceChildren();
@@ -163,7 +175,7 @@ export function renderContribution(snapshot, parameters) {
     back.href = '#/answers/' + encodeURIComponent(answer.id);
     const description = make('p', '正在补充：');
     description.append(back, make('span', ` · 第 ${answer.revisionNumber} 版`, 'muted'));
-    context.append(description, make('p', '文章链接和当前公开版本会随正文带入 GitHub。', 'muted'));
+    context.append(description, make('p', '文章链接和当前公开版本会随正文带入 GitHub。选择“补充当前陈述”时，也会注明补充分支的父陈述。', 'muted'));
     if (parameters.has('revision') && parameters.get('revision') !== answer.revisionId) context.append(make('p', '这篇文章已更新，将引用当前公开版本。', 'muted'));
   } else if (parameters.has('article')) context.append(make('p', '未找到关联的公开文章，可按通用投稿继续补充。', 'muted'));
   $('contribution-unavailable').hidden = enabled;

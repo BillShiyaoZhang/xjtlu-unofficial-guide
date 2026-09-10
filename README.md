@@ -26,7 +26,7 @@ npm run dev
 - `community/`：数据、业务配置和少量定制 UI。
 - `server/`：校园规则及 SDK 网关；不实现数据库、认证、加密或发布引擎。
 - `scripts/`：构建、离线平台 CLI、只读旧库转换和全新目录恢复。
-- `vendor/`、根 `package-lock.json`：固定 core 0.2.0 / runtime 0.3.0 产物，不依赖相邻源码目录。
+- `vendor/`、根 `package-lock.json`：固定 core 0.3.0 / runtime 0.3.0 分支兼容产物，不依赖相邻源码目录；来源与校验值见 `vendor/README.md`。
 - `tests/fixtures/legacy-schema/`：15 个旧 SQL schema，仅供合成迁移测试。
 - 本地 `apps/web/`：已忽略、不再跟踪的旧实现及已有修改；它不是新代码的构建、运行或测试依赖。请勿对这个保留目录执行 `git clean -fdx`。
 
@@ -35,6 +35,8 @@ npm run dev
 在 `/editor` 的「内容审核」中，审核人可以同时展开多篇正文、查看逐句来源、跨页勾选文章，并批量提交结论与逐篇意见。选择「通过并发布」会在同次提交中生成经过人工确认的新修订并公开；原稿、逐句引用和审核记录保留。其余结论只保存意见。操作步骤见 [逐篇勾选与批量审核](docs/handbook-maintenance.md#逐篇勾选与批量审核)。
 
 ## GitHub Pages
+
+读者页现提供「分支图 / 列表」切换：按话题展开不同陈述，并在每条陈述下面展开补充信息和后续补充，分别保留来源、适用范围和核验状态。正文旁可定位当前陈述、跳转父陈述，或发起「补充这条信息」投稿。详见 [话题分支图与不同说法的收录](docs/topic-branches.md)。
 
 [公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。76 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；读者可直接在页面填写补充、更正及个人经验，再跳转到已填好标题和正文的 GitHub Issue 页面确认提交，界面明确提示需要 GitHub 账号。
 

@@ -17,7 +17,7 @@ import { createStore, harness, initialTime, readJson, repoRoot } from './helpers
 test('the consumer uses versioned installed packages, never adjacent platform source links', async () => {
   const lock = JSON.parse(await readFile(join(repoRoot, 'package-lock.json'), 'utf8'));
   for (const name of ['runtime', 'core']) {
-    const version = name === 'runtime' ? '0.3.0' : '0.2.0';
+    const version = '0.3.0';
     const directory = dirname(fileURLToPath(import.meta.resolve(`@information-community/${name}`)));
     const metadata = JSON.parse(await readFile(join(directory, 'package.json'), 'utf8'));
     assert.equal(metadata.version, version);
@@ -26,7 +26,7 @@ test('the consumer uses versioned installed packages, never adjacent platform so
     assert.ok(packagePath !== '..' && !packagePath.startsWith(`..${sep}`), directory);
     const pinned = lock.packages[`node_modules/@information-community/${name}`];
     assert.equal(pinned.version, version);
-    assert.equal(pinned.resolved, `file:vendor/information-community-${name}-${version}.tgz`);
+    assert.equal(pinned.resolved, `file:vendor/information-community-${name}-${version}${name === 'runtime' ? '-branches' : ''}.tgz`);
     assert.match(pinned.integrity, /^sha512-/);
     assert.equal(pinned.link, undefined);
   }
