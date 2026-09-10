@@ -13,11 +13,11 @@ const { chromium } = require('playwright');
 const basePath = '/xjtlu-unofficial-guide/';
 const screenshots = resolve(process.env.GUIDE_SCREENSHOTS ?? 'community/.browser-qa');
 
-function reviewedFixture(demo, { empty = false, onlyDemo = false, includeDemo = false } = {}) {
+function reviewedFixture(demo, { empty = false, onlyDemo = false, includeDemo = false, collectedCount = 0, onlyCollected = false } = {}) {
   const snapshot = {
     ...structuredClone(demo), mode: 'public-reviewed', answers: [],
   };
-  if (!empty && !onlyDemo) {
+  if (!empty && !onlyDemo && !onlyCollected) {
     const answer = {
       id: 'synthetic-reviewed-ai', title: '人工确认后的合成审核文章', slug: 'synthetic-reviewed-ai',
       revisionId: 'synthetic-reviewed-ai-v2', revisionNumber: 2,
@@ -44,11 +44,26 @@ function reviewedFixture(demo, { empty = false, onlyDemo = false, includeDemo = 
     ...structuredClone(answer), origin: 'human', originalOrigin: 'human', reviewStatus: 'demo',
     ...Object.fromEntries(['summary', 'asOf', 'verifiedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote'].map(key => [key, answer[key] ?? ''])),
   });
+  for (let index = 0; index < collectedCount; index++) {
+    const id = `synthetic-collected-${String(index + 1).padStart(3, '0')}`;
+    const topic = demo.catalog.topics[index % demo.catalog.topics.length];
+    const answer = {
+      ...structuredClone(demo.answers[0]), id, slug: id, title: `合成资料整理第 ${index + 1} 篇`,
+      revisionId: `${id}-v1`, revisionNumber: 1, summary: '用于检验公开资料整理内容的标识、检索及投稿上下文。',
+      demo: false, origin: 'ai_draft', originalOrigin: 'ai_draft', reviewStatus: 'collected',
+      asOf: '2026-09-10', researchedAt: '2026-09-10', verifiedAt: '', reviewOwnerLabel: '尚未人工核验', reviewDueAt: '2026-12-10', evidenceNote: '', warnings: [],
+      topic: { id: topic.id, slug: topic.slug, title: topic.titleZh },
+    };
+    answer.sentences = answer.sentences.map((sentence, sentenceIndex) => ({ ...sentence, text: `合成资料整理第 ${index + 1} 篇的第 ${sentenceIndex + 1} 段内容，用于浏览器测试。` }));
+    answer.history = [{ id: answer.revisionId, number: answer.revisionNumber, title: answer.title }];
+    snapshot.answers.push(answer);
+  }
+  if (collectedCount) snapshot.mode = 'public-guide';
   snapshot.contentHash = pagesContentHash(snapshot);
   return snapshot;
 }
 
-async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false, includeDemo = false, contributionsRepository } = {}) {
+async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false, includeDemo = false, contributionsRepository, collectedCount = 0, onlyCollected = false } = {}) {
   // Never consume or replace the operator's exported snapshot or build directory.
   const root = await mkdtemp(join(tmpdir(), 'guide-pages-browser-'));
   t.after(async () => {
@@ -62,17 +77,21 @@ async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false
     ...['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json'].map(name => copyFile(resolve('community', name), join(community, name))),
     cp(resolve('community/pages-ui'), join(community, 'pages-ui'), { recursive: true }),
   ]);
+  const configFile = join(community, 'pages.config.json');
+  const config = JSON.parse(await readFile(configFile, 'utf8'));
+  delete config.collectedRevisionIds;
   if (contributionsRepository !== undefined) {
-    const configFile = join(community, 'pages.config.json');
-    const config = JSON.parse(await readFile(configFile, 'utf8'));
     if (contributionsRepository === null) delete config.contributionsRepository;
     else config.contributionsRepository = contributionsRepository;
-    await writeFile(configFile, JSON.stringify(config));
   }
+  await writeFile(configFile, JSON.stringify(config));
   const { output } = await buildPages({ root, basePath, now: '2026-09-10T00:00:00Z' });
   if (reviewed) {
     const demo = JSON.parse(await readFile(join(output, 'public.json'), 'utf8'));
-    await writeFile(join(community, 'pages-reviewed.json'), JSON.stringify(reviewedFixture(demo, { empty, onlyDemo, includeDemo })));
+    const snapshot = reviewedFixture(demo, { empty, onlyDemo, includeDemo, collectedCount, onlyCollected });
+    config.collectedRevisionIds = snapshot.answers.filter(answer => answer.reviewStatus === 'collected').map(answer => answer.revisionId);
+    await writeFile(configFile, JSON.stringify(config));
+    await writeFile(join(community, 'pages-reviewed.json'), JSON.stringify(snapshot));
     await buildPages({ root, basePath });
   }
   const assets = new Map();
@@ -421,4 +440,101 @@ test('Pages contribution entry does not invent a destination without a configure
   assert.match(await page.locator('#contribution-unavailable').innerText(), /投稿入口暂未开放/u);
   assert.equal(await page.locator('#contribute-view a[href^="https://github.com/"]').count(), 0);
   await assertPageFits(page);
+});
+
+test('public guide distinguishes collected, approved, and demo articles on desktop and mobile', async t => {
+  const site = await staticSite(t, { reviewed: true, collectedCount: 3, includeDemo: true, contributionsRepository: 'SyntheticOwner/public-guide-feedback' });
+  assert.equal(site.data.mode, 'public-guide');
+  const collected = site.data.answers.find(answer => answer.reviewStatus === 'collected');
+  const approved = site.data.answers.find(answer => answer.reviewStatus === 'approved');
+  for (const [name, viewport] of [['desktop', { width: 1440, height: 1040 }], ['mobile', { width: 390, height: 844 }]]) {
+    const context = await site.browser.newContext({ viewport });
+    const page = await context.newPage(), errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
+    await page.goto(site.base);
+    await page.locator('body[data-ready=true]').waitFor();
+    assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+    assert.equal(await page.locator('#edition-note').innerText(), '资料整理内容待人工核验 · 非学校官方信息');
+    assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 3);
+    assert.equal(await page.locator('#answer-list [data-review-status=approved]').count(), 2);
+    assert.equal(await page.locator('#answer-list [data-review-status=demo]').count(), 4);
+    for (const item of await page.locator('#answer-list [data-review-status=collected]').all()) {
+      assert.match(await item.innerText(), /资料整理 2026\/9\/10/u);
+      assert.match(await item.innerText(), /待人工核验/u);
+      assert.doesNotMatch(await item.innerText(), /核验 未注明|演示内容|经人工审核/u);
+    }
+    await page.locator('#query').fill('合成资料整理');
+    assert.equal(await page.locator('#answer-list .answer-item').count(), 3);
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-collected-reader.png`), fullPage: true });
+    await page.locator('#topic').selectOption(collected.topic.id);
+    assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.filter(answer => answer.reviewStatus === 'collected' && answer.topic?.id === collected.topic.id).length);
+    await page.locator(`#answer-list a[href="#/answers/${encodeURIComponent(collected.id)}"]`).click();
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    const text = await page.locator('#answer-detail').innerText();
+    assert.match(text, /资料整理 2026\/9\/10/u);
+    assert.match(text, /AI 辅助资料整理，尚未逐条人工核验/u);
+    assert.doesNotMatch(text, /人工核验 未注明|经人工审核确认|演示内容/u);
+    for (const sentence of collected.sentences) assert.ok(text.includes(sentence.text));
+    assert.equal(await page.locator('#answer-detail .citation').count(), collected.citations.length);
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-collected-detail.png`), fullPage: true });
+    await page.reload();
+    await page.locator('body[data-ready=true]').waitFor();
+    assert.equal(await page.locator('#answer-detail h1').innerText(), collected.title);
+    assert.match(await page.locator('#answer-detail').innerText(), /尚未逐条人工核验/u);
+    await page.getByRole('link', { name: '补充/更正这篇', exact: true }).click();
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    const contribution = new URL(await page.locator('#contribution-correction').getAttribute('href'));
+    assert.equal(contribution.searchParams.get('revision'), collected.revisionId);
+    assert.equal(contribution.searchParams.get('article'), new URL('#/answers/' + collected.id, site.data.site.publicUrl).href);
+    await page.goto(site.base + '#/answers/' + encodeURIComponent(approved.id));
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#answer-detail').innerText(), /AI 辅助初稿，经人工审核确认/u);
+    assert.match(await page.locator('#answer-detail .detail-meta').innerText(), /人工核验/u);
+    assert.doesNotMatch(await page.locator('#answer-detail').innerText(), /尚未逐条人工核验/u);
+    await page.locator('#about-nav').click();
+    await page.locator('#about-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#about-content-title').innerText(), '资料整理与核验状态');
+    const about = await page.locator('#about-content-description').innerText();
+    assert.match(about, /尚未逐条人工核验/u);
+    assert.match(about, /已经人工审核的文章会单独标注核验日期/u);
+    assert.match(about, /演示文章另有明确标注/u);
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-collected-about.png`), fullPage: true });
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+  assert.ok(site.requests.every(request => request.method === 'GET' && request.path.startsWith(basePath) && !request.path.includes('/api/')));
+});
+
+test('all 69 collected fixture articles remain searchable among 73 public answers without claiming human verification', async t => {
+  const site = await staticSite(t, { reviewed: true, collectedCount: 69, onlyCollected: true, includeDemo: true });
+  assert.equal(site.data.mode, 'public-guide');
+  const context = await site.browser.newContext({ viewport: { width: 390, height: 844 } });
+  t.after(() => context.close());
+  const page = await context.newPage(), errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(site.base);
+  await page.locator('body[data-ready=true]').waitFor();
+  assert.equal(await page.locator('#count').innerText(), '73 条答案');
+  assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 69);
+  assert.equal(site.data.answers[0].demo, true, 'the source fixture deliberately retains its original demo-first order');
+  assert.equal(await page.locator('#answer-list .answer-item').first().getAttribute('data-review-status'), 'collected');
+  assert.equal(await page.locator('#answer-list .answer-item').last().getAttribute('data-review-status'), 'demo');
+  const last = site.data.answers.at(-1);
+  await page.locator('#query').fill(last.title);
+  assert.equal(await page.locator('#answer-list .answer-item').count(), 1);
+  await page.locator('#answer-list a').click();
+  await page.locator('#detail-view').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#answer-detail h1').innerText(), last.title);
+  assert.match(await page.locator('#answer-detail').innerText(), /尚未逐条人工核验/u);
+  await page.locator('#about-nav').click();
+  await page.locator('#about-view').waitFor({ state: 'visible' });
+  assert.match(await page.locator('#about-content-description').innerText(), /尚未逐条人工核验/u);
+  assert.doesNotMatch(await page.locator('#about-content-description').innerText(), /已经人工审核的文章/u);
+  assert.equal(await page.getByText('公开只读演示', { exact: true }).count(), 0);
+  await assertPageFits(page);
+  assert.deepEqual(errors, []);
 });

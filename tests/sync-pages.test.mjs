@@ -32,6 +32,16 @@ const syntheticSnapshot = (title = 'Synthetic reviewed article', generatedAt = '
   snapshot.contentHash = pagesContentHash(snapshot);
   return snapshot;
 };
+const syntheticCollectedSnapshot = () => {
+  const snapshot = syntheticSnapshot('Synthetic unverified collected material');
+  snapshot.mode = 'public-guide';
+  Object.assign(snapshot.answers[0], {
+    origin: 'ai_draft', originalOrigin: 'ai_draft', reviewStatus: 'collected', verifiedAt: '',
+    researchedAt: '2098-01-01', reviewOwnerLabel: '尚未人工核验', evidenceNote: 'Synthetic collected source information.',
+  });
+  snapshot.contentHash = pagesContentHash(snapshot);
+  return snapshot;
+};
 async function git(root, args, { optional = false } = {}) {
   try {
     const { stdout } = await execute('git', ['-c', `safe.directory=${root.replaceAll('\\', '/')}`, ...args], {
@@ -141,6 +151,41 @@ test('sync replaces a previously published contribution destination but rejects 
   assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
   assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
   assert.equal((await syncPagesSnapshot({ root: f.root })).changed, false);
+});
+
+test('withdrawing a collected revision replaces the older public-guide snapshot with the current empty release', async t => {
+  const previous = syntheticCollectedSnapshot();
+  const config = { ...pagesConfig, collectedRevisionIds: [] };
+  const f = await fixture(t, { published: previous, config });
+  const current = { ...structuredClone(previous), mode: 'public-reviewed', answers: [] };
+  current.contentHash = pagesContentHash(current);
+  await writeSnapshot(f.root, current);
+  const index = await readFile(join(f.root, '.git/index'));
+  const result = await syncPagesSnapshot({ root: f.root });
+  assert.equal(result.changed, true);
+  assert.equal(result.parent, f.baseline);
+  assert.equal(result.contentHash, current.contentHash);
+  const published = JSON.parse(await git(f.remote, ['show', `${result.commit}:${snapshotFile}`]));
+  assert.equal(published.mode, 'public-reviewed');
+  assert.deepEqual(published.answers, []);
+  assert.deepEqual(published, current);
+  assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
+  assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
+});
+
+test('a local collection authorization absent from deployed configuration cannot be synchronized', async t => {
+  const f = await fixture(t, { published: syntheticSnapshot(), config: { ...pagesConfig, collectedRevisionIds: [] } });
+  const snapshot = syntheticCollectedSnapshot();
+  await writeFile(join(f.root, 'community/pages.config.json'), JSON.stringify({
+    ...pagesConfig, collectedRevisionIds: [snapshot.answers[0].revisionId],
+  }));
+  await writeSnapshot(f.root, snapshot);
+  const index = await readFile(join(f.root, '.git/index'));
+  await assert.rejects(syncPagesSnapshot({ root: f.root }), { code: 'SYNC_PIPELINE_NOT_READY' });
+  assert.equal(await git(f.remote, ['rev-parse', 'refs/heads/main']), f.baseline);
+  assert.deepEqual(JSON.parse(await git(f.remote, ['show', `${f.baseline}:${snapshotFile}`])), syntheticSnapshot());
+  assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
+  assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
 });
 
 test('an old remote Pages pipeline blocks synchronization before making a commit', async t => {

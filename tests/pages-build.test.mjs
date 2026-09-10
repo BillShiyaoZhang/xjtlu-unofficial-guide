@@ -8,7 +8,9 @@ import { buildPages, createPagesData } from '../scripts/build-pages.mjs';
 const community = new URL('../community/', import.meta.url);
 const readJson = async name => JSON.parse(await readFile(new URL(name, community), 'utf8'));
 async function fixture() {
-  return { config: await readJson('pages.config.json'), profile: await readJson('content-profile.json'), content: await readJson('content.json'), catalog: await readJson('catalog.json'), now: '2026-09-10T00:00:00Z' };
+  const config = await readJson('pages.config.json');
+  delete config.collectedRevisionIds;
+  return { config, profile: await readJson('content-profile.json'), content: await readJson('content.json'), catalog: await readJson('catalog.json'), now: '2026-09-10T00:00:00Z' };
 }
 
 test('Pages exports exactly the reviewed demo revisions as public DTOs', async () => {
@@ -79,6 +81,7 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   const directory = resolve(root, 'community');
   await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
   for (const name of ['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json']) await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
+  await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify((await fixture()).config));
   for (const [name, contents] of Object.entries({ 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' })) await writeFile(resolve(directory, 'pages-ui', name), contents);
   await mkdir(resolve(directory, '.runtime'));
   await writeFile(resolve(directory, '.runtime', 'community.sqlite'), 'PRIVATE_DATABASE_SENTINEL');

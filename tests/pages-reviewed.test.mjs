@@ -19,6 +19,7 @@ async function setup(t, options = {}) {
   h.store.transact(state => { state.modules.content = importContent(state.modules.content, h.bundle); });
   const { token } = await h.operator(['content_reviewer']);
   const config = await readCommunity('pages.config.json');
+  delete config.collectedRevisionIds;
   const articles = async () => (await readJson(await h.get('/api/guide/review-articles', token))).articles;
   const review = async (article, decision = 'approved') => readJson(await h.post('/api/guide/reviews/batch', {
     mode: 'review-and-publish', items: [{
@@ -296,6 +297,9 @@ async function exportFixture(t) {
   }
   const runtimeConfig = await readCommunity('runtime.config.json');
   await writeFile(resolve(directory, 'runtime.demo.json'), JSON.stringify({ ...runtimeConfig, dataDirectory: '.demo-runtime' }));
+  const pagesConfig = await readCommunity('pages.config.json');
+  delete pagesConfig.collectedRevisionIds;
+  await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify(pagesConfig));
   const serializableKeyring = {
     activeVersion: keyring.activeVersion,
     keys: Object.fromEntries(Object.entries(keyring.keys).map(([version, key]) => [version, key.toString('hex')])),

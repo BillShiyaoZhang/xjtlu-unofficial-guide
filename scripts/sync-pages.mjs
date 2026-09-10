@@ -11,10 +11,10 @@ const githubRepository = 'https://github.com/BillShiyaoZhang/xjtlu-unofficial-gu
 const messages = {
   SYNC_ARGUMENTS: '仅支持 --demo 或 --production，默认使用本地演示运行库。',
   SYNC_REPOSITORY: '请从指南仓库根目录同步，并检查 Git 是否可用。',
-  SYNC_SNAPSHOT: '公开快照必须是 community/pages-reviewed.json 中有效的公开审定快照，请先重新导出并构建。',
+  SYNC_SNAPSHOT: 'community/pages-reviewed.json 必须是符合当前发布清单的有效公开快照，请先重新导出并构建。',
   SYNC_REMOTE: '同步目标配置不匹配。请将 origin 的读取和推送地址设为本项目的 GitHub HTTPS 地址。',
   SYNC_FETCH: '无法读取远端分支。请检查网络、Git 登录权限和远端 main 分支后重试。',
-  SYNC_PIPELINE_NOT_READY: '远端尚未安装审定快照的 Pages 构建流程。请先合并部署流程代码，再同步公开内容。',
+  SYNC_PIPELINE_NOT_READY: '远端的 Pages 构建流程或发布清单尚不支持此快照。请先提交部署代码与配置，再同步公开内容。',
   SYNC_IDENTITY: 'Git 提交身份尚未配置，请在此仓库配置 user.name 和 user.email 后重试。',
   SYNC_COMMIT: '未能生成公开快照提交；本地分支和暂存区没有被提交。',
   SYNC_PUSH: '推送未完成或未确认。请检查网络、权限或远端更新后重新同步；不会强制覆盖远端提交。',
@@ -93,12 +93,20 @@ export async function syncPagesSnapshot({ root = repositoryRoot, snapshotPath, r
   const parent = (await git(root, ['rev-parse', '--verify', `${tracking}^{commit}`], { code: 'SYNC_FETCH' })).trim();
   const pipeline = await git(root, ['show', `${parent}:scripts/build-pages.mjs`], { allowFailure: true });
   if (!pipeline?.includes('pages-reviewed.json')) throw failure('SYNC_PIPELINE_NOT_READY');
+  // Snapshot-only sync cannot deploy new collection permissions or site settings.
+  // Refuse a release that the already-deployed configuration would reject.
+  try {
+    const remoteConfig = JSON.parse(await git(root, ['show', `${parent}:community/pages.config.json`], { allowFailure: true }));
+    publicSnapshot(bytes, remoteConfig);
+  } catch { throw failure('SYNC_PIPELINE_NOT_READY'); }
   const existing = await git(root, ['show', `${parent}:${snapshotFile}`], { allowFailure: true });
   let existingHash;
   if (existing !== null) {
     let previous;
     try { previous = JSON.parse(existing); } catch { throw failure('SYNC_SNAPSHOT'); }
-    existingHash = publicSnapshot(Buffer.from(existing), { ...config, contributionsRepository: previous.site?.contributionsRepository }).contentHash;
+    existingHash = publicSnapshot(Buffer.from(existing), { ...config, contributionsRepository: previous.site?.contributionsRepository,
+      collectedRevisionIds: previous.answers?.filter(answer => answer.reviewStatus === 'collected').map(answer => answer.revisionId),
+    }).contentHash;
   }
   if (existingHash === snapshot.contentHash) {
     return { changed: false, commit: parent, contentHash: snapshot.contentHash, branch };
@@ -136,7 +144,7 @@ export async function main(args = process.argv.slice(2)) {
   await buildPages({ root: repositoryRoot });
   const result = await syncPagesSnapshot({ root: repositoryRoot, snapshotPath: exported.snapshotPath, expectedRemote: githubRepository });
   console.log(result.changed
-    ? `已同步 ${exported.answerCount} 篇公开文章（其中 ${exported.reviewedCount} 篇经过人工审核），提交 ${result.commit.slice(0, 12)}。Pages 部署由 GitHub Actions 继续处理。`
+    ? `已同步 ${exported.answerCount} 篇公开文章（${exported.reviewedCount} 篇经过人工审核，${exported.collectedCount} 篇为待核验资料整理），提交 ${result.commit.slice(0, 12)}。Pages 部署由 GitHub Actions 继续处理。`
     : '公开内容没有变化，未创建提交。');
   return result;
 }

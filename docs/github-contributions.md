@@ -4,6 +4,8 @@
 
 欢迎[补充信息、指出错误或提供不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)。投稿使用公开仓库 `BillShiyaoZhang/xjtlu-unofficial-guide` 的 GitHub Issue Forms；已有内容与处理进展见 [Issues](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。
 
+手册中的 69 篇初版资料已获明确收录授权，以「资料整理初版」公开，保留 AI 来源、资料读取日期和未人工核验说明。欢迎针对其中的缺口、过期信息或不同经历提出补充；公开收录本身不代表维护者已逐条核实。
+
 ## 如何投稿
 
 1. 在手册中打开投稿入口，或直接访问上方表单选择页。先浏览已有 Issue；同一事项可在已有讨论中补充来源和经历。
@@ -33,6 +35,8 @@ npm run sync:pages
 
 待 GitHub Actions 部署完成后，检查公开页面，并可在原 Issue 中关联更新后的文章。已有不可变修订应按 [内容维护说明](handbook-maintenance.md) 追加新版；Issue 的提交、标签、评论或关闭均不会自动改写手册，也不会自动写入人工核验时间。
 
+当前还有一条固定范围的资料收录通道：`collectedRevisionIds` 明确列出的本批 69 个初版修订，可以保留未核验标识进入 Pages，不需伪造「通过」记录。这不使新的 Issue 或未来草稿自动获得收录资格。若需要改变清单，应明确决定具体修订、提交配置并重新导出部署；真正经过人工核对并发布的新版本优先展示。`public-guide` 快照分别统计资料收录与人工审核，整理结果不混入核验计数。
+
 ## 页面与配置
 
 Pages 的投稿入口由 `community/pages.config.json` 中的 `contributionsRepository` 指定，当前值为 `BillShiyaoZhang/xjtlu-unofficial-guide`。表单位于该仓库的 `.github/ISSUE_TEMPLATE/`；读者经 Pages 跳转，最终在 GitHub 提交。
@@ -41,6 +45,6 @@ Pages 的投稿入口由 `community/pages.config.json` 中的 `contributionsRepo
 
 ## 与原有参与流程的关系
 
-本次明确开放外部 GitHub Issues 的公众补充与讨论，扩展了 [阶段 1 产品边界](product-boundary.md) 中原先关闭公开 UGC 的部分。使用此入口只需要 GitHub 账号，不需要研究邀请或研究同意。
+本次明确开放外部 GitHub Issues 的公众补充与讨论，并按用户授权收录此前搜集的 69 篇资料初版，扩展了 [阶段 1 产品边界](product-boundary.md) 中相应限制。使用公开投稿入口只需要 GitHub 账号，不需要研究邀请或研究同意。
 
 GitHub 公开投稿由 GitHub 保存；本地 Node 服务原有的邀请制私有线索继续按其自身流程处理。此次没有自动抓取 Issue、没有把公开投稿转存为私件，也没有把原有私件、内部审核意见或研究数据公开到 GitHub。

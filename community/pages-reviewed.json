@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "mode": "public-reviewed",
-  "generatedAt": "2026-09-10T06:12:14.579Z",
+  "mode": "public-guide",
+  "generatedAt": "2026-09-10T06:33:36.171Z",
   "site": {
     "name": "西浦非官方指南",
     "basePath": "/xjtlu-unofficial-guide/",
@@ -467,7 +467,6430 @@
           "title": "怎样判断一张答案卡是否仍适用？"
         }
       ]
+    },
+    {
+      "id": "handbook-arrival-academic-integrity-ai",
+      "title": "作业使用了生成式 AI，提交前应检查什么？",
+      "revisionId": "handbook-arrival-academic-integrity-ai-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "图书馆的 2026 年 3 月太仓 AI 素养培训介绍将学术诚信和文中引用 AI 列入提纲。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "提交前重读本次 assignment brief 和课程通知，逐项核对允许的工具、使用环节、合作范围及声明要求。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "规则不清楚时，向 module leader 说明准备使用的工具和具体用途，询问是否允许以及如何披露，并保存答复。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "为使用过程保留工具名称、使用日期、相关输入输出、自己检查和修改的记录，按课程要求整理提交材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "逐条回到原始资料核对 AI 输出中的文献、数据和引用，删除自己无法核验的内容。",
+          "kind": "advice"
+        },
+        {
+          "id": "s6",
+          "text": "最终检查正文、参考文献和工具使用声明是否一致，确保自己能够解释所提交的分析与结论。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：培训介绍不是课程作业的 AI 授权；不据此判断某次使用是否合规，也不推断全校存在统一允许或禁止规则。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-academic-integrity-ai-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-98b645f45baa965f",
+          "sourceRevisionId": "handbook-source-98b645f45baa965f-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "AI Literacy: Understand and Effectively Use AI-powered Tools",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/node/1915"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-academic-integrity-ai",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先核对本门课程的任务要求，再说明自己的使用过程和引用。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-academic-integrity-ai-v1",
+          "number": 1,
+          "title": "作业使用了生成式 AI，提交前应检查什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-academic-calendar",
+      "title": "本学期第几周、阅读周和校历去哪里查？",
+      "revisionId": "handbook-arrival-academic-calendar-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校“在校学生—教学日历”入口目前链接到 2026–2027 学年学生版校历。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该校历列出教学周、阅读周、考试时段和节假日等类别。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "先核对 PDF 标题中的学年和学生版标识，再把当前日期对应到正确学期与教学周。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "安排个人日程时同时查看课程通知、个人课表和考试通知，不把校历中的整体时段当作某门课的具体时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "保存官网入口和所看版本；出行或重要安排前重新打开核对，有冲突时请教务或课程方确认。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡不转录考试日期、作业截止日或个人放假安排；以官网当前版本及相应正式通知为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-academic-calendar-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f826af76e9900c88",
+          "sourceRevisionId": "handbook-source-f826af76e9900c88-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "在校学生",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/current-students"
+        },
+        {
+          "id": "handbook-arrival-academic-calendar-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-26c305c1ccdc9e56",
+          "sourceRevisionId": "handbook-source-26c305c1ccdc9e56-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 1,
+          "title": "Xi'an Jiaotong-Liverpool University 2026–2027 Academic Calendar (STUDENT)",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/08/ACADEMIC-CALENDAR-2026-27-FOR-STUDENT-XJTLU.pdf"
+        },
+        {
+          "id": "handbook-arrival-academic-calendar-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-26c305c1ccdc9e56",
+          "sourceRevisionId": "handbook-source-26c305c1ccdc9e56-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Xi'an Jiaotong-Liverpool University 2026–2027 Academic Calendar (STUDENT)",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/08/ACADEMIC-CALENDAR-2026-27-FOR-STUDENT-XJTLU.pdf"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-academic-calendar",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从学校在校学生页打开当学年的学生版校历，再与个人课表核对。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-academic-calendar-v1",
+          "number": 1,
+          "title": "本学期第几周、阅读周和校历去哪里查？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-system-bookmarks",
+      "title": "常用系统太多，先收藏哪些入口？",
+      "revisionId": "handbook-arrival-system-bookmarks-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校“在校学生”页集中列出邮箱、Learning Mall、e-Bridge、图书馆和学生一站式等入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "先从该页逐个打开，并按“邮件通知、课程学习、学籍办事、生活服务”保存书签。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "第一次登录时核对浏览器地址，尽量从学校官网进入，不使用群聊里来历不明的登录链接。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "给每个书签写一句用途，例如“查注册与证明”或“看课程材料”，减少临时找系统的时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "某个入口打不开时，记录完整页面地址和错误提示，再向对应部门询问。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-system-bookmarks-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f826af76e9900c88",
+          "sourceRevisionId": "handbook-source-f826af76e9900c88-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "在校学生",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/current-students"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-system-bookmarks",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从学校在校学生页建立自己的入口清单。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-system-bookmarks-v1",
+          "number": 1,
+          "title": "常用系统太多，先收藏哪些入口？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-account-setup",
+      "title": "校园账号怎么开始用，忘记密码怎么办？",
+      "revisionId": "handbook-arrival-account-setup-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "校园账号可用于学校邮箱、计算机、图书馆和 BOX 等系统。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "IT 介绍页指向 UIM（https://sso.xjtlu.edu.cn），用于绑定个人邮箱或手机。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "收到学校的账号通知后，按通知中的官方激活指引完成设置，核对学号及姓名是否一致。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "在首次成功登录后检查找回方式，确保绑定的是自己持续能使用的邮箱或号码。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "遇到激活或重置失败时，向 IT 提供学号、发生时间及脱敏截图；不要发送密码或验证码。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：账号激活 FAQ 本次只能检索到摘要，具体按钮和所需证件流程尚未直接核验。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-account-setup-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        },
+        {
+          "id": "handbook-arrival-account-setup-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-account-setup",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先确认学校发来的账号信息，再检查找回方式。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-account-setup-v1",
+          "number": 1,
+          "title": "校园账号怎么开始用，忘记密码怎么办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-email",
+      "title": "校园邮箱在哪里看，手机配置失败怎么办？",
+      "revisionId": "handbook-arrival-email-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校邮箱网页版入口是 https://mail.xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "手机无法添加邮箱时，先测试网页版登录和收发，再判断是账号问题还是客户端设置问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "为入学、课程、办事回执分别建立文件夹，并定期检查垃圾邮件和未读邮件。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "回复办事邮件时保留原主题和往来记录，在正文写清学号、校区及所问事项。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "需要手机配置帮助时，从 IT 官网进入最新邮箱指南，或携带设备向本校区 IT 服务窗口求助。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-email-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-email",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "优先用网页版确认账号与收信是否正常。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-email-v1",
+          "number": 1,
+          "title": "校园邮箱在哪里看，手机配置失败怎么办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-network-login",
+      "title": "连上校园 Wi-Fi 却不能上网怎么办？",
+      "revisionId": "handbook-arrival-network-login-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校无线网络名称为 XJTLU，网络认证入口为 https://netauth.xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "官方网络介绍涵盖苏州工业园区和太仓两个校园。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "确认网络名称后打开浏览器检查是否需要认证；若未自动弹出，可通过已核对的认证地址进入。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "在公共设备上避免保存登录状态，离开时退出自己的账号。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "报障时写明校区、楼宇或教室、设备型号、无线或有线连接方式及错误出现的时间。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-network-login-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        },
+        {
+          "id": "handbook-arrival-network-login-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-45af0de78d436a56",
+          "sourceRevisionId": "handbook-source-45af0de78d436a56-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "校园网络",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services/%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%BB%9C-intro"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-network-login",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "确认连入学校网络，并检查网页认证。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-network-login-v1",
+          "number": 1,
+          "title": "连上校园 Wi-Fi 却不能上网怎么办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-printing",
+      "title": "第一次在校园打印，应该怎么准备？",
+      "revisionId": "handbook-arrival-printing-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "校园自助打印系统支持打印、复印和扫描，打印任务可在设备上刷校园卡领取。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "从 IT 页面进入当前打印指引，先确认提交方式、附近可用设备和计费设置。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "打印前检查 PDF 页数、纸张尺寸、单双面、彩色或黑白，先用少量页面试打。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "遇到卡纸或任务重复时，先记下设备位置、任务名称和提示，不要连续反复提交同一文件。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "离开设备前收齐文件，清除自己的临时材料并退出登录，尤其留意含证件或成绩信息的页面。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-printing-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-printing",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先提交打印任务，再到自助设备取件。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-printing-v1",
+          "number": 1,
+          "title": "第一次在校园打印，应该怎么准备？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-box-backup",
+      "title": "课程文件和小组资料怎么整理备份？",
+      "revisionId": "handbook-arrival-box-backup-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "校园云盘 BOX 的入口为 https://box.xjtlu.edu.cn，并提供版本控制功能。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "按学期和课程代码建目录，把原始材料、协作稿和最终提交稿分开保存。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "重要作业在自己的另一处可信存储中保留备份，并检查备份能否打开。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "分享前确认接收对象与权限，含个人证件或他人信息的材料不要设置为公开链接。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "小组合作时约定文件命名和最终提交负责人，交稿前核对文件内容，而不只看文件名。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-box-backup-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-box-backup",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "使用校园 BOX 时同时检查目录和分享权限。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-box-backup-v1",
+          "number": 1,
+          "title": "课程文件和小组资料怎么整理备份？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-it-suzhou",
+      "title": "苏州校区的 IT 问题找谁？",
+      "revisionId": "handbook-arrival-it-suzhou-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "IT 官网列出苏州服务点为中心楼 956A，电话 0512 8816 1250，邮箱 IT@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "发邮件时在主题写明“系统名称 + 简短故障”，正文附校区、学号、设备和报错时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "截图遮住密码、验证码及无关个人资料，同时保留需要排查的错误文字。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "到场前从 IT 页面核对当日窗口安排；若设备可以携带，连同充电器一并带上。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-it-suzhou-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-it-suzhou",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "记录报错信息后联系苏州工业园区 IT 服务。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-it-suzhou-v1",
+          "number": 1,
+          "title": "苏州校区的 IT 问题找谁？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-it-taicang",
+      "title": "太仓校区的 IT 问题找谁？",
+      "revisionId": "handbook-arrival-it-taicang-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "IT 官网列出太仓服务点为 H 栋一楼服务大厅，电话 0512 8897 0505，邮箱 IT.TC@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "报障时说明问题发生在太仓，并写清楼宇、房间或设备位置。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "如果仅一个系统出错，补充其他学校系统能否正常登录，帮助服务人员缩小排查范围。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "到场前核对官网窗口安排，并保存原工单或邮件主题以便连续跟进。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "taicang"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-it-taicang-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b5b248e22efe1a15",
+          "sourceRevisionId": "handbook-source-b5b248e22efe1a15-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "IT 服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/it-services"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-it-taicang",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "太仓有独立的 IT 服务联系方式。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-it-taicang-v1",
+          "number": 1,
+          "title": "太仓校区的 IT 问题找谁？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-learning-mall",
+      "title": "Learning Mall Core 和 Premium 怎么区分？",
+      "revisionId": "handbook-arrival-learning-mall-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "官方登录指南把 Core 列为师生在线教学平台，Premium 提供额外学习资源并面向校外用户。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "使用学校账号时选择“XJTLU Account”，再用学校邮箱账号的用户名和密码登录。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "从学校学习超市入口或 https://core.xjtlu.edu.cn 进入，先检查当前登录身份。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "找不到某门课时，记录课程代码、班级和页面截图，向课程负责人确认课程页面是否已开放。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果是登录失败，先检查账号类型；如果是课程内容问题，附上具体课程链接询问。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-learning-mall-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-bd47b1efb6991b8f",
+          "sourceRevisionId": "handbook-source-bd47b1efb6991b8f-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "How to access to Learning Mall Core platform",
+          "mode": "link-only",
+          "url": "https://knowledgebase.xjtlu.edu.cn/article/how-to-access-to-learning-mall-core-platform-341.html"
+        },
+        {
+          "id": "handbook-arrival-learning-mall-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-bd47b1efb6991b8f",
+          "sourceRevisionId": "handbook-source-bd47b1efb6991b8f-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "How to access to Learning Mall Core platform",
+          "mode": "link-only",
+          "url": "https://knowledgebase.xjtlu.edu.cn/article/how-to-access-to-learning-mall-core-platform-341.html"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-learning-mall",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "日常校内课程学习先确认进入 Core。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-learning-mall-v1",
+          "number": 1,
+          "title": "Learning Mall Core 和 Premium 怎么区分？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-ebridge",
+      "title": "e-Bridge 主要用来办什么？",
+      "revisionId": "handbook-arrival-ebridge-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "e-Bridge 是学校学生信息与课程管理门户，涵盖注册、学籍、学术记录和课程说明。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "通过学校在校学生页进入 https://ebridge.xjtlu.edu.cn，并核对当前学年和个人信息。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "办理事务前先看具体栏目说明，提交后保存回执或状态页面。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "若看到个人资料或记录不一致，注明字段、期望更正内容及支持材料，联系页面指定部门。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "群聊转述与个人系统信息冲突时，把两处信息提供给负责部门核对，避免自行推断办理结果。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-ebridge-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-1864414f42956520",
+          "sourceRevisionId": "handbook-source-1864414f42956520-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "e-Bridge",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/it-services/e-bridge-eng"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-ebridge",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把学籍与课程记录类事务放到 e-Bridge 核对。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-ebridge-v1",
+          "number": 1,
+          "title": "e-Bridge 主要用来办什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-onestop",
+      "title": "不知道该找哪个部门，可以先问谁？",
+      "revisionId": "handbook-arrival-onestop-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学生一站式提供非学术事务咨询，并协助引导至相关部门。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "官方咨询入口包括 onestop@xjtlu.edu.cn 和 https://studentonestop.xjtlu.edu.cn/。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "先用三句话说明“要完成什么、已经做了什么、卡在哪里”，附上校区和学号。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "如果已有申请编号或邮件往来，一并提供，方便接续处理。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "请对方明确下一步办理部门、材料、提交渠道和查看结果的方式，并保存答复。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-onestop-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        },
+        {
+          "id": "handbook-arrival-onestop-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-onestop",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "非学术事务可以从学生一站式开始。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-onestop-v1",
+          "number": 1,
+          "title": "不知道该找哪个部门，可以先问谁？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-card-replacement",
+      "title": "校园卡或学生证丢了，从哪里补办？",
+      "revisionId": "handbook-arrival-card-replacement-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校一站式服务范围包括学生卡补办，以及学生证注册和补办。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "先确认丢失的是校园卡、学生证还是其他证件，向一站式说明准确名称。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "尽快询问是否需要挂失或停用，以及本校区补办需要的身份核验材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "在官方页面确认费用、领取地点和临时通行安排后再办理，避免照搬往届经验。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "不要在公开群聊发布完整证件照片或证件号码，寻物信息保留最少必要内容。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-card-replacement-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-card-replacement",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先分清证件类型，再走一站式申请入口。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-card-replacement-v1",
+          "number": 1,
+          "title": "校园卡或学生证丢了，从哪里补办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-transcripts",
+      "title": "在读证明和成绩单怎样申请？",
+      "revisionId": "handbook-arrival-transcripts-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "在校学生的申请路径为 e-Bridge → Academic → Academic Records → Transcripts and Letters → Self-Service Portal。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该门户提供成绩单、在校状态证明及其他证明文件；申请问题可联系 Transcripts@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "先向接收方确认需要的语言、文件类型、电子或纸质形式，以及是否有验签要求。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "按页面要求下载或提交申请，核对姓名、学号和接收邮箱后再发送。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "纸质文件请在同一官方说明页核对可办类型、费用和领取安排，并留出对方接收材料的时间。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-transcripts-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-c1d844d55ff450ed",
+          "sourceRevisionId": "handbook-source-c1d844d55ff450ed-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "成绩单与证明",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/transcripts-and-certifications"
+        },
+        {
+          "id": "handbook-arrival-transcripts-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-c1d844d55ff450ed",
+          "sourceRevisionId": "handbook-source-c1d844d55ff450ed-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "成绩单与证明",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/transcripts-and-certifications"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-transcripts",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "进入 e-Bridge 自助门户选择所需文件。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-transcripts-v1",
+          "number": 1,
+          "title": "在读证明和成绩单怎样申请？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-development-adviser",
+      "title": "适应大学生活遇到困难，成长顾问能帮什么？",
+      "revisionId": "handbook-arrival-development-adviser-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校成长顾问为本科生和研究生提供不同支持，公开咨询邮箱为 sda@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "先从个人系统或学校发给你的通知查找本人的成长顾问，找不到时向中心咨询。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "联系前列出当前最影响生活或学习的两三件事，说明持续多久、已尝试哪些办法。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "会面后把商定的下一步写成小任务，并确认是否需要转介其他部门。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "涉及课程、住宿或健康的具体事项时，可请顾问协助确定负责部门和沟通方式。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-development-adviser-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-development-adviser",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把困惑具体化，再联系自己的成长顾问。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-development-adviser-v1",
+          "number": 1,
+          "title": "适应大学生活遇到困难，成长顾问能帮什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-international-support",
+      "title": "国际及港澳台新生遇到到校事务，先找哪里？",
+      "revisionId": "handbook-arrival-international-support-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校资源页为国际及港澳台学生列出住宿、保险、到校适应等支持，并提供两校区欢迎指南链接。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该页公布的国际学生支持邮箱为 global@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "邮件注明校区、项目、入学年份和需要帮助的事项，先确认适用的办理指南。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "涉及签证或居留时，仅向学校负责团队和官方主管机构核对所需材料、预约及办理要求。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "预订接机或住宿前先询问本届服务是否开放、申请方式和确认凭证，保留书面回复。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：此卡只提供服务入口，不判断签证、居留、保险资格或接机可用性。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-international-support-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        },
+        {
+          "id": "handbook-arrival-international-support-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-international-support",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先通过西浦国际核对自己的身份类别和校区流程。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-international",
+        "slug": "international",
+        "title": "国际学生支持"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-international-support-v1",
+          "number": 1,
+          "title": "国际及港澳台新生遇到到校事务，先找哪里？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-counselling",
+      "title": "想找人谈谈，怎样预约学校心理咨询？",
+      "revisionId": "handbook-arrival-counselling-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校 SCC 提供个人、团体及家庭咨询，支持中文普通话和英语。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "预约邮箱为 counsellingservice@xjtlu.edu.cn，公开电话为 0512 8816 1815。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "预约时简要说明需要咨询、偏好语言、所在校区和可联系时间，详细经历可以留到会谈中说。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "在预约时核对形式、地点及保密规则，选择能安心交流的时间和环境。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果有即时人身危险或急救需要，直接拨打对应紧急电话，不等待普通预约邮件回复。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：不提供个人心理诊断、治疗建议或预约时效承诺；紧急事件使用紧急求助渠道。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-counselling-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-2a2d9c2bf5a30a36",
+          "sourceRevisionId": "handbook-source-2a2d9c2bf5a30a36-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "生活服务",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/health-and-wellbeing"
+        },
+        {
+          "id": "handbook-arrival-counselling-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-2a2d9c2bf5a30a36",
+          "sourceRevisionId": "handbook-source-2a2d9c2bf5a30a36-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "生活服务",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/health-and-wellbeing"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-counselling",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "通过学校咨询中心的官方渠道提出预约需求。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-wellbeing",
+        "slug": "wellbeing",
+        "title": "身心健康与求助"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-counselling-v1",
+          "number": 1,
+          "title": "想找人谈谈，怎样预约学校心理咨询？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-emergency-help",
+      "title": "遇到紧急情况，应该拨打什么电话？",
+      "revisionId": "handbook-arrival-emergency-help-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "110 用于公安报警，119 用于消防救援，120 是全国统一医疗急救电话。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "图书馆 2026 年暑期服务通知列出的非人工服务时段校园联系人为苏州 0512 8816 1066、太仓 0512 8897 0793。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "求助时先讲清校区、建筑、楼层及附近明显标志，再说明发生了什么和需要何种帮助。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "按接警或调度人员要求回答问题，保持电话可接通；在安全前提下请同伴协助指引救援人员。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "提前把公共紧急电话存入手机，并了解自己常去楼宇的出口和集合点。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：校园联系人只作为图书馆通知中列出的补充入口，不替代公共急救、公安或消防服务。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-emergency-help-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-39549f5c31cc6849",
+          "sourceRevisionId": "handbook-source-39549f5c31cc6849-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "常用紧急救助及公益服务号码说明",
+          "mode": "link-only",
+          "url": "https://bjca.miit.gov.cn/zwgk/tzgg/art/2022/art_8d4eb93ee3424f30826c97ee400e8937.html"
+        },
+        {
+          "id": "handbook-arrival-emergency-help-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-831f396a5d6f6460",
+          "sourceRevisionId": "handbook-source-831f396a5d6f6460-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Adjustment of Library Opening Arrangements during Summer Holiday",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/node/1992"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-emergency-help",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先联系与事件对应的公共紧急服务，并清楚说明位置。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-wellbeing",
+        "slug": "wellbeing",
+        "title": "身心健康与求助"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-emergency-help-v1",
+          "number": 1,
+          "title": "遇到紧急情况，应该拨打什么电话？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-accessibility-support",
+      "title": "有无障碍或学习支持需求，怎样提前沟通？",
+      "revisionId": "handbook-arrival-accessibility-support-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校学生一站式为非学术问题提供咨询与部门转介。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "可先向一站式说明所在校区、受影响的活动，以及需要确认的无障碍设施或支持安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "涉及课堂、考核或材料形式时，同时联系课程或项目负责人，询问正式申请渠道、材料及处理周期。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "把问题写成具体场景，例如进入某栋楼、长距离移动、阅读电子资料或听取课堂内容存在困难。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "需要图书馆协助时，可查看其 Disabilities Service 页面作为咨询线索，并直接核对本校区当前服务。",
+          "kind": "advice"
+        },
+        {
+          "id": "s6",
+          "text": "仅向学校指定的私密渠道提供必要材料，并保存沟通和安排确认记录。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：尚未找到可直接核验的当前全校合理调整申请流程；不承诺审批资格或具体安排。图书馆 Disabilities Service 页仅检索可见，设施与服务现状待核验。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-accessibility-support-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-accessibility-support",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先提出具体障碍和支持需求，请学校明确负责渠道。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-accessibility-support-v1",
+          "number": 1,
+          "title": "有无障碍或学习支持需求，怎样提前沟通？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-finance-check",
+      "title": "学费、奖助学金和经济困难支持，从哪里核对？",
+      "revisionId": "handbook-arrival-finance-check-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "一站式服务范围列有非学术奖学金与助学金申请。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "学校硕士招生费用页按专业和学制列出学费信息。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "本科生从学校招生栏目中选择自己的身份类别，研究生选择相应学段，再核对入学年份和项目。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "将录取通知、个人系统账单及奖助通知放在一起核对，遇到不一致请负责部门书面确认。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "经济困难可先询问一站式或研究生支持团队是否有适用的支持渠道，以及需要哪些材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s6",
+          "text": "任何付款前核对官方收款页面、项目名称与本人信息，并保存回执；不要凭群聊转账信息付款。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：此卡不列个人应缴金额、资助资格、分期或退款结论；中国内地本科费用页本次仅检索可见，具体内容待直接核验。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-finance-check-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0f212f406973e8bd",
+          "sourceRevisionId": "handbook-source-0f212f406973e8bd-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "学习资源与支持",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support"
+        },
+        {
+          "id": "handbook-arrival-finance-check-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-b85668c3cdb6e377",
+          "sourceRevisionId": "handbook-source-b85668c3cdb6e377-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "硕士研究生招生：学费及奖学金",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/master/fees-and-scholarship"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-finance-check",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先匹配学段与身份，再查官方入口和个人通知。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-finance",
+        "slug": "finance",
+        "title": "费用与资助入口"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-finance-check-v1",
+          "number": 1,
+          "title": "学费、奖助学金和经济困难支持，从哪里核对？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-arrival-master-registration",
+      "title": "硕士新生到校前，应核对哪些办理事项？",
+      "revisionId": "handbook-arrival-master-registration-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "2026/27 硕士手册把注册分为线上、现场和财务三部分，线上环节通过 e-Bridge 核对资料。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "同册公布研究生支持邮箱为 pgsupport@xjtlu.edu.cn。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "把本人最新录取通知与迎新邮件中的任务逐项列出，分别记录材料、提交入口和完成状态。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "现场核验前，向招生或研究生支持团队确认身份证明、学历及语言材料是否需要原件或补充文件。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "核对本人的联系方式和紧急联系人，并把无法按要求到场、材料缺失或系统无法注册的问题提前书面说明。",
+          "kind": "advice"
+        },
+        {
+          "id": "s6",
+          "text": "涉及费用或临时困难时，请负责团队说明当前可用渠道，等待正式回复后安排后续步骤。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：引用的是 2026/27 版手册的事项结构；不同入学批次的具体材料、时间、费用和结果仍须以本人正式通知为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "postgraduate",
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-arrival-master-registration-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-822013393c7ef6be",
+          "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "XJTLU Master's Student Handbook AY2026/27",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/09/XJTLU_Masters-Student-Handbook_AY2026-27.pdf"
+        },
+        {
+          "id": "handbook-arrival-master-registration-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-822013393c7ef6be",
+          "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "XJTLU Master's Student Handbook AY2026/27",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/09/XJTLU_Masters-Student-Handbook_AY2026-27.pdf"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-arrival-master-registration",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "用手册建立清单，再对照本届录取与迎新通知。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-arrival",
+        "slug": "arrival",
+        "title": "到校准备"
+      },
+      "history": [
+        {
+          "id": "handbook-arrival-master-registration-v1",
+          "number": 1,
+          "title": "硕士新生到校前，应核对哪些办理事项？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-read-module-catalogue",
+      "title": "开课前怎样读懂课程大纲？",
+      "revisionId": "handbook-read-module-catalogue-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校公开课程目录按学科代码分类，可从中进入课程页面。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "本次打开的 CPT001 示例页列出学年、学期、课程目标、学习成果和教学方式，学年标为 2025/26。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先抄下课表中的课程代码和英文全名，再逐项记录本学期的学习成果、阅读材料、作业类型与老师公布的评分标准。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议将不理解的术语整理成短清单，在第一周课堂或答疑时间确认，随后拆成每周阅读、练习和提交任务。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议用本学期课程通知核对目录内容，尤其留意同名课程、不同学期和往年版本。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：目录示例只演示读取方法；不据此承诺当前课程设置、学分或考核比例。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-read-module-catalogue-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-4fbc846a36ba7a9b",
+          "sourceRevisionId": "handbook-source-4fbc846a36ba7a9b-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Module Catalogues — 课程目录",
+          "mode": "link-only",
+          "url": "https://modules.xjtlu.edu.cn/dept"
+        },
+        {
+          "id": "handbook-read-module-catalogue-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-1b59f0d88cb0917d",
+          "sourceRevisionId": "handbook-source-1b59f0d88cb0917d-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Professional Skills in Computer Science — Module Catalogues",
+          "mode": "link-only",
+          "url": "https://modules.xjtlu.edu.cn/mod?mod_code=CPT001&psl_code=SEM2"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-read-module-catalogue",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先按课程代码定位，再核对学年、学习目标和教学方式，把不清楚的要求带到课程答疑。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-read-module-catalogue-v1",
+          "number": 1,
+          "title": "开课前怎样读懂课程大纲？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-timetable-academic-help",
+      "title": "课表有冲突或课程信息不对，怎样描述问题？",
+      "revisionId": "handbook-timetable-academic-help-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "教务办公室负责课表协调、学生课表个性化服务及日常教务咨询。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先核对自己选中的学期、校区、课程代码和教学班，再比较课表与本学期课程通知。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议按“课程 A 与课程 B—日期和时段—显示教室—发现时间”描述冲突，并附去掉无关个人信息的截图。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议通过教务官方页核对本校区咨询入口；咨询时说明年级、专业及已经尝试的核对步骤。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议在收到正式答复后保存邮件和调整结果，并再检查对应课程页面是否同步。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡不判断选课是否生效，也不替代课程出勤或调课指示。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate",
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-timetable-academic-help-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-ac1aabfd076f505c",
+          "sourceRevisionId": "handbook-source-ac1aabfd076f505c-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Registry Office — 教务办公室",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/professional-services/registry"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-timetable-academic-help",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "准备课程代码、冲突时段和系统截图，向教务办公室提交能够复现的问题。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-timetable-academic-help-v1",
+          "number": 1,
+          "title": "课表有冲突或课程信息不对，怎样描述问题？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-choose-transfer-programme",
+      "title": "选专业或考虑转专业前，先做哪些功课？",
+      "revisionId": "handbook-choose-transfer-programme-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "教务办公室统筹本科选专业、转专业流程，并组织专业展会等学术活动。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先列出两到三个目标专业，比较其核心课程、研究方向、实践形式和后续发展路径。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议实际阅读目标专业课程大纲，找一项小型阅读或练习任务，判断自己是否愿意持续投入。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议准备当前专业、入学届、已修课程与目标专业名称，向教务核对本届规则、提交入口和材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议同时请目标专业老师解释课程衔接和学习负担，并把得到的答复按日期归档。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：不提供转专业资格、名额、分数线、审批结果或学制影响的个案结论。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-choose-transfer-programme-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-ac1aabfd076f505c",
+          "sourceRevisionId": "handbook-source-ac1aabfd076f505c-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Registry Office — 教务办公室",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/professional-services/registry"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-choose-transfer-programme",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把兴趣、课程内容和申请规则分开核对，带着具体专业比较表咨询。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-choose-transfer-programme-v1",
+          "number": 1,
+          "title": "选专业或考虑转专业前，先做哪些功课？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-exam-and-assessment-help",
+      "title": "考试、补考或考评问题，如何找到正确咨询入口？",
+      "revisionId": "handbook-exam-and-assessment-help-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "教务办公室负责期末考试与补考管理，也处理减轻情节和考评申诉等事务。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "考前建议逐门核对正式考试通知中的日期、时段、地点、考试形式及允许携带物品，并提前查看路线。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "遇到考试或考评问题，建议记录课程代码、受影响的考核、时间经过、已收到的通知及希望核实的问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "如需咨询 mitigating circumstances 或 assessment appeal，建议尽快从教务官方入口询问当前流程、材料要求及适用时限。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议保存提交回执和后续答复；复习时以本学期学习成果与授课材料安排练习。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本稿不判断是否符合减轻情节、是否可以申诉或是否获准补考；不提供具体时限与成绩计算规则。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-exam-and-assessment-help-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-ac1aabfd076f505c",
+          "sourceRevisionId": "handbook-source-ac1aabfd076f505c-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Registry Office — 教务办公室",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/professional-services/registry"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-exam-and-assessment-help",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先整理考试与课程信息，政策问题交给教务核实，复习安排依据本学期材料。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-exam-and-assessment-help-v1",
+          "number": 1,
+          "title": "考试、补考或考评问题，如何找到正确咨询入口？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-find-books-articles",
+      "title": "找教材、论文和电子书，从图书馆哪里开始？",
+      "revisionId": "handbook-find-books-articles-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "图书馆首页提供综合检索、馆藏目录、电子书、电子期刊与数据库入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "已知书名时，建议同时准备作者、版本或 ISBN，避免把同名书或不同版次当作课程要求的教材。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "按主题找论文时，建议先拆出两个核心概念，准备英文关键词与同义词，再按年份、文献类型和学科筛选。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议先读摘要判断是否相关，再记录标题、作者、年份、DOI 或稳定链接，方便写作时回溯。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果无法获取全文，建议保存文献题名和报错页面，通过图书馆服务入口询问访问或获取方式。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：可检索到记录不等于有全文权限；本稿未登录数据库核验个人访问范围。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-find-books-articles-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0ead3ce98216a3be",
+          "sourceRevisionId": "handbook-source-0ead3ce98216a3be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Home — Library for XJTLU",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-find-books-articles",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "已知书名先查馆藏；按主题找文献时，用综合检索和数据库逐步缩小范围。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-find-books-articles-v1",
+          "number": 1,
+          "title": "找教材、论文和电子书，从图书馆哪里开始？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-library-renew-reserve",
+      "title": "图书续借、预约或跨馆取书，怎样先查清楚？",
+      "revisionId": "handbook-library-renew-reserve-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "馆藏目录入口支持续借、预约和分馆间递送服务。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议从图书馆首页进入 Catalogue，先核对所需图书的馆藏地点、版次与当前可借状态。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "借书后建议记录个人账户显示的到期时间；需要延长使用时，提前查看该册是否可以续借。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "使用预约或跨馆递送前，建议核对取书校区和通知方式，提交后检查记录是否已生成。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果按钮不可用或状态异常，建议携带书名、馆藏条码和报错截图咨询图书馆，确认后再安排往返。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：可借册数、借期、续借条件与处理时间以账户及现行馆规为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-library-renew-reserve-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0ead3ce98216a3be",
+          "sourceRevisionId": "handbook-source-0ead3ce98216a3be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Home — Library for XJTLU",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-library-renew-reserve",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "在馆藏目录查看借阅记录与可用操作，提交后再次确认状态。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-library-renew-reserve-v1",
+          "number": 1,
+          "title": "图书续借、预约或跨馆取书，怎样先查清楚？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-library-study-space",
+      "title": "想找自习位或讨论室，应该先核对什么？",
+      "revisionId": "handbook-library-study-space-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "馆网提供开放时间、空间指南、房间预约及座位预约入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "2026 图书馆迎新通知提供空间、资源与常用支持的入门指引。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先明确人数、讨论音量、设备需求和预计使用时段，再选择相应空间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "预约时建议核对校区、楼层、房间或座位编号，并保存成功页面或确认信息。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "出发前建议再查开放安排；使用后按现场和预约页面的要求结束使用，给下一位读者留出空间。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：未核实实时空位；节假日开放时间、预约规则与到场确认方式以原站和现场为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-library-study-space-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0ead3ce98216a3be",
+          "sourceRevisionId": "handbook-source-0ead3ce98216a3be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Home — Library for XJTLU",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/"
+        },
+        {
+          "id": "handbook-library-study-space-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-3cfb5e989757dda3",
+          "sourceRevisionId": "handbook-source-3cfb5e989757dda3-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "2026 Library Orientation | Step into XJTLU Library, Step into a Wider World",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/node/2019"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-library-study-space",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先明确安静自习还是小组讨论，再核对校区、开放时间和预约状态。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-library-study-space-v1",
+          "number": 1,
+          "title": "想找自习位或讨论室，应该先核对什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-collect-textbooks",
+      "title": "开学领教材，错过集中发放怎么办？",
+      "revisionId": "handbook-collect-textbooks-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "图书馆教材服务页提供教材列表、学生 FAQ，以及两校区教材服务中心信息。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该页说明集中发书通常在每学期第 0 周进行，错过后可按教材服务中心指引领取。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先核对本学期课程、教材版次与发放安排，再整理需要领取或咨询的书目。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "领取前建议查看学校当期通知中的地点、时段和所需凭证；课程发生调整时先向课程方确认对应教材。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果书目缺失、领取记录不符或涉及教材结算，建议把课程代码、书名和领取记录发给教材服务方核对。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：第 0 周是页面的一般说明；本学期安排、教材结算与退换规则须查看当前通知。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student",
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-collect-textbooks-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b3ff0e19673fdf67",
+          "sourceRevisionId": "handbook-source-b3ff0e19673fdf67-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Textbook Service — 教材服务",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/Study_Support/Textbook_Service"
+        },
+        {
+          "id": "handbook-collect-textbooks-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-b3ff0e19673fdf67",
+          "sourceRevisionId": "handbook-source-b3ff0e19673fdf67-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Textbook Service — 教材服务",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/Study_Support/Textbook_Service"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-collect-textbooks",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先按课程核对教材列表，再按本校区教材服务通知领取。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-collect-textbooks-v1",
+          "number": 1,
+          "title": "开学领教材，错过集中发放怎么办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-library-research-skills",
+      "title": "不会检索或管理参考文献，怎样利用图书馆支持？",
+      "revisionId": "handbook-library-research-skills-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "馆网提供学科指南及信息技能、数字工具、学术出版等工作坊入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议预约或参加活动前准备研究题目、已试过的关键词，以及最想解决的一到两个问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "做文献综述时，建议建立“研究问题—方法—主要发现—局限—可引用位置”的阅读表。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议从第一篇文献起保存完整书目信息，按课程指定格式练习引用，并人工核对自动生成的参考文献。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如果写作涉及跨学科主题，建议先看相关学科指南，再用同一组关键词在不同数据库比较结果。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：工作坊报名页本次抓取受限；是否开课、名额及支持形式应从馆网进入后确认。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-library-research-skills-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0ead3ce98216a3be",
+          "sourceRevisionId": "handbook-source-0ead3ce98216a3be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Home — Library for XJTLU",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-library-research-skills",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "带着一个真实课题学习检索，把找到的资料变成可以追溯的阅读记录。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-library-research-skills-v1",
+          "number": 1,
+          "title": "不会检索或管理参考文献，怎样利用图书馆支持？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-eap-study-habits",
+      "title": "全英文学习刚开始，怎样用好 EAP？",
+      "revisionId": "handbook-eap-study-habits-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "英语语言中心通过 EAP 课程支持英语能力以及学术学习所需技能。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议每周挑选一段真实课程阅读，用自己的话写出主张、证据和一个想追问的问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "讨论前建议准备简短提纲并练习解释一个概念；听课时优先记录论点关系和不理解之处。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "拿到反馈后，建议按结构、论证、引用和语言分类，只选最影响理解的两项做下一轮修改。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "如学习任务明显超出当前能力，建议带具体作业和反馈向 EAP 老师询问练习方式与可用支持。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：分班、选课、考核与语言成绩要求以本届正式安排为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student",
+          "undergraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-eap-study-habits-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-e383f217d6c724d3",
+          "sourceRevisionId": "handbook-source-e383f217d6c724d3-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "English Language Centre",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/english-language-centre"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-eap-study-habits",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "围绕本学期任务练习阅读、讨论和表达，逐步形成可重复的学习习惯。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-language",
+        "slug": "language",
+        "title": "语言与学术写作"
+      },
+      "history": [
+        {
+          "id": "handbook-eap-study-habits-v1",
+          "number": 1,
+          "title": "全英文学习刚开始，怎样用好 EAP？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-academic-writing-support",
+      "title": "论文和作业写不清楚，找谁获得学术写作支持？",
+      "revisionId": "handbook-academic-writing-support-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "Academic Literacies Centre 为院系提供英语与学术技能支持，形式包括课堂、研讨及个别辅导。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "目前官网将 ALC 与 ELC 等中心列在 Global Cultures and Languages Hub 下。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先问所在课程或院系有哪些 ALC 支持及预约方式，再提交希望讨论的具体问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "会前建议准备题目要求、评分标准、一小段草稿和老师已有反馈，说明想改进论点、结构还是表达。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "会后建议自己完成修改，并对照原始资料检查引用、数据和结论是否准确。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本次未核实具体院系的预约时段；写作辅导不代表代写、润色承诺或分数保证。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-academic-writing-support-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f52591b848116c0a",
+          "sourceRevisionId": "handbook-source-f52591b848116c0a-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Academic Literacies Centre",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/academic-literacies-centre"
+        },
+        {
+          "id": "handbook-academic-writing-support-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-a4ae82c4e45e5146",
+          "sourceRevisionId": "handbook-source-a4ae82c4e45e5146-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Global Cultures and Languages Hub",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-academic-writing-support",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把题目、评分标准、草稿和困惑一起带去，比只问“怎么提高写作”更容易得到有效反馈。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-language",
+        "slug": "language",
+        "title": "语言与学术写作"
+      },
+      "history": [
+        {
+          "id": "handbook-academic-writing-support-v1",
+          "number": 1,
+          "title": "论文和作业写不清楚，找谁获得学术写作支持？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-liverpool-study-routes",
+      "title": "4+0、2+2 和 2+1+1 怎么区分？",
+      "revisionId": "handbook-liverpool-study-routes-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "官网将 4+0 描述为四个学习阶段均在西浦完成，2+2 为前两阶段在西浦、后两阶段在利物浦大学学习；具体可选路线取决于专业。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "对于创业家学院的部分本科专业，2+1+1 为前两阶段在西浦、第三阶段在利物浦、第四阶段回西浦。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先在官方学位类型页和本专业页找到自己的完整专业名称，避免仅凭同学院或相近专业类比。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "比较路线时，建议列出课程衔接、未来研究兴趣、生活安排与总体预算等要点，并逐项向项目方核实。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议将目标路径、入学届、当前专业和最关心的问题整理给学校相关团队，并保存正式答复。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：这只是路线结构介绍；不确认某专业或个人具备申请资格，也不复述学费折扣、门槛和截止日。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-liverpool-study-routes-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0b9dd1630afeffef",
+          "sourceRevisionId": "handbook-source-0b9dd1630afeffef-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Degree Types — 学习路径与学位类型",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/degree-types"
+        },
+        {
+          "id": "handbook-liverpool-study-routes-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-0b9dd1630afeffef",
+          "sourceRevisionId": "handbook-source-0b9dd1630afeffef-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Degree Types — 学习路径与学位类型",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/degree-types"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-liverpool-study-routes",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先看路径结构，再按自己的专业和入学届核对可选路线。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-exchange",
+        "slug": "exchange",
+        "title": "海外交流"
+      },
+      "history": [
+        {
+          "id": "handbook-liverpool-study-routes-v1",
+          "number": 1,
+          "title": "4+0、2+2 和 2+1+1 怎么区分？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-semester-exchange-plan",
+      "title": "想申请一学期或一学年的交换，怎样开始？",
+      "revisionId": "handbook-semester-exchange-plan-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "官方交换页面按合作院校、西浦专业与海外学习时长列出对应关系。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该页指向 e-Bridge 的 Student Mobility 信息，并列出 studyabroad@xjtlu.edu.cn 咨询渠道。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先查自己的专业是否在对应列表中，再比较对方学期起止与本校课程安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议准备目标院校课程说明、希望修读的模块、当前学习记录和语言材料，向项目方确认当期所需材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "在作出承诺前，建议确认提名、对方院校申请、课程认可和出行准备分别由谁办理，并建立待办清单。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：合作列表不代表当期名额；课程认可、学分转换、资格与截止日必须获得项目方确认。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-semester-exchange-plan-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-b01169b98321e3ec",
+          "sourceRevisionId": "handbook-source-b01169b98321e3ec-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Semester or Year Abroad",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/semester-or-year-abroad"
+        },
+        {
+          "id": "handbook-semester-exchange-plan-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-b01169b98321e3ec",
+          "sourceRevisionId": "handbook-source-b01169b98321e3ec-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Semester or Year Abroad",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/semester-or-year-abroad"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-semester-exchange-plan",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "按“自己的专业—合作院校—可交换时段”核对，提前准备课程匹配问题。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-exchange",
+        "slug": "exchange",
+        "title": "海外交流"
+      },
+      "history": [
+        {
+          "id": "handbook-semester-exchange-plan-v1",
+          "number": 1,
+          "title": "想申请一学期或一学年的交换，怎样开始？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-summer-school-plan",
+      "title": "海外暑校怎么找，哪些事需要先问清？",
+      "revisionId": "handbook-summer-school-plan-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校暑校页面提供合作项目入口，并区分需要学校提名与可直接向主办校申请的项目。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先确定想体验学科、补充技能还是了解目标院校，再筛选课程主题和教学形式。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议在主办院校官网核对课程日期、语言、费用包含项目、申请材料及退出安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "对需要提名的项目，建议从学校官方页核对咨询渠道并先确认步骤；直接申请项目则按主办校指引操作。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议特别询问课程成果如何记录、是否涉及本校课程认可，再安排与本校考试和研究项目之间的时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：暑校录取、费用与课程认可不能从项目宣传推断；本稿不将参加暑校等同于获本校学分。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-summer-school-plan-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-3d4a442b8bf56311",
+          "sourceRevisionId": "handbook-source-3d4a442b8bf56311-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Summer Abroad",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/summer-abroad"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-summer-school-plan",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先分清是否需要学校提名，再核对主办校要求及自己的学习目标。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-exchange",
+        "slug": "exchange",
+        "title": "海外交流"
+      },
+      "history": [
+        {
+          "id": "handbook-summer-school-plan-v1",
+          "number": 1,
+          "title": "海外暑校怎么找，哪些事需要先问清？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-internship-job-search",
+      "title": "找实习或校招信息，有哪些校内入口？",
+      "revisionId": "handbook-internship-job-search-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校 Career Centre System 入口汇集实习、招聘和职业活动信息，并提供职业顾问预约。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先列出目标岗位关键词、可实习时间、地点与已有技能，再筛选岗位说明。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议为每个目标岗位整理一份匹配表：岗位要求、对应课程或项目、自己能举出的成果证据。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "投递前建议核对发布主体与申请渠道，将简历调整到岗位实际需要，并保存所投版本与申请日期。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "面试前建议准备两三个真实项目，练习解释问题、自己的贡献、结果以及遇到的局限。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：岗位展示不保证仍开放或会录用；实习安排、协议与学业冲突需另行核实。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-internship-job-search-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-68cde5425c9cc6d7",
+          "sourceRevisionId": "handbook-source-68cde5425c9cc6d7-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Graduate Destinations — Career Centre 服务入口",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/graduate-destinations"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-internship-job-search",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "用学校职业系统找信息，再为目标岗位准备可验证的技能与项目经历。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-careers",
+        "slug": "careers",
+        "title": "实习就业与升学"
+      },
+      "history": [
+        {
+          "id": "handbook-internship-job-search-v1",
+          "number": 1,
+          "title": "找实习或校招信息，有哪些校内入口？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-career-advice-mentor",
+      "title": "对职业方向没把握，怎样准备职业咨询或校外导师交流？",
+      "revisionId": "handbook-career-advice-mentor-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "就业中心提供职业规划支持，也设有校外导师项目。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "咨询前建议列出感兴趣的两三个方向、已做过的尝试、喜欢或不喜欢的任务，以及现实时间约束。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "与行业导师交流时，建议围绕日常工作、入门技能、岗位差异和成长路径提问，避免只问“哪个行业最好”。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议带一份简历或项目简介，让对方能够根据你的实际经历提出建议。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "交流后建议选择一项小行动，例如访谈从业者、完成作品或研究岗位要求，并设定自己的复盘时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：导师项目的开放年级、批次和匹配方式应查当期通知；咨询不保证实习、录取或工作机会。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-career-advice-mentor-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-7bd42ba20067c41f",
+          "sourceRevisionId": "handbook-source-7bd42ba20067c41f-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Career Centre — 学校服务介绍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/it-services/career-centre-intro"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-career-advice-mentor",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "带着具体选择和证据去讨论，把谈话转成下一步能执行的小任务。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-careers",
+        "slug": "careers",
+        "title": "实习就业与升学"
+      },
+      "history": [
+        {
+          "id": "handbook-career-advice-mentor-v1",
+          "number": 1,
+          "title": "对职业方向没把握，怎样准备职业咨询或校外导师交流？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-postgraduate-application-materials",
+      "title": "准备升学申请，先整理哪些材料？",
+      "revisionId": "handbook-postgraduate-application-materials-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "西浦硕士申请页的准备清单包括个人陈述、成绩记录、学位或在读证明、语言材料、推荐人信息和简历等。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "申请其他院校时，建议逐个查看目标项目官网，单列必需材料、提交方式、推荐流程及需要自己跟进的环节。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议给材料使用清楚的文件名，记录版本与用途，并核对姓名、课程名称和日期是否一致。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "邀请推荐人时，建议提前征求同意，提供目标项目、个人简历与能帮助其回忆你表现的课程或研究实例。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议将个人陈述围绕真实兴趣、相关经历、尚待补足的能力和项目适配度展开，不把他人录取经历当作自己的预测。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：所列材料只概括西浦公开页面，并非所有院校的统一清单；不推断录取资格、语言豁免或申请时限。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-postgraduate-application-materials-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-976d7273f87ca543",
+          "sourceRevisionId": "handbook-source-976d7273f87ca543-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Master's Admissions — How to Apply",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/admissions/master/how-to-apply"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-postgraduate-application-materials",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先按目标项目建立材料表，提前邀请了解自己学习情况的推荐人。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-careers",
+        "slug": "careers",
+        "title": "实习就业与升学"
+      },
+      "history": [
+        {
+          "id": "handbook-postgraduate-application-materials-v1",
+          "number": 1,
+          "title": "准备升学申请，先整理哪些材料？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-surf-research-start",
+      "title": "本科生想尝试科研，SURF 可以怎样准备？",
+      "revisionId": "handbook-surf-research-start-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校 2025 年 SURF 新闻将该项目介绍为支持本科生与学术老师共同开展研究的年度项目。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议从感兴趣的课程或问题出发，阅读项目方向介绍，写清自己想理解什么以及为什么。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "联系潜在指导老师前，建议准备简短自我介绍、相关技能或课程经历、一份小作品或阅读笔记。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议询问项目目标、任务分工、时间投入、培训要求及成果形式，再判断是否能与暑期其他安排兼顾。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "开展研究后，建议保留实验或代码版本、阅读记录和每次讨论后的待办，便于复盘自己的贡献。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：来源是 2025 年项目回顾；当前招募、可参与年级、名额、资助与申请步骤须看本年度正式通知。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-surf-research-start-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-c4097040a1fcebd5",
+          "sourceRevisionId": "handbook-source-c4097040a1fcebd5-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Bumper year for summer undergraduate research projects",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/news/2025/11/bumper-year-for-summer-undergraduate-research-projects"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-surf-research-start",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先确认研究兴趣与可投入时间，再用小作品或阅读记录展示准备情况。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-research",
+        "slug": "research",
+        "title": "科研与创新"
+      },
+      "history": [
+        {
+          "id": "handbook-surf-research-start-v1",
+          "number": 1,
+          "title": "本科生想尝试科研，SURF 可以怎样准备？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-find-research-supervisor",
+      "title": "想找研究方向或潜在导师，先读什么？",
+      "revisionId": "handbook-find-research-supervisor-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校 Research Portal 首页提供研究检索和高级检索入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先确定一组主题关键词，查找相关教师公开主页、研究项目和近期论文，并核对所在院系。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议选择一两篇最相关论文先读摘要、研究问题与结论，写出自己真正理解的内容和仍不明白的地方。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "联系老师时，建议用简短正文说明身份、兴趣与对应研究的联系，附上相关经历，并提出具体、可回答的问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议根据目标区分课程项目、SURF、毕业课题与研究生申请，再向院系核实相应参与方式。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：研究门户部分人员页面本次显示验证码；未获取受限内容。教师研究兴趣不代表当前有招生或助研名额。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-find-research-supervisor-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-727f4bb2b971557b",
+          "sourceRevisionId": "handbook-source-727f4bb2b971557b-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "XJTLU Research Portal",
+          "mode": "link-only",
+          "url": "https://scholar.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-find-research-supervisor",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先读研究内容，再带着具体问题联系，说明自己可以如何参与。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-research",
+        "slug": "research",
+        "title": "科研与创新"
+      },
+      "history": [
+        {
+          "id": "handbook-find-research-supervisor-v1",
+          "number": 1,
+          "title": "想找研究方向或潜在导师，先读什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-past-papers-and-fyp",
+      "title": "哪里找往年试卷与毕业论文，怎样正确使用？",
+      "revisionId": "handbook-past-papers-and-fyp-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "图书馆首页设有 Exam Papers & Theses 入口，介绍可查往年试卷及毕业论文等资料。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先记录课程代码、学年和专业，再从图书馆官方入口查找对应材料。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "使用旧试卷时，建议先核对其与本学期学习成果的对应关系，独立练习后整理薄弱知识点。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "阅读 FYP 或论文时，建议关注研究问题如何收窄、方法如何说明、证据如何支持结论，而后回读原始参考文献。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议向课程老师确认允许参考的范围，并保持自己的分析、写作和引用记录。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本次未登录资源系统，不保证每门课、每学年均有材料；历史试卷与论文不构成当前考核要求或可复用答案。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate",
+          "postgraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-past-papers-and-fyp-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-0ead3ce98216a3be",
+          "sourceRevisionId": "handbook-source-0ead3ce98216a3be-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Home — Library for XJTLU",
+          "mode": "link-only",
+          "url": "https://lib.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-past-papers-and-fyp",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把历史材料当作了解题型和结构的参考，再回到本学期课程要求。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-library",
+        "slug": "library",
+        "title": "图书馆与信息素养"
+      },
+      "history": [
+        {
+          "id": "handbook-past-papers-and-fyp-v1",
+          "number": 1,
+          "title": "哪里找往年试卷与毕业论文，怎样正确使用？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-sip-routine-medical-entry",
+      "title": "园区想预约普通门诊，怎么找到官方就医入口？",
+      "revisionId": "handbook-life-sip-routine-medical-entry-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "独墅湖医院官网提供就医须知、门诊排班和院内导航，列出的地址为苏州工业园区崇文路9号。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "截至2026年9月10日，官网提示网站挂号系统升级，预约请使用“苏州市独墅湖医院”微信公众号的“掌上就医”。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先从医院官网核对预约渠道，再确认就诊人、院区、科室和日期；不知道挂哪一科时，向院方导诊询问。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议按预约提示准备身份证明、既往就诊资料和本人医保或保险信息；支付与报销问题另向院方或保险服务方核对。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议保存预约确认信息，到院后按现场提示签到；离院前确认报告查询和后续联系入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s6",
+          "text": "如需急救，请使用本手册的紧急求助渠道，不等待普通门诊预约。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡仅提供园区就医入口，不判断症状、推荐药物或承诺号源、费用与报销结果；预约方式与排班以院方当期公告为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-sip-routine-medical-entry-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-51bc8fc60a36d523",
+          "sourceRevisionId": "handbook-source-51bc8fc60a36d523-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "苏州大学附属第四医院（苏州市独墅湖医院）：就医入口",
+          "mode": "link-only",
+          "url": "https://www.sdhmdp.com/"
+        },
+        {
+          "id": "handbook-life-sip-routine-medical-entry-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-51bc8fc60a36d523",
+          "sourceRevisionId": "handbook-source-51bc8fc60a36d523-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "苏州大学附属第四医院（苏州市独墅湖医院）：就医入口",
+          "mode": "link-only",
+          "url": "https://www.sdhmdp.com/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-sip-routine-medical-entry",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "可从独墅湖医院官网查看就医须知和排班，再按院方当前预约指引办理。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-wellbeing",
+        "slug": "wellbeing",
+        "title": "身心健康与求助"
+      },
+      "history": [
+        {
+          "id": "handbook-life-sip-routine-medical-entry-v1",
+          "number": 1,
+          "title": "园区想预约普通门诊，怎么找到官方就医入口？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-two-campuses",
+      "title": "到校前先核对：园区还是太仓？",
+      "revisionId": "handbook-life-two-campuses-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "园区校园地址是苏州工业园区仁爱路111号；太仓校园地址是太仓市太仓大道111号。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先在报到邮件或活动通知中圈出校区、楼宇和房间，分别保存目的地。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议给接送人员发送完整中文地址，同时写明“园区校园”或“太仓校园”。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议订票前以自己的当年报到通知核对目的地，学院名称不能代替报到地点。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议寄行李前向住宿前台确认公寓收件地址和代收安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：校园地址不等于宿舍、快递站或活动入口地址。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-two-campuses-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f6f206cd533234d2",
+          "sourceRevisionId": "handbook-source-f6f206cd533234d2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "访问校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-two-campuses",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "按通知中的校区与完整地址导航，再定位具体办事楼宇。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-campus",
+        "slug": "campus",
+        "title": "校区与地图"
+      },
+      "history": [
+        {
+          "id": "handbook-life-two-campuses-v1",
+          "number": 1,
+          "title": "到校前先核对：园区还是太仓？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-campus-renaming",
+      "title": "旧攻略中的“北校区”现在指哪里？",
+      "revisionId": "handbook-life-campus-renaming-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校自2026年3月将原“北校区”改称“中校区”，生命科学楼所在地块称为新“北校区”。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "同次更新将AS楼改称“影视与创意科技楼”，原南北校区地下通道改称“东西汇廊”。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议阅读2025年及以前的攻略时，先记录楼宇英文缩写，再去现行地图定位。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议约见时写“楼名＋房间号”，遇到新旧名称不一致时向通知发出方核对。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：不要把旧材料中的“北校区”直接理解为现今生命科学楼区域。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-campus-renaming-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f6f206cd533234d2",
+          "sourceRevisionId": "handbook-source-f6f206cd533234d2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "访问校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us"
+        },
+        {
+          "id": "handbook-life-campus-renaming-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-f6f206cd533234d2",
+          "sourceRevisionId": "handbook-source-f6f206cd533234d2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "访问校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-campus-renaming",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "2026年3月命名已更新，查旧材料时同时核对楼名和地图。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-campus",
+        "slug": "campus",
+        "title": "校区与地图"
+      },
+      "history": [
+        {
+          "id": "handbook-life-campus-renaming-v1",
+          "number": 1,
+          "title": "旧攻略中的“北校区”现在指哪里？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-campus-map",
+      "title": "看不懂楼名或第一次找教室，怎么准备？",
+      "revisionId": "handbook-life-campus-map-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校“我们的校园”页面分别提供苏州工业园区和太仓校园地图下载入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先按当日通知或课表找到楼宇，再定位房间，保留原始楼名和编号。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议第一次前往时预留找入口、乘电梯和确认楼层的时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议把手机地图和楼内导向牌配合使用；仍找不到时给前台看完整房间号。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议截图保存当天需要的地图，遇到改道以现场标识和学校通知为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-campus-map-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-08df1ecde71df6f6",
+          "sourceRevisionId": "handbook-source-08df1ecde71df6f6-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "我们的校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/our-campus"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-campus-map",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从学校地图入口保存对应校区地图，再提前走一遍路线。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-campus",
+        "slug": "campus",
+        "title": "校区与地图"
+      },
+      "history": [
+        {
+          "id": "handbook-life-campus-map-v1",
+          "number": 1,
+          "title": "看不懂楼名或第一次找教室，怎么准备？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-arrive-sip",
+      "title": "去园区校园，先查哪些车站和地铁站？",
+      "revisionId": "handbook-life-arrive-sip-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校访问指引列出地铁8号线仁爱路站、2号线松涛街站，以及苏州站、苏州园区站和苏州北站。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议同时比较车票到站时间和车站到报到地点的后续路程。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议在出发当天查询运营公告、末班车和步行出口，保存备选路线。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议携带大件行李或夜间到达时，把换乘次数和最后一段交通纳入安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议跨城赶车时留足缓冲，并以实时交通情况调整出发时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡没有提供实时班次、票价或到达时长；学校访问页的交通信息也标注仅供参考。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-arrive-sip-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f6f206cd533234d2",
+          "sourceRevisionId": "handbook-source-f6f206cd533234d2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "访问校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-arrive-sip",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把学校推荐的交通节点用于比较，再查当天的完整行程。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-transport",
+        "slug": "transport",
+        "title": "交通与出行"
+      },
+      "history": [
+        {
+          "id": "handbook-life-arrive-sip-v1",
+          "number": 1,
+          "title": "去园区校园，先查哪些车站和地铁站？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-arrive-taicang",
+      "title": "去太仓校园，车票和导航怎么核对？",
+      "revisionId": "handbook-life-arrive-taicang-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校太仓访问指引列出的铁路节点是太仓站和太仓南站，机场节点包括上海虹桥、上海浦东和无锡硕放。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议购票时逐字检查车站名称，抵达后再导航到太仓大道111号的具体入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议比较铁路与公路衔接方案时，把换乘等候、行李和报到时间一起考虑。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议晚间抵达前查清最后一段交通，必要时提前与接待方确认可到达时段。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议跨校区参加活动时另查返程，不能用活动开始时间倒推一定能赶上的车次。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：未核实实时公交、轨道交通接驳与接送安排，出行当日需重新查询。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "taicang"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-arrive-taicang-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f6f206cd533234d2",
+          "sourceRevisionId": "handbook-source-f6f206cd533234d2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "访问校园",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-arrive-taicang",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先确认太仓目的地，再比较太仓站与太仓南站的接续交通。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-transport",
+        "slug": "transport",
+        "title": "交通与出行"
+      },
+      "history": [
+        {
+          "id": "handbook-life-arrive-taicang-v1",
+          "number": 1,
+          "title": "去太仓校园，车票和导航怎么核对？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-campus-shuttle",
+      "title": "园区和太仓之间的区间车怎么查、怎么坐？",
+      "revisionId": "handbook-life-campus-shuttle-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校区间车预约首页提供SIP与TC往返查询，服务对象为校内师生。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "公开预约规则要求提前预约，行程变化及时取消；乘车时需出示二维码。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议在计划出行时打开预约页，核对当前截止时间、班次、上车点和返程。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议将成功预约的信息保存到手机，并提前到达候车点。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议出发前再次查看学校UC通知，遇到停运或延误及时调整安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡不承诺余座、免费资格、家属乘车或特定班次；以预约系统与当天学校通知为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-campus-shuttle-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-cf199500b8b25593",
+          "sourceRevisionId": "handbook-source-cf199500b8b25593-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Shuttle Bus Booking 区间车预约",
+          "mode": "link-only",
+          "url": "https://shuttlebus.xjtlu.edu.cn/"
+        },
+        {
+          "id": "handbook-life-campus-shuttle-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-cf199500b8b25593",
+          "sourceRevisionId": "handbook-source-cf199500b8b25593-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Shuttle Bus Booking 区间车预约",
+          "mode": "link-only",
+          "url": "https://shuttlebus.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-campus-shuttle",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从学校预约首页查看线路、日期和规则，确认后保留乘车信息。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-transport",
+        "slug": "transport",
+        "title": "交通与出行"
+      },
+      "history": [
+        {
+          "id": "handbook-life-campus-shuttle-v1",
+          "number": 1,
+          "title": "园区和太仓之间的区间车怎么查、怎么坐？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-domestic-housing-notice",
+      "title": "中国大陆新生怎样确认自己的宿舍安排？",
+      "revisionId": "handbook-life-domestic-housing-notice-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校中国大陆学生住宿页说明，本、硕、博学生录取后会收到宿舍安排信息或邮件，具体安排以入学前通知为准。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议检查申请时使用的邮箱与学校通知渠道，保存住宿通知和后续变更。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议列出公寓名称、入住日期、办理地点、需带材料和官方联系方式。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议确认床与收纳空间尺寸后再购买大件用品，并核对现场设施清单。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议尚未收到安排时向学校指定窗口查询，向工作人员提供姓名、学号与入学类别。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：适用中国大陆学生；本卡不保证某一公寓、房型、价格或自行选房机会。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-domestic-housing-notice-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-80038e9634169e8a",
+          "sourceRevisionId": "handbook-source-80038e9634169e8a-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "中国大陆学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-domestic-housing-notice",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从本人收到的住宿通知核对安排，先确定房间再采购。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-housing",
+        "slug": "housing",
+        "title": "住宿与报修"
+      },
+      "history": [
+        {
+          "id": "handbook-life-domestic-housing-notice-v1",
+          "number": 1,
+          "title": "中国大陆新生怎样确认自己的宿舍安排？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-sip-dorm-repair",
+      "title": "园区宿舍水电、空调或门锁有问题，联系谁？",
+      "revisionId": "handbook-life-sip-dorm-repair-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校中国大陆学生住宿页列出物业热线：文星0512-88852922、文荟0512-62952612、文萃0512-67616932、文缘0512-62600650。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先核对自己所在公寓；报修时提供楼栋、房间、故障现象和方便上门的时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议保存受理时间与工单号，在不拍到室友隐私的前提下记录故障。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议维修后当场试用并确认结果；未解决时凭同一记录继续联系物业。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议同时向前台了解停水停电公告，避免把整栋维护误认为房间单独故障。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：电话摘自学校公开目录，未进行拨打测试；以公寓最新公告为准，芭菲等其他公寓需查对应前台。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-sip-dorm-repair-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-80038e9634169e8a",
+          "sourceRevisionId": "handbook-source-80038e9634169e8a-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "中国大陆学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-sip-dorm-repair",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "按实际公寓找到物业，报清房号和问题并留下记录。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-housing",
+        "slug": "housing",
+        "title": "住宿与报修"
+      },
+      "history": [
+        {
+          "id": "handbook-life-sip-dorm-repair-v1",
+          "number": 1,
+          "title": "园区宿舍水电、空调或门锁有问题，联系谁？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-taicang-dorm-repair",
+      "title": "太仓公寓报修和找前台，先存哪些信息？",
+      "revisionId": "handbook-life-taicang-dorm-repair-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校住宿页面列出创业家公寓地址为太仓大道115号，太仓学生公寓物业电话为0512-53995190。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议办理入住时保存本楼前台位置、线上报修入口与公共设施使用说明。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议发现设施损坏后尽早报告，记录房号、发生时间和故障变化。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议和物业确认维修是否需要本人在场，并在离开房间前妥善保管个人物品。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议把既有损坏写入入住记录，维修完成后核对是否恢复使用。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：此电话是公寓物业入口，不是校园教学楼设施报修热线；未进行拨打测试。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "taicang"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-taicang-dorm-repair-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-a2b07b918d94bbec",
+          "sourceRevisionId": "handbook-source-a2b07b918d94bbec-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "港澳台地区及国际学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation"
+        },
+        {
+          "id": "handbook-life-taicang-dorm-repair-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-80038e9634169e8a",
+          "sourceRevisionId": "handbook-source-80038e9634169e8a-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 1,
+          "title": "中国大陆学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-taicang-dorm-repair",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "区分校园与公寓地址，入住时确认当前报修渠道。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-housing",
+        "slug": "housing",
+        "title": "住宿与报修"
+      },
+      "history": [
+        {
+          "id": "handbook-life-taicang-dorm-repair-v1",
+          "number": 1,
+          "title": "太仓公寓报修和找前台，先存哪些信息？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-move-in-checklist",
+      "title": "入住第一天，宿舍要检查和记录什么？",
+      "revisionId": "handbook-life-move-in-checklist-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校住宿介绍列出的常见设施包括家具、空调、卫生间、热水设施和公共洗衣房。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议入住后和物业清单逐项核对床、桌椅、门窗、灯具与卫浴状态，记录已有损坏。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议向前台询问洗衣、饮水、垃圾投放、门禁和水电查询的具体操作。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议先备足一两天的洗漱、换洗和清洁用品，再按实际需要采购。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议和室友商量公共区域清洁、安静时段和共用物品，避免重复购买。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：设施会因公寓、楼栋和建成年份不同而变化；不可按官网示意图保证每间房配置。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-move-in-checklist-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-9adbb5cc6c13ac2f",
+          "sourceRevisionId": "handbook-source-9adbb5cc6c13ac2f-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "住宿和社区",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/accommodation"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-move-in-checklist",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先熟悉实际设施和前台规则，再补齐个人用品。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-housing",
+        "slug": "housing",
+        "title": "住宿与报修"
+      },
+      "history": [
+        {
+          "id": "handbook-life-move-in-checklist-v1",
+          "number": 1,
+          "title": "入住第一天，宿舍要检查和记录什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-global-housing-entry",
+      "title": "港澳台及国际学生的住宿信息从哪里查？",
+      "revisionId": "handbook-life-global-housing-entry-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校为港澳台及国际学生单设住宿说明，园区部分介绍芭菲国际公寓，太仓部分介绍创业家公寓。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "该页面列出的芭菲地址是苏州工业园区雪堂街8号。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议先以本人当年的到校通知核对就读和入住校区，再选择相应住宿入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议按自己的入学学期和学生类别核对申请方式，并保存住宿确认邮件。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议抵达前向接待方确认入住材料、可办理时间及逾时到达安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：仅供港澳台及国际学生查询对应入口；页面中的样板房、收费和合同说明不能替代本人的正式安排。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-global-housing-entry-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-a2b07b918d94bbec",
+          "sourceRevisionId": "handbook-source-a2b07b918d94bbec-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "港澳台地区及国际学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation"
+        },
+        {
+          "id": "handbook-life-global-housing-entry-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-a2b07b918d94bbec",
+          "sourceRevisionId": "handbook-source-a2b07b918d94bbec-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "港澳台地区及国际学生宿舍",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-global-housing-entry",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "使用专门的住宿页面和本人到校通知，核对校区与入住入口。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-housing",
+        "slug": "housing",
+        "title": "住宿与报修"
+      },
+      "history": [
+        {
+          "id": "handbook-life-global-housing-entry-v1",
+          "number": 1,
+          "title": "港澳台及国际学生的住宿信息从哪里查？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-campus-facility-help",
+      "title": "教室或校园公共设施有故障，怎么说明问题？",
+      "revisionId": "handbook-life-campus-facility-help-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "校园管理办公室负责校园设施维护、物业与商户管理；其公开园区联系邮箱为cmo@xjtlu.edu.cn，电话为0512-88161071。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先向所在楼宇前台反映，说明校区、楼宇、楼层、房间和具体设备。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议描述“哪里坏、何时发现、是否影响使用”，附不含个人信息的现场照片。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议保存受理记录；涉及太仓设施时，注明太仓校区并请前台确认相应处理窗口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议把校园公共设施与公寓房间问题分别交给对应前台，以便尽快定位。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：公开联系方式不是紧急救援渠道；本次未核实各楼栋当前线上工单入口。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-campus-facility-help-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-3e274559d72f7568",
+          "sourceRevisionId": "handbook-source-3e274559d72f7568-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Campus Management Office",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/professional-services/campus-management-office"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-campus-facility-help",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "通过校园管理入口反馈公共设施问题，提供可定位的描述。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-campus",
+        "slug": "campus",
+        "title": "校区与地图"
+      },
+      "history": [
+        {
+          "id": "handbook-life-campus-facility-help-v1",
+          "number": 1,
+          "title": "教室或校园公共设施有故障，怎么说明问题？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-campus-dining",
+      "title": "校内哪里吃饭、营业时间怎么查？",
+      "revisionId": "handbook-life-campus-dining-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校2025—2026学生指南介绍了校内餐饮和便利店，并给出可查商户地点、营业时间与菜单的小程序二维码。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议从该指南或学校最新通知找到商户入口，再选对应校区查询。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议第一周分别记下靠近上课地点和住宿地点的用餐选择。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议遇到节假日、考试周或较晚下课，提前核对营业时间并准备备用选择。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议有饮食限制时直接向商户确认配料和制作方式，再决定是否点餐。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：指南属于2025—2026学年资料；商户、菜单、价格和营业时间均须当次查询，不作店铺排名或消费承诺。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-campus-dining-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-4caad1f6416d7ed2",
+          "sourceRevisionId": "handbook-source-4caad1f6416d7ed2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "梦想“捕”手：2025—2026学生成长指南",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2025/07/XJTLU-Student-Development-Advisor-2526-CN.pdf"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-campus-dining",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "从学校商户入口查当期菜单、地点与营业信息。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-life",
+        "slug": "life",
+        "title": "饮食与城市生活"
+      },
+      "history": [
+        {
+          "id": "handbook-life-campus-dining-v1",
+          "number": 1,
+          "title": "校内哪里吃饭、营业时间怎么查？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-lost-property",
+      "title": "东西丢在校园或区间车上，先找谁？",
+      "revisionId": "handbook-life-lost-property-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校2025—2026学生指南将失物招领列为校园服务中心的服务。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "当前区间车页面公布的遗失物品联系号码为园区0512-81888362、太仓0512-88970793。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "建议按最后使用地点回忆时间线，先联系该楼宇前台或对应班车服务中心。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议说明物品类型、颜色、时间和位置，并保留只有失主知道的细节供认领核验。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议在公开寻物信息中隐去学号、证件号、住址和完整票据内容。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：校园一般失物入口来自2025—2026指南，班车电话来自当前公开页面；不保证物品已经找到。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-lost-property-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-4caad1f6416d7ed2",
+          "sourceRevisionId": "handbook-source-4caad1f6416d7ed2-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "梦想“捕”手：2025—2026学生成长指南",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2025/07/XJTLU-Student-Development-Advisor-2526-CN.pdf"
+        },
+        {
+          "id": "handbook-life-lost-property-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-cf199500b8b25593",
+          "sourceRevisionId": "handbook-source-cf199500b8b25593-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Shuttle Bus Booking 区间车预约",
+          "mode": "link-only",
+          "url": "https://shuttlebus.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-lost-property",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "尽快按遗失地点联系前台，描述物品并保留身份核验细节。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-life",
+        "slug": "life",
+        "title": "饮食与城市生活"
+      },
+      "history": [
+        {
+          "id": "handbook-life-lost-property-v1",
+          "number": 1,
+          "title": "东西丢在校园或区间车上，先找谁？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-sip-sports",
+      "title": "园区想打球或健身，从哪里预约？",
+      "revisionId": "handbook-life-sip-sports-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校体育页面介绍中校区室外篮球场、网球场，并链接西浦体育中心预约网站。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议从学校体育页面进入预约入口，核对场馆所属校区和项目。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议下单或报名之前查看当前收费、取消条件、装备要求与场馆公告。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议首次参加时选择适合自己的活动强度，并按工作人员的现场指引使用设备。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议约同伴时明确场馆名称和场次，活动结束前留出换衣及返程时间。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：场地介绍不等于当前开放或有空位，也不代表全部项目免费。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-sip-sports-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-195b328be7f1a92d",
+          "sourceRevisionId": "handbook-source-195b328be7f1a92d-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "体育与社团活动",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/sports-and-activities"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-sip-sports",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先在体育中心入口核对校区、项目与可预约时段。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-sport",
+        "slug": "sport",
+        "title": "体育与运动"
+      },
+      "history": [
+        {
+          "id": "handbook-life-sip-sports-v1",
+          "number": 1,
+          "title": "园区想打球或健身，从哪里预约？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-taicang-sports",
+      "title": "太仓有哪些体育资源，游泳前查什么？",
+      "revisionId": "handbook-life-taicang-sports-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校体育与社团活动页面明确介绍了太仓体育中心的游泳池，并提供体育预约入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议预约前确认显示的是太仓场馆，仔细查看泳池或所选项目的开放安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议向场馆确认入场凭证、装备、更衣与储物要求，再出发参加。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议初次使用器械或参加不熟悉的项目时先向工作人员了解使用方法。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议安排一个能长期坚持的运动时段，并在天气或场馆安排变化时调整。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本卡不提供游泳资格、健康证明要求、收费或教学课程保证，以场馆现行要求为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "taicang"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-taicang-sports-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-195b328be7f1a92d",
+          "sourceRevisionId": "handbook-source-195b328be7f1a92d-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "体育与社团活动",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/sports-and-activities"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-taicang-sports",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "太仓体育中心有泳池，具体开放与使用条件从预约页面确认。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-sport",
+        "slug": "sport",
+        "title": "体育与运动"
+      },
+      "history": [
+        {
+          "id": "handbook-life-taicang-sports-v1",
+          "number": 1,
+          "title": "太仓有哪些体育资源，游泳前查什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-clubs-discovery",
+      "title": "想参加社团，怎么找到适合自己的组织？",
+      "revisionId": "handbook-life-clubs-discovery-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "西浦校园生活社团目录设有苏州、太仓校区入口，以及学术、公益、艺术、体育等分类。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先选校区，再按兴趣打开社团介绍，记录组织的活动内容和联系入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议向组织询问本学期活动时间、参与方式和是否接受初学者。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议先参加一两次体验活动，再结合课表决定投入频率。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议参与跨校区活动前一起核对场地与返程；阅读旧活动页时特别检查日期。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：目录中的社团存在记录不等于正在招新，成员数和分类数量也不是活动质量评价。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-clubs-discovery-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-ae8d7aac9d74cf03",
+          "sourceRevisionId": "handbook-source-ae8d7aac9d74cf03-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "西浦校园生活：社团目录",
+          "mode": "link-only",
+          "url": "https://engage.xjtlu.edu.cn/zh/club"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-clubs-discovery",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "用Student Engagement目录筛选校区和兴趣，再核对当期活动。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-clubs",
+        "slug": "clubs",
+        "title": "社团与活动"
+      },
+      "history": [
+        {
+          "id": "handbook-life-clubs-discovery-v1",
+          "number": 1,
+          "title": "想参加社团，怎么找到适合自己的组织？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-public-library",
+      "title": "园区校园附近还可以去哪里阅读、自习？",
+      "revisionId": "handbook-life-public-library-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "苏州工业园区图书馆总馆原称苏州独墅湖图书馆，地址为仁爱路258号，官方介绍包含阅览与自修空间。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议从公共文化中心场馆页面进入活动或开放公告，确认当天是否开放。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议第一次前往前确认入馆、办证、借阅和座位使用要求。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议仅带需要的学习材料，并把休息和返程时间一并安排。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议查找不同公共图书馆时核对总馆、分馆的具体地址，避免只按简称导航。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：该场馆页页首与页脚开放时间写法不同，初版不固定转载时段；以最新开放公告或馆方答复为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-public-library-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-d3f02225bcea8bd9",
+          "sourceRevisionId": "handbook-source-d3f02225bcea8bd9-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "苏州工业园区图书馆（总馆）",
+          "mode": "link-only",
+          "url": "https://pcc.sipac.gov.cn/main/venue-map/venue-detail/28d4659b8c9bebebdd2e98311b933250"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-public-library",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "把苏州工业园区图书馆作为校外阅读选择，先核对当期开放公告。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-life",
+        "slug": "life",
+        "title": "饮食与城市生活"
+      },
+      "history": [
+        {
+          "id": "handbook-life-public-library-v1",
+          "number": 1,
+          "title": "园区校园附近还可以去哪里阅读、自习？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-city-service-12345",
+      "title": "校外公共服务问题不知道找哪个部门，怎么办？",
+      "revisionId": "handbook-life-city-service-12345-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "苏州市政府公布的12345平台说明将其定位为面向公众的非紧急公共服务入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议咨询前整理事情发生的区域、地点、时间和希望了解的具体问题。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议先描述事实和已联系的单位，请工作人员确认应转向的部门与办理入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议保存工单号和答复，后续沟通时引用同一记录。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议只在受理渠道提供必要材料，不在公开平台上传证件、手机号或他人隐私。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：12345与紧急救助渠道用途不同；本卡仅介绍入口，不判断个案能否受理或保证办理结果。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-city-service-12345-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-61c13d2689f21d40",
+          "sourceRevisionId": "handbook-source-61c13d2689f21d40-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "市政府办公室关于印发苏州市12345公共服务平台运行管理办法的通知",
+          "mode": "link-only",
+          "url": "https://www.suzhou.gov.cn/szsrmzf/zfbgswj/202012/a543c78b2e9b447cba3ae2c56a7822bf.shtml"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-city-service-12345",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "可通过苏州12345询问非紧急公共服务的办理入口。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-life",
+        "slug": "life",
+        "title": "饮食与城市生活"
+      },
+      "history": [
+        {
+          "id": "handbook-life-city-service-12345-v1",
+          "number": 1,
+          "title": "校外公共服务问题不知道找哪个部门，怎么办？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-life-museum-culture",
+      "title": "想了解西浦校园文化或看展，从哪里开始？",
+      "revisionId": "handbook-life-museum-culture-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "西浦博物馆官网列有园区本馆、XEC新馆，以及展览、品牌活动和学生解说团等入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "建议先按校区查想参观的场馆和展览，再安排路线。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "建议出发前查看博物馆最新开放信息，特别核对法定假日与校园关闭日。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "建议对讲解或志愿活动有兴趣时，通过页面中的官方联系入口了解当期参与方式。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "建议参观时遵守现场拍摄和展品保护提示；做课程项目需要图像时先询问使用要求。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：历史展讯不代表展览仍在进行，加入解说团或参加活动需按当期通知办理。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-life-museum-culture-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-6bf2cba8492285c6",
+          "sourceRevisionId": "handbook-source-6bf2cba8492285c6-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "博物馆",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/campus-life/support-and-facilities/museum"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-life-museum-culture",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "查看西浦博物馆的场馆、展览和学生解说团入口。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-campus",
+        "slug": "campus",
+        "title": "校区与地图"
+      },
+      "history": [
+        {
+          "id": "handbook-life-museum-culture-v1",
+          "number": 1,
+          "title": "想了解西浦校园文化或看展，从哪里开始？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-official-handbooks-and-editions",
+      "title": "官方手册在哪找，如何选对年度和人群？",
+      "revisionId": "handbook-official-handbooks-and-editions-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "大学出版物页当前列有2026–2027硕士、博士及教育博士手册，而两校区国际生入学指南仍标为2025–2026。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "下载时把文件命名为“学生类别—校区—学年—下载日期”，先看目录中的注册、学习要求、支持服务，再定位具体事项。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "对费用、截止日期、出勤、补考、进阶要求等影响较大的内容，另找当期部门通知；把通知链接和适用入学届一起记录。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "如果网页目录与附件封面年份不同，把两处截图或标题整理给相应部门确认；不要仅凭文件上传路径中的年份判断有效期。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本条核对的是公开出版物目录，未对每本附件内的所有政策作有效性审核。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-official-handbooks-and-editions-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-23923b01fcf8b077",
+          "sourceRevisionId": "handbook-source-23923b01fcf8b077-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "大学出版物：手册与招生指南",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/about/publications"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-official-handbooks-and-editions",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先核对封面的学年、学生类别与校区，再使用里面的具体流程。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-method",
+        "slug": "using-this-guide",
+        "title": "使用本指南"
+      },
+      "history": [
+        {
+          "id": "handbook-official-handbooks-and-editions-v1",
+          "number": 1,
+          "title": "官方手册在哪找，如何选对年度和人群？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-first-week-action-list",
+      "title": "到校第一周，可以按什么顺序把基本事项做完？",
+      "revisionId": "handbook-first-week-action-list-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校在校学生页面集中链接了邮箱、e-Bridge、图书馆、教学日历和学生服务。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "到校前：按本人录取与报到通知列出线上任务、线下核验地点、入住安排和需带证件；不要用别的项目同学的清单代替自己的通知。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "安顿当天：确认实际分配的住宿地点，检查房间设备并记下物业报修渠道；实走一次宿舍到第一节课教室的路线。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "开课前：测试学校邮箱、e-Bridge与课程平台的登录，核对课程代码、班级、教室和第一项任务；把未显示的课程或账号报错分别交给教务/课程负责人或IT。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "第一周内：阅读课程说明、试听图书馆入门培训，找到自己的支持联系人，并把尚未完成的事项写成“问题—负责部门—已提交日期—下一步”。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：这是整理顺序建议，不是学校正式报到任务清单；具体证件和完成期限以本人当期通知为准。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-first-week-action-list-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f826af76e9900c88",
+          "sourceRevisionId": "handbook-source-f826af76e9900c88-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "在校学生",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/current-students"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-first-week-action-list",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "按通知、账号、住宿、课程、支持五条线逐项核对，做一张自己的未完成清单。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-arrival",
+        "slug": "arrival",
+        "title": "到校准备"
+      },
+      "history": [
+        {
+          "id": "handbook-first-week-action-list-v1",
+          "number": 1,
+          "title": "到校第一周，可以按什么顺序把基本事项做完？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-asking-for-help-effectively",
+      "title": "不知道该找谁时，怎样把问题说清楚？",
+      "revisionId": "handbook-asking-for-help-effectively-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "在校学生页提供IT服务、学生一站式、支持与咨询，以及成绩单与证明等不同入口。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "把问题先分成账号设备、课程教务、住宿设施、学生事务或身心支持，再从对应入口确认接收渠道。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "邮件或工单可按这个结构写：我是哪个校区/项目的学生；正在办什么；在哪一步遇到什么；已尝试什么；希望确认哪一个下一步。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "系统故障可附发生时间、课程或工单编号及去除个人信息的报错图；把密码、验证码和无关证件信息排除在说明之外。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "保留受理编号和原始回复；再次跟进时引用同一事项，清楚写出新增情况。涉及紧急安全问题时先使用本手册的紧急求助入口。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：此模板不承诺受理时限，也不代替具体部门要求的正式申请表。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-asking-for-help-effectively-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-f826af76e9900c88",
+          "sourceRevisionId": "handbook-source-f826af76e9900c88-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "在校学生",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/current-students"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-asking-for-help-effectively",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先明确问题类型，再提供能让工作人员定位问题的最少信息。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "handbook-asking-for-help-effectively-v1",
+          "number": 1,
+          "title": "不知道该找谁时，怎样把问题说清楚？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-student-wiki-and-old-guides",
+      "title": "学生 Wiki 和旧攻略适合怎么用？",
+      "revisionId": "handbook-student-wiki-and-old-guides-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "XJTLU Wiki 首页提供新生、校园、苏州、利物浦与实习等主题导航。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "旧XJTLUCA/XJTLU-Guide仓库标注于2023年8月归档，并提示内容迁往XJTLU Wiki。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "可以先用社区文章了解常见术语和别人遇过的问题；涉及课程规则、缴费、住宿分配或账号配置时，再找对应官方说明逐项确认。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "阅读经验时记录作者当时的校区、专业、入学届和文章更新时间；缺少这些信息的体验，不宜直接推广到自己的情况。",
+          "kind": "advice"
+        },
+        {
+          "id": "s5",
+          "text": "群聊、公众号、小红书、知乎或视频里的线索，也可按相同方式整理成待核问题；只保留公开链接和必要摘要，不转存同学私信、群成员资料或个人评价。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：收录链接不代表学校认可、所有页面仍有效，或本手册已经核验该站全部内容。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-student-wiki-and-old-guides-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-90b9d4dfa1be9bae",
+          "sourceRevisionId": "handbook-source-90b9d4dfa1be9bae-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "XJTLU Wiki：学生社区入口",
+          "mode": "link-only",
+          "url": "https://wiki.xjt.lu/"
+        },
+        {
+          "id": "handbook-student-wiki-and-old-guides-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-9e0568f9630a1e1d",
+          "sourceRevisionId": "handbook-source-9e0568f9630a1e1d-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "XJTLUCA/XJTLU-Guide：已归档的西浦生活指南",
+          "mode": "link-only",
+          "url": "https://github.com/XJTLUCA/XJTLU-Guide"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-student-wiki-and-old-guides",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "用学生经验发现问题和关键词，再把办事结论核对到当前官方来源。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-community",
+        "slug": "community",
+        "title": "学生社区与非官方资源"
+      },
+      "history": [
+        {
+          "id": "handbook-student-wiki-and-old-guides-v1",
+          "number": 1,
+          "title": "学生 Wiki 和旧攻略适合怎么用？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-unofficial-campus-app-projects",
+      "title": "看到非官方校园工具时，先检查什么？",
+      "revisionId": "handbook-unofficial-campus-app-projects-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "PeronGH/XJTLU-App的公开仓库将自身描述为非官方校园应用，README列出课程、作业、通知、活动等功能清单。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "先检查项目发布页、最近维护记录、已知问题与支持的平台；把README里的规划功能和已发布版本能完成的事情分开看。",
+          "kind": "advice"
+        },
+        {
+          "id": "s3",
+          "text": "对于要求登录或读取课程数据的工具，先了解数据去向、需要的权限及退出/删除方式；没有把握时直接使用学校官方入口完成任务。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "如果只是想获取源码学习，可以先阅读文档和许可，再决定是否在自己的测试环境中运行；不要将下载链接等同于安全审计结果。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：本次仅核对公开项目介绍，未安装、运行或审计这款应用，也未确认所有功能的当前可用性。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-unofficial-campus-app-projects-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-8d447f1df22bb2f9",
+          "sourceRevisionId": "handbook-source-8d447f1df22bb2f9-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "PeronGH/XJTLU-App：非官方校园应用项目",
+          "mode": "link-only",
+          "url": "https://github.com/PeronGH/XJTLU-App"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-unofficial-campus-app-projects",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "先看项目是否有可用版本、维护记录和权限说明，再决定是否尝试。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-community",
+        "slug": "community",
+        "title": "学生社区与非官方资源"
+      },
+      "history": [
+        {
+          "id": "handbook-unofficial-campus-app-projects-v1",
+          "number": 1,
+          "title": "看到非官方校园工具时，先检查什么？"
+        }
+      ]
+    },
+    {
+      "id": "handbook-learning-path-mentor-2026",
+      "title": "2026年新增的学习路径导师（LPM）能帮什么忙？",
+      "revisionId": "handbook-learning-path-mentor-2026-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校2026年9月8日报道：新增个性化学习路径导师LPM，当周向本科生推出，学生可登录e-Bridge查看自己的LPM信息。",
+          "kind": "fact"
+        },
+        {
+          "id": "s2",
+          "text": "报道将LPM的职责定位为理解学术规则和规划学习机会，并与学术导师、成长顾问、学友导师、校外导师协作。",
+          "kind": "fact"
+        },
+        {
+          "id": "s3",
+          "text": "联系前准备当前专业/年级、已修课程、希望探索的机会，以及最不清楚的一两条规则；讨论后把需另行申请的事项列出来。",
+          "kind": "advice"
+        },
+        {
+          "id": "s4",
+          "text": "专业学习与科研方向可继续找学术导师，生活适应可找成长顾问；不知道如何组合学习机会时，可以把问题交给LPM讨论。",
+          "kind": "advice"
+        },
+        {
+          "id": "c1",
+          "text": "注意：该消息面向本科生，不能据此推断研究生也已分配LPM；报道提及的“即将推出”项目不等于已经开放申请。",
+          "kind": "advice"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "undergraduate"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "handbook-learning-path-mentor-2026-s1-0",
+          "sentenceId": "s1",
+          "sourceEntityId": "handbook-source-66a107fb4ad3d8e7",
+          "sourceRevisionId": "handbook-source-66a107fb4ad3d8e7-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "西浦新增学习路径导师，构建五星学生支持体系",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/news/2026/09/xuexilujingdaoshi"
+        },
+        {
+          "id": "handbook-learning-path-mentor-2026-s2-0",
+          "sentenceId": "s2",
+          "sourceEntityId": "handbook-source-66a107fb4ad3d8e7",
+          "sourceRevisionId": "handbook-source-66a107fb4ad3d8e7-v1",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "西浦新增学习路径导师，构建五星学生支持体系",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/news/2026/09/xuexilujingdaoshi"
+        }
+      ],
+      "warnings": [],
+      "slug": "handbook-learning-path-mentor-2026",
+      "demo": false,
+      "origin": "ai_draft",
+      "originalOrigin": "ai_draft",
+      "reviewStatus": "collected",
+      "summary": "本科生可从e-Bridge查询LPM，用于讨论学习路径与规则理解；先准备自己的目标和问题。",
+      "asOf": "2026-09-10",
+      "verifiedAt": "",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z",
+      "reviewOwnerLabel": "尚未人工核验",
+      "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+      "researchedAt": "2026-09-10",
+      "topic": {
+        "id": "topic-study",
+        "slug": "study",
+        "title": "学习与教务"
+      },
+      "history": [
+        {
+          "id": "handbook-learning-path-mentor-2026-v1",
+          "number": 1,
+          "title": "2026年新增的学习路径导师（LPM）能帮什么忙？"
+        }
+      ]
     }
   ],
-  "contentHash": "815135d6e2d27a3181bb752926175327ccd90dc9b0241397c53ad413c280fc79"
+  "contentHash": "db67283d8ee8c0db230c5a166d54816ac41e97efa23e6acee998093aaf4fb1f6"
 }

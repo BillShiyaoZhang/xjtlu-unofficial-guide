@@ -45,23 +45,29 @@ function warnings(target, answer) {
 }
 
 function renderEdition() {
-  const reviewed = snapshot.mode === 'public-reviewed';
-  const approved = reviewed && snapshot.answers.some(answer => answer.reviewStatus === 'approved');
+  const guide = snapshot.mode !== 'public-demo';
+  const approved = guide && snapshot.answers.some(answer => answer.reviewStatus === 'approved');
+  const collected = snapshot.answers.some(answer => answer.reviewStatus === 'collected');
   const demos = snapshot.answers.some(answer => answer.demo);
-  const empty = reviewed && !snapshot.answers.length;
-  $('edition-label').textContent = approved || empty ? '公开只读指南' : '公开只读演示';
-  $('edition-note').textContent = empty ? '暂无已发布内容' : approved
+  const empty = guide && !snapshot.answers.length;
+  $('edition-label').textContent = collected || approved || empty ? '公开只读指南' : '公开只读演示';
+  $('edition-note').textContent = empty ? '暂无已发布内容' : collected ? '资料整理内容待人工核验 · 非学校官方信息' : approved
     ? demos ? '含审核文章和演示内容 · 非学校官方信息' : '经人工审核 · 非学校官方信息'
     : '示范内容，不代表学校官方信息';
-  $('about-content-title').textContent = empty ? '暂无已发布内容' : approved ? demos ? '审核文章与演示内容' : '已审核内容' : '示范内容';
+  $('about-content-title').textContent = empty ? '暂无已发布内容' : collected ? '资料整理与核验状态' : approved ? demos ? '审核文章与演示内容' : '已审核内容' : '示范内容';
   $('about-content-description').textContent = empty ? '目前没有可供阅读的已发布文章。'
+    : collected
+      ? '手册包含按公开来源整理的校园信息，资料整理日期会在文章中标明。标有「待人工核验」的内容由 AI 辅助整理，尚未逐条人工核验，请对照原始来源确认具体安排。'
+        + (approved ? '已经人工审核的文章会单独标注核验日期。' : '')
+        + (demos ? '演示文章另有明确标注。' : '')
     : approved
       ? '这里收录已由编辑审核并发布的校园信息，保留逐句来源、适用范围和复核时间。AI 辅助整理的内容在详情中注明。'
         + (demos ? '其中标有「演示内容」的文章，请结合其单独说明阅读。' : '')
         + '编辑审核不代替学校的正式通知，具体事项请向相关部门核实。'
       : '本页公开展示项目中的示范答案及其原始来源。示范答案尚不代表真实试点的正式审核结果，不能作为选课、入学或其他重要决定的唯一依据。具体事项请向学校相关部门核实。';
-  $('about-snapshot-description').textContent = reviewed
-    ? '这是从本地已发布内容同步的公开快照。后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处只提供阅读，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
+  $('about-snapshot-description').textContent = guide
+    ? (collected ? '这是按当前发布清单生成的公开快照。' : '这是从本地已发布内容同步的公开快照。')
+      + '后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处只提供阅读，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
     : '此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。';
 }
 
@@ -90,15 +96,19 @@ function renderList(parameters) {
   const selectedTopic = snapshot.catalog.topics.find(value => value.id === $('topic').value);
   $('topic-description').textContent = selectedTopic?.description ?? '';
   const terms = searchTerms(query);
-  const answers = snapshot.answers.filter(answer => (!$('topic').value || answer.topic?.id === $('topic').value) && (!query.trim() || matches(answer, terms)));
+  const answers = snapshot.answers.filter(answer => (!$('topic').value || answer.topic?.id === $('topic').value) && (!query.trim() || matches(answer, terms)))
+    .sort((left, right) => Number(left.demo) - Number(right.demo));
   $('count').textContent = `${answers.length} 条答案`;
   $('answer-list').replaceChildren();
   for (const answer of answers) {
     const item = make('article', undefined, 'answer-item');
+    item.dataset.reviewStatus = answer.reviewStatus ?? (answer.demo ? 'demo' : '');
     const link = make('a'); link.href = answerHash(answer);
     link.append(make('h3', answer.title));
     item.append(make('span', answer.topic?.title ?? '校园信息', 'topic-label'), link, make('p', answer.summary));
-    item.append(make('span', `核验 ${date(answer.verifiedAt)} · ${(answer.citations ?? []).length} 项来源`, 'metadata'));
+    const collected = answer.reviewStatus === 'collected';
+    item.append(make('span', `${collected ? '资料整理 ' + date(answer.researchedAt) : '核验 ' + date(answer.verifiedAt)} · ${(answer.citations ?? []).length} 项来源`, 'metadata'));
+    if (collected) item.append(make('span', ' · 待人工核验', 'collected-status'));
     if (answer.demo) item.append(make('span', ' · 演示内容', 'demo'));
     warnings(item, answer);
     $('answer-list').append(item);
@@ -111,12 +121,17 @@ function renderDetail(answer) {
   const target = $('answer-detail');
   target.replaceChildren(make('p', answer.topic?.title ?? '校园信息', 'eyebrow'), make('h1', answer.title));
   const metadata = make('div', undefined, 'detail-meta');
-  for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`, `人工核验 ${date(answer.verifiedAt)}`, `复核期限 ${date(answer.reviewDueAt)}`, answer.reviewOwnerLabel]) {
+  const collected = answer.reviewStatus === 'collected';
+  for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`,
+    collected ? `资料整理 ${date(answer.researchedAt)}` : `人工核验 ${date(answer.verifiedAt)}`,
+    collected ? '待人工核验' : answer.reviewOwnerLabel, `复核期限 ${date(answer.reviewDueAt)}`]) {
     if (text) metadata.append(make('span', text));
   }
   target.append(metadata);
   if (answer.demo) target.append(make('p', answer.reviewStatus === 'approved' ? '演示内容，已完成人工审核。' : '演示内容，真实试点前需重新审核。', 'warning'));
-  if (answer.originalOrigin === 'ai_draft') target.append(make('p', '内容来源：AI 辅助初稿，经人工审核确认。', 'muted'));
+  if (collected) target.append(make('p', '内容来源：AI 辅助资料整理，尚未逐条人工核验。', 'warning collected-notice'));
+  else if (answer.originalOrigin === 'ai_draft') target.append(make('p', answer.reviewStatus === 'approved'
+    ? '内容来源：AI 辅助初稿，经人工审核确认。' : '内容来源：AI 辅助整理。', 'muted'));
   warnings(target, answer);
   const scope = Object.entries(answer.scope ?? {}).flatMap(([dimension, values]) => values.map(value => snapshot.catalog.scopes.find(item => item.dimension === dimension && (item.id === value || item.code === value))?.labelZh ?? value));
   target.append(make('p', `适用范围：${scope.join(' · ') || '尚未明确'}`, 'muted'));
@@ -238,7 +253,7 @@ async function load() {
     const response = await fetch('./public.json', { credentials: 'omit' });
     if (!response.ok) throw new Error('Snapshot unavailable');
     const value = await response.json();
-    if (value.schemaVersion !== 1 || !['public-demo', 'public-reviewed'].includes(value.mode) || !Array.isArray(value.answers) || !value.catalog || !Array.isArray(value.catalog.topics) || !Array.isArray(value.catalog.scopes) || typeof value.site?.name !== 'string') throw new Error('Unsupported snapshot');
+    if (value.schemaVersion !== 1 || !['public-demo', 'public-reviewed', 'public-guide'].includes(value.mode) || !Array.isArray(value.answers) || !value.catalog || !Array.isArray(value.catalog.topics) || !Array.isArray(value.catalog.scopes) || typeof value.site?.name !== 'string') throw new Error('Unsupported snapshot');
     snapshot = value;
     renderEdition();
     $('topic').replaceChildren(make('option', '全部主题'));

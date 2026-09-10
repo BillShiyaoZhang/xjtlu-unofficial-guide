@@ -128,6 +128,7 @@ export async function buildPages({ root = resolve('.'), now, origin, basePath } 
     data = validateReviewedPagesData(await jsonFile(snapshotFile), { config, now, origin, basePath });
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
+    if (config.collectedRevisionIds?.length) fail('an explicit collection requires an exported public snapshot; run export:pages first');
     const profile = await jsonFile(resolve(community, 'content-profile.json'));
     const content = await jsonFile(resolve(community, 'content.json'));
     const catalog = await jsonFile(resolve(community, 'catalog.json'));

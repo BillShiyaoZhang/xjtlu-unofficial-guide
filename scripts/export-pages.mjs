@@ -55,9 +55,12 @@ export async function exportPagesSnapshot({ root = resolve('.'), demo = true, en
   try {
     await regularFile(snapshotPath);
     const saved = await json(snapshotPath);
-    // A changed submission destination is deployment metadata, not a reason to
-    // discard the last content snapshot. It is used here only for comparison.
-    previous = validateReviewedPagesData(saved, { config: { ...config, contributionsRepository: saved.site?.contributionsRepository } });
+    // Validate the old release for comparison only. Changed release selection must
+    // allow removals; the replacement above is always validated against current config.
+    previous = validateReviewedPagesData(saved, { config: { ...config,
+      contributionsRepository: saved.site?.contributionsRepository,
+      collectedRevisionIds: saved.answers?.filter(answer => answer.reviewStatus === 'collected').map(answer => answer.revisionId),
+    } });
   }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
   const changed = previous?.contentHash !== snapshot.contentHash;
@@ -68,7 +71,8 @@ export async function exportPagesSnapshot({ root = resolve('.'), demo = true, en
       await rename(temporary, snapshotPath);
     } finally { await unlink(temporary).catch(error => { if (error.code !== 'ENOENT') throw error; }); }
   }
-  return { snapshotPath, answerCount: snapshot.answers.length, reviewedCount: snapshot.answers.filter(answer => answer.reviewStatus === 'approved').length, contentHash: snapshot.contentHash, changed };
+  return { snapshotPath, answerCount: snapshot.answers.length, reviewedCount: snapshot.answers.filter(answer => answer.reviewStatus === 'approved').length,
+    collectedCount: snapshot.answers.filter(answer => answer.reviewStatus === 'collected').length, contentHash: snapshot.contentHash, changed };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
