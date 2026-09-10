@@ -5,7 +5,7 @@
     {
       "key": "life-dushu-hospital",
       "title": "苏州大学附属第四医院（苏州市独墅湖医院）：就医入口",
-      "url": "https://www.sdhmdp.com/",
+      "url": "https://www.sdhmdp.com/", "sourceCategory": "web",
       "publisher": "苏州大学附属第四医院（苏州市独墅湖医院）",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -15,7 +15,7 @@
     {
       "key": "life-visit",
       "title": "访问校园",
-      "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -25,7 +25,7 @@
     {
       "key": "life-map",
       "title": "我们的校园",
-      "url": "https://www.xjtlu.edu.cn/zh/campus-life/our-campus",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/our-campus", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -35,7 +35,7 @@
     {
       "key": "life-accommodation",
       "title": "住宿和社区",
-      "url": "https://www.xjtlu.edu.cn/zh/campus-life/accommodation",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/accommodation", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -45,7 +45,7 @@
     {
       "key": "life-domestic-housing",
       "title": "中国大陆学生宿舍",
-      "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -55,7 +55,7 @@
     {
       "key": "life-global-housing",
       "title": "港澳台地区及国际学生宿舍",
-      "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -65,7 +65,7 @@
     {
       "key": "life-cmo",
       "title": "Campus Management Office",
-      "url": "https://www.xjtlu.edu.cn/en/professional-services/campus-management-office",
+      "url": "https://www.xjtlu.edu.cn/en/professional-services/campus-management-office", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -75,7 +75,7 @@
     {
       "key": "life-guide-2526",
       "title": "梦想“捕”手：2025—2026学生成长指南",
-      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2025/07/XJTLU-Student-Development-Advisor-2526-CN.pdf",
+      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2025/07/XJTLU-Student-Development-Advisor-2526-CN.pdf", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -85,7 +85,7 @@
     {
       "key": "life-shuttle",
       "title": "Shuttle Bus Booking 区间车预约",
-      "url": "https://shuttlebus.xjtlu.edu.cn/",
+      "url": "https://shuttlebus.xjtlu.edu.cn/", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学校园管理办公室",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -95,7 +95,7 @@
     {
       "key": "life-sports",
       "title": "体育与社团活动",
-      "url": "https://www.xjtlu.edu.cn/zh/campus-life/sports-and-activities",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/sports-and-activities", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -105,7 +105,7 @@
     {
       "key": "life-engage",
       "title": "西浦校园生活：社团目录",
-      "url": "https://engage.xjtlu.edu.cn/zh/club",
+      "url": "https://engage.xjtlu.edu.cn/zh/club", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学 Student Engagement",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -115,7 +115,7 @@
     {
       "key": "life-sip-library",
       "title": "苏州工业园区图书馆（总馆）",
-      "url": "https://pcc.sipac.gov.cn/main/venue-map/venue-detail/28d4659b8c9bebebdd2e98311b933250",
+      "url": "https://pcc.sipac.gov.cn/main/venue-map/venue-detail/28d4659b8c9bebebdd2e98311b933250", "sourceCategory": "web",
       "publisher": "苏州工业园区公共文化中心",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -125,7 +125,7 @@
     {
       "key": "life-city-12345",
       "title": "市政府办公室关于印发苏州市12345公共服务平台运行管理办法的通知",
-      "url": "https://www.suzhou.gov.cn/szsrmzf/zfbgswj/202012/a543c78b2e9b447cba3ae2c56a7822bf.shtml",
+      "url": "https://www.suzhou.gov.cn/szsrmzf/zfbgswj/202012/a543c78b2e9b447cba3ae2c56a7822bf.shtml", "sourceCategory": "web",
       "publisher": "苏州市人民政府",
       "publishedAt": "2020-12-16",
       "accessedAt": "2026-09-10",
@@ -135,7 +135,7 @@
     {
       "key": "life-museum",
       "title": "博物馆",
-      "url": "https://www.xjtlu.edu.cn/zh/campus-life/support-and-facilities/museum",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/support-and-facilities/museum", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学博物馆",
       "publishedAt": null,
       "accessedAt": "2026-09-10",

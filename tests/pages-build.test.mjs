@@ -17,6 +17,7 @@ test('Pages exports exactly the reviewed demo revisions as public DTOs', async (
   const data = createPagesData(await fixture());
   assert.equal(data.mode, 'public-demo');
   assert.equal(data.answers.length, 4);
+  assert.ok(data.catalog.scopes.every(scope => typeof scope.code === 'string' && scope.code.length > 0));
   assert.ok(data.answers.every(value => value.demo && value.history.length === 1));
   const serialized = JSON.stringify(data);
   for (const privateField of ['reviewOwnerId', 'searchText', 'extensions', 'payload', 'passwordHash', 'consent', 'keyring', 'localhost']) assert.ok(!serialized.includes(privateField), privateField);
@@ -82,13 +83,13 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
   for (const name of ['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json']) await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
   await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify((await fixture()).config));
-  for (const [name, contents] of Object.entries({ 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' })) await writeFile(resolve(directory, 'pages-ui', name), contents);
+  for (const [name, contents] of Object.entries({ 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'contributions.js': 'export const contributionTypes = {};', 'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' })) await writeFile(resolve(directory, 'pages-ui', name), contents);
   await mkdir(resolve(directory, '.runtime'));
   await writeFile(resolve(directory, '.runtime', 'community.sqlite'), 'PRIVATE_DATABASE_SENTINEL');
   await writeFile(resolve(directory, '.dev-secrets.json'), 'PRIVATE_SECRETS_SENTINEL');
   const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
   assert.equal(result.answerCount, 4);
-  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'contributions.js', 'index.html', 'public.json', 'style.css']);
   const serialized = await readFile(resolve(result.output, 'public.json'), 'utf8');
   assert.ok(!serialized.includes('PRIVATE_DATABASE_SENTINEL'));
   assert.ok(!serialized.includes('PRIVATE_SECRETS_SENTINEL'));

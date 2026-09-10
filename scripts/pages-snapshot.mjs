@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto';
 import { configureContent, publishContent, projectPublic, decryptPrivatePayload } from '@information-community/runtime';
 import { isSafePublicUrl } from '../server/business-validation.mjs';
+import { SOURCE_CATEGORIES, sourceCategories } from '../community/source-categories.mjs';
+import { publicSourceMetadata } from '../community/source-registry.mjs';
 
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const pick = (value, fields) => Object.fromEntries(fields.filter(key => value[key] !== undefined).map(key => [key, value[key]]));
@@ -77,7 +79,7 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
   distinct(input.answers.map(answer => answer?.revisionId));
   for (const answer of input.answers) {
     exact(answer, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'citations', 'scope', 'warnings', 'slug', 'demo',
-      'summary', 'asOf', 'verifiedAt', 'researchedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote', 'topic', 'history', 'origin', 'originalOrigin', 'reviewStatus']);
+      'summary', 'asOf', 'verifiedAt', 'researchedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote', 'topic', 'history', 'origin', 'originalOrigin', 'reviewStatus', 'sourceCategories']);
     id(answer.id); id(answer.revisionId); text(answer.title, 160, 1); text(answer.slug, 200, 1);
     if (!Number.isSafeInteger(answer.revisionNumber) || answer.revisionNumber < 1 || typeof answer.demo !== 'boolean') fail('invalid public content version');
     if (answer.reviewStatus === 'collected') {
@@ -107,7 +109,10 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
     }
     list(answer.citations, 5000); distinct(answer.citations.map(citation => citation?.id));
     for (const citation of answer.citations) {
-      exact(citation, ['id', 'sentenceId', 'sourceEntityId', 'sourceRevisionId', 'position', 'order', 'title', 'url', 'mode', 'excerpt']);
+      exact(citation, ['id', 'sentenceId', 'sourceEntityId', 'sourceRevisionId', 'position', 'order', 'title', 'url', 'mode', 'excerpt', 'sourceCategory', 'publisher']);
+      // Existing snapshots remain exportable; whenever classification is present it is strict.
+      if (citation.sourceCategory !== undefined && !SOURCE_CATEGORIES.includes(citation.sourceCategory)) fail('invalid source category');
+      if (citation.publisher !== undefined) text(citation.publisher, 300, 1);
       for (const name of ['id', 'sentenceId', 'sourceEntityId', 'sourceRevisionId']) id(citation[name]);
       if (!answer.sentences.some(sentence => sentence.id === citation.sentenceId)) fail('citation refers to missing sentence');
       if (!Number.isSafeInteger(citation.order) || citation.order < 0) fail('invalid citation order');
@@ -123,6 +128,12 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
         text(citation.excerpt, 100000, 1);
         if (citation.excerpt.length !== citation.position.end - citation.position.start) fail('excerpt length differs from citation');
       } else fail('invalid citation mode');
+    }
+    if (answer.sourceCategories !== undefined) {
+      list(answer.sourceCategories, SOURCE_CATEGORIES.length); distinct(answer.sourceCategories);
+      if (answer.sourceCategories.some(category => !SOURCE_CATEGORIES.includes(category)) ||
+          answer.citations.some(citation => citation.sourceCategory === undefined) ||
+          JSON.stringify(answer.sourceCategories) !== JSON.stringify(sourceCategories(answer.citations))) fail('article source categories differ from citations');
     }
     distinct(answer.citations.map(citation => `${citation.sentenceId}|${citation.order}`));
     for (const sentence of answer.sentences) if (sentence.kind === 'fact' && !answer.citations.some(citation => citation.sentenceId === sentence.id)) fail('fact is missing evidence');
@@ -213,11 +224,12 @@ export function createReviewedPagesData({ state, catalog, config, keyring, now =
     const citations = node.citations.map(citation => {
       const source = revisions.get(citation.sourceRevisionId);
       if (source.data.rights?.expiresAt !== undefined) fail('time-limited sources cannot enter permanent static artifacts');
-      return { ...pick(citation, ['id', 'sentenceId', 'sourceEntityId', 'sourceRevisionId', 'position', 'order', 'title', 'mode', 'excerpt']), url: publicUrl(citation.url, site) };
+      return { ...pick(citation, ['id', 'sentenceId', 'sourceEntityId', 'sourceRevisionId', 'position', 'order', 'title', 'mode', 'excerpt']),
+        ...publicSourceMetadata(source.data), url: publicUrl(citation.url, site) };
     });
     const dispute = { reported: '该答案收到争议报告，正在复核，请对照原始来源。', confirmed: '该答案存在已确认的争议，请勿据此单独作出决定。' }[data.disputeStatus];
     return {
-      ...pick(node, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'scope']), citations,
+      ...pick(node, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'scope']), citations, sourceCategories: sourceCategories(citations),
       warnings: [...node.warnings, ...(dispute ? [dispute] : [])],
       slug: data.slug ?? entity.slug ?? entity.extensions?.slug ?? entity.id,
       demo: data.demo === true, origin: data.origin, originalOrigin: data.originalOrigin ?? data.origin, reviewStatus: collection ? 'collected' : legacyDemo ? 'demo' : 'approved',

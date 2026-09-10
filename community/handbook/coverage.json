@@ -1,12 +1,17 @@
 {
   "researchedAt": "2026-09-10",
   "status": "pending-human-review",
-  "cardCount": 69,
+  "cardCount": 76,
   "topicCount": 20,
-  "sourceCount": 53,
-  "citedSourceCount": 50,
-  "factCount": 93,
-  "citationCount": 95,
+  "sourceCount": 57,
+  "citedSourceCount": 54,
+  "factCount": 103,
+  "sourceCategories": {
+    "university_official": 50,
+    "user_provided": 0,
+    "web": 7
+  },
+  "citationCount": 105,
   "humanVerifiedCount": 0,
   "topics": [
     {
@@ -22,7 +27,7 @@
     {
       "topic": "systems",
       "title": "账号与系统",
-      "count": 10
+      "count": 11
     },
     {
       "topic": "services",
@@ -52,17 +57,17 @@
     {
       "topic": "study",
       "title": "学习与教务",
-      "count": 7
+      "count": 9
     },
     {
       "topic": "library",
       "title": "图书馆与信息素养",
-      "count": 6
+      "count": 8
     },
     {
       "topic": "language",
       "title": "语言与学术写作",
-      "count": 2
+      "count": 3
     },
     {
       "topic": "wellbeing",
@@ -102,7 +107,7 @@
     {
       "topic": "research",
       "title": "科研与创新",
-      "count": 2
+      "count": 3
     },
     {
       "topic": "community",
@@ -593,6 +598,55 @@
       "title": "2026年新增的学习路径导师（LPM）能帮什么忙？",
       "topic": "study",
       "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-library-suggest-purchase",
+      "revisionId": "handbook-supplement-library-suggest-purchase-v1",
+      "title": "图书馆没有想读的书，可以怎样荐购？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-library-interlibrary-loan",
+      "revisionId": "handbook-supplement-library-interlibrary-loan-v1",
+      "title": "硕士研究需要的文献不在馆藏里，能向哪里求助？",
+      "topic": "library",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-language-partner",
+      "revisionId": "handbook-supplement-language-partner-v1",
+      "title": "想练口语、认识不同文化的同学，可以去哪里找语伴？",
+      "topic": "language",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-peer-study-support",
+      "revisionId": "handbook-supplement-peer-study-support-v1",
+      "title": "想找同伴复习或交流学习方法，伴学社提供什么线索？",
+      "topic": "study",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-computer-labs",
+      "revisionId": "handbook-supplement-computer-labs-v1",
+      "title": "硕士生想用校园机房完成学习任务，先确认什么？",
+      "topic": "systems",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-master-degree-plus",
+      "revisionId": "handbook-supplement-master-degree-plus-v1",
+      "title": "硕士入学后，哪里持续查学习技能和发展活动？",
+      "topic": "study",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-supplement-research-computing",
+      "revisionId": "handbook-supplement-research-computing-v1",
+      "title": "硕士科研需要较多算力，如何咨询学校 HPC？",
+      "topic": "research",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
     }
   ]
 }

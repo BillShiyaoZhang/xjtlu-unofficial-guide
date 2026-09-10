@@ -12,6 +12,19 @@ let queryEventId = null;
 let routeGeneration = 0, searchGeneration = 0;
 const pendingRequests = new Map();
 const date = value => value ? new Date(typeof value === 'number' && value < 1e12 ? value * 1000 : value).toLocaleDateString('zh-CN') : '未注明';
+const sourceLabels = { university_official: '学校官方', user_provided: '用户提供', web: '网络资料' };
+const universalScopeLabels = { campus: '两校区通用入口', audience: '学生通用入口', academic_year: '不限学年' };
+function sourceBadges(answer) {
+  const group = create('div', undefined, 'source-categories');
+  group.setAttribute('aria-label', '材料来源');
+  for (const category of answer.sourceCategories ?? []) {
+    if (!sourceLabels[category]) continue;
+    const badge = create('span', sourceLabels[category], 'source-category');
+    badge.dataset.sourceCategory = category;
+    group.append(badge);
+  }
+  return group;
+}
 function message(value) { $('message').textContent = value; $('message').hidden = !value; }
 async function api(path, { data, auth = token, key, requestContext } = {}) {
   const request = data ? JSON.stringify([path, auth, data, requestContext]) : null;
@@ -70,6 +83,7 @@ function renderAnswers() {
     const link = create('a'); link.href = '/answers/' + encodeURIComponent(answer.slug);
     link.addEventListener('click', event => { event.preventDefault(); history.pushState({}, '', link.href); route(); });
     link.append(create('h3', answer.title)); item.append(link, create('p', answer.summary));
+    item.append(sourceBadges(answer));
     item.append(create('span', `核验 ${date(answer.verifiedAt)} · ${answer.citations.length} 项来源`, 'metadata'));
     if (answer.demo) item.append(create('span', ' · 演示内容', 'demo'));
     for (const warning of answer.warnings) item.append(create('p', warning, 'warning'));
@@ -112,9 +126,11 @@ async function detail(slug, revision, generation) {
   const metadata = create('div', undefined, 'detail-meta');
   for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`, `人工核验 ${date(answer.verifiedAt)}`, `复核期限 ${date(answer.reviewDueAt)}`, answer.reviewOwnerLabel]) if (text) metadata.append(create('span', text));
   target.append(metadata);
+  target.append(sourceBadges(answer));
   for (const warning of answer.warnings) target.append(create('p', warning, 'warning'));
   if (answer.demo) target.append(create('p', '演示内容，真实试点前需重新审核。', 'warning'));
-  const scopeLabels = Object.entries(answer.scope).flatMap(([dimension, values]) => values.map(value => catalog.scopes.find(scope => scope.dimension === dimension && (scope.id === value || scope.code === value))?.labelZh ?? value));
+  const scopeLabels = Object.entries(answer.scope).flatMap(([dimension, values]) => values.map(value => catalog.scopes.find(scope => scope.dimension === dimension && (scope.id === value || scope.code === value))?.labelZh
+    ?? (value === 'universal' ? universalScopeLabels[dimension] ?? '通用' : value)));
   target.append(create('p', `适用范围：${scopeLabels.join(' · ') || '尚未明确'}`, 'muted'));
   if (answer.evidenceNote) target.append(create('p', answer.evidenceNote, 'warning'));
   for (const sentence of answer.sentences) {
@@ -122,7 +138,13 @@ async function detail(slug, revision, generation) {
     for (const citation of answer.citations.filter(item => item.sentenceId === sentence.id)) {
       const box = create('div', undefined, 'citation');
       const link = create('a', citation.title); link.href = citation.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      if (sourceLabels[citation.sourceCategory]) {
+        const badge = create('span', sourceLabels[citation.sourceCategory], 'source-category');
+        badge.dataset.sourceCategory = citation.sourceCategory;
+        box.append(badge, document.createTextNode(' '));
+      }
       box.append(link, create('span', citation.mode === 'link-only' ? ' · 原站链接' : ' · 授权摘录', 'muted'));
+      if (citation.publisher) box.append(create('span', ` · 发布方：${citation.publisher}`, 'muted'));
       if (citation.excerpt) box.append(create('p', citation.excerpt));
       target.append(box);
     }

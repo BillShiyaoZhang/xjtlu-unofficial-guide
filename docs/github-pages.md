@@ -6,13 +6,15 @@
 
 ## 补充、纠错与不同经验
 
-读者可以从 Pages 打开[GitHub 投稿表单](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)，使用 GitHub 账号提交新增信息、纠错或不同经验。表单及讨论位于公开仓库 `BillShiyaoZhang/xjtlu-unofficial-guide`；由用户在 GitHub 最终提交，提交后公开可见。Pages 不接收或保存投稿正文，也不替用户创建 Issue。
+读者可以在 Pages 的[补充信息页](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/#/contribute)直接填写新增信息、纠错或个人经验，确认内容可以公开后点击按钮，标题和完整正文会自动带入 GitHub。最终需要 GitHub 账号，由用户核对并提交到公开仓库 `BillShiyaoZhang/xjtlu-unofficial-guide`。内容仅保留在当前页面；Pages 服务器不保存投稿正文，也不替用户创建 Issue。正文较长时会提供完整正文复制入口，不会截断投稿。
 
 本地工作台的「GitHub 投稿」入口打开同一仓库的 Issues，供维护者分类、去重和关联来源。整理、采纳或关闭 Issue 不等于完成事实核验；不同时间、校区或条件下的经验可以并列保留。Issue 不会自动进入手册，也不会转存为本地私件。决定更新手册时，仍先在本地编辑相应修订并发布，再按下方流程同步。
 
 投稿地址由 `community/pages.config.json` 的 `contributionsRepository` 配置，当前为 `BillShiyaoZhang/xjtlu-unofficial-guide`。投稿入口随页面构建发布；修改入口配置、表单或页面代码需要正常提交并部署这些文件，`sync:pages` 仍只提交公开内容快照。完整操作与维护约定见 [GitHub 投稿与整理](github-contributions.md)。
 
 ## 本批 69 篇资料的显式收录
+
+**当前范围（2026-09-10 本轮更新）：** 按 `todo.md` 的直接发布授权，在原有 69 篇之外补充 7 篇，当前清单共 76 个资料修订，公开快照共 80 篇（另含 4 篇演示）。新增图书荐购、馆际互借、语伴、伴学社、机房、Degree Plus 和 HPC，见 [本轮补充](handbook-maintenance.md#2026-09-10-本轮补充)。来源类别在文章与逐句引用旁展示，与人工核验状态分别保留。以下 69/73 数字记录首次收录范围。
 
 用户已明确要求将此前搜集的 69 篇全部公开为资料整理初版。`community/pages.config.json` 的 `collectedRevisionIds` 固定列出本批 69 个精确修订 ID；这份清单只授权相应版本进入 Pages，不授权未来草稿自动公开。
 
@@ -59,7 +61,7 @@ Pages 是静态页面；公开投稿跳转至 GitHub，手册登录、审核及�
 
 `npm run build:pages` 优先读取并校验此快照。快照存在但损坏时构建失败；快照合法但为空时展示空目录。配置包含资料收录清单却缺少快照时，也会直接报错，不会悄悄恢复旧演示内容。只有未配置资料收录且尚无快照的旧流程，才按 `pages.config.json` 的 `public-demo` 清单，在内存中导入演示种子、执行平台发布校验并生成原有四张演示卡。构建阶段不连接本机数据库；GitHub Actions 只消费已经提交的公开快照。
 
-当前 `public-guide` 与既有快照模式共用静态阅读页面，支持目录、主题筛选、搜索、全文、来源和 hash 深链。相对资源兼容 `/xjtlu-unofficial-guide/` 项目子路径；页面不请求本地后台 API、认证或研究上报。点击投稿入口后，用户在 GitHub 完成登录、填写和提交。复核期限在阅读时重新检查，已过期的内容显示待复核提示；资料读取日期不会被展示成人工核验日期。
+当前 `public-guide` 与既有快照模式共用静态阅读页面，支持目录、主题筛选、搜索、全文、来源和 hash 深链。相对资源兼容 `/xjtlu-unofficial-guide/` 项目子路径；页面不请求本地后台 API、认证或研究上报。投稿在站内填写，跳转 GitHub 后完成登录、核对和最终提交。复核期限在阅读时重新检查，已过期的内容显示待复核提示；资料读取日期不会被展示成人工核验日期。
 
 静态站点保留同步时的状态。本地隐藏、撤回、更新文章或处置来源后，必须再次同步并完成部署，Pages 才能反映变化；已下载或缓存的副本无法收回。带有效期限的来源不得进入静态产物。自有方法说明链接会指向 Pages，不能携带本机地址。不要将需要即时撤回、限时授权或含个人资料的内容纳入静态发布路径。
 

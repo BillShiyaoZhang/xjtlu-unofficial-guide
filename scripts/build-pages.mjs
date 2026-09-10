@@ -3,8 +3,10 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentModule, importContent, publishContent, projectPublic, readPublicRevision } from '@information-community/runtime';
 import { pagesSite, validateReviewedPagesData } from './pages-snapshot.mjs';
+import { sourceCategories } from '../community/source-categories.mjs';
+import { publicSourceMetadata } from '../community/source-registry.mjs';
 
-const assets = ['index.html', 'app.js', 'style.css', 'brand.svg'];
+const assets = ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg'];
 const outputs = [...assets, 'public.json', '.nojekyll'];
 const pick = (value, names) => Object.fromEntries(names.filter(name => value[name] !== undefined).map(name => [name, value[name]]));
 const fail = message => { throw new Error(`Pages build: ${message}`); };
@@ -96,8 +98,10 @@ export function createPagesData({ config, profile, content: input, catalog, now 
     const topic = topics.find(value => value.id === (data.topicId ?? entity.topicId ?? entity.extensions?.topicId));
     const history = selected.filter(value => value.entityId === node.id).map(value => readPublicRevision(content, value.id, { now })).filter(Boolean)
       .map(value => ({ id: value.revisionId, number: value.revisionNumber, title: value.title }));
+    const citations = node.citations.map(citation => ({ ...citation, ...publicSourceMetadata(revisions.get(citation.sourceRevisionId).data) }));
     return {
       ...pick(node, ['id', 'title', 'revisionId', 'revisionNumber', 'sentences', 'citations', 'scope', 'warnings']),
+      citations, sourceCategories: sourceCategories(citations),
       slug: data.slug ?? entity.slug ?? entity.extensions?.slug ?? entity.id,
       demo: true,
       ...pick(data, ['summary', 'asOf', 'verifiedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote']),

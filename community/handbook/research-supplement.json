@@ -1,0 +1,178 @@
+{
+  "section": "supplement",
+  "researchedAt": "2026-09-10",
+  "sources": [
+    {
+      "key": "suggest-purchase",
+      "title": "Suggest a Purchase — 图书荐购",
+      "url": "https://lib.xjtlu.edu.cn/Collections/Suggest_a_Purchase",
+      "publisher": "西交利物浦大学图书馆",
+      "sourceCategory": "university_official",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已读取公开正文。定位第 (1) 部分 OPAC Online Suggestion、Autumn Book Fair，以及第 (2) 部分教职工渠道；只转述学生可用入口，不将教职工购书报销办法扩展给学生。页面未标明公布日期。"
+    },
+    {
+      "key": "library-collections-navigation",
+      "title": "Collections — 图书馆资源与服务导航",
+      "url": "https://lib.xjtlu.edu.cn/Collections",
+      "publisher": "西交利物浦大学图书馆",
+      "sourceCategory": "university_official",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已读取公开正文及 Research Support 导航，列有 Inter-Library Loans 与 Library Appointment。仅用导航证明服务入口存在；链接后的 ILL 指南本次返回 429，未据此转述费用、数量、时限或申请资格。"
+    },
+    {
+      "key": "master-handbook-support-2627",
+      "title": "XJTLU Master's Student Handbook AY2026/27",
+      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/09/XJTLU_Masters-Student-Handbook_AY2026-27.pdf",
+      "publisher": "西交利物浦大学",
+      "sourceCategory": "university_official",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已读取 2026/27 新版 PDF。定位 PDF 第 14 页（印刷页 21–22）的 Degree Plus 和研究生院联系方式，第 19 页（印刷页 31–32）的 Interlibrary Loan，第 21 页（印刷页 35–36）的 Computer Labs 与 High Performance Computing。2026/27 为适用学年，上传路径不作为精确发布日期；只摘写支持入口和使用准备，不给出资格或学业结果判断。"
+    },
+    {
+      "key": "language-partner-union",
+      "title": "西浦校园生活：语伴",
+      "url": "https://engage.xjtlu.edu.cn/zh/club/185",
+      "publisher": "西交利物浦大学 Student Engagement（语伴组织介绍）",
+      "sourceCategory": "university_official",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已读取学校社团平台公开正文。定位标题下的苏州、功能性组织标签，以及通过配对形成互助小组的组织介绍。页面中的成立日期、历年活动日期和管理团队学年不作为本页发布日期；不转述最大、最久等宣传评价，也不承诺当前正在配对。"
+    },
+    {
+      "key": "peer-tutoring-club",
+      "title": "西浦校园生活：伴学社",
+      "url": "https://engage.xjtlu.edu.cn/zh/club/231",
+      "publisher": "西交利物浦大学 Student Engagement（伴学社组织介绍）",
+      "sourceCategory": "university_official",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已读取学校社团平台公开正文。定位苏州校区、功能性组织标签、PTC 学术支持自述，以及 2025 年微积分复习讲座、数学研讨会和 LP 分享讲座记录。只将活动记录作为既往例子，不把最新活动栏目当作本学期日程，不引用成绩和奖学金宣传承诺。"
+    }
+  ],
+  "cards": [
+    {
+      "key": "supplement-library-suggest-purchase",
+      "title": "图书馆没有想读的书，可以怎样荐购？",
+      "topic": "library",
+      "summary": "从 OPAC 提交书目建议，先确认馆藏与版本，再准备荐购理由。",
+      "campuses": ["universal"],
+      "audiences": ["universal"],
+      "keywords": ["荐购", "图书采购", "OPAC", "Suggest a Purchase", "ISBN", "书展"],
+      "sentences": [
+        { "kind": "fact", "text": "图书馆荐购页说明，学生和教职工均可通过 OPAC 在线荐购或书展推荐图书；提交前应先阅读纸本馆藏建设政策。", "sourceKeys": ["suggest-purchase"] },
+        { "kind": "fact", "text": "同页另列的购书申请表和自行购书报销渠道位于教职工部分，不能据此认定学生自行购书后可报销。", "sourceKeys": ["suggest-purchase"] },
+        { "kind": "advice", "text": "先用书名、作者和 ISBN 检索馆藏，确认是否已有电子版或其他版次；确实没有时，再整理出版社、出版年、版次以及与课程或研究的关系。", "sourceKeys": [] },
+        { "kind": "advice", "text": "从来源页进入 OPAC，按当前表单提交并保存记录；如有使用期限，在咨询中说明，但在收到确认前为课程阅读另备可用资料。", "sourceKeys": [] }
+      ],
+      "cautions": ["荐购是采购建议，不能将提交成功理解为已经采购、确定到馆或可以报销；书展日期和采购结果以图书馆通知为准。"],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "supplement-library-interlibrary-loan",
+      "title": "硕士研究需要的文献不在馆藏里，能向哪里求助？",
+      "topic": "library",
+      "summary": "确认本馆资源后，向图书馆查询馆际互借或文献获取安排。",
+      "campuses": ["universal"],
+      "audiences": ["postgraduate"],
+      "keywords": ["硕士", "馆际互借", "ILL", "Interlibrary Loan", "文献传递", "论文全文"],
+      "sentences": [
+        { "kind": "fact", "text": "2026/27 硕士手册列有馆际互借服务，可向合作馆申请本馆未收藏的图书或文献复印件。", "sourceKeys": ["master-handbook-support-2627"] },
+        { "kind": "fact", "text": "图书馆网站的 Research Support 导航设有 Inter-Library Loans 入口。", "sourceKeys": ["library-collections-navigation"] },
+        { "kind": "advice", "text": "先在 Discover、数据库和图书目录中检查是否已有可用版本；再准备题名、作者、年份、DOI 或 ISBN，以及确切需要的章节或页码。", "sourceKeys": [] },
+        { "kind": "advice", "text": "从图书馆导航查询现行申请办法，若指南打不开可联系图书馆；先问清获取形式、适用人群、费用和预计时间，再安排自己的阅读进度。", "sourceKeys": [] }
+      ],
+      "cautions": ["本条依据硕士手册介绍服务入口；未核实当前 ILL 表单及具体借阅规则，不保证每篇文献都能提供。"],
+      "reviewAfterDays": 60
+    },
+    {
+      "key": "supplement-language-partner",
+      "title": "想练口语、认识不同文化的同学，可以去哪里找语伴？",
+      "topic": "language",
+      "summary": "从学校社团平台查语伴组织，再确认当期配对和交流活动。",
+      "campuses": ["suzhou"],
+      "audiences": ["universal"],
+      "keywords": ["语伴", "Language Partner Union", "LPU", "口语", "跨文化", "国际生", "语言交流"],
+      "sentences": [
+        { "kind": "fact", "text": "学校社团平台将语伴列为苏州的功能性组织，其介绍说明通过配对组成互助小组，促进中外学生的语言练习和文化交流。", "sourceKeys": ["language-partner-union"] },
+        { "kind": "advice", "text": "从组织页面查看当期活动和申请入口，向组织确认本学期是否开放配对、参加方式及地点，再安排自己的时间。", "sourceKeys": [] },
+        { "kind": "advice", "text": "联系前写清想练习的语言、目前程度和可参加时段；第一次交流可共同选一个日常主题，约定双方都有练习时间。", "sourceKeys": [] }
+      ],
+      "cautions": ["网页组织介绍不等于正在招募或一定能够配对；本条按页面所列苏州范围整理，太仓同学请先确认参与安排。"],
+      "reviewAfterDays": 60
+    },
+    {
+      "key": "supplement-peer-study-support",
+      "title": "想找同伴复习或交流学习方法，伴学社提供什么线索？",
+      "topic": "study",
+      "summary": "通过伴学社的公开活动记录了解同伴学习形式，再查本学期安排。",
+      "campuses": ["suzhou"],
+      "audiences": ["undergraduate"],
+      "keywords": ["伴学社", "PTC", "Peer Tutoring Club", "Learning Partner", "LP", "复习", "学习小组"],
+      "sentences": [
+        { "kind": "fact", "text": "学校社团平台将伴学社 PTC 列为苏州校区的功能性组织，介绍中以同伴学术支持为主要方向。", "sourceKeys": ["peer-tutoring-club"] },
+        { "kind": "fact", "text": "页面保留了 2025 年微积分复习讲座、数学研讨会和 Learning Partner 分享讲座的活动记录。", "sourceKeys": ["peer-tutoring-club"] },
+        { "kind": "advice", "text": "带着课程代码和具体卡住的知识点查找适合的活动；参加前核对活动年份、报名状态、面向年级和地点。", "sourceKeys": [] },
+        { "kind": "advice", "text": "把同伴分享与自己的课程大纲、授课教师说明一起使用；涉及考评要求或作业边界时，直接向课程负责人确认。", "sourceKeys": [] }
+      ],
+      "cautions": ["既往活动只说明曾有这些学习形式，不代表本学期照常开办；不将社团宣传理解为成绩、通过考试或获得奖学金的保证。"],
+      "reviewAfterDays": 60
+    },
+    {
+      "key": "supplement-computer-labs",
+      "title": "硕士生想用校园机房完成学习任务，先确认什么？",
+      "topic": "systems",
+      "summary": "先查机房是否可用、软件是否齐备，再带着校园账号和备份文件前往。",
+      "campuses": ["universal"],
+      "audiences": ["postgraduate"],
+      "keywords": ["机房", "Computer Labs", "电脑", "Windows", "macOS", "校园账号", "软件"],
+      "sentences": [
+        { "kind": "fact", "text": "2026/27 硕士手册说明，机房电脑预装 Windows 或 macOS 及软件，学生可用校园账号登录；上课、维护或预约活动会影响自由使用。", "sourceKeys": ["master-handbook-support-2627"] },
+        { "kind": "advice", "text": "出发前查看所在校区机房的门口或当期公告，确认开放安排、是否有课以及需要的软件版本；假期使用请另行核对。", "sourceKeys": [] },
+        { "kind": "advice", "text": "准备一份可恢复的作业备份，使用中及时保存；离开前带走随身物品并退出学校账号和已登录的网站。", "sourceKeys": [] }
+      ],
+      "cautions": ["本条以硕士手册为依据提供准备清单，未逐间核验机房设备、开放时间和空位，也不承诺某个软件在所有电脑上都可用。"],
+      "reviewAfterDays": 60
+    },
+    {
+      "key": "supplement-master-degree-plus",
+      "title": "硕士入学后，哪里持续查学习技能和发展活动？",
+      "topic": "study",
+      "summary": "在 Learning Mall 查找 Degree Plus，按当前学习阶段选择相关资源。",
+      "campuses": ["universal"],
+      "audiences": ["postgraduate"],
+      "keywords": ["硕士", "Degree Plus", "Learning Mall", "学习技能", "研究生院", "职业发展"],
+      "sentences": [
+        { "kind": "fact", "text": "2026/27 硕士手册介绍，研究生院在 Learning Mall 为在读硕士提供 Degree Plus，内容分为技能提升、活动和未来发展。", "sourceKeys": ["master-handbook-support-2627"] },
+        { "kind": "advice", "text": "登录自己的 Learning Mall 后查找课程，先从目前最需要的一项技能或活动开始，核对发布日期、参加条件和报名状态。", "sourceKeys": [] },
+        { "kind": "advice", "text": "如账号内没有显示课程，将所读项目和页面问题整理后交给研究生院确认；可从来源手册的 Contact XJTLU Graduate School 栏查联系入口。", "sourceKeys": [] }
+      ],
+      "cautions": ["Degree Plus 在所引手册中明确面向在读硕士；本条没有读取需登录的课程内容，不承诺某场活动仍开放报名。"],
+      "reviewAfterDays": 60
+    },
+    {
+      "key": "supplement-research-computing",
+      "title": "硕士科研需要较多算力，如何咨询学校 HPC？",
+      "topic": "research",
+      "summary": "先和导师明确计算需求，再由导师或项目负责人了解申请流程。",
+      "campuses": ["universal"],
+      "audiences": ["postgraduate"],
+      "keywords": ["HPC", "高性能计算", "算力", "科研", "导师", "建模", "人工智能"],
+      "sentences": [
+        { "kind": "fact", "text": "2026/27 硕士手册说明，学生使用 HPC 需由导师或项目负责人提交申请；平台资料入口 https://hpc.xjtlu.edu.cn/account 仅限校园网络访问。", "sourceKeys": ["master-handbook-support-2627"] },
+        { "kind": "advice", "text": "先向导师说明研究任务、需要的软件、数据规模及预计资源需求，确认是否适合学校 HPC，并由负责老师查询现行申请与培训安排。", "sourceKeys": [] },
+        { "kind": "advice", "text": "拿到使用说明后再安排任务；正式提交前先用小样本验证脚本，并确认数据存储、备份、费用及访问权限。", "sourceKeys": [] }
+      ],
+      "cautions": ["本条只介绍硕士手册中的咨询路径，未登录 HPC 平台，不提供账户、配额、收费、开放容量或审批时限保证。"],
+      "reviewAfterDays": 60
+    }
+  ]
+}

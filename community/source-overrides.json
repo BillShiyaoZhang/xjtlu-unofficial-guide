@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "url": "http://localhost:4317/about#method",
+      "sourceCategory": "user_provided",
+      "note": "项目维护者撰写的指南使用方法，属于社区提供的说明，不是学校通知。"
+    },
+    {
+      "url": "http://localhost:4317/about",
+      "sourceCategory": "user_provided",
+      "note": "项目维护者撰写的指南说明，不是学校通知。"
+    }
+  ]
+}

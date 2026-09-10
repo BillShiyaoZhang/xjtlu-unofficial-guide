@@ -3,10 +3,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentModule, importContent } from '@information-community/runtime';
+import { classifySource, SOURCE_CATEGORY_LABELS, sourceCategories } from '../community/source-categories.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const prefix = 'handbook-';
-const inputs = ['research-arrival.json', 'research-study.json', 'research-life.json', 'research-navigation.json'];
+const inputs = ['research-arrival.json', 'research-study.json', 'research-life.json', 'research-navigation.json', 'research-supplement.json'];
 const json = async path => JSON.parse(await readFile(resolve(root, path), 'utf8'));
 const hash = value => createHash('sha256').update(value).digest('hex').slice(0, 16);
 const fail = message => { throw new Error(`Handbook: ${message}`); };
@@ -43,15 +44,17 @@ export async function compileHandbook() {
       const key = `${part.section}:${source.key}`;
       if (byKey.has(key)) fail(`duplicate source key ${key}`);
       const url = new URL(source.url);
+      const sourceCategory = classifySource(source);
       if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password || ['localhost', '127.0.0.1'].includes(url.hostname)) fail(`invalid source URL ${key}`);
       if (!source.title || !source.publisher || !source.note || source.accessedAt !== date || !['opened', 'search-result-only'].includes(source.verification)) fail(`incomplete source metadata ${key}`);
       if (source.publishedAt !== null && (!/^\d{4}-\d{2}-\d{2}$/u.test(source.publishedAt) || source.publishedAt > date)) fail(`invalid publication date ${key}`);
       // URL identity deduplicates shared official pages; all individual research notes are retained in the source index.
       const identity = url.href;
-      const retained = sources.get(identity) ?? { ...source, url: identity, id: `${prefix}source-${hash(identity)}`, observations: [] };
+      const retained = sources.get(identity) ?? { ...source, sourceCategory, url: identity, id: `${prefix}source-${hash(identity)}`, observations: [] };
+      if (retained.sourceCategory !== sourceCategory) fail(`conflicting source categories for ${identity}`);
       retained.observations.push({ section: part.section, key: source.key, note: source.note, verification: source.verification });
       sources.set(identity, retained);
-      byKey.set(key, { ...source, id: retained.id, url: identity });
+      byKey.set(key, { ...source, sourceCategory, id: retained.id, url: identity });
     }
     cards.push(...part.cards.map(card => ({ ...card, section: part.section })));
   }
@@ -87,6 +90,8 @@ export async function compileHandbook() {
   const usedSources = new Set(cards.flatMap(card => card.sentences.flatMap(sentence => sentence.sourceKeys.map(key => byKey.get(`${card.section}:${key}`).id))));
   for (const source of sources.values()) {
     if (!usedSources.has(source.id)) continue;
+    // The runtime's link-only allowlist excludes custom metadata. Keep provenance
+    // in the research registry and public DTO, without rewriting immutable v1 data.
     bundle.entities.push({ id: source.id, type: 'artifact', externalId: source.id });
     bundle.revisions.push({ id: `${source.id}-v1`, entityId: source.id, number: 1, parentRevisionId: null, createdAt: timestamp,
       data: { title: source.title, url: source.url, mode: 'link-only', publisher: source.publisher, accessedAt: timestamp, ...(source.publishedAt ? { issuedAt: `${source.publishedAt}T00:00:00Z` } : {}) } });
@@ -132,7 +137,8 @@ export async function compileHandbook() {
     lines.push(`<a id="section-${topic}"></a>`, '', `## ${titles[topic][0]}`, '');
     for (const card of rows.filter(row => row.topic === topic)) {
       lines.push(`<a id="${card.id}"></a>`, '', `### ${card.title}`, '', card.summary, '',
-        `校区：${card.campuses.map(value => value === 'universal' ? '两校区通用入口' : labels[value]).join('、')}；人群：${card.audiences.map(value => value === 'universal' ? '学生通用入口' : labels[value]).join('、')}。资料整理：${date}；建议复核：${card.reviewDueAt.slice(0, 10)}。`, '');
+        `校区：${card.campuses.map(value => value === 'universal' ? '两校区通用入口' : labels[value]).join('、')}；人群：${card.audiences.map(value => value === 'universal' ? '学生通用入口' : labels[value]).join('、')}。资料整理：${date}；建议复核：${card.reviewDueAt.slice(0, 10)}。`,
+        `材料来源：${sourceCategories(card.sentences.flatMap(sentence => sentence.sourceKeys.map(key => byKey.get(`${card.section}:${key}`)))).map(category => SOURCE_CATEGORY_LABELS[category]).join('、')}。来源类别不代表本手册已经完成核验。`, '');
       for (const sentence of card.sentences) {
         const refs = [...new Map(sentence.sourceKeys.map(key => { const source = byKey.get(`${card.section}:${key}`); return [source.id, source]; })).values()];
         lines.push(`- **${sentence.kind === 'fact' ? '来源事实' : '行动建议'}**：${sentence.text}${refs.length ? ` ${refs.map(link).join('；')}` : ''}`);
@@ -143,12 +149,13 @@ export async function compileHandbook() {
   }
   lines.push('<a id="sources"></a>', '', '## 来源索引', '', '以下仅保留链接和整理者的定位说明；未保存网页全文。页面未注明发布日期时明确记为“未注明”。检索摘要线索不作为事实句的证据。', '');
   for (const source of sources.values()) {
-    lines.push(`### ${source.title}`, '', `${link(source)} · 发布方：${source.publisher} · 页面日期：${source.publishedAt ?? '未注明'} · 读取日期：${source.accessedAt}`, '',
+    lines.push(`### ${source.title}`, '', `${link(source)} · 来源类别：${SOURCE_CATEGORY_LABELS[source.sourceCategory]} · 发布方：${source.publisher} · 页面日期：${source.publishedAt ?? '未注明'} · 读取日期：${source.accessedAt}`, '',
       ...source.observations.map(observation => `- ${observation.verification === 'opened' ? '已读取正文' : '仅检索线索'}：${observation.note}`), '');
   }
   return { combined, bundle, catalog, markdown: lines.join('\n') + '\n', report: {
     researchedAt: date, status: 'pending-human-review', cardCount: cards.length, topicCount: ordered.length,
     sourceCount: sources.size, citedSourceCount: usedSources.size, factCount,
+    sourceCategories: Object.fromEntries(Object.keys(SOURCE_CATEGORY_LABELS).map(category => [category, [...sources.values()].filter(source => source.sourceCategory === category).length])),
     citationCount: bundle.citations.length, humanVerifiedCount: 0,
     topics: ordered.map(topic => ({ topic, title: titles[topic][0], count: cards.filter(card => card.topic === topic).length })),
     cards: rows.map(card => ({ id: card.id, revisionId: card.revisionId, title: card.title, topic: card.topic, reviewDueAt: card.reviewDueAt })),

@@ -1,3 +1,5 @@
+import { renderContribution as renderContributionForm } from './contributions.js';
+
 const $ = id => document.getElementById(id);
 const make = (tag, text, className) => {
   const element = document.createElement(tag);
@@ -14,6 +16,19 @@ const date = value => {
 };
 const normalize = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').trim();
 const answerHash = answer => '#/answers/' + encodeURIComponent(answer.id);
+const sourceLabels = { university_official: '学校官方', user_provided: '用户提供', web: '网络资料' };
+const universalScopeLabels = { campus: '两校区通用入口', audience: '学生通用入口', academic_year: '不限学年' };
+function renderSourceCategories(answer) {
+  const group = make('div', undefined, 'source-categories');
+  group.setAttribute('aria-label', '材料来源');
+  for (const category of answer.sourceCategories ?? []) {
+    if (!sourceLabels[category]) continue;
+    const badge = make('span', sourceLabels[category], 'source-category');
+    badge.dataset.sourceCategory = category;
+    group.append(badge);
+  }
+  return group;
+}
 
 function message(text = '') {
   $('message').textContent = text;
@@ -67,7 +82,7 @@ function renderEdition() {
       : '本页公开展示项目中的示范答案及其原始来源。示范答案尚不代表真实试点的正式审核结果，不能作为选课、入学或其他重要决定的唯一依据。具体事项请向学校相关部门核实。';
   $('about-snapshot-description').textContent = guide
     ? (collected ? '这是按当前发布清单生成的公开快照。' : '这是从本地已发布内容同步的公开快照。')
-      + '后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处只提供阅读，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
+      + '后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处可阅读及填写公开投稿，发布需跳转 GitHub；不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
     : '此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。';
 }
 
@@ -106,6 +121,7 @@ function renderList(parameters) {
     const link = make('a'); link.href = answerHash(answer);
     link.append(make('h3', answer.title));
     item.append(make('span', answer.topic?.title ?? '校园信息', 'topic-label'), link, make('p', answer.summary));
+    item.append(renderSourceCategories(answer));
     const collected = answer.reviewStatus === 'collected';
     item.append(make('span', `${collected ? '资料整理 ' + date(answer.researchedAt) : '核验 ' + date(answer.verifiedAt)} · ${(answer.citations ?? []).length} 项来源`, 'metadata'));
     if (collected) item.append(make('span', ' · 待人工核验', 'collected-status'));
@@ -128,12 +144,14 @@ function renderDetail(answer) {
     if (text) metadata.append(make('span', text));
   }
   target.append(metadata);
+  target.append(renderSourceCategories(answer));
   if (answer.demo) target.append(make('p', answer.reviewStatus === 'approved' ? '演示内容，已完成人工审核。' : '演示内容，真实试点前需重新审核。', 'warning'));
-  if (collected) target.append(make('p', '内容来源：AI 辅助资料整理，尚未逐条人工核验。', 'warning collected-notice'));
+  if (collected) target.append(make('p', '整理方式：AI 辅助资料整理，尚未逐条人工核验。', 'warning collected-notice'));
   else if (answer.originalOrigin === 'ai_draft') target.append(make('p', answer.reviewStatus === 'approved'
-    ? '内容来源：AI 辅助初稿，经人工审核确认。' : '内容来源：AI 辅助整理。', 'muted'));
+    ? '整理方式：AI 辅助初稿，经人工审核确认。' : '整理方式：AI 辅助整理。', 'muted'));
   warnings(target, answer);
-  const scope = Object.entries(answer.scope ?? {}).flatMap(([dimension, values]) => values.map(value => snapshot.catalog.scopes.find(item => item.dimension === dimension && (item.id === value || item.code === value))?.labelZh ?? value));
+  const scope = Object.entries(answer.scope ?? {}).flatMap(([dimension, values]) => values.map(value => snapshot.catalog.scopes.find(item => item.dimension === dimension && (item.id === value || item.code === value))?.labelZh
+    ?? (value === 'universal' ? universalScopeLabels[dimension] ?? '通用' : value)));
   target.append(make('p', `适用范围：${scope.join(' · ') || '尚未明确'}`, 'muted'));
   if (answer.evidenceNote) target.append(make('p', answer.evidenceNote, 'warning'));
   for (const sentence of answer.sentences ?? []) {
@@ -143,7 +161,13 @@ function renderDetail(answer) {
       const href = safeLink(citation.url);
       const title = make(href ? 'a' : 'span', citation.title ?? '原始来源');
       if (href) { title.href = href; title.target = '_blank'; title.rel = 'noopener noreferrer'; }
+      if (sourceLabels[citation.sourceCategory]) {
+        const badge = make('span', sourceLabels[citation.sourceCategory], 'source-category');
+        badge.dataset.sourceCategory = citation.sourceCategory;
+        box.append(badge, document.createTextNode(' '));
+      }
       box.append(title, make('span', citation.mode === 'link-only' ? ' · 原站链接' : ' · 授权摘录', 'muted'));
+      if (citation.publisher) box.append(make('span', ` · 发布方：${citation.publisher}`, 'muted'));
       if (citation.excerpt) box.append(make('p', citation.excerpt));
       target.append(box);
     }
@@ -170,46 +194,7 @@ function renderDetail(answer) {
 }
 
 function renderContribution(parameters) {
-  const repository = snapshot.site.contributionsRepository;
-  const enabled = typeof repository === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9-]{0,38}\/[a-zA-Z0-9._-]{1,100}$/u.test(repository)
-    && !['.', '..'].includes(repository.split('/')[1]);
-  const answer = snapshot.answers.find(value => value.id === parameters.get('article'));
-  const context = $('contribution-context');
-  context.replaceChildren();
-  context.hidden = !parameters.has('article');
-  if (answer) {
-    const back = make('a', answer.title);
-    back.href = answerHash(answer);
-    const description = make('p', '正在补充：');
-    description.append(back, make('span', ` · 第 ${answer.revisionNumber} 版`, 'muted'));
-    context.append(description, make('p', '文章链接和当前公开版本会带入 GitHub 表单。', 'muted'));
-    if (parameters.has('revision') && parameters.get('revision') !== answer.revisionId) {
-      context.append(make('p', '这篇文章已更新，将引用当前公开版本。', 'muted'));
-    }
-  } else if (parameters.has('article')) context.append(make('p', '未找到关联的公开文章，可按通用投稿继续补充。', 'muted'));
-  $('contribution-unavailable').hidden = enabled;
-  $('contribution-options').hidden = !enabled;
-  for (const [id, template] of [
-    ['contribution-new', 'new-information.yml'], ['contribution-correction', 'correction.yml'], ['contribution-experience', 'experience.yml'],
-  ]) {
-    const link = $(id);
-    link.removeAttribute('href');
-    if (!enabled) continue;
-    const url = new URL(`https://github.com/${repository}/issues/new`);
-    url.searchParams.set('template', template);
-    if (answer) {
-      let articleUrl;
-      try {
-        const base = new URL(snapshot.site.publicUrl);
-        if (base.protocol === 'https:' && !base.username && !base.password) articleUrl = new URL(answerHash(answer), base).href;
-      } catch { /* A malformed public site URL must never become an executable link. */ }
-      if (articleUrl) url.searchParams.set('article', articleUrl);
-      url.searchParams.set('revision', answer.revisionId);
-      url.searchParams.set('context', `${answer.title} · 文章 ID：${answer.id}`.slice(0, 1000));
-    }
-    link.href = url.href;
-    link.referrerPolicy = 'no-referrer';
-  }
+  renderContributionForm(snapshot, parameters);
   show('contribute');
 }
 

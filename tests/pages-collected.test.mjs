@@ -54,7 +54,11 @@ test('the explicitly selected research batch is public as unverified AI material
   const h = await setup(t, { mutateBundle(bundle) {
     bundle.revisions.find(row => row.data.origin === 'ai_draft').data.internalNotes = 'PRIVATE_COLLECTED_METADATA_SENTINEL';
   } });
-  assert.equal(h.drafts.length, 69);
+  const coverage = await readCommunity('handbook/coverage.json');
+  const release = await readCommunity('pages.config.json');
+  assert.ok(coverage.cardCount > 0);
+  assert.equal(h.drafts.length, coverage.cardCount);
+  assert.deepEqual(new Set(release.collectedRevisionIds), new Set(coverage.cards.map(card => card.revisionId)));
   const before = h.store.read();
   assert.deepEqual(h.snapshot().answers, [], 'future or existing drafts are not public without explicit revision IDs');
   const ids = h.drafts.map(row => row.revisionId);

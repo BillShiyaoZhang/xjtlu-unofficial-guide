@@ -33,14 +33,35 @@
     <section id="contribute-view" class="view" aria-labelledby="contribute-title" hidden>
       <p class="eyebrow">一起完善手册</p><h1 id="contribute-title">补充信息</h1>
       <p class="contribute-intro">提供新信息、指出错误，或分享与手册描述不同的实际经历。尽量附上公开来源、适用校区和时间，方便编辑核对。</p>
-      <div class="contribution-notice"><strong>通过 GitHub 提交</strong><p>需要登录 GitHub 账号，提交内容公开可见。请勿填写手机号、学号、证件号或他人的个人信息。点击下方入口后，在 GitHub 核对表单并手动提交。</p></div>
+      <div class="contribution-notice"><strong>在这里填写，到 GitHub 确认发布</strong><p>需要登录 GitHub 账号，提交内容公开可见。请勿填写手机号、学号、证件号或他人的个人信息。填好后点击按钮，内容会自动带入 GitHub；核对后由你确认提交。</p></div>
       <div id="contribution-context" class="contribution-context" hidden></div>
       <p id="contribution-unavailable" class="muted" hidden>投稿入口暂未开放，请稍后再来。</p>
-      <div id="contribution-options" class="contribution-options">
-        <article><h2>新增信息</h2><p>补充手册还没覆盖的事项、办理入口或可靠资料。</p><a id="contribution-new" class="contribution-link" target="_blank" rel="noopener noreferrer">新增信息（GitHub）</a></article>
-        <article><h2>纠错</h2><p>指出过时内容、失效链接或表述错误，并附上核对依据。</p><a id="contribution-correction" class="contribution-link" target="_blank" rel="noopener noreferrer">提交更正（GitHub）</a></article>
-        <article><h2>不同经验</h2><p>注明校区和时间，分享与手册描述不同的经历。</p><a id="contribution-experience" class="contribution-link" target="_blank" rel="noopener noreferrer">分享经验（GitHub）</a></article>
-      </div>
+      <form id="contribution-form" class="contribution-form">
+        <label for="contribution-type">投稿类型<select id="contribution-type" name="type"><option value="new">新增 / 补充信息</option><option value="correction">更正 / 报告过期</option><option value="experience">分享个人经验</option></select></label>
+        <p id="contribution-type-description" class="muted"></p>
+        <label for="contribution-title">标题 <span class="required-note">必填</span><input id="contribution-title" name="title" required maxlength="100" placeholder="用一句话说明你想补充的内容"></label>
+        <label for="contribution-content"><span id="contribution-content-label">信息正文</span> <span class="required-note">必填</span><textarea id="contribution-content" name="content" rows="7" required aria-describedby="contribution-content-help"></textarea></label>
+        <p id="contribution-content-help" class="field-help muted"></p>
+        <label for="contribution-source">来源或依据 <span id="contribution-source-required" class="required-note">必填</span><textarea id="contribution-source" name="source" rows="3" required placeholder="公开链接、文件名称，或本人经历的时间和场景" aria-describedby="contribution-source-help"></textarea></label>
+        <p id="contribution-source-help" class="field-help muted">个人经历可以填写“本人经历”，不需要寻找官方链接。</p>
+        <div class="contribution-fields">
+          <label for="contribution-campus">适用校区 <span class="required-note">必填</span><select id="contribution-campus" name="campus" required><option value="">请选择</option><option>苏州工业园区校区</option><option>太仓校区</option><option>两校区均适用</option><option>不限校区</option><option>尚不确定</option></select></label>
+          <label for="contribution-audience">适用人群 <span class="required-note">必填</span><input id="contribution-audience" name="audience" required maxlength="100" placeholder="例如本科新生；尚不确定也可注明"></label>
+          <label for="contribution-time">发生或有效时间 <span class="required-note">必填</span><input id="contribution-time" name="time" required maxlength="100" placeholder="例如 2026 年 9 月、某学期"></label>
+          <label for="contribution-ai">AI 参与说明 <span class="required-note">必填</span><input id="contribution-ai" name="ai" required maxlength="200" placeholder="未使用；或用于搜索、翻译、整理等"></label>
+        </div>
+        <label class="contribution-confirm" for="contribution-public"><input id="contribution-public" name="public" type="checkbox" required><span>我知道投稿会公开，确认没有个人资料、账号密码或非公开内部材料。</span></label>
+        <p class="muted">填写内容只保留在当前页面，刷新或关闭页面会丢失。点击按钮后将在新标签页打开 GitHub，本站不会代你发布。</p>
+        <button type="submit" id="contribution-submit">前往 GitHub 确认提交</button>
+        <p id="contribution-status" role="status" aria-live="polite" hidden></p>
+        <a id="contribution-open" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer" hidden>重新打开 GitHub 确认页面</a>
+        <section id="contribution-long" class="contribution-long" aria-labelledby="contribution-long-title" hidden>
+          <h2 id="contribution-long-title">内容较长，无法通过链接完整带入</h2>
+          <p>内容已完整保留在下方。可以精简后重试，或复制正文并在 GitHub 粘贴；标题会自动带入。</p>
+          <label for="contribution-copy-body">完整投稿正文<textarea id="contribution-copy-body" rows="8" readonly></textarea></label>
+          <div class="contribution-actions"><button id="contribution-copy" class="secondary" type="button">复制完整正文</button><a id="contribution-long-open" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">到 GitHub 粘贴并确认</a></div>
+        </section>
+      </form>
       <p class="muted contribution-review-note">编辑核对后会决定是否纳入手册；提交成功后，可在对应 GitHub Issue 中查看讨论和处理结果。</p>
     </section>
     <section id="about-view" class="view prose" aria-labelledby="about-title" hidden>
@@ -48,6 +69,7 @@
       <p>西浦非官方指南是独立的校园信息整理项目，与西交利物浦大学没有官方隶属关系，也不代表学校作出承诺或解释。</p>
       <h2 id="about-content-title">公开内容</h2><p id="about-content-description"></p>
       <h2>来源与适用范围</h2><p>每条答案保留来源链接、适用范围及资料整理或核验时间。来源与答案表述不一致时，以最新的官方原文和直接答复为准。标有待复核或争议提示的内容尤其需要重新核对。</p>
+      <p>材料来源分为学校官方（学校官网及学校、部门、学院公众号）、用户提供、网络资料（包括商业公众号）。来源类别与 AI 整理、人工核验状态分别标注；学校官方来源不代表本指南是官方发布。</p>
       <h2>公开快照</h2><p id="about-snapshot-description"></p>
       <dl class="snapshot-info"><dt>快照生成时间</dt><dd id="about-generated-at"></dd><dt>项目</dt><dd><a href="https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide" target="_blank" rel="noopener noreferrer">xjtlu-unofficial-guide</a></dd></dl>
     </section>

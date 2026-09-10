@@ -252,6 +252,26 @@
       "externalId": "handbook-source-66a107fb4ad3d8e7"
     },
     {
+      "id": "handbook-source-604557b99bd6b3e7",
+      "type": "artifact",
+      "externalId": "handbook-source-604557b99bd6b3e7"
+    },
+    {
+      "id": "handbook-source-592231dc2f8c4b4d",
+      "type": "artifact",
+      "externalId": "handbook-source-592231dc2f8c4b4d"
+    },
+    {
+      "id": "handbook-source-3524b6117b2d8415",
+      "type": "artifact",
+      "externalId": "handbook-source-3524b6117b2d8415"
+    },
+    {
+      "id": "handbook-source-2d0541b6052b9211",
+      "type": "artifact",
+      "externalId": "handbook-source-2d0541b6052b9211"
+    },
+    {
       "id": "handbook-arrival-academic-integrity-ai",
       "type": "answer",
       "externalId": "handbook-arrival-academic-integrity-ai",
@@ -938,6 +958,76 @@
       "extensions": {
         "slug": "handbook-learning-path-mentor-2026",
         "topicId": "topic-study",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-library-suggest-purchase",
+      "type": "answer",
+      "externalId": "handbook-supplement-library-suggest-purchase",
+      "extensions": {
+        "slug": "handbook-supplement-library-suggest-purchase",
+        "topicId": "topic-library",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-library-interlibrary-loan",
+      "type": "answer",
+      "externalId": "handbook-supplement-library-interlibrary-loan",
+      "extensions": {
+        "slug": "handbook-supplement-library-interlibrary-loan",
+        "topicId": "topic-library",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-language-partner",
+      "type": "answer",
+      "externalId": "handbook-supplement-language-partner",
+      "extensions": {
+        "slug": "handbook-supplement-language-partner",
+        "topicId": "topic-language",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-peer-study-support",
+      "type": "answer",
+      "externalId": "handbook-supplement-peer-study-support",
+      "extensions": {
+        "slug": "handbook-supplement-peer-study-support",
+        "topicId": "topic-study",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-computer-labs",
+      "type": "answer",
+      "externalId": "handbook-supplement-computer-labs",
+      "extensions": {
+        "slug": "handbook-supplement-computer-labs",
+        "topicId": "topic-systems",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-master-degree-plus",
+      "type": "answer",
+      "externalId": "handbook-supplement-master-degree-plus",
+      "extensions": {
+        "slug": "handbook-supplement-master-degree-plus",
+        "topicId": "topic-study",
+        "riskLevel": "low"
+      }
+    },
+    {
+      "id": "handbook-supplement-research-computing",
+      "type": "answer",
+      "externalId": "handbook-supplement-research-computing",
+      "extensions": {
+        "slug": "handbook-supplement-research-computing",
+        "topicId": "topic-research",
         "riskLevel": "low"
       }
     }
@@ -1647,6 +1737,62 @@
         "publisher": "西交利物浦大学",
         "accessedAt": "2026-09-10T00:00:00Z",
         "issuedAt": "2026-09-08T00:00:00Z"
+      }
+    },
+    {
+      "id": "handbook-source-604557b99bd6b3e7-v1",
+      "entityId": "handbook-source-604557b99bd6b3e7",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "Suggest a Purchase — 图书荐购",
+        "url": "https://lib.xjtlu.edu.cn/Collections/Suggest_a_Purchase",
+        "mode": "link-only",
+        "publisher": "西交利物浦大学图书馆",
+        "accessedAt": "2026-09-10T00:00:00Z"
+      }
+    },
+    {
+      "id": "handbook-source-592231dc2f8c4b4d-v1",
+      "entityId": "handbook-source-592231dc2f8c4b4d",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "Collections — 图书馆资源与服务导航",
+        "url": "https://lib.xjtlu.edu.cn/Collections",
+        "mode": "link-only",
+        "publisher": "西交利物浦大学图书馆",
+        "accessedAt": "2026-09-10T00:00:00Z"
+      }
+    },
+    {
+      "id": "handbook-source-3524b6117b2d8415-v1",
+      "entityId": "handbook-source-3524b6117b2d8415",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "西浦校园生活：语伴",
+        "url": "https://engage.xjtlu.edu.cn/zh/club/185",
+        "mode": "link-only",
+        "publisher": "西交利物浦大学 Student Engagement（语伴组织介绍）",
+        "accessedAt": "2026-09-10T00:00:00Z"
+      }
+    },
+    {
+      "id": "handbook-source-2d0541b6052b9211-v1",
+      "entityId": "handbook-source-2d0541b6052b9211",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "西浦校园生活：伴学社",
+        "url": "https://engage.xjtlu.edu.cn/zh/club/231",
+        "mode": "link-only",
+        "publisher": "西交利物浦大学 Student Engagement（伴学社组织介绍）",
+        "accessedAt": "2026-09-10T00:00:00Z"
       }
     },
     {
@@ -6592,6 +6738,461 @@
         "handbookBatch": "initial-2026-09-10",
         "reviewStatus": "pending-human-review"
       }
+    },
+    {
+      "id": "handbook-supplement-library-suggest-purchase-v1",
+      "entityId": "handbook-supplement-library-suggest-purchase",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "图书馆没有想读的书，可以怎样荐购？",
+        "summary": "从 OPAC 提交书目建议，先确认馆藏与版本，再准备荐购理由。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "图书馆荐购页说明，学生和教职工均可通过 OPAC 在线荐购或书展推荐图书；提交前应先阅读纸本馆藏建设政策。"
+          },
+          {
+            "id": "s2",
+            "kind": "fact",
+            "text": "同页另列的购书申请表和自行购书报销渠道位于教职工部分，不能据此认定学生自行购书后可报销。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "先用书名、作者和 ISBN 检索馆藏，确认是否已有电子版或其他版次；确实没有时，再整理出版社、出版年、版次以及与课程或研究的关系。"
+          },
+          {
+            "id": "s4",
+            "kind": "advice",
+            "text": "从来源页进入 OPAC，按当前表单提交并保存记录；如有使用期限，在咨询中说明，但在收到确认前为课程阅读另备可用资料。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：荐购是采购建议，不能将提交成功理解为已经采购、确定到馆或可以报销；书展日期和采购结果以图书馆通知为准。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "universal"
+          ],
+          "audience": [
+            "universal"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [],
+        "scopeMode": "universal",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-12-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "图书馆没有想读的书,可以怎样荐购? 从 opac 提交书目建议,先确认馆藏与版本,再准备荐购理由。 荐购 图书采购 opac suggest a purchase isbn 书展 图书馆荐购页说明,学生和教职工均可通过 opac 在线荐购或书展推荐图书;提交前应先阅读纸本馆藏建设政策。 同页另列的购书申请表和自行购书报销渠道位于教职工部分,不能据此认定学生自行购书后可报销。 先用书名、作者和 isbn 检索馆藏,确认是否已有电子版或其他版次;确实没有时,再整理出版社、出版年、版次以及与课程或研究的关系。 从来源页进入 opac,按当前表单提交并保存记录;如有使用期限,在咨询中说明,但在收到确认前为课程阅读另备可用资料。 注意:荐购是采购建议,不能将提交成功理解为已经采购、确定到馆或可以报销;书展日期和采购结果以图书馆通知为准。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-library-interlibrary-loan-v1",
+      "entityId": "handbook-supplement-library-interlibrary-loan",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "硕士研究需要的文献不在馆藏里，能向哪里求助？",
+        "summary": "确认本馆资源后，向图书馆查询馆际互借或文献获取安排。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "2026/27 硕士手册列有馆际互借服务，可向合作馆申请本馆未收藏的图书或文献复印件。"
+          },
+          {
+            "id": "s2",
+            "kind": "fact",
+            "text": "图书馆网站的 Research Support 导航设有 Inter-Library Loans 入口。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "先在 Discover、数据库和图书目录中检查是否已有可用版本；再准备题名、作者、年份、DOI 或 ISBN，以及确切需要的章节或页码。"
+          },
+          {
+            "id": "s4",
+            "kind": "advice",
+            "text": "从图书馆导航查询现行申请办法，若指南打不开可联系图书馆；先问清获取形式、适用人群、费用和预计时间，再安排自己的阅读进度。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：本条依据硕士手册介绍服务入口；未核实当前 ILL 表单及具体借阅规则，不保证每篇文献都能提供。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "universal"
+          ],
+          "audience": [
+            "postgraduate"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-audience-postgraduate"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "硕士研究需要的文献不在馆藏里,能向哪里求助? 确认本馆资源后,向图书馆查询馆际互借或文献获取安排。 硕士 馆际互借 ill interlibrary loan 文献传递 论文全文 2026/27 硕士手册列有馆际互借服务,可向合作馆申请本馆未收藏的图书或文献复印件。 图书馆网站的 research support 导航设有 inter-library loans 入口。 先在 discover、数据库和图书目录中检查是否已有可用版本;再准备题名、作者、年份、doi 或 isbn,以及确切需要的章节或页码。 从图书馆导航查询现行申请办法,若指南打不开可联系图书馆;先问清获取形式、适用人群、费用和预计时间,再安排自己的阅读进度。 注意:本条依据硕士手册介绍服务入口;未核实当前 ill 表单及具体借阅规则,不保证每篇文献都能提供。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-language-partner-v1",
+      "entityId": "handbook-supplement-language-partner",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "想练口语、认识不同文化的同学，可以去哪里找语伴？",
+        "summary": "从学校社团平台查语伴组织，再确认当期配对和交流活动。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "学校社团平台将语伴列为苏州的功能性组织，其介绍说明通过配对组成互助小组，促进中外学生的语言练习和文化交流。"
+          },
+          {
+            "id": "s2",
+            "kind": "advice",
+            "text": "从组织页面查看当期活动和申请入口，向组织确认本学期是否开放配对、参加方式及地点，再安排自己的时间。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "联系前写清想练习的语言、目前程度和可参加时段；第一次交流可共同选一个日常主题，约定双方都有练习时间。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：网页组织介绍不等于正在招募或一定能够配对；本条按页面所列苏州范围整理，太仓同学请先确认参与安排。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "suzhou"
+          ],
+          "audience": [
+            "universal"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-campus-suzhou"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "想练口语、认识不同文化的同学,可以去哪里找语伴? 从学校社团平台查语伴组织,再确认当期配对和交流活动。 语伴 language partner union lpu 口语 跨文化 国际生 语言交流 学校社团平台将语伴列为苏州的功能性组织,其介绍说明通过配对组成互助小组,促进中外学生的语言练习和文化交流。 从组织页面查看当期活动和申请入口,向组织确认本学期是否开放配对、参加方式及地点,再安排自己的时间。 联系前写清想练习的语言、目前程度和可参加时段;第一次交流可共同选一个日常主题,约定双方都有练习时间。 注意:网页组织介绍不等于正在招募或一定能够配对;本条按页面所列苏州范围整理,太仓同学请先确认参与安排。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-peer-study-support-v1",
+      "entityId": "handbook-supplement-peer-study-support",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "想找同伴复习或交流学习方法，伴学社提供什么线索？",
+        "summary": "通过伴学社的公开活动记录了解同伴学习形式，再查本学期安排。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "学校社团平台将伴学社 PTC 列为苏州校区的功能性组织，介绍中以同伴学术支持为主要方向。"
+          },
+          {
+            "id": "s2",
+            "kind": "fact",
+            "text": "页面保留了 2025 年微积分复习讲座、数学研讨会和 Learning Partner 分享讲座的活动记录。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "带着课程代码和具体卡住的知识点查找适合的活动；参加前核对活动年份、报名状态、面向年级和地点。"
+          },
+          {
+            "id": "s4",
+            "kind": "advice",
+            "text": "把同伴分享与自己的课程大纲、授课教师说明一起使用；涉及考评要求或作业边界时，直接向课程负责人确认。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：既往活动只说明曾有这些学习形式，不代表本学期照常开办；不将社团宣传理解为成绩、通过考试或获得奖学金的保证。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "suzhou"
+          ],
+          "audience": [
+            "undergraduate"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-campus-suzhou",
+          "scope-audience-undergraduate"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "想找同伴复习或交流学习方法,伴学社提供什么线索? 通过伴学社的公开活动记录了解同伴学习形式,再查本学期安排。 伴学社 ptc peer tutoring club learning partner lp 复习 学习小组 学校社团平台将伴学社 ptc 列为苏州校区的功能性组织,介绍中以同伴学术支持为主要方向。 页面保留了 2025 年微积分复习讲座、数学研讨会和 learning partner 分享讲座的活动记录。 带着课程代码和具体卡住的知识点查找适合的活动;参加前核对活动年份、报名状态、面向年级和地点。 把同伴分享与自己的课程大纲、授课教师说明一起使用;涉及考评要求或作业边界时,直接向课程负责人确认。 注意:既往活动只说明曾有这些学习形式,不代表本学期照常开办;不将社团宣传理解为成绩、通过考试或获得奖学金的保证。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-computer-labs-v1",
+      "entityId": "handbook-supplement-computer-labs",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "硕士生想用校园机房完成学习任务，先确认什么？",
+        "summary": "先查机房是否可用、软件是否齐备，再带着校园账号和备份文件前往。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "2026/27 硕士手册说明，机房电脑预装 Windows 或 macOS 及软件，学生可用校园账号登录；上课、维护或预约活动会影响自由使用。"
+          },
+          {
+            "id": "s2",
+            "kind": "advice",
+            "text": "出发前查看所在校区机房的门口或当期公告，确认开放安排、是否有课以及需要的软件版本；假期使用请另行核对。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "准备一份可恢复的作业备份，使用中及时保存；离开前带走随身物品并退出学校账号和已登录的网站。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：本条以硕士手册为依据提供准备清单，未逐间核验机房设备、开放时间和空位，也不承诺某个软件在所有电脑上都可用。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "universal"
+          ],
+          "audience": [
+            "postgraduate"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-audience-postgraduate"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "硕士生想用校园机房完成学习任务,先确认什么? 先查机房是否可用、软件是否齐备,再带着校园账号和备份文件前往。 机房 computer labs 电脑 windows macos 校园账号 软件 2026/27 硕士手册说明,机房电脑预装 windows 或 macos 及软件,学生可用校园账号登录;上课、维护或预约活动会影响自由使用。 出发前查看所在校区机房的门口或当期公告,确认开放安排、是否有课以及需要的软件版本;假期使用请另行核对。 准备一份可恢复的作业备份,使用中及时保存;离开前带走随身物品并退出学校账号和已登录的网站。 注意:本条以硕士手册为依据提供准备清单,未逐间核验机房设备、开放时间和空位,也不承诺某个软件在所有电脑上都可用。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-master-degree-plus-v1",
+      "entityId": "handbook-supplement-master-degree-plus",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "硕士入学后，哪里持续查学习技能和发展活动？",
+        "summary": "在 Learning Mall 查找 Degree Plus，按当前学习阶段选择相关资源。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "2026/27 硕士手册介绍，研究生院在 Learning Mall 为在读硕士提供 Degree Plus，内容分为技能提升、活动和未来发展。"
+          },
+          {
+            "id": "s2",
+            "kind": "advice",
+            "text": "登录自己的 Learning Mall 后查找课程，先从目前最需要的一项技能或活动开始，核对发布日期、参加条件和报名状态。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "如账号内没有显示课程，将所读项目和页面问题整理后交给研究生院确认；可从来源手册的 Contact XJTLU Graduate School 栏查联系入口。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：Degree Plus 在所引手册中明确面向在读硕士；本条没有读取需登录的课程内容，不承诺某场活动仍开放报名。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "universal"
+          ],
+          "audience": [
+            "postgraduate"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-audience-postgraduate"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "硕士入学后,哪里持续查学习技能和发展活动? 在 learning mall 查找 degree plus,按当前学习阶段选择相关资源。 硕士 degree plus learning mall 学习技能 研究生院 职业发展 2026/27 硕士手册介绍,研究生院在 learning mall 为在读硕士提供 degree plus,内容分为技能提升、活动和未来发展。 登录自己的 learning mall 后查找课程,先从目前最需要的一项技能或活动开始,核对发布日期、参加条件和报名状态。 如账号内没有显示课程,将所读项目和页面问题整理后交给研究生院确认;可从来源手册的 contact xjtlu graduate school 栏查联系入口。 注意:degree plus 在所引手册中明确面向在读硕士;本条没有读取需登录的课程内容,不承诺某场活动仍开放报名。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
+    },
+    {
+      "id": "handbook-supplement-research-computing-v1",
+      "entityId": "handbook-supplement-research-computing",
+      "number": 1,
+      "parentRevisionId": null,
+      "createdAt": "2026-09-10T00:00:00Z",
+      "data": {
+        "title": "硕士科研需要较多算力，如何咨询学校 HPC？",
+        "summary": "先和导师明确计算需求，再由导师或项目负责人了解申请流程。",
+        "sentences": [
+          {
+            "id": "s1",
+            "kind": "fact",
+            "text": "2026/27 硕士手册说明，学生使用 HPC 需由导师或项目负责人提交申请；平台资料入口 https://hpc.xjtlu.edu.cn/account 仅限校园网络访问。"
+          },
+          {
+            "id": "s2",
+            "kind": "advice",
+            "text": "先向导师说明研究任务、需要的软件、数据规模及预计资源需求，确认是否适合学校 HPC，并由负责老师查询现行申请与培训安排。"
+          },
+          {
+            "id": "s3",
+            "kind": "advice",
+            "text": "拿到使用说明后再安排任务；正式提交前先用小样本验证脚本，并确认数据存储、备份、费用及访问权限。"
+          },
+          {
+            "id": "c1",
+            "kind": "advice",
+            "text": "注意：本条只介绍硕士手册中的咨询路径，未登录 HPC 平台，不提供账户、配额、收费、开放容量或审批时限保证。"
+          }
+        ],
+        "scope": {
+          "campus": [
+            "universal"
+          ],
+          "audience": [
+            "postgraduate"
+          ],
+          "academic_year": [
+            "universal"
+          ]
+        },
+        "scopeIds": [
+          "scope-audience-postgraduate"
+        ],
+        "scopeMode": "constrained",
+        "impact": "low",
+        "origin": "ai_draft",
+        "locale": "zh-CN",
+        "demo": false,
+        "asOf": "2026-09-10",
+        "verifiedAt": "",
+        "researchedAt": "2026-09-10",
+        "reviewDueAt": "2026-11-09T00:00:00.000Z",
+        "reviewOwnerLabel": "待指派人工编辑",
+        "evidenceCoverage": "linked_only",
+        "disputeStatus": "none",
+        "evidenceNote": "初版资料整理；2026-09-10读取公开来源，尚未人工审核。事实句附原站链接，行动建议单列；未保存原文快照。",
+        "searchText": "硕士科研需要较多算力,如何咨询学校 hpc? 先和导师明确计算需求,再由导师或项目负责人了解申请流程。 hpc 高性能计算 算力 科研 导师 建模 人工智能 2026/27 硕士手册说明,学生使用 hpc 需由导师或项目负责人提交申请;平台资料入口 https://hpc.xjtlu.edu.cn/account 仅限校园网络访问。 先向导师说明研究任务、需要的软件、数据规模及预计资源需求,确认是否适合学校 hpc,并由负责老师查询现行申请与培训安排。 拿到使用说明后再安排任务;正式提交前先用小样本验证脚本,并确认数据存储、备份、费用及访问权限。 注意:本条只介绍硕士手册中的咨询路径,未登录 hpc 平台,不提供账户、配额、收费、开放容量或审批时限保证。",
+        "handbookBatch": "initial-2026-09-10",
+        "reviewStatus": "pending-human-review"
+      }
     }
   ],
   "citations": [
@@ -7635,6 +8236,116 @@
       "sentenceId": "s2",
       "sourceEntityId": "handbook-source-66a107fb4ad3d8e7",
       "sourceRevisionId": "handbook-source-66a107fb4ad3d8e7-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-library-suggest-purchase-s1-0",
+      "revisionId": "handbook-supplement-library-suggest-purchase-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-604557b99bd6b3e7",
+      "sourceRevisionId": "handbook-source-604557b99bd6b3e7-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-library-suggest-purchase-s2-0",
+      "revisionId": "handbook-supplement-library-suggest-purchase-v1",
+      "sentenceId": "s2",
+      "sourceEntityId": "handbook-source-604557b99bd6b3e7",
+      "sourceRevisionId": "handbook-source-604557b99bd6b3e7-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-library-interlibrary-loan-s1-0",
+      "revisionId": "handbook-supplement-library-interlibrary-loan-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-822013393c7ef6be",
+      "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-library-interlibrary-loan-s2-0",
+      "revisionId": "handbook-supplement-library-interlibrary-loan-v1",
+      "sentenceId": "s2",
+      "sourceEntityId": "handbook-source-592231dc2f8c4b4d",
+      "sourceRevisionId": "handbook-source-592231dc2f8c4b4d-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-language-partner-s1-0",
+      "revisionId": "handbook-supplement-language-partner-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-3524b6117b2d8415",
+      "sourceRevisionId": "handbook-source-3524b6117b2d8415-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-peer-study-support-s1-0",
+      "revisionId": "handbook-supplement-peer-study-support-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-2d0541b6052b9211",
+      "sourceRevisionId": "handbook-source-2d0541b6052b9211-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-peer-study-support-s2-0",
+      "revisionId": "handbook-supplement-peer-study-support-v1",
+      "sentenceId": "s2",
+      "sourceEntityId": "handbook-source-2d0541b6052b9211",
+      "sourceRevisionId": "handbook-source-2d0541b6052b9211-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-computer-labs-s1-0",
+      "revisionId": "handbook-supplement-computer-labs-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-822013393c7ef6be",
+      "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-master-degree-plus-s1-0",
+      "revisionId": "handbook-supplement-master-degree-plus-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-822013393c7ef6be",
+      "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
+      "position": {
+        "kind": "link"
+      },
+      "order": 0
+    },
+    {
+      "id": "handbook-supplement-research-computing-s1-0",
+      "revisionId": "handbook-supplement-research-computing-v1",
+      "sentenceId": "s1",
+      "sourceEntityId": "handbook-source-822013393c7ef6be",
+      "sourceRevisionId": "handbook-source-822013393c7ef6be-v1",
       "position": {
         "kind": "link"
       },

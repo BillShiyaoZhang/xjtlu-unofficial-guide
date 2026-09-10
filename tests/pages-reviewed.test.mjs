@@ -235,7 +235,7 @@ async function buildFixture(t, snapshot) {
     await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
   }
   for (const [name, contents] of Object.entries({
-    'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")',
+    'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'contributions.js': 'export const contributionTypes = {};',
     'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>',
   })) await writeFile(resolve(directory, 'pages-ui', name), contents);
   await writeFile(resolve(directory, 'pages-reviewed.json'), JSON.stringify(snapshot));
@@ -257,7 +257,7 @@ test('Pages build prefers the reviewed snapshot and emits no private runtime or 
   assert.equal(emitted.mode, 'public-reviewed');
   assert.deepEqual(emitted.answers, snapshot.answers);
   assert.equal(emitted.contentHash, snapshot.contentHash);
-  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'brand.svg', 'contributions.js', 'index.html', 'public.json', 'style.css']);
   const serialized = JSON.stringify(emitted);
   assert.equal(serialized.includes('PRIVATE_RUNTIME_DATABASE_SENTINEL'), false);
   assert.equal(serialized.includes('PRIVATE_REVIEWER_LOGIN_SENTINEL'), false);

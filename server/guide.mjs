@@ -10,6 +10,8 @@ import { reviewContent, readReviews } from './content-review.mjs';
 import { readReviewArticles, submitArticleReviews } from './article-review.mjs';
 import { guideIdentityProvider, localPasswordLogin, loopbackLoginRequest } from './local-password.mjs';
 import { validateGuideCreate, validateGuideAnonymousReport, validateGuideTransition, researchAvailability } from './business-validation.mjs';
+import { sourceCategories } from '../community/source-categories.mjs';
+import { publicSourceMetadata } from '../community/source-registry.mjs';
 
 const fail = (code, message, status = 400) => { throw new RuntimeError(code, message, status); };
 const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
@@ -39,8 +41,11 @@ export function guideAnswer(state, node, catalog) {
   const data = state.modules.content.revisions.find(item => item.id === node.revisionId).data;
   const topic = catalog.topics.find(item => item.id === (data.topicId ?? entity.topicId ?? entity.extensions?.topicId));
   const dispute = { reported: '该答案收到争议报告，正在复核，请对照原始来源。', confirmed: '该答案存在已确认的争议，请勿据此单独作出决定。' }[data.disputeStatus];
+  const revisions = new Map(state.modules.content.revisions.map(revision => [revision.id, revision]));
+  const citations = node.citations.map(citation => ({ ...citation, ...publicSourceMetadata(revisions.get(citation.sourceRevisionId).data) }));
   return {
     ...node, slug: data.slug ?? entity.slug ?? entity.extensions?.slug ?? entity.id, demo: data.demo === true,
+    citations, sourceCategories: sourceCategories(citations),
     warnings: [...node.warnings, ...(dispute ? [dispute] : [])],
     summary: data.summary ?? '', asOf: data.asOf ?? null,
     verifiedAt: data.verifiedAt ?? null, reviewDueAt: data.reviewDueAt ?? null,

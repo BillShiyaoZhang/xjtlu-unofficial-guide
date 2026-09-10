@@ -2,16 +2,18 @@
 
 更新：2026-09-10。
 
-欢迎[补充信息、指出错误或提供不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)。投稿使用公开仓库 `BillShiyaoZhang/xjtlu-unofficial-guide` 的 GitHub Issue Forms；已有内容与处理进展见 [Issues](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。
+欢迎在手册内[补充信息、指出错误或提供不同经验](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/#/contribute)。填写完成后，标题和完整正文会带入公开仓库 `BillShiyaoZhang/xjtlu-unofficial-guide` 的 GitHub Issue 新建页，由你最后确认提交。也保留[直接使用 GitHub 表单](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)的入口；已有内容与处理进展见 [Issues](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。
 
-手册中的 69 篇初版资料已获明确收录授权，以「资料整理初版」公开，保留 AI 来源、资料读取日期和未人工核验说明。欢迎针对其中的缺口、过期信息或不同经历提出补充；公开收录本身不代表维护者已逐条核实。
+手册中的 76 篇初版资料（原有 69 篇与本轮补充 7 篇）已获明确收录授权，以「资料整理初版」公开，保留 AI 来源、资料读取日期和未人工核验说明。欢迎针对其中的缺口、过期信息或不同经历提出补充；公开收录本身不代表维护者已逐条核实。
 
 ## 如何投稿
 
-1. 在手册中打开投稿入口，或直接访问上方表单选择页。先浏览已有 Issue；同一事项可在已有讨论中补充来源和经历。
-2. 使用 GitHub 账号登录，选择「补充新资料」「纠错或报告过期」或「分享个人经验或不同经历」。
-3. 写明对应文章或主题、发生时间、校区与适用人群，并说明是否使用 AI 辅助。有来源时附可公开访问的链接；个人经历可描述背景及可公开复述的依据，不要求提供官方链接。亲历、转述和原站明确写出的内容请分别说明。
-4. 在 GitHub 检查准备公开的内容，再由你点击提交。仅打开表单不会创建 Issue；提交后的正文、GitHub 用户名和后续讨论公开可见。
+1. 在手册中打开「补充信息」，或从具体文章点击「补充/更正这篇」。先浏览已有 Issue；同一事项可在已有讨论中补充来源和经历。
+2. 在站内选择「新增 / 补充信息」「更正 / 报告过期」或「分享个人经验」，写好标题和具体内容。
+3. 写明来源、发生时间、校区与适用人群，并说明是否使用 AI 辅助。个人经历可写「本人经历」并描述场景，不要求提供官方链接；纠错时暂时没有依据也可以留空。亲历、转述和原站明确写出的内容请分别说明。
+4. 勾选公开确认，点击「前往 GitHub 确认提交」。新标签页会自动填好标题和正文，关联文章及当前公开版本也一并带入。使用 GitHub 账号登录后核对并点击提交；仅打开页面不会创建 Issue，提交后的正文、GitHub 用户名和后续讨论公开可见。
+
+站内填写不需要登录；最终发布必须有 GitHub 账号。内容仅保留在当前页面，不写入浏览器持久存储或本站服务器，刷新、关闭页面会丢失。正文较长时，页面保留完整内容并提供复制入口：复制后到 GitHub 粘贴即可，不会截断文字。跳转内容放在 GitHub 地址参数中，可能进入浏览器历史，因此仅填写准备公开的信息。
 
 | 投稿类型 | 可以提供什么 |
 | --- | --- |
@@ -35,16 +37,18 @@ npm run sync:pages
 
 待 GitHub Actions 部署完成后，检查公开页面，并可在原 Issue 中关联更新后的文章。已有不可变修订应按 [内容维护说明](handbook-maintenance.md) 追加新版；Issue 的提交、标签、评论或关闭均不会自动改写手册，也不会自动写入人工核验时间。
 
-当前还有一条固定范围的资料收录通道：`collectedRevisionIds` 明确列出的本批 69 个初版修订，可以保留未核验标识进入 Pages，不需伪造「通过」记录。这不使新的 Issue 或未来草稿自动获得收录资格。若需要改变清单，应明确决定具体修订、提交配置并重新导出部署；真正经过人工核对并发布的新版本优先展示。`public-guide` 快照分别统计资料收录与人工审核，整理结果不混入核验计数。
+当前还有一条固定范围的资料收录通道：`collectedRevisionIds` 明确列出的当前 76 个初版修订，可以保留未核验标识进入 Pages，不需伪造「通过」记录。这不使新的 Issue 或未来草稿自动获得收录资格。若需要改变清单，应明确决定具体修订、提交配置并重新导出部署；真正经过人工核对并发布的新版本优先展示。`public-guide` 快照分别统计资料收录与人工审核，整理结果不混入核验计数。
 
 ## 页面与配置
 
 Pages 的投稿入口由 `community/pages.config.json` 中的 `contributionsRepository` 指定，当前值为 `BillShiyaoZhang/xjtlu-unofficial-guide`。表单位于该仓库的 `.github/ISSUE_TEMPLATE/`；读者经 Pages 跳转，最终在 GitHub 提交。
 
+站内表单由 `community/pages-ui/contributions.js` 生成 Markdown 正文，通过 `template=website-contribution.md`、`title` 和 `body` 参数预填。Markdown 接收模板不再要求重复填写或勾选；原有三个 YAML Issue Forms 供直接访问 GitHub 的读者使用。实现依据 GitHub 官方的[通过 URL 查询创建 Issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-an-issue#creating-an-issue-from-a-url-query)；官方提示过长 URL 可能返回 414，因此页面对编码后的完整地址采用 7,500 字符的保守上限，并为超长正文提供复制路径。该上限是本项目的兼容性取值，不是 GitHub 公布的统一限制。
+
 维护者更改目标仓库时，需要确认新仓库公开、Issues 已开启且具备对应表单，再提交入口配置并部署页面。`sync:pages` 只同步公开手册快照，不负责提交表单、配置或页面代码。具体构建与发布步骤见 [Pages 同步](github-pages.md)。
 
 ## 与原有参与流程的关系
 
-本次明确开放外部 GitHub Issues 的公众补充与讨论，并按用户授权收录此前搜集的 69 篇资料初版，扩展了 [阶段 1 产品边界](product-boundary.md) 中相应限制。使用公开投稿入口只需要 GitHub 账号，不需要研究邀请或研究同意。
+本次明确开放外部 GitHub Issues 的公众补充与讨论，并按用户授权收录原有 69 篇与本轮补充的 7 篇资料初版，扩展了 [阶段 1 产品边界](product-boundary.md) 中相应限制。使用公开投稿入口只需要 GitHub 账号，不需要研究邀请或研究同意。
 
 GitHub 公开投稿由 GitHub 保存；本地 Node 服务原有的邀请制私有线索继续按其自身流程处理。此次没有自动抓取 Issue、没有把公开投稿转存为私件，也没有把原有私件、内部审核意见或研究数据公开到 GitHub。

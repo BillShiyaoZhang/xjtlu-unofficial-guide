@@ -1,6 +1,6 @@
 # 西浦非官方指南
 
-**[阅读初版手册](docs/handbook.md)**：按入学、学习、生活与发展机会整理的完整中文内容，包含逐句来源、两校区适用范围和复核提示。2026-09-10 搜集的 69 篇内容已获明确授权，作为「资料整理初版」收录到 Pages 公开清单；保留 AI 来源、资料读取时间及尚未人工核验的说明。收录授权不等于逐篇事实核验。覆盖情况、导入方式及后续缺口见 [内容维护说明](docs/handbook-maintenance.md)。
+**[阅读初版手册](docs/handbook.md)**：按入学、学习、生活与发展机会整理的完整中文内容，包含逐句来源、两校区适用范围和复核提示。2026-09-10 的原有 69 篇与本轮补充的 7 篇均获明确授权，作为「资料整理初版」收录到 Pages 公开清单；共 76 篇，保留 AI 来源、资料读取时间及尚未人工核验的说明。文章与引用分别标注「学校官方」「用户提供」「网络资料」，来源类别不代表已经人工核验。覆盖情况、导入方式及后续缺口见 [内容维护说明](docs/handbook-maintenance.md)。
 
 这是一个“先核对来源，再做决定”的校园信息指南。本仓库现在是 [decentralized-information-community](https://github.com/BillShiyaoZhang/decentralized-information-community) 的数据与业务消费端：通用存储、证据修订、发布、身份、会话、加密、撤回和恢复由底座负责。
 
@@ -19,7 +19,7 @@ npm run build
 npm run dev
 ```
 
-默认访问 <http://127.0.0.1:4317>；端口被占用时命令会输出实际地址。演示使用独立的 `community/.demo-runtime` 和本地随机密钥，首次导入完整内容，只在运行库中发布明确标注的四条演示答案。本批 69 篇的 Pages 收录通过独立导出清单完成，原始 AI 稿及运行库发布状态保留；重启不会自动导入或发布未来草稿。演示内容不是新的事实核验结果。
+默认访问 <http://127.0.0.1:4317>；端口被占用时命令会输出实际地址。演示使用独立的 `community/.demo-runtime` 和本地随机密钥，首次导入完整内容，只在运行库中发布明确标注的四条演示答案。76 篇资料的 Pages 收录通过独立导出清单完成，原始 AI 稿及运行库发布状态保留；重启不会自动导入或发布未来草稿。演示内容不是新的事实核验结果。
 
 ## 维护边界
 
@@ -36,13 +36,13 @@ npm run dev
 
 ## GitHub Pages
 
-[公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。本批 69 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；补充信息、纠错及不同经验通过页面入口跳转至公开 GitHub Issue 表单。
+[公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。76 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；读者可直接在页面填写补充、更正及个人经验，再跳转到已填好标题和正文的 GitHub Issue 页面确认提交，界面明确提示需要 GitHub 账号。
 
-运行 `npm run sync:pages` 后，Pages 在 GitHub Actions 部署完成后更新。导出只读本机运行库，生成 `mode: public-guide` 的 `community/pages-reviewed.json`，将 `collectedCount` 与 `reviewedCount` 分别计数；不会把收录初版改为人工来源、填写核验时间或新增审核记录。本批发布快照包含 73 篇：69 篇资料初版、0 篇人工审核内容、4 篇原有演示。账户、密码、内部意见和运行库不会进入静态站点。人工审核、隐藏、来源撤回和修订更新会在后续同步时反映，清单不会自动公开未来草稿或恢复被取代的初稿。操作步骤见 [Pages 同步](docs/github-pages.md)。
+运行 `npm run sync:pages` 后，Pages 在 GitHub Actions 部署完成后更新。导出只读本机运行库，生成 `mode: public-guide` 的 `community/pages-reviewed.json`，将 `collectedCount` 与 `reviewedCount` 分别计数；不会把收录初版改为人工来源、填写核验时间或新增审核记录。当前发布快照包含 80 篇：76 篇资料初版、0 篇人工审核内容、4 篇原有演示。账户、密码、内部意见和运行库不会进入静态站点。人工审核、隐藏、来源撤回和修订更新会在后续同步时反映，清单不会自动公开未来草稿或恢复被取代的初稿。操作步骤见 [Pages 同步](docs/github-pages.md)。
 
 公众可使用 GitHub 账号[提交补充、纠错或不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)，也可[查看已有投稿](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。内容由投稿人在 GitHub 最终提交并公开；维护者在 Issues 中整理、去重、关联来源。采纳或关闭 Issue 不代表事实已核验，也不会自动改写手册。使用方式见 [投稿说明](CONTRIBUTING.md) 和 [GitHub 投稿与整理](docs/github-contributions.md)。
 
-外部 GitHub Issues 投稿与讨论、此次 69 篇资料整理初版的显式收录，都是对旧阶段 1 边界的明确扩展；公开投稿无需研究邀请或研究同意。站内公开评论、自动导入投稿、高影响内容及未获授权草稿的自动发布仍未开放。**没有、也不计划部署到 OpenAI Sites**。产品判断与历史设计见：
+外部 GitHub Issues 投稿与讨论、76 篇资料整理初版的显式收录，都是对旧阶段 1 边界的明确扩展；公开投稿无需研究邀请或研究同意。站内公开评论、自动导入投稿、高影响内容及未获授权草稿的自动发布仍未开放。**没有、也不计划部署到 OpenAI Sites**。产品判断与历史设计见：
 
 - [产品意图](./docs/intention.md)
 - [详细设计](./docs/design.md)

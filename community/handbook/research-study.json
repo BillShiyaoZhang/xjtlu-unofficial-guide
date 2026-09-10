@@ -5,7 +5,7 @@
     {
       "key": "study-registry",
       "title": "Registry Office — 教务办公室",
-      "url": "https://www.xjtlu.edu.cn/en/professional-services/registry",
+      "url": "https://www.xjtlu.edu.cn/en/professional-services/registry", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -15,7 +15,7 @@
     {
       "key": "study-modules",
       "title": "Module Catalogues — 课程目录",
-      "url": "https://modules.xjtlu.edu.cn/dept",
+      "url": "https://modules.xjtlu.edu.cn/dept", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -25,7 +25,7 @@
     {
       "key": "study-module-example",
       "title": "Professional Skills in Computer Science — Module Catalogues",
-      "url": "https://modules.xjtlu.edu.cn/mod?mod_code=CPT001&psl_code=SEM2",
+      "url": "https://modules.xjtlu.edu.cn/mod?mod_code=CPT001&psl_code=SEM2", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -35,7 +35,7 @@
     {
       "key": "study-library",
       "title": "Home — Library for XJTLU",
-      "url": "https://lib.xjtlu.edu.cn/",
+      "url": "https://lib.xjtlu.edu.cn/", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -45,7 +45,7 @@
     {
       "key": "study-library-orientation",
       "title": "2026 Library Orientation | Step into XJTLU Library, Step into a Wider World",
-      "url": "https://lib.xjtlu.edu.cn/node/2019",
+      "url": "https://lib.xjtlu.edu.cn/node/2019", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": "2026-08-28",
       "accessedAt": "2026-09-10",
@@ -55,7 +55,7 @@
     {
       "key": "study-textbooks",
       "title": "Textbook Service — 教材服务",
-      "url": "https://lib.xjtlu.edu.cn/Study_Support/Textbook_Service",
+      "url": "https://lib.xjtlu.edu.cn/Study_Support/Textbook_Service", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -65,7 +65,7 @@
     {
       "key": "study-gclh",
       "title": "Global Cultures and Languages Hub",
-      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -75,7 +75,7 @@
     {
       "key": "study-elc",
       "title": "English Language Centre",
-      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/english-language-centre",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/english-language-centre", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -85,7 +85,7 @@
     {
       "key": "study-alc",
       "title": "Academic Literacies Centre",
-      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/academic-literacies-centre",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/academic-literacies-centre", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -95,7 +95,7 @@
     {
       "key": "study-degrees",
       "title": "Degree Types — 学习路径与学位类型",
-      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/degree-types",
+      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/degree-types", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -105,7 +105,7 @@
     {
       "key": "study-exchange",
       "title": "Semester or Year Abroad",
-      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/semester-or-year-abroad",
+      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/semester-or-year-abroad", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -115,7 +115,7 @@
     {
       "key": "study-summer",
       "title": "Summer Abroad",
-      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/summer-abroad",
+      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/summer-abroad", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -125,7 +125,7 @@
     {
       "key": "study-careers",
       "title": "Career Centre — 学校服务介绍",
-      "url": "https://www.xjtlu.edu.cn/en/it-services/career-centre-intro",
+      "url": "https://www.xjtlu.edu.cn/en/it-services/career-centre-intro", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -135,7 +135,7 @@
     {
       "key": "study-career-system",
       "title": "Graduate Destinations — Career Centre 服务入口",
-      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/graduate-destinations",
+      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/graduate-destinations", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -145,7 +145,7 @@
     {
       "key": "study-master-apply",
       "title": "Master's Admissions — How to Apply",
-      "url": "https://www.xjtlu.edu.cn/en/admissions/master/how-to-apply",
+      "url": "https://www.xjtlu.edu.cn/en/admissions/master/how-to-apply", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
@@ -155,7 +155,7 @@
     {
       "key": "study-surf",
       "title": "Bumper year for summer undergraduate research projects",
-      "url": "https://www.xjtlu.edu.cn/en/news/2025/11/bumper-year-for-summer-undergraduate-research-projects",
+      "url": "https://www.xjtlu.edu.cn/en/news/2025/11/bumper-year-for-summer-undergraduate-research-projects", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": "2025-11-21",
       "accessedAt": "2026-09-10",
@@ -165,7 +165,7 @@
     {
       "key": "study-research-portal",
       "title": "XJTLU Research Portal",
-      "url": "https://scholar.xjtlu.edu.cn/",
+      "url": "https://scholar.xjtlu.edu.cn/", "sourceCategory": "university_official",
       "publisher": "西交利物浦大学",
       "publishedAt": null,
       "accessedAt": "2026-09-10",
