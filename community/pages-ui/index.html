@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <meta name="description" content="西浦非官方指南的公开内容。查阅校园信息、原始来源和核验时间。">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="一起留下西浦的消息与经验。查找校园资料、分享经历，保留讨论与原始来源。">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>西浦非官方指南</title>
   <link rel="icon" href="./brand.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./style.css">
@@ -13,16 +13,25 @@
   <script type="module" src="./app.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">跳到正文</a>
   <header>
-    <a class="brand" href="#/answers"><img src="./brand.svg" width="40" height="40" alt=""><span>西浦非官方指南</span></a>
-    <nav aria-label="主导航"><a id="answers-nav" href="#/answers">答案目录</a><a id="contribute-nav" href="#/contribute">补充信息</a><a id="about-nav" href="#/about">关于本指南</a></nav>
+    <a class="brand" href="#/discover"><img src="./brand.svg" width="40" height="40" alt=""><span>西浦非官方指南</span></a>
+    <nav aria-label="主导航"><a id="discover-nav" href="#/discover">校园共建</a><a id="answers-nav" href="#/answers?view=list">查资料</a><a id="contribute-nav" href="#/share">说一句</a><a id="about-nav" href="#/about">关于</a></nav>
   </header>
-  <div class="edition"><span id="edition-label">公开只读指南</span><span id="edition-note">非学校官方信息</span></div>
-  <main>
+  <div class="edition"><span id="edition-label">校园资料与共同记录</span><span id="edition-note">非学校官方信息</span></div>
+  <main id="main" tabindex="-1">
     <p id="message" role="status" aria-live="polite">正在读取公开内容</p>
     <button id="retry" type="button" class="secondary" hidden>重新加载</button>
+    <section id="discover-view" class="view" hidden><div id="community-home"></div></section>
+    <section id="topic-view" class="view" hidden><div id="community-topic"></div></section>
+    <section id="share-view" class="view" hidden>
+      <p class="eyebrow">消息、经历、追问，都可以</p><h1>你想补充哪方面？</h1>
+      <p>不用写成完整攻略。选个话题，把你知道的一点先留下来。</p>
+      <label for="share-topic">选择话题</label><select id="share-topic"></select><div id="share-composer"></div>
+      <p class="muted"><a href="#/contribute">需要按文章版本提交补充或更正？使用详细投稿表</a></p>
+    </section>
     <section id="answers-view" class="view" aria-labelledby="directory-title" hidden>
-      <div class="section-title"><h1 id="directory-title">西浦非官方指南</h1><span id="count" class="muted" aria-live="polite"></span></div>
+      <div class="section-title"><h1 id="directory-title">查找已有整理</h1><span id="count" class="muted" aria-live="polite"></span></div>
       <form id="search" role="search"><label class="search-label" for="query">查找校园信息</label><div class="search-row"><input id="query" name="query" type="search" autocomplete="off" maxlength="200" placeholder="搜索答案、主题或来源"><button type="submit">搜索</button></div></form>
       <div class="filters"><label>主题<select id="topic"><option value="">全部主题</option></select></label><p id="topic-description" class="muted"></p></div>
       <div class="directory-display" role="group" aria-label="目录显示方式"><button id="branches-mode" type="button" aria-pressed="true" aria-controls="directory-branches">分支图</button><button id="list-mode" type="button" aria-pressed="false" aria-controls="answer-list">列表</button></div>

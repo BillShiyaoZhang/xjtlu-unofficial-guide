@@ -2,7 +2,7 @@
 
 **[阅读初版手册](docs/handbook.md)**：按入学、学习、生活与发展机会整理的完整中文内容，包含逐句来源、两校区适用范围和复核提示。2026-09-10 的原有 69 篇与本轮补充的 7 篇均获明确授权，作为「资料整理初版」收录到 Pages 公开清单；共 76 篇，保留 AI 来源、资料读取时间及尚未人工核验的说明。文章与引用分别标注「学校官方」「用户提供」「网络资料」，来源类别不代表已经人工核验。覆盖情况、导入方式及后续缺口见 [内容维护说明](docs/handbook-maintenance.md)。
 
-这是一个“先核对来源，再做决定”的校园信息指南。本仓库现在是 [decentralized-information-community](https://github.com/BillShiyaoZhang/decentralized-information-community) 的数据与业务消费端：通用存储、证据修订、发布、身份、会话、加密、撤回和恢复由底座负责。
+这是一个让同学共同留下校园消息与经验的平台：从具体问题开始分享，在原始讨论的基础上逐渐整理学校知识。本仓库是 [decentralized-information-community](https://github.com/BillShiyaoZhang/decentralized-information-community) 的数据与业务消费端：通用存储、证据修订、发布、身份、会话、加密、撤回和恢复由底座负责。
 
 默认入口已经从 `apps/web` 切换到根目录。`community/` 保存校园数据、内容规则、角色权限、生命周期配置、研究说明和少量定制页面；`server/` 只补业务校验和展示字段。编辑工作台复用底座的身份、详情、处置及内容 SDK。
 
@@ -36,6 +36,17 @@ npm run dev
 
 ## GitHub Pages
 
+本轮读者界面以「校园共建」为首页，准备了课程经验、校园资源、硕士入学三条编辑提问，并提供校园消息入口。站内读取真实 GitHub 投稿与回复；轻量输入只要求分享正文和公开确认，支持主动保存本机草稿。引用精确原帖／回复的整理会与原文互相连接。活动报名、延期／取消、计划结束与校园情况的解决记录分别展示，往期内容保留。当前没有虚构活动、参与人数或评论，发布仍由用户在 GitHub 确认。配置与整理步骤见 [校园共建运营流程](docs/community-operations.md)。
+
+预览本轮公开页面（与本地编辑工作台分开）：
+
+```powershell
+npm run build:pages
+npm run preview:pages
+```
+
+访问 <http://127.0.0.1:4318/>。此命令只展示构建后的公开产物；代码和话题配置需要经仓库部署流程更新线上版本。
+
 读者页现提供「分支图 / 列表」切换：按话题展开不同陈述，并在每条陈述下面展开补充信息和后续补充，分别保留来源、适用范围和核验状态。正文旁可定位当前陈述、跳转父陈述，或发起「补充这条信息」投稿。详见 [话题分支图与不同说法的收录](docs/topic-branches.md)。
 
 [公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。76 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；读者可直接在页面填写补充、更正及个人经验，再跳转到已填好标题和正文的 GitHub Issue 页面确认提交，界面明确提示需要 GitHub 账号。
@@ -44,7 +55,7 @@ npm run dev
 
 公众可使用 GitHub 账号[提交补充、纠错或不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)，也可[查看已有投稿](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。内容由投稿人在 GitHub 最终提交并公开；维护者在 Issues 中整理、去重、关联来源。采纳或关闭 Issue 不代表事实已核验，也不会自动改写手册。使用方式见 [投稿说明](CONTRIBUTING.md) 和 [GitHub 投稿与整理](docs/github-contributions.md)。
 
-外部 GitHub Issues 投稿与讨论、76 篇资料整理初版的显式收录，都是对旧阶段 1 边界的明确扩展；公开投稿无需研究邀请或研究同意。站内公开评论、自动导入投稿、高影响内容及未获授权草稿的自动发布仍未开放。**没有、也不计划部署到 OpenAI Sites**。产品判断与历史设计见：
+GitHub Issues 投稿与讨论的站内展示、76 篇资料整理初版的显式收录，都是对旧阶段 1 边界的明确扩展；公开投稿无需研究邀请或研究同意。站内直接发布评论、自动导入投稿及未获授权草稿的自动发布仍未开放。**没有、也不计划部署到 OpenAI Sites**。产品判断与历史设计见：
 
 - [产品意图](./docs/intention.md)
 - [详细设计](./docs/design.md)

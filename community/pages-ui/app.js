@@ -1,6 +1,9 @@
-import { renderContribution as renderContributionForm } from './contributions.js';
+import { renderContribution as renderContributionForm, mountQuickContribution } from './contributions.js';
 import { renderBranches } from './branches.js';
 import { withBranchAncestors } from './branch-model.js';
+import { searchAnswers, scopeText } from './search.js';
+import { validateTopicsConfig } from './topic-model.js';
+import { mountCommunity, communityTopics } from './community.js';
 
 const $ = id => document.getElementById(id);
 const make = (tag, text, className) => {
@@ -10,13 +13,16 @@ const make = (tag, text, className) => {
   return element;
 };
 let snapshot;
-let listHash = '#/answers?view=branches';
+let topicsConfig = { schemaVersion: 1, topics: [] };
+let listHash = '#/answers?view=list';
+let mountedCommunity, mountedQuick;
+let previousHash;
+const positions = new Map();
 const date = value => {
   if (!value) return '未注明';
   const parsed = new Date(typeof value === 'number' && value < 1e12 ? value * 1000 : value);
   return Number.isFinite(parsed.getTime()) ? parsed.toLocaleDateString('zh-CN') : '未注明';
 };
-const normalize = value => String(value ?? '').normalize('NFKC').toLocaleLowerCase('zh-CN').trim();
 const answerHash = answer => '#/answers/' + encodeURIComponent(answer.id) + listHash.slice(listHash.indexOf('?'));
 const supplementHash = answer => '#/contribute?' + new URLSearchParams({ article: answer.id, revision: answer.revisionId, type: 'supplement' });
 function directoryParameters(parameters) {
@@ -46,7 +52,7 @@ function message(text = '') {
 
 function show(view) {
   for (const element of document.querySelectorAll('.view')) element.hidden = element.id !== `${view}-view`;
-  for (const [id, selected] of [['answers-nav', ['answers', 'detail', 'missing'].includes(view)], ['contribute-nav', view === 'contribute'], ['about-nav', view === 'about']]) {
+  for (const [id, selected] of [['discover-nav', ['discover', 'topic'].includes(view)], ['answers-nav', ['answers', 'detail', 'missing'].includes(view)], ['contribute-nav', ['contribute', 'share'].includes(view)], ['about-nav', view === 'about']]) {
     if (selected) $(id).setAttribute('aria-current', 'page');
     else $(id).removeAttribute('aria-current');
   }
@@ -74,7 +80,7 @@ function renderEdition() {
   const collected = snapshot.answers.some(answer => answer.reviewStatus === 'collected');
   const demos = snapshot.answers.some(answer => answer.demo);
   const empty = guide && !snapshot.answers.length;
-  $('edition-label').textContent = collected || approved || empty ? '公开只读指南' : '公开只读演示';
+  $('edition-label').textContent = collected || approved || empty ? '校园资料与共同记录' : '公开演示';
   $('edition-note').textContent = empty ? '暂无已发布内容' : collected ? '资料整理内容待人工核验 · 非学校官方信息' : approved
     ? demos ? '含审核文章和演示内容 · 非学校官方信息' : '经人工审核 · 非学校官方信息'
     : '示范内容，不代表学校官方信息';
@@ -91,26 +97,8 @@ function renderEdition() {
       : '本页公开展示项目中的示范答案及其原始来源。示范答案尚不代表真实试点的正式审核结果，不能作为选课、入学或其他重要决定的唯一依据。具体事项请向学校相关部门核实。';
   $('about-snapshot-description').textContent = guide
     ? (collected ? '这是按当前发布清单生成的公开快照。' : '这是从本地已发布内容同步的公开快照。')
-      + '后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。此处可阅读及填写公开投稿，发布需跳转 GitHub；不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
+      + '资料的后续修改、隐藏或撤回，需要再次同步后才会反映到此站点。话题中的公开投稿与回复则直接从 GitHub 读取，可手动刷新。此处可阅读及填写公开投稿，发布需跳转 GitHub；不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。'
     : '此版本仅包含构建时可公开的示范内容，不接收账户登录、私件投稿或研究活动记录。学校网站由其各自的维护方提供。';
-}
-
-function searchTerms(query) {
-  const normalized = normalize(query);
-  const alternatives = [normalized];
-  for (const [canonical, aliases] of Object.entries(snapshot.search?.aliases ?? {})) {
-    const group = [canonical, ...(Array.isArray(aliases) ? aliases : [])].map(normalize);
-    if (group.includes(normalized)) alternatives.push(...group);
-  }
-  return [...new Set(alternatives)];
-}
-
-function matches(answer, alternatives) {
-  const haystack = normalize([answer.title, answer.summary, answer.topic?.title,
-    ...(answer.sentences ?? []).map(sentence => sentence.text),
-    ...(answer.citations ?? []).map(citation => citation.title),
-  ].join(' '));
-  return alternatives.some(term => term.split(/\s+/u).every(word => haystack.includes(word)));
 }
 
 function renderList(parameters) {
@@ -120,9 +108,7 @@ function renderList(parameters) {
   $('topic').value = snapshot.catalog.topics.some(value => value.id === topic) ? topic : '';
   const selectedTopic = snapshot.catalog.topics.find(value => value.id === $('topic').value);
   $('topic-description').textContent = selectedTopic?.description ?? '';
-  const terms = searchTerms(query);
-  const answers = snapshot.answers.filter(answer => (!$('topic').value || answer.topic?.id === $('topic').value) && (!query.trim() || matches(answer, terms)))
-    .sort((left, right) => Number(left.demo) - Number(right.demo));
+  const answers = searchAnswers(snapshot, query, $('topic').value);
   $('count').textContent = `${answers.length} 条答案`;
   $('branches-mode').setAttribute('aria-pressed', String(view === 'branches'));
   $('list-mode').setAttribute('aria-pressed', String(view === 'list'));
@@ -142,6 +128,7 @@ function renderList(parameters) {
     link.append(make('h3', answer.title));
     item.append(make('span', answer.topic?.title ?? '校园信息', 'topic-label'), link, make('p', answer.summary));
     item.append(renderSourceCategories(answer));
+    item.append(make('p', scopeText(answer, snapshot.catalog), 'scope-label'));
     const collected = answer.reviewStatus === 'collected';
     item.append(make('span', `${collected ? '资料整理 ' + date(answer.researchedAt) : '核验 ' + date(answer.verifiedAt)} · ${(answer.citations ?? []).length} 项来源`, 'metadata'));
     if (collected) item.append(make('span', ' · 待人工核验', 'collected-status'));
@@ -149,17 +136,23 @@ function renderList(parameters) {
     warnings(item, answer);
     $('answer-list').append(item);
   }
-  if (!answers.length && view === 'list') $('answer-list').append(make('p', '暂无符合条件的公开答案。', 'empty'));
+  if (!answers.length && view === 'list') {
+    const empty = make('div', undefined, 'empty');
+    empty.append(make('p', '暂无符合条件的公开答案。试试换个关键词，也可以把问题留下来。'));
+    const ask = make('a', '去话题里问问 →'); ask.href = '#/share'; empty.append(ask); $('answer-list').append(empty);
+  }
   show('answers');
 }
 
-function renderDetail(answer) {
+function renderDetail(answer, parameters = new URLSearchParams()) {
   const target = $('answer-detail');
+  const originTopic = communityTopics(snapshot, topicsConfig).find(topic => topic.id === parameters.get('fromTopic') && topic.catalogTopicId === answer.topic?.id);
+  const detailHref = value => originTopic ? '#/answers/' + encodeURIComponent(value.id) + '?' + new URLSearchParams({ fromTopic: originTopic.id }) : answerHash(value);
   target.replaceChildren(make('p', answer.topic?.title ?? '校园信息', 'eyebrow'), make('h1', answer.title));
   const parent = snapshot.answers.find(value => value.id === answer.supplementTo && value.id !== answer.id && value.topic?.id === answer.topic?.id);
   if (parent) {
     const context = make('p', '这条信息补充了：', 'supplement-parent');
-    const link = make('a', parent.title); link.href = answerHash(parent);
+    const link = make('a', parent.title); link.href = detailHref(parent);
     context.append(link);
     target.append(context);
   }
@@ -170,19 +163,24 @@ function renderDetail(answer) {
     collected ? '待人工核验' : answer.reviewOwnerLabel, `复核期限 ${date(answer.reviewDueAt)}`]) {
     if (text) metadata.append(make('span', text));
   }
-  target.append(metadata);
+  // Detailed dates stay available below the content; the essential review status stays above it.
   target.append(renderSourceCategories(answer));
   if (answer.demo) target.append(make('p', answer.reviewStatus === 'approved' ? '演示内容，已完成人工审核。' : '演示内容，真实试点前需重新审核。', 'warning'));
   if (collected) target.append(make('p', '整理方式：AI 辅助资料整理，尚未逐条人工核验。', 'warning collected-notice'));
   else if (answer.originalOrigin === 'ai_draft') target.append(make('p', answer.reviewStatus === 'approved'
     ? '整理方式：AI 辅助初稿，经人工审核确认。' : '整理方式：AI 辅助整理。', 'muted'));
-  warnings(target, answer);
+  const notes = make('div', undefined, 'article-notes');
+  warnings(notes, answer);
   const scope = Object.entries(answer.scope ?? {}).flatMap(([dimension, values]) => values.map(value => snapshot.catalog.scopes.find(item => item.dimension === dimension && (item.id === value || item.code === value))?.labelZh
     ?? (value === 'universal' ? universalScopeLabels[dimension] ?? '通用' : value)));
   target.append(make('p', `适用范围：${scope.join(' · ') || '尚未明确'}`, 'muted'));
-  if (answer.evidenceNote) target.append(make('p', answer.evidenceNote, 'warning'));
+  if (answer.evidenceNote) notes.append(make('p', answer.evidenceNote, 'warning'));
   for (const sentence of answer.sentences ?? []) {
-    target.append(make('p', sentence.text, 'answer-body'));
+    const paragraph = make('p', sentence.text, 'answer-body'); paragraph.id = 'sentence-' + sentence.id;
+    target.append(paragraph);
+    const sources = (answer.citations ?? []).filter(value => value.sentenceId === sentence.id);
+    const sourceDetails = make('details', undefined, 'sentence-sources');
+    sourceDetails.append(make('summary', `查看这段的 ${sources.length} 项原始来源`));
     for (const citation of (answer.citations ?? []).filter(value => value.sentenceId === sentence.id)) {
       const box = make('div', undefined, 'citation');
       const href = safeLink(citation.url);
@@ -196,9 +194,11 @@ function renderDetail(answer) {
       box.append(title, make('span', citation.mode === 'link-only' ? ' · 原站链接' : ' · 授权摘录', 'muted'));
       if (citation.publisher) box.append(make('span', ` · 发布方：${citation.publisher}`, 'muted'));
       if (citation.excerpt) box.append(make('p', citation.excerpt));
-      target.append(box);
+      sourceDetails.append(box);
     }
+    if (sources.length) target.append(sourceDetails);
   }
+  target.append(metadata, notes);
   const contribution = make('section', undefined, 'contribution-prompt');
   const supplementLink = make('a', '补充这条信息', 'contribution-link');
   supplementLink.href = supplementHash(answer);
@@ -208,6 +208,15 @@ function renderDetail(answer) {
   actions.append(supplementLink, contributionLink);
   contribution.append(make('h2', '补充这篇文章'), make('p', '提供进一步说明或补充来源，经编辑核对后可作为这条陈述的下级分支。也欢迎更正内容或分享不同经历。'), actions);
   target.append(contribution);
+  const linkedTopic = originTopic ?? communityTopics(snapshot, topicsConfig).find(topic => topic.id === answer.topic?.id);
+  if (linkedTopic) {
+    contribution.querySelector('h2').textContent = '这里与你的经历一致吗？';
+    contribution.querySelector('p').textContent = '可以补充一句、纠正某个细节，或讲讲不同的经历。原始投稿会保留在话题里。';
+    const discussionLink = make('a', '查看这个话题的原始讨论 →'); discussionLink.href = '#/topics/' + encodeURIComponent(linkedTopic.id);
+    contribution.prepend(discussionLink);
+    const quick = make('div'); target.append(quick);
+    mountedQuick = mountQuickContribution(quick, { snapshot, topic: linkedTopic, article: answer });
+  }
   if (answer.history?.length) {
     target.append(make('h2', '公开版本记录'));
     const history = make('div', undefined, 'history');
@@ -217,9 +226,10 @@ function renderDetail(answer) {
   renderBranches($('answer-branches'), {
     answers: snapshot.answers.filter(value => value.topic?.id === answer.topic?.id),
     topics: snapshot.catalog.topics, links: snapshot.links ?? [], selectedId: answer.id,
-    answerHref: answerHash, contributionHref: supplementHash, topicId: answer.topic?.id, scopes: snapshot.catalog.scopes,
+    answerHref: detailHref, contributionHref: supplementHash, topicId: answer.topic?.id, scopes: snapshot.catalog.scopes,
   });
-  $('back-to-list').href = listHash;
+  $('back-to-list').href = originTopic ? '#/topics/' + encodeURIComponent(originTopic.id) : listHash;
+  $('back-to-list').textContent = originTopic ? '← 回到话题与讨论' : '返回答案目录';
   show('detail');
 }
 
@@ -230,16 +240,33 @@ function renderContribution(parameters) {
 
 function route({ scroll = true } = {}) {
   if (!snapshot) return;
+  if (previousHash && scroll) positions.set(previousHash, { y: window.scrollY, href: document.activeElement?.getAttribute('href') });
+  mountedCommunity?.destroy(); mountedCommunity = null;
+  mountedQuick?.destroy(); mountedQuick = null;
   message();
-  const raw = location.hash.slice(1) || '/answers';
+  const raw = location.hash.slice(1) || '/discover';
   const split = raw.indexOf('?');
   const path = split < 0 ? raw : raw.slice(0, split);
   const parameters = new URLSearchParams(split < 0 ? '' : raw.slice(split + 1));
-  if (path === '/about') {
+  if (path === '/discover' || path === '/') {
+    mountedCommunity = mountCommunity($('community-home'), { snapshot, config: topicsConfig });
+    show('discover'); document.title = `校园共建 | ${snapshot.site.name}`;
+  } else if (path.startsWith('/topics/')) {
+    let topicId; try { topicId = decodeURIComponent(path.slice('/topics/'.length)); } catch { topicId = 'invalid'; }
+    mountedCommunity = mountCommunity($('community-topic'), { snapshot, config: topicsConfig, topicId, parameters });
+    show('topic'); document.title = `${communityTopics(snapshot, topicsConfig).find(topic => topic.id === topicId)?.title ?? '共建话题'} | ${snapshot.site.name}`;
+  } else if (path === '/share') {
+    const topics = communityTopics(snapshot, topicsConfig);
+    $('share-topic').replaceChildren(...topics.map(topic => { const option = make('option', topic.title); option.value = topic.id; return option; }));
+    if (topics.some(topic => topic.id === parameters.get('topic'))) $('share-topic').value = parameters.get('topic');
+    const topic = topics.find(topic => topic.id === $('share-topic').value);
+    if (topic) mountedQuick = mountQuickContribution($('share-composer'), { snapshot, topic });
+    show('share'); document.title = `说一句 | ${snapshot.site.name}`;
+  } else if (path === '/about') {
     show('about'); document.title = `关于本指南 | ${snapshot.site.name}`;
   } else if (path === '/contribute') {
     renderContribution(parameters); document.title = `补充信息 | ${snapshot.site.name}`;
-  } else if (path === '/answers' || path === '/') {
+  } else if (path === '/answers') {
     listHash = '#/answers?' + directoryParameters(parameters);
     renderList(parameters); document.title = snapshot.site.name;
   } else {
@@ -248,12 +275,20 @@ function route({ scroll = true } = {}) {
     const answer = snapshot.answers.find(value => value.id === id);
     if (answer) {
       if (['view', 'query', 'topic'].some(key => parameters.has(key))) listHash = '#/answers?' + directoryParameters(parameters);
-      renderDetail(answer); document.title = `${answer.title} | ${snapshot.site.name}`;
+      renderDetail(answer, parameters); document.title = `${answer.title} | ${snapshot.site.name}`;
     }
     else { $('answer-detail').replaceChildren(); show('missing'); document.title = `未找到公开答案 | ${snapshot.site.name}`; }
   }
   $('answers-nav').href = listHash;
-  if (scroll) window.scrollTo({ top: 0, behavior: 'instant' });
+  if (scroll) {
+    const restored = positions.get(location.hash);
+    const visible = document.querySelector('.view:not([hidden])');
+    const prior = restored?.href ? [...visible.querySelectorAll('a')].find(link => link.getAttribute('href') === restored.href) : null;
+    const focus = prior ?? visible.querySelector('h1');
+    if (focus) { focus.tabIndex = -1; focus.focus({ preventScroll: true }); }
+    window.scrollTo({ top: restored?.y ?? 0, behavior: 'instant' });
+  }
+  previousHash = location.hash;
 }
 
 function search(view) {
@@ -274,6 +309,9 @@ async function load() {
     const value = await response.json();
     if (value.schemaVersion !== 1 || !['public-demo', 'public-reviewed', 'public-guide'].includes(value.mode) || !Array.isArray(value.answers) || !value.catalog || !Array.isArray(value.catalog.topics) || !Array.isArray(value.catalog.scopes) || typeof value.site?.name !== 'string') throw new Error('Unsupported snapshot');
     snapshot = value;
+    const topicsResponse = await fetch('./community-topics.json', { credentials: 'omit' });
+    if (!topicsResponse.ok) throw new Error('Topic configuration unavailable');
+    topicsConfig = validateTopicsConfig(await topicsResponse.json(), snapshot.catalog);
     renderEdition();
     $('topic').replaceChildren(make('option', '全部主题'));
     $('topic').firstElementChild.value = '';
@@ -300,5 +338,12 @@ $('topic').addEventListener('change', search);
 $('branches-mode').addEventListener('click', () => search('branches'));
 $('list-mode').addEventListener('click', () => search('list'));
 $('retry').addEventListener('click', load);
+$('share-topic').addEventListener('change', () => {
+  const topic = communityTopics(snapshot, topicsConfig).find(topic => topic.id === $('share-topic').value);
+  mountedQuick?.destroy();
+  if (topic) mountedQuick = mountQuickContribution($('share-composer'), { snapshot, topic });
+  history.replaceState(null, '', '#/share?' + new URLSearchParams({ topic: topic.id }));
+});
+document.querySelector('.skip-link').addEventListener('click', event => { event.preventDefault(); $('main').focus(); $('main').scrollIntoView(); });
 window.addEventListener('hashchange', () => route());
 load();

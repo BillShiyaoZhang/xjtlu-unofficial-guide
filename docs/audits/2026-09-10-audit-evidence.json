@@ -1,0 +1,216 @@
+{
+  "auditDate": "2026-09-10",
+  "method": "Pre-redesign baseline recorded before the 2026-09-10 community UI implementation. Local snapshot; search logic reproduced from the then-current community/pages-ui/app.js:98-125. Browser independently confirmed 申请研究生=0 and 升学=3 in that earlier version. Counts are content inventory, not usage analytics; these search results do not describe the new implementation.",
+  "answerCount": 76,
+  "reviewStatus": {
+    "collected": 76
+  },
+  "audiences": {
+    "undergraduate": 20,
+    "postgraduate": 18,
+    "universal": 40,
+    "new-student": 17
+  },
+  "campuses": {
+    "universal": 63,
+    "suzhou": 9,
+    "taicang": 4
+  },
+  "reviewDueAt": {
+    "2026-10-10T00:00:00.000Z": 19,
+    "2026-12-09T00:00:00.000Z": 50,
+    "2026-11-09T00:00:00.000Z": 7
+  },
+  "topics": {
+    "学习与教务": 9,
+    "账号与系统": 11,
+    "校园办事": 6,
+    "国际学生支持": 1,
+    "身心健康与求助": 3,
+    "费用与资助入口": 1,
+    "到校准备": 2,
+    "图书馆与信息素养": 8,
+    "语言与学术写作": 3,
+    "海外交流": 3,
+    "实习就业与升学": 3,
+    "科研与创新": 3,
+    "校区与地图": 5,
+    "交通与出行": 3,
+    "住宿与报修": 5,
+    "饮食与城市生活": 4,
+    "体育与运动": 2,
+    "社团与活动": 1,
+    "使用本指南": 1,
+    "学生社区与非官方资源": 2
+  },
+  "searches": [
+    {
+      "query": "申请研究生",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "升学",
+      "count": 3,
+      "results": [
+        {
+          "id": "handbook-internship-job-search",
+          "title": "找实习或校招信息，有哪些校内入口？"
+        },
+        {
+          "id": "handbook-career-advice-mentor",
+          "title": "对职业方向没把握，怎样准备职业咨询或校外导师交流？"
+        },
+        {
+          "id": "handbook-postgraduate-application-materials",
+          "title": "准备升学申请，先整理哪些材料？"
+        }
+      ]
+    },
+    {
+      "query": "申请硕士",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "找导师",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "宿舍报修",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "暑研",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "暑期科研",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "太仓 打印",
+      "count": 0,
+      "results": []
+    },
+    {
+      "query": "图书馆",
+      "count": 15,
+      "results": [
+        {
+          "id": "handbook-arrival-academic-integrity-ai",
+          "title": "作业使用了生成式 AI，提交前应检查什么？"
+        },
+        {
+          "id": "handbook-arrival-system-bookmarks",
+          "title": "常用系统太多，先收藏哪些入口？"
+        },
+        {
+          "id": "handbook-arrival-account-setup",
+          "title": "校园账号怎么开始用，忘记密码怎么办？"
+        },
+        {
+          "id": "handbook-arrival-emergency-help",
+          "title": "遇到紧急情况，应该拨打什么电话？"
+        },
+        {
+          "id": "handbook-arrival-accessibility-support",
+          "title": "有无障碍或学习支持需求，怎样提前沟通？"
+        },
+        {
+          "id": "handbook-find-books-articles",
+          "title": "找教材、论文和电子书，从图书馆哪里开始？"
+        },
+        {
+          "id": "handbook-library-renew-reserve",
+          "title": "图书续借、预约或跨馆取书，怎样先查清楚？"
+        },
+        {
+          "id": "handbook-library-study-space",
+          "title": "想找自习位或讨论室，应该先核对什么？"
+        },
+        {
+          "id": "handbook-collect-textbooks",
+          "title": "开学领教材，错过集中发放怎么办？"
+        },
+        {
+          "id": "handbook-library-research-skills",
+          "title": "不会检索或管理参考文献，怎样利用图书馆支持？"
+        },
+        {
+          "id": "handbook-past-papers-and-fyp",
+          "title": "哪里找往年试卷与毕业论文，怎样正确使用？"
+        },
+        {
+          "id": "handbook-life-public-library",
+          "title": "园区校园附近还可以去哪里阅读、自习？"
+        },
+        {
+          "id": "handbook-first-week-action-list",
+          "title": "到校第一周，可以按什么顺序把基本事项做完？"
+        },
+        {
+          "id": "handbook-supplement-library-suggest-purchase",
+          "title": "图书馆没有想读的书，可以怎样荐购？"
+        },
+        {
+          "id": "handbook-supplement-library-interlibrary-loan",
+          "title": "硕士研究需要的文献不在馆藏里，能向哪里求助？"
+        }
+      ]
+    },
+    {
+      "query": "选课",
+      "count": 3,
+      "results": [
+        {
+          "id": "handbook-timetable-academic-help",
+          "title": "课表有冲突或课程信息不对，怎样描述问题？"
+        },
+        {
+          "id": "handbook-eap-study-habits",
+          "title": "全英文学习刚开始，怎样用好 EAP？"
+        },
+        {
+          "id": "handbook-summer-school-plan",
+          "title": "海外暑校怎么找，哪些事需要先问清？"
+        }
+      ]
+    }
+  ],
+  "browserChecks": [
+    {
+      "viewport": "390x844",
+      "route": "/",
+      "observation": "No directly readable answer in initial viewport; topics collapsed; root appears near bottom."
+    },
+    {
+      "viewport": "390x844",
+      "article": "handbook-postgraduate-application-materials",
+      "firstBodyTopCssPx": 720.7265625,
+      "observation": "Title, repeated review notices and metadata precede answer."
+    },
+    {
+      "viewport": "390x844",
+      "action": "Enter on article link",
+      "activeElementAfterNavigation": "BODY",
+      "scrollY": 0
+    },
+    {
+      "viewport": "390x844",
+      "action": "Return to directory from third 升学 result",
+      "directoryScrollYBefore": 572,
+      "directoryScrollYAfter": 0,
+      "queryPreserved": true
+    }
+  ],
+  "limitations": [
+    "No student usability sessions or analytics assessed.",
+    "No full source-content correctness audit or exhaustive accessibility/performance testing.",
+    "No external submissions, production mutations or deployment."
+  ]
+}

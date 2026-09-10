@@ -46,8 +46,12 @@ async function fixture(t) {
     links: [],
   };
   await writeFile(join(root, 'public.json'), JSON.stringify(data));
+  await writeFile(join(root, 'community-topics.json'), JSON.stringify({ schemaVersion: 1, topics: [{
+    id: 'synthetic-supplement-question', catalogTopicId: topic.id, title: '合成补充讨论',
+    prompt: '补充这组合成陈述的信息。', kind: 'question', editorial: true,
+  }] }));
   const assets = new Map();
-  for (const name of ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg', 'public.json', 'branches.js', 'branch-model.js', 'branches.css', 'core/index.js', 'core/branches.js']) {
+  for (const name of ['index.html', 'app.js', 'contributions.js', 'topic-model.js', 'discussions.js', 'search.js', 'community.js', 'community-topics.json', 'style.css', 'brand.svg', 'public.json', 'branches.js', 'branch-model.js', 'branches.css', 'core/index.js', 'core/branches.js']) {
     const type = name.endsWith('.js') ? 'text/javascript' : name.endsWith('.css') ? 'text/css' : name.endsWith('.json') ? 'application/json' : name.endsWith('.svg') ? 'image/svg+xml' : 'text/html';
     assets.set(basePath + (name === 'index.html' ? '' : name), { body: await readFile(join(root, name)), type });
   }
@@ -160,7 +164,7 @@ test('supplement contribution links bind the current public parent and only prep
   assert.equal(await page.locator('#contribution-type option[value=supplement]').evaluate(option => option.disabled), true);
   assert.equal(await page.locator('#contribution-type').inputValue(), 'new');
   assert.equal(await page.locator('#contribution-supplement-help').isVisible(), true);
-  await page.locator('#contribute-nav').click();
+  await page.goto(site.base + '#/contribute');
   await page.locator('#contribution-context').waitFor({ state: 'hidden' });
   assert.equal(await page.locator('#contribution-type option[value=supplement]').evaluate(option => option.disabled), true);
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);

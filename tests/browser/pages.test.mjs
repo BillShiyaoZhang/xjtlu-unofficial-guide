@@ -77,7 +77,7 @@ async function staticSite(t, { production = false, reviewed = false, empty = fal
   await mkdir(community);
   const loaded = await loadCommunity({ includeDemo: !production });
   await Promise.all([
-    ...['content-profile.json', 'catalog.json'].map(name => copyFile(resolve('community', name), join(community, name))),
+    ...['content-profile.json', 'catalog.json', 'community-topics.json'].map(name => copyFile(resolve('community', name), join(community, name))),
     writeFile(join(community, 'content.json'), JSON.stringify(loaded.bundle)),
     cp(resolve('community/pages-ui'), join(community, 'pages-ui'), { recursive: true }),
   ]);
@@ -112,6 +112,8 @@ async function staticSite(t, { production = false, reviewed = false, empty = fal
   const assets = new Map();
   for (const [name, type] of [
     ['index.html', 'text/html; charset=utf-8'], ['app.js', 'text/javascript; charset=utf-8'], ['contributions.js', 'text/javascript; charset=utf-8'],
+    ['topic-model.js', 'text/javascript; charset=utf-8'], ['discussions.js', 'text/javascript; charset=utf-8'],
+    ['search.js', 'text/javascript; charset=utf-8'], ['community.js', 'text/javascript; charset=utf-8'], ['community-topics.json', 'application/json; charset=utf-8'],
     ['branches.js', 'text/javascript; charset=utf-8'], ['branch-model.js', 'text/javascript; charset=utf-8'],
     ['core/index.js', 'text/javascript; charset=utf-8'], ['core/branches.js', 'text/javascript; charset=utf-8'], ['branches.css', 'text/css; charset=utf-8'],
     ['style.css', 'text/css; charset=utf-8'], ['brand.svg', 'image/svg+xml'], ['public.json', 'application/json; charset=utf-8'],
@@ -163,7 +165,7 @@ test('Pages branches group independent statements and preserve reading context a
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
     await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
-    await page.goto(site.base);
+    await page.goto(site.base + '#/answers?view=branches');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'true');
     assert.equal(await page.locator('#answer-list').isVisible(), false);
@@ -269,7 +271,7 @@ test('Pages branches show explicit public relationships as escaped cross links a
   const page = await context.newPage(), errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.route('**/public.json', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(data) }));
-  await page.goto(site.base);
+  await page.goto(site.base + '#/answers?view=branches');
   await page.locator('body[data-ready=true]').waitFor();
   const related = page.locator('#directory-branches .guide-branch-related');
   assert.equal(await related.getAttribute('open'), null);
@@ -302,7 +304,7 @@ test('the production guide contains 76 collected articles and no demo pages on d
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
-    assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+    assert.equal(await page.locator('#edition-label').innerText(), '校园资料与共同记录');
     assert.equal(await page.locator('#count').innerText(), '76 条答案');
     assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 76);
     assert.equal(await page.locator('#answer-list [data-review-status=demo], .demo').count(), 0);
@@ -346,7 +348,7 @@ test('public Pages reader works on a project subpath across desktop and mobile w
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
     assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.length);
-    assert.equal(await page.getByText('公开只读演示', { exact: true }).count(), 1);
+    assert.equal(await page.getByText('公开演示', { exact: true }).count(), 1);
     assert.equal(await page.locator('input[type=password]').count(), 0);
     assert.equal(await page.locator('a[href^="/"]').count(), 0);
     await assertPageFits(page);
@@ -448,7 +450,7 @@ test('reviewed Pages show AI confirmation and recompute overdue warnings across 
     await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
-    assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+    assert.equal(await page.locator('#edition-label').innerText(), '校园资料与共同记录');
     assert.equal(await page.locator('#edition-note').innerText(), '经人工审核 · 非学校官方信息');
     assert.equal(await page.locator('#answer-list .answer-item').count(), 2);
     for (const item of await page.locator('#answer-list .answer-item').all()) {
@@ -507,12 +509,12 @@ test('an empty reviewed Pages snapshot remains an empty directory without demo f
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(site.base + '#/answers?view=list');
   await page.locator('body[data-ready=true]').waitFor();
-  assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+  assert.equal(await page.locator('#edition-label').innerText(), '校园资料与共同记录');
   assert.equal(await page.locator('#edition-note').innerText(), '暂无已发布内容');
   assert.equal(await page.locator('#count').innerText(), '0 条答案');
   assert.equal(await page.locator('#answer-list .answer-item').count(), 0);
   assert.match(await page.locator('#answer-list').innerText(), /暂无符合条件的公开答案/u);
-  assert.equal(await page.getByText('公开只读演示', { exact: true }).count(), 0);
+  assert.equal(await page.getByText('公开演示', { exact: true }).count(), 0);
   await page.locator('#query').fill('教务系统');
   assert.equal(await page.locator('#answer-list .answer-item').count(), 0);
   await page.reload();
@@ -534,7 +536,7 @@ test('reviewed snapshots keep demo-only and mixed-edition labels accurate', asyn
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
-    assert.equal(await page.locator('#edition-label').innerText(), onlyDemo ? '公开只读演示' : '公开只读指南');
+    assert.equal(await page.locator('#edition-label').innerText(), onlyDemo ? '公开演示' : '校园资料与共同记录');
     if (onlyDemo) assert.doesNotMatch(await page.locator('.edition').innerText(), /经人工审核/u);
     else assert.match(await page.locator('#edition-note').innerText(), /含审核文章和演示内容/u);
     assert.equal(await page.locator('#answer-list .demo').count(), site.data.answers.filter(answer => answer.demo).length);
@@ -590,7 +592,7 @@ test('Pages drafts all contribution types on site and prefills GitHub without su
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
-    await page.locator('#contribute-nav').click();
+    await page.goto(site.base + '#/contribute');
     await page.locator('#contribute-view').waitFor({ state: 'visible' });
     assert.equal(await page.locator('#contribute-nav').getAttribute('aria-current'), 'page');
     assert.match(await page.locator('#contribute-view').innerText(), /需要登录 GitHub 账号/u);
@@ -691,7 +693,7 @@ test('Pages contribution validation and long-draft fallback preserve content wit
   assert.equal(await page.locator('#contribution-long').isVisible(), false);
   assert.equal(await page.locator('#contribution-long-open').getAttribute('href'), null);
   await page.locator('#about-nav').click();
-  await page.locator('#contribute-nav').click();
+  await page.goto(site.base + '#/contribute');
   assert.equal(await page.locator('#contribution-content').inputValue(), '修改后的简短内容');
   await page.reload();
   await page.locator('body[data-ready=true]').waitFor();
@@ -740,7 +742,7 @@ test('Pages keep separate in-memory drafts for each article and general contribu
   assert.equal(await page.locator('#contribution-content').inputValue(), '只对应第一篇的更正内容');
   assert.equal(await page.locator('#contribution-type').inputValue(), 'correction');
   assert.equal(await page.locator('#contribution-public').isChecked(), true);
-  await page.locator('#contribute-nav').click();
+  await page.goto(site.base + '#/contribute');
   await page.locator('#contribution-context').waitFor({ state: 'hidden' });
   assert.equal(await page.locator('#contribution-title').inputValue(), '通用投稿');
   assert.equal(await page.locator('#contribution-content').inputValue(), '尚未关联文章的内容');
@@ -759,7 +761,7 @@ test('public guide distinguishes collected, approved, and demo articles on deskt
     await page.addInitScript(() => { Date.now = () => Date.parse('2026-09-12T00:00:00Z'); });
     await page.goto(site.base + '#/answers?view=list');
     await page.locator('body[data-ready=true]').waitFor();
-    assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+    assert.equal(await page.locator('#edition-label').innerText(), '校园资料与共同记录');
     assert.equal(await page.locator('#edition-note').innerText(), '资料整理内容待人工核验 · 非学校官方信息');
     assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 3);
     assert.equal(await page.locator('#answer-list [data-review-status=approved]').count(), 2);
@@ -838,7 +840,7 @@ test('all 69 collected fixture articles remain searchable among 73 public answer
   await page.locator('#about-view').waitFor({ state: 'visible' });
   assert.match(await page.locator('#about-content-description').innerText(), /尚未逐条人工核验/u);
   assert.doesNotMatch(await page.locator('#about-content-description').innerText(), /已经人工审核的文章/u);
-  assert.equal(await page.getByText('公开只读演示', { exact: true }).count(), 0);
+  assert.equal(await page.getByText('公开演示', { exact: true }).count(), 0);
   await assertPageFits(page);
   assert.deepEqual(errors, []);
 });
@@ -869,6 +871,8 @@ test('all three source categories appear in article cards and citations independ
     assert.deepEqual(await page.locator('#answer-detail > .source-categories .source-category').allTextContents(), ['学校官方', '用户提供', '网络资料']);
     assert.deepEqual(await page.locator('.citation .source-category').allTextContents(), ['学校官方', '用户提供', '网络资料']);
     assert.match(await page.locator('#answer-detail').innerText(), /整理方式：AI 辅助初稿，经人工审核确认/u);
+    assert.equal(await page.locator('.sentence-sources').getAttribute('open'), null);
+    await page.locator('.sentence-sources > summary').click();
     assert.match(await page.locator('.citation').nth(1).innerText(), /发布方：投稿用户/u);
     await assertPageFits(page);
     assert.deepEqual(errors, []);

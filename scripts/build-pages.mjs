@@ -7,10 +7,11 @@ import { sourceCategories } from '../community/source-categories.mjs';
 import { publicSourceMetadata } from '../community/source-registry.mjs';
 import { branchBrowserAssets } from './branch-assets.mjs';
 import { connectedSupplements, supplementMetadata } from '../community/supplements.mjs';
+import { validateTopicsConfig } from '../community/pages-ui/topic-model.js';
 
-const assets = ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg'];
+const assets = ['index.html', 'app.js', 'contributions.js', 'topic-model.js', 'discussions.js', 'search.js', 'community.js', 'style.css', 'brand.svg'];
 const branchAssets = ['branches.js', 'branch-model.js', 'branches.css', 'core/index.js', 'core/branches.js', 'core/LICENSE'];
-const outputs = [...assets, ...branchAssets, 'public.json', '.nojekyll'];
+const outputs = [...assets, ...branchAssets, 'public.json', 'community-topics.json', '.nojekyll'];
 const pick = (value, names) => Object.fromEntries(names.filter(name => value[name] !== undefined).map(name => [name, value[name]]));
 const fail = message => { throw new Error(`Pages build: ${message}`); };
 const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
@@ -143,6 +144,15 @@ export async function buildPages({ root = resolve('.'), now, origin, basePath } 
     const catalog = await jsonFile(resolve(community, 'catalog.json'));
     data = createPagesData({ config, profile, content, catalog, now, origin, basePath });
   }
+  let topics = { schemaVersion: 1, topics: [] };
+  try {
+    const topicsFile = resolve(community, 'community-topics.json');
+    const stat = await lstat(topicsFile);
+    if (!stat.isFile() || stat.isSymbolicLink()) fail('community topics must be a regular file');
+    topics = await jsonFile(topicsFile);
+  } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  // Use the public catalog: an editorial prompt must not expose a hidden catalog category.
+  topics = validateTopicsConfig(topics, data.catalog);
   const source = resolve(community, 'pages-ui');
   for (const name of assets) {
     const stat = await lstat(resolve(source, name));
@@ -174,8 +184,9 @@ export async function buildPages({ root = resolve('.'), now, origin, basePath } 
     await writeFile(resolve(output, name), body);
   }
   await writeFile(resolve(output, 'public.json'), JSON.stringify(data, null, 2) + '\n');
+  await writeFile(resolve(output, 'community-topics.json'), JSON.stringify(topics, null, 2) + '\n');
   await writeFile(resolve(output, '.nojekyll'), '');
-  return { output, answerCount: data.answers.length };
+  return { output, answerCount: data.answers.length, topicCount: topics.topics.length };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

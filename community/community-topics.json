@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "topics": [
+    {
+      "id": "before-your-first-class",
+      "catalogTopicId": "topic-study",
+      "title": "你最希望开课前有人告诉你的那件事",
+      "prompt": "你修过的课里，有什么是开课前不知道、后来觉得值得提醒下一届的？可以分享一项先修基础、一种作业形式或一个小经历。记得的话，请带上课程代码、修读学期和自己的基础；不同学期、不同背景的体验都欢迎。",
+      "kind": "question",
+      "editorial": true
+    },
+    {
+      "id": "wish-i-knew-campus-resources",
+      "catalogTopicId": "topic-services",
+      "title": "有什么校园资源，你希望早点知道？",
+      "prompt": "说说一个帮到你的地方、服务、工具或信息入口，以及你当时怎样使用它。知道校区、使用条件或链接的话可以顺手补上；只记得一部分也可以先分享。遇到不同情况也欢迎补充。",
+      "kind": "question",
+      "editorial": true
+    },
+    {
+      "id": "masters-first-month-questions",
+      "catalogTopicId": "topic-arrival",
+      "title": "读硕士的第一个月，什么最让你困惑？",
+      "prompt": "从课程、论文准备到校园生活，分享一个你刚读硕士时遇到的问题：后来怎样解决，或者现在还卡在哪里？能补充专业、校区或当时的学习阶段会更有帮助；新问题和不同经历都欢迎。",
+      "kind": "question",
+      "editorial": true
+    }
+  ]
+}

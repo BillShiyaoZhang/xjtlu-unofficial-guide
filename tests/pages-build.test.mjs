@@ -1,17 +1,35 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { lstat, mkdtemp, mkdir, readFile, readdir, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { buildPages, createPagesData } from '../scripts/build-pages.mjs';
 import { loadCommunity, loadDemoPagesConfig } from './helpers.mjs';
 
 const community = new URL('../community/', import.meta.url);
+const uiAssets = ['index.html', 'app.js', 'contributions.js', 'topic-model.js', 'discussions.js', 'search.js', 'community.js', 'style.css', 'brand.svg'];
+const assetFixture = { 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")',
+  'contributions.js': 'export const contributionTypes = {};', 'topic-model.js': 'export const topicCards = () => [];',
+  'discussions.js': 'export const discussions = [];', 'search.js': 'export const search = () => [];', 'community.js': 'export const community = {};',
+  'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' };
 const readJson = async name => JSON.parse(await readFile(new URL(name, community), 'utf8'));
 async function fixture() {
   const config = await loadDemoPagesConfig();
   delete config.collectedRevisionIds;
   return { config, profile: await readJson('content-profile.json'), content: (await loadCommunity({ includeDemo: true })).bundle, catalog: await readJson('catalog.json'), now: '2026-09-10T00:00:00Z' };
+}
+
+async function topicsBuildFixture(t) {
+  const root = await mkdtemp(resolve(tmpdir(), 'guide-pages-topics-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const directory = resolve(root, 'community');
+  await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
+  const input = await fixture();
+  for (const [name, data] of [['pages.config.json', input.config], ['content-profile.json', input.profile], ['content.json', input.content], ['catalog.json', input.catalog]]) {
+    await writeFile(resolve(directory, name), JSON.stringify(data));
+  }
+  for (const [name, contents] of Object.entries(assetFixture)) await writeFile(resolve(directory, 'pages-ui', name), contents);
+  return { root, directory, input, topicsFile: resolve(directory, 'community-topics.json') };
 }
 
 test('Pages exports exactly the reviewed demo revisions as public DTOs', async () => {
@@ -86,17 +104,19 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   const input = await fixture();
   await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify(input.config));
   await writeFile(resolve(directory, 'content.json'), JSON.stringify(input.content));
-  for (const [name, contents] of Object.entries({ 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'contributions.js': 'export const contributionTypes = {};', 'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' })) await writeFile(resolve(directory, 'pages-ui', name), contents);
+  for (const [name, contents] of Object.entries(assetFixture)) await writeFile(resolve(directory, 'pages-ui', name), contents);
   await mkdir(resolve(directory, '.runtime'));
   await writeFile(resolve(directory, '.runtime', 'community.sqlite'), 'PRIVATE_DATABASE_SENTINEL');
   await writeFile(resolve(directory, '.dev-secrets.json'), 'PRIVATE_SECRETS_SENTINEL');
   const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
   assert.equal(result.answerCount, 4);
-  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'branch-model.js', 'branches.css', 'branches.js', 'brand.svg', 'contributions.js', 'core', 'index.html', 'public.json', 'style.css']);
+  assert.deepEqual((await readdir(result.output)).sort(), ['.nojekyll', 'app.js', 'branch-model.js', 'branches.css', 'branches.js', 'brand.svg', 'community-topics.json', 'community.js', 'contributions.js', 'core', 'discussions.js', 'index.html', 'public.json', 'search.js', 'style.css', 'topic-model.js']);
   assert.deepEqual((await readdir(resolve(result.output, 'core'))).sort(), ['LICENSE', 'branches.js', 'index.js']);
   const serialized = await readFile(resolve(result.output, 'public.json'), 'utf8');
   assert.ok(!serialized.includes('PRIVATE_DATABASE_SENTINEL'));
   assert.ok(!serialized.includes('PRIVATE_SECRETS_SENTINEL'));
+  assert.equal(result.topicCount, 0);
+  assert.deepEqual(JSON.parse(await readFile(resolve(result.output, 'community-topics.json'), 'utf8')), { schemaVersion: 1, topics: [] });
   await writeFile(resolve(result.output, 'private-backup.json'), 'DO_NOT_PUBLISH');
   await assert.rejects(buildPages({ root }), /unexpected output private-backup.json/);
 });
@@ -106,15 +126,17 @@ test('the production Pages build contains exactly the 76 real articles and no de
   t.after(() => rm(root, { recursive: true, force: true }));
   const directory = resolve(root, 'community');
   await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
-  for (const name of ['pages.config.json', 'pages-reviewed.json', 'content-profile.json', 'content.json', 'catalog.json']) {
+  for (const name of ['pages.config.json', 'pages-reviewed.json', 'content-profile.json', 'content.json', 'catalog.json', 'community-topics.json']) {
     await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
   }
-  for (const name of ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg']) {
+  for (const name of uiAssets) {
     await writeFile(resolve(directory, 'pages-ui', name), await readFile(new URL(`pages-ui/${name}`, community)));
   }
   const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
   const data = JSON.parse(await readFile(resolve(result.output, 'public.json'), 'utf8'));
   assert.equal(result.answerCount, 76);
+  assert.equal(result.topicCount, 3);
+  assert.deepEqual(JSON.parse(await readFile(resolve(result.output, 'community-topics.json'), 'utf8')), await readJson('community-topics.json'));
   assert.ok(data.answers.every(answer => answer.demo === false && answer.reviewStatus === 'collected'));
   const handbook = await readJson('handbook/runtime-import.json');
   assert.deepEqual(new Set(data.answers.map(answer => answer.id)), new Set(handbook.entities.filter(entity => entity.type === 'answer').map(entity => entity.id)));
@@ -122,4 +144,55 @@ test('the production Pages build contains exactly the 76 real articles and no de
   input.config = await readJson('pages.config.json');
   delete input.config.collectedRevisionIds;
   assert.deepEqual(createPagesData(input).answers, [], 'cleared authorizations cannot publish even the explicit test-only demo bundle');
+});
+
+test('Pages topics round-trip independently of public answers and only refer to the public catalog', async t => {
+  const fixture = await topicsBuildFixture(t);
+  const topics = await readJson('community-topics.json');
+  await writeFile(fixture.topicsFile, JSON.stringify(topics));
+  const result = await buildPages({ root: fixture.root, now: fixture.input.now });
+  assert.equal(result.topicCount, 3);
+  assert.equal(result.answerCount, 4, 'editorial topics do not create published answer revisions');
+  assert.deepEqual(JSON.parse(await readFile(resolve(result.output, 'community-topics.json'), 'utf8')), topics);
+  const catalog = structuredClone(fixture.input.catalog);
+  catalog.topics.find(topic => topic.id === topics.topics[0].catalogTopicId).status = 'hidden';
+  await writeFile(resolve(fixture.directory, 'catalog.json'), JSON.stringify(catalog));
+  await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), /unknown catalog topic/u);
+});
+
+test('Pages rejects invalid and private topic fields before writing any output', async t => {
+  const fixture = await topicsBuildFixture(t);
+  const seed = await readJson('community-topics.json');
+  const invalid = [
+    { ...seed, schemaVersion: 2 },
+    { ...seed, privateNotes: 'PRIVATE_TOPICS_SENTINEL' },
+    { ...seed, topics: [{ ...seed.topics[0], payload: 'PRIVATE_TOPIC_PAYLOAD' }] },
+    { ...seed, topics: [{ ...seed.topics[0], catalogTopicId: 'unknown-topic' }] },
+    { ...seed, topics: [{ ...seed.topics[0], kind: 'event', event: { status: 'scheduled', registrationUrl: 'https://localhost/' } }] },
+    { ...seed, topics: [{ ...seed.topics[0], kind: 'event', event: { status: 'scheduled', internalNotes: 'PRIVATE_EVENT_NOTE' } }] },
+  ];
+  for (const input of invalid) {
+    await writeFile(fixture.topicsFile, JSON.stringify(input));
+    await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), TypeError);
+    await assert.rejects(lstat(resolve(fixture.directory, 'pages-dist')), { code: 'ENOENT' });
+  }
+  await writeFile(fixture.topicsFile, '{invalid-json');
+  await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), SyntaxError);
+});
+
+test('Pages rejects topic directories and symlinked input rather than treating them as absent', async t => {
+  const fixture = await topicsBuildFixture(t);
+  await mkdir(fixture.topicsFile);
+  await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), /community topics must be a regular file/u);
+  await rm(fixture.topicsFile, { recursive: true });
+  const target = resolve(fixture.directory, 'topic-source.json');
+  await writeFile(target, JSON.stringify(await readJson('community-topics.json')));
+  try { await symlink(target, fixture.topicsFile, 'file'); }
+  catch (error) {
+    if (['EPERM', 'EACCES', 'ENOTSUP'].includes(error.code)) { t.diagnostic(`File symlinks unavailable on this host: ${error.code}; directory rejection was verified.`); return; }
+    throw error;
+  }
+  await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), /community topics must be a regular file/u);
+  await rm(target);
+  await assert.rejects(buildPages({ root: fixture.root, now: fixture.input.now }), /community topics must be a regular file/u);
 });
