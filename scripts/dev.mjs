@@ -23,7 +23,7 @@ try {
 const env = { ...process.env, RUNTIME_MFA_KEY: secrets.mfaKey, RUNTIME_KEYRING: JSON.stringify(secrets.keyring) };
 let app;
 for (let port = Number(process.env.PORT ?? 4317); port < 4340; port++) {
-  try { app = await startGuide({ root, configFile: 'runtime.demo.json', env, port, host: '127.0.0.1' }); break; }
+  try { app = await startGuide({ root, configFile: 'runtime.demo.json', env, port, host: '127.0.0.1', localPasswordOnly: true }); break; }
   catch (error) { if (error.code !== 'EADDRINUSE') throw error; }
 }
 if (!app) throw new Error('No available demo port.');

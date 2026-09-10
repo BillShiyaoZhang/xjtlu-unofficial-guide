@@ -353,6 +353,44 @@ test('export reads a real private runtime database, preserves no-op bytes and re
   assert.deepEqual(await readFile(databasePath), databaseBytes, 'export must never write or migrate the source runtime database');
 });
 
+test('export replaces an old contribution destination while keeping current configuration and prior snapshot validation strict', async t => {
+  const h = await setup(t);
+  await h.review((await h.articles()).find(row => row.origin === 'ai_draft'));
+  const { root, directory } = await exportFixture(t);
+  await mkdir(resolve(directory, '.demo-runtime'));
+  await backup(h.store.db, resolve(directory, '.demo-runtime', 'community.sqlite'));
+  const now = new Date(h.time()).toISOString();
+  const oldConfig = { ...h.config, contributionsRepository: 'previous-owner/previous-feedback' };
+  const newConfig = { ...h.config, contributionsRepository: 'current-owner/current-feedback' };
+  const configPath = resolve(directory, 'pages.config.json');
+  await writeFile(configPath, JSON.stringify(oldConfig));
+  const first = await exportPagesSnapshot({ root, demo: true, now });
+  const previous = JSON.parse(await readFile(first.snapshotPath, 'utf8'));
+  assert.equal(previous.site.contributionsRepository, oldConfig.contributionsRepository);
+  await writeFile(configPath, JSON.stringify(newConfig));
+  assert.throws(() => validateReviewedPagesData(previous, { config: newConfig }));
+  const replacement = await exportPagesSnapshot({ root, demo: true, now });
+  assert.equal(replacement.changed, true);
+  assert.notEqual(replacement.contentHash, first.contentHash);
+  const current = JSON.parse(await readFile(replacement.snapshotPath, 'utf8'));
+  assert.equal(current.site.contributionsRepository, newConfig.contributionsRepository);
+  assert.deepEqual(current.answers, previous.answers);
+  assert.deepEqual(validateReviewedPagesData(current, { config: newConfig }), current);
+  assert.equal((await exportPagesSnapshot({ root, demo: true, now })).changed, false);
+  for (const mutate of [
+    value => { value.privateData = 'SYNTHETIC_PRIVATE_PREVIOUS_SNAPSHOT'; value.contentHash = pagesContentHash(value); },
+    value => { value.answers[0].title = 'Synthetic hash mismatch'; },
+    value => { value.site.publicUrl = 'https://different.example/guide/'; value.contentHash = pagesContentHash(value); },
+  ]) {
+    const invalidPrevious = structuredClone(previous);
+    mutate(invalidPrevious);
+    const bytes = JSON.stringify(invalidPrevious);
+    await writeFile(first.snapshotPath, bytes);
+    await assert.rejects(exportPagesSnapshot({ root, demo: true, now }));
+    assert.equal(await readFile(first.snapshotPath, 'utf8'), bytes, 'a destination change must not excuse private fields, bad hashes or a different site identity');
+  }
+});
+
 test('export rejects blank, incomplete or incompatible databases without modifying them or the existing public snapshot', async t => {
   const h = await setup(t);
   await h.review((await h.articles()).find(row => row.origin === 'ai_draft'));

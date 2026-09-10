@@ -48,7 +48,7 @@ function reviewedFixture(demo, { empty = false, onlyDemo = false, includeDemo = 
   return snapshot;
 }
 
-async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false, includeDemo = false } = {}) {
+async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false, includeDemo = false, contributionsRepository } = {}) {
   // Never consume or replace the operator's exported snapshot or build directory.
   const root = await mkdtemp(join(tmpdir(), 'guide-pages-browser-'));
   t.after(async () => {
@@ -62,6 +62,13 @@ async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false
     ...['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json'].map(name => copyFile(resolve('community', name), join(community, name))),
     cp(resolve('community/pages-ui'), join(community, 'pages-ui'), { recursive: true }),
   ]);
+  if (contributionsRepository !== undefined) {
+    const configFile = join(community, 'pages.config.json');
+    const config = JSON.parse(await readFile(configFile, 'utf8'));
+    if (contributionsRepository === null) delete config.contributionsRepository;
+    else config.contributionsRepository = contributionsRepository;
+    await writeFile(configFile, JSON.stringify(config));
+  }
   const { output } = await buildPages({ root, basePath, now: '2026-09-10T00:00:00Z' });
   if (reviewed) {
     const demo = JSON.parse(await readFile(join(output, 'public.json'), 'utf8'));
@@ -317,4 +324,101 @@ test('reviewed snapshots keep demo-only and mixed-edition labels accurate', asyn
     assert.deepEqual(errors, []);
     await context.close();
   }
+});
+
+test('Pages contributions link to three GitHub forms with public article context and no submission', async t => {
+  const repository = 'SyntheticOwner/public-guide-feedback';
+  const site = await staticSite(t, { reviewed: true, contributionsRepository: repository });
+  assert.equal(site.data.site.contributionsRepository, repository);
+  const first = site.data.answers[0];
+  for (const [name, viewport] of [['desktop', { width: 1440, height: 1040 }], ['mobile', { width: 390, height: 844 }]]) {
+    const context = await site.browser.newContext({ viewport });
+    const requests = [], errors = [];
+    context.on('request', request => requests.push({ url: request.url(), method: request.method(), headers: request.headers() }));
+    // Intercept the destination: exercise navigation without contacting GitHub or creating an Issue.
+    await context.route('https://github.com/**', route => route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Synthetic GitHub Form</title><p>Submission remains a manual GitHub action.</p>' }));
+    const page = await context.newPage();
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(site.base);
+    await page.locator('body[data-ready=true]').waitFor();
+    await page.locator('#contribute-nav').click();
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#contribute-nav').getAttribute('aria-current'), 'page');
+    assert.match(await page.locator('#contribute-view').innerText(), /需要登录 GitHub 账号/u);
+    assert.match(await page.locator('#contribute-view').innerText(), /提交内容公开可见/u);
+    assert.match(await page.locator('#contribute-view').innerText(), /请勿填写手机号、学号、证件号/u);
+    assert.equal(await page.locator('#contribution-context').isVisible(), false);
+    assert.equal(await page.locator('#contribution-options a').count(), 3);
+    for (const [id, template] of [
+      ['contribution-new', 'new-information.yml'], ['contribution-correction', 'correction.yml'], ['contribution-experience', 'experience.yml'],
+    ]) {
+      const link = page.locator(`#${id}`), url = new URL(await link.getAttribute('href'));
+      assert.equal(url.origin + url.pathname, `https://github.com/${repository}/issues/new`);
+      assert.equal(url.searchParams.get('template'), template);
+      assert.equal(url.searchParams.has('article'), false);
+      assert.equal(url.searchParams.has('revision'), false);
+      assert.equal(url.searchParams.has('context'), false);
+      assert.equal(await link.getAttribute('target'), '_blank');
+      assert.match(await link.getAttribute('rel'), /noopener/u);
+    }
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-contribute.png`), fullPage: true });
+
+    await page.goto(site.base + '#/answers/' + encodeURIComponent(first.id));
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    await page.getByRole('link', { name: '补充/更正这篇', exact: true }).click();
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#contribution-context').innerText(), new RegExp(first.title, 'u'));
+    for (const link of await page.locator('#contribution-options a').all()) {
+      const url = new URL(await link.getAttribute('href'));
+      assert.equal(url.searchParams.get('article'), new URL('#/answers/' + encodeURIComponent(first.id), site.data.site.publicUrl).href);
+      assert.equal(url.searchParams.get('revision'), first.revisionId);
+      assert.equal(url.searchParams.get('context'), `${first.title} · 文章 ID：${first.id}`);
+      assert.equal(url.searchParams.has('labels'), false);
+      assert.equal(url.searchParams.has('assignees'), false);
+      assert.equal(url.searchParams.has('token'), false);
+      assert.doesNotMatch(url.href, /127\.0\.0\.1|localhost/u);
+    }
+    const popupPromise = context.waitForEvent('page');
+    await page.locator('#contribution-correction').click();
+    const popup = await popupPromise;
+    await popup.waitForLoadState('domcontentloaded');
+    assert.equal(await popup.title(), 'Synthetic GitHub Form');
+    assert.equal(new URL(popup.url()).searchParams.get('template'), 'correction.yml');
+    await popup.close();
+    await page.reload();
+    await page.locator('body[data-ready=true]').waitFor();
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#contribution-context').innerText(), /第 2 版/u);
+    await assertPageFits(page);
+    await page.screenshot({ path: join(screenshots, `${name}-pages-contribute-article.png`), fullPage: true });
+
+    await page.goto(site.base + '#/contribute?article=' + encodeURIComponent(first.id) + '&revision=forged-private-version&context=private-note');
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#contribution-context').innerText(), /文章已更新/u);
+    assert.equal(new URL(await page.locator('#contribution-correction').getAttribute('href')).searchParams.get('revision'), first.revisionId);
+    assert.doesNotMatch(await page.locator('#contribution-correction').getAttribute('href'), /forged-private-version|private-note/u);
+    await page.goto(site.base + '#/contribute?article=unknown-private-id');
+    await page.locator('#contribute-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#contribution-context').innerText(), /未找到关联的公开文章/u);
+    assert.equal(new URL(await page.locator('#contribution-correction').getAttribute('href')).searchParams.has('context'), false);
+    assert.ok(requests.every(request => request.method === 'GET' && !request.headers.authorization));
+    assert.deepEqual(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length })), { local: 0, session: 0 });
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+});
+
+test('Pages contribution entry does not invent a destination without a configured public repository', async t => {
+  const site = await staticSite(t, { contributionsRepository: null });
+  const context = await site.browser.newContext({ viewport: { width: 390, height: 844 } });
+  t.after(() => context.close());
+  const page = await context.newPage();
+  await page.goto(site.base + '#/contribute');
+  await page.locator('body[data-ready=true]').waitFor();
+  await page.locator('#contribute-view').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#contribution-options').isVisible(), false);
+  assert.match(await page.locator('#contribution-unavailable').innerText(), /投稿入口暂未开放/u);
+  assert.equal(await page.locator('#contribute-view a[href^="https://github.com/"]').count(), 0);
+  await assertPageFits(page);
 });

@@ -94,7 +94,13 @@ export async function syncPagesSnapshot({ root = repositoryRoot, snapshotPath, r
   const pipeline = await git(root, ['show', `${parent}:scripts/build-pages.mjs`], { allowFailure: true });
   if (!pipeline?.includes('pages-reviewed.json')) throw failure('SYNC_PIPELINE_NOT_READY');
   const existing = await git(root, ['show', `${parent}:${snapshotFile}`], { allowFailure: true });
-  if (existing !== null && publicSnapshot(Buffer.from(existing), config).contentHash === snapshot.contentHash) {
+  let existingHash;
+  if (existing !== null) {
+    let previous;
+    try { previous = JSON.parse(existing); } catch { throw failure('SYNC_SNAPSHOT'); }
+    existingHash = publicSnapshot(Buffer.from(existing), { ...config, contributionsRepository: previous.site?.contributionsRepository }).contentHash;
+  }
+  if (existingHash === snapshot.contentHash) {
     return { changed: false, commit: parent, contentHash: snapshot.contentHash, branch };
   }
   for (const identity of ['GIT_AUTHOR_IDENT', 'GIT_COMMITTER_IDENT']) await git(root, ['var', identity], { code: 'SYNC_IDENTITY' });

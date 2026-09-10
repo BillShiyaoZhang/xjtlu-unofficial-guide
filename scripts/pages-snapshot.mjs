@@ -28,7 +28,9 @@ export function pagesSite(config, overrides = {}) {
   if (!isSafePublicUrl(origin) || url.protocol !== 'https:' || url.pathname !== '/' || url.search || url.hash) fail('site origin must be public HTTPS');
   if (typeof basePath !== 'string' || !/^\/(?:[a-zA-Z0-9._-]+\/)*$/u.test(basePath) || basePath.split('/').some(part => part === '.' || part === '..')) fail('invalid basePath');
   text(config.siteName, 160, 1);
-  return { name: config.siteName, basePath, publicUrl: url.origin + basePath };
+  const repository = config.contributionsRepository;
+  if (repository !== undefined && (typeof repository !== 'string' || !/^[a-zA-Z0-9][a-zA-Z0-9-]{0,38}\/[a-zA-Z0-9_.-]{1,100}$/u.test(repository) || ['.', '..'].includes(repository.split('/')[1]))) fail('invalid contributions repository');
+  return { name: config.siteName, basePath, publicUrl: url.origin + basePath, ...(repository ? { contributionsRepository: repository } : {}) };
 }
 function publicUrl(value, site) {
   if (['http://localhost:4317/about', 'http://localhost:4317/about#method'].includes(value)) return site.publicUrl + '#/about';
@@ -43,8 +45,11 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
   date(input.generatedAt);
   if (!/^[a-f0-9]{64}$/u.test(input.contentHash) || pagesContentHash(input) !== input.contentHash) fail('content hash mismatch');
   const site = pagesSite(config, overrides);
-  exact(input.site, ['name', 'basePath', 'publicUrl']);
-  if (JSON.stringify(canonical(input.site)) !== JSON.stringify(canonical(site))) fail('snapshot site differs from Pages configuration; export it again');
+  exact(input.site, ['name', 'basePath', 'publicUrl', 'contributionsRepository']);
+  // Old snapshots remain valid until the first export after enabling submissions.
+  const expectedSite = { ...site };
+  if (input.site.contributionsRepository === undefined) delete expectedSite.contributionsRepository;
+  if (JSON.stringify(canonical(input.site)) !== JSON.stringify(canonical(expectedSite))) fail('snapshot site differs from Pages configuration; export it again');
   exact(input.catalog, ['topics', 'scopes', 'publishers']);
   for (const [key, fields] of [
     ['topics', ['id', 'slug', 'titleZh', 'description']], ['scopes', ['id', 'dimension', 'code', 'labelZh']],

@@ -21,11 +21,16 @@
       <form id="login-form" class="login-form">
         <label>账户 ID<input name="accountId" autocomplete="username" required maxlength="120"></label>
         <label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="1024"></label>
-        <label>双重验证码<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></label>
-        <button type="submit">登录</button>
+        <label id="login-code-field">双重验证码<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></label>
+        <button id="login-submit" type="submit" disabled>登录</button>
       </form>
     </section>
     <div id="workspace" hidden>
+      <section aria-labelledby="github-contributions-title">
+        <h2 id="github-contributions-title">GitHub 投稿</h2>
+        <p class="muted">读者通过公开 Issues 提供补充、更正或不同经验。先整理来源、时间和适用范围；收录或关闭投稿不代表已核实全部内容。</p>
+        <p><a href="https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues?q=is%3Aissue+is%3Aopen" target="_blank" rel="noopener noreferrer">打开投稿与讨论</a></p>
+      </section>
       <div class="view-tabs" role="tablist" aria-label="审核视图"><button id="queue-tab" type="button" role="tab" aria-selected="true" aria-controls="queue-view">私件队列</button><button id="content-tab" type="button" role="tab" aria-selected="false" aria-controls="content-view">内容审核</button></div>
       <section id="queue-view" role="tabpanel" aria-labelledby="queue-tab">
         <div class="queue-toolbar">

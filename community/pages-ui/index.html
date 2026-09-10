@@ -14,7 +14,7 @@
 <body>
   <header>
     <a class="brand" href="#/answers"><img src="./brand.svg" width="40" height="40" alt=""><span>西浦非官方指南</span></a>
-    <nav aria-label="主导航"><a id="answers-nav" href="#/answers">答案目录</a><a id="about-nav" href="#/about">关于本指南</a></nav>
+    <nav aria-label="主导航"><a id="answers-nav" href="#/answers">答案目录</a><a id="contribute-nav" href="#/contribute">补充信息</a><a id="about-nav" href="#/about">关于本指南</a></nav>
   </header>
   <div class="edition"><span id="edition-label">公开只读指南</span><span id="edition-note">非学校官方信息</span></div>
   <main>
@@ -29,6 +29,19 @@
     <section id="detail-view" class="view" hidden>
       <a class="back" id="back-to-list" href="#/answers">返回答案目录</a>
       <article id="answer-detail"></article>
+    </section>
+    <section id="contribute-view" class="view" aria-labelledby="contribute-title" hidden>
+      <p class="eyebrow">一起完善手册</p><h1 id="contribute-title">补充信息</h1>
+      <p class="contribute-intro">提供新信息、指出错误，或分享与手册描述不同的实际经历。尽量附上公开来源、适用校区和时间，方便编辑核对。</p>
+      <div class="contribution-notice"><strong>通过 GitHub 提交</strong><p>需要登录 GitHub 账号，提交内容公开可见。请勿填写手机号、学号、证件号或他人的个人信息。点击下方入口后，在 GitHub 核对表单并手动提交。</p></div>
+      <div id="contribution-context" class="contribution-context" hidden></div>
+      <p id="contribution-unavailable" class="muted" hidden>投稿入口暂未开放，请稍后再来。</p>
+      <div id="contribution-options" class="contribution-options">
+        <article><h2>新增信息</h2><p>补充手册还没覆盖的事项、办理入口或可靠资料。</p><a id="contribution-new" class="contribution-link" target="_blank" rel="noopener noreferrer">新增信息（GitHub）</a></article>
+        <article><h2>纠错</h2><p>指出过时内容、失效链接或表述错误，并附上核对依据。</p><a id="contribution-correction" class="contribution-link" target="_blank" rel="noopener noreferrer">提交更正（GitHub）</a></article>
+        <article><h2>不同经验</h2><p>注明校区和时间，分享与手册描述不同的经历。</p><a id="contribution-experience" class="contribution-link" target="_blank" rel="noopener noreferrer">分享经验（GitHub）</a></article>
+      </div>
+      <p class="muted contribution-review-note">编辑核对后会决定是否纳入手册；提交成功后，可在对应 GitHub Issue 中查看讨论和处理结果。</p>
     </section>
     <section id="about-view" class="view prose" aria-labelledby="about-title" hidden>
       <p class="eyebrow">项目说明</p><h1 id="about-title">关于本指南</h1>

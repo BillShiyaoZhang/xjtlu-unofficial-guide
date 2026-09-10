@@ -8,6 +8,7 @@ const statusLabels = { submitted: '待筛查', screening: '筛查中', actioned:
 const fieldLabels = { title: '标题', body: '正文', text: '内容', note: '说明', description: '描述', summary: '摘要', reportType: '报告类型', reason: '理由', category: '分类', question: '问题', material: '材料', url: '链接', sourceUrl: '来源链接', entityId: '关联内容', revisionId: '关联修订' };
 let token = sessionStorage.getItem(sessionKey) ?? '';
 let principal = null;
+let passwordOnly = false;
 let generation = 0;
 let detailGeneration = 0;
 let revisionGeneration = 0;
@@ -74,7 +75,7 @@ function forgetSession() {
 function errorMessage(error) {
   if (error.code === 'STALE_RESPONSE') return;
   const known = {
-    UNAUTHENTICATED: '会话已失效，请重新登录。', INVALID_CREDENTIALS: '账户、密码或验证码不正确。',
+    UNAUTHENTICATED: '会话已失效，请重新登录。', INVALID_CREDENTIALS: passwordOnly ? '账户或密码不正确。' : '账户、密码或验证码不正确。',
     FORBIDDEN: '当前账户没有执行此操作的权限。', RECORD_EXPIRED: '该私件已到期或撤回，详情已清除。',
     VERSION_CONFLICT: '私件已被其他操作更新，请刷新后重新核对。',
     CONFLICT: '内容版本或审核记录已变化，请刷新后重新核对。',
@@ -328,10 +329,26 @@ async function busy(form, work) {
   finally { button.disabled = false; button.removeAttribute('aria-busy'); }
 }
 
+async function loadLoginConfig() {
+  passwordOnly = false;
+  try {
+    const response = await fetch('/api/guide/login-config', { cache: 'no-store', credentials: 'omit', signal: AbortSignal.timeout(5000) });
+    if (response.ok) passwordOnly = (await response.json()).passwordOnly === true;
+  } catch { /* Default to the standard MFA form when configuration is unavailable. */ }
+  const code = $('#login-form').elements.code;
+  code.value = '';
+  code.required = !passwordOnly;
+  code.disabled = passwordOnly;
+  $('#login-code-field').hidden = passwordOnly;
+  $('#login-form').dataset.passwordOnly = String(passwordOnly);
+  $('#login-submit').disabled = false;
+}
+
 $('#login-form').addEventListener('submit', event => {
   event.preventDefault();
   const form = event.currentTarget;
-  const input = { accountId: form.elements.accountId.value.trim(), password: form.elements.password.value, code: form.elements.code.value.trim() };
+  const input = { accountId: form.elements.accountId.value.trim(), password: form.elements.password.value };
+  if (!passwordOnly) input.code = form.elements.code.value.trim();
   busy(form, async () => {
     clearSensitive();
     const result = await api('/api/auth/login', { input });
@@ -493,4 +510,4 @@ setInterval(() => {
   }
 }, 15_000);
 clearSensitive();
-restoreSession();
+loadLoginConfig().then(() => restoreSession());

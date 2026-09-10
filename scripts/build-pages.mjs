@@ -2,7 +2,7 @@ import { copyFile, lstat, mkdir, readFile, readdir, writeFile } from 'node:fs/pr
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentModule, importContent, publishContent, projectPublic, readPublicRevision } from '@information-community/runtime';
-import { validateReviewedPagesData } from './pages-snapshot.mjs';
+import { pagesSite, validateReviewedPagesData } from './pages-snapshot.mjs';
 
 const assets = ['index.html', 'app.js', 'style.css', 'brand.svg'];
 const outputs = [...assets, 'public.json', '.nojekyll'];
@@ -110,7 +110,7 @@ export function createPagesData({ config, profile, content: input, catalog, now 
     schemaVersion: 1,
     mode: 'public-demo',
     generatedAt: new Date(now).toISOString(),
-    site: { name: config.siteName, basePath: site.basePath, publicUrl: site.publicUrl },
+    site: pagesSite(config, overrides),
     catalog: { topics, scopes, publishers },
     search: { aliases: structuredClone(profile.search.aliases) },
     answers,

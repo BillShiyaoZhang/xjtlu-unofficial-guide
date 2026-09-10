@@ -4,10 +4,11 @@ import { fileURLToPath } from 'node:url';
 import {
   openRuntime, buildRuntime, createRuntimeApp, RuntimeError, projectPublic,
   readPublicRevision, readRevision, executeAuthorized, assertParticipantOperation,
-  lifecycleCommand, issueParticipantInvitation, submitAnonymousReport, readAuthorized,
+  lifecycleCommand, issueParticipantInvitation, submitAnonymousReport, readAuthorized, authenticateIdentity,
 } from '@information-community/runtime';
 import { reviewContent, readReviews } from './content-review.mjs';
 import { readReviewArticles, submitArticleReviews } from './article-review.mjs';
+import { guideIdentityProvider, localPasswordLogin, loopbackLoginRequest } from './local-password.mjs';
 import { validateGuideCreate, validateGuideAnonymousReport, validateGuideTransition, researchAvailability } from './business-validation.mjs';
 
 const fail = (code, message, status = 400) => { throw new RuntimeError(code, message, status); };
@@ -48,7 +49,8 @@ export function guideAnswer(state, node, catalog) {
     topic: topic ? { id: topic.id, slug: topic.slug, title: topic.titleZh ?? topic.title_zh ?? topic.title } : null,
   };
 }
-export function createGuideServer({ store, business, catalog, keyring, mfaKey, assets = {}, clock = Date.now, provider }) {
+export function createGuideServer({ store, business, catalog, keyring, mfaKey, assets = {}, clock = Date.now, provider, localPasswordOnly = false }) {
+  provider = guideIdentityProvider(provider, localPasswordOnly);
   const policy = business.roles;
   const lifecycle = { config: business.lifecycle, keyring, participants: business.participants, provider, policy };
   const app = createRuntimeApp({ store, auth: { mfaKey, rolePermissions: policy, participants: business.participants, provider }, lifecycle, anonymousReports: business.anonymousReports, assets, clock });
@@ -59,6 +61,13 @@ export function createGuideServer({ store, business, catalog, keyring, mfaKey, a
     try {
       const url = new URL(req.url, 'http://guide.local'), path = url.pathname;
       if (req.method === 'POST' && (req.headers['sec-fetch-site'] === 'cross-site' || (req.headers.origin && new URL(req.headers.origin).host !== req.headers.host))) fail('ORIGIN_REJECTED', '请从本站提交。', 403);
+      if (req.method === 'GET' && path === '/api/guide/login-config') return send(res, 200, { passwordOnly: localPasswordOnly && loopbackLoginRequest(req) });
+      if (localPasswordOnly && !loopbackLoginRequest(req)) fail('LOCAL_ONLY', '本机工作台仅接受本机访问。', 403);
+      if (localPasswordOnly && req.method === 'POST' && path === '/api/auth/login') return send(res, 200, localPasswordLogin(store, await bodyOf(req), { mfaKey, now: clock() }));
+      if (localPasswordOnly && req.method === 'GET' && path === '/api/auth/me') {
+        const principal = store.transact(state => authenticateIdentity(state, tokenOf(req), { provider, participantsConfig: business.participants, now: clock() }));
+        return send(res, 200, principal.assurance === 'local-password' ? { ...principal, mfa: false } : principal);
+      }
       if (req.method === 'GET' && path === '/api/guide/catalog') return send(res, 200, catalog);
       if (req.method === 'GET' && path === '/api/guide/notice') return send(res, 200, {
         ...(business.guide?.notice ?? catalog.notice ?? {}), research: researchAvailability(business.research, clock()),
@@ -163,7 +172,7 @@ export function createGuideServer({ store, business, catalog, keyring, mfaKey, a
   return app;
 }
 
-export async function startGuide({ root = resolve(process.env.GUIDE_ROOT ?? 'community'), configFile = 'runtime.config.json', env = process.env, port = Number(env.PORT ?? 4317), host = env.HOST ?? '127.0.0.1' } = {}) {
+export async function startGuide({ root = resolve(process.env.GUIDE_ROOT ?? 'community'), configFile = 'runtime.config.json', env = process.env, port = Number(env.PORT ?? 4317), host = env.HOST ?? '127.0.0.1', localPasswordOnly = false } = {}) {
   let incomplete = false;
   try { await access(resolve(root, '.migration-incomplete')); incomplete = true; }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
@@ -171,6 +180,7 @@ export async function startGuide({ root = resolve(process.env.GUIDE_ROOT ?? 'com
   if (!/^[a-f\d]{64}$/iu.test(env.RUNTIME_MFA_KEY ?? '') || !env.RUNTIME_KEYRING) throw new Error('Set RUNTIME_MFA_KEY and RUNTIME_KEYRING; use npm run dev for an isolated local demo.');
   const runtime = await openRuntime({ root, configFile });
   try {
+    if (localPasswordOnly && (configFile !== 'runtime.demo.json' || runtime.dataDirectory !== resolve(root, '.demo-runtime') || !['127.0.0.1', '::1'].includes(host) || runtime.identityProvider)) throw new Error('Password-only login is restricted to the local demo runtime.');
     const catalog = await jsonFile(resolve(root, 'catalog.json'));
     runtime.business.guide = { notice: await jsonFile(resolve(root, runtime.business.consentFile ?? 'consent.json')) };
     const { assets } = await buildRuntime(runtime);
@@ -180,7 +190,7 @@ export async function startGuide({ root = resolve(process.env.GUIDE_ROOT ?? 'com
       assets['/'] = assets['/extensions/index.html'];
       for (const path of ['/about', '/participate', '/report']) assets[path] = assets['/'];
     }
-    const app = createGuideServer({ store: runtime.store, business: runtime.business, catalog, keyring: JSON.parse(env.RUNTIME_KEYRING), mfaKey: env.RUNTIME_MFA_KEY, assets, provider: runtime.identityProvider });
+    const app = createGuideServer({ store: runtime.store, business: runtime.business, catalog, keyring: JSON.parse(env.RUNTIME_KEYRING), mfaKey: env.RUNTIME_MFA_KEY, assets, provider: runtime.identityProvider, localPasswordOnly });
     await new Promise((accept, reject) => { app.once('error', reject); app.listen(port, host, accept); });
     const timer = setInterval(() => {
       try {

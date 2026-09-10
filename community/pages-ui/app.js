@@ -22,7 +22,7 @@ function message(text = '') {
 
 function show(view) {
   for (const element of document.querySelectorAll('.view')) element.hidden = element.id !== `${view}-view`;
-  for (const [id, selected] of [['answers-nav', ['answers', 'detail', 'missing'].includes(view)], ['about-nav', view === 'about']]) {
+  for (const [id, selected] of [['answers-nav', ['answers', 'detail', 'missing'].includes(view)], ['contribute-nav', view === 'contribute'], ['about-nav', view === 'about']]) {
     if (selected) $(id).setAttribute('aria-current', 'page');
     else $(id).removeAttribute('aria-current');
   }
@@ -133,6 +133,11 @@ function renderDetail(answer) {
       target.append(box);
     }
   }
+  const contribution = make('section', undefined, 'contribution-prompt');
+  const contributionLink = make('a', '补充/更正这篇', 'contribution-link');
+  contributionLink.href = '#/contribute?' + new URLSearchParams({ article: answer.id, revision: answer.revisionId });
+  contribution.append(make('h2', '补充这篇文章'), make('p', '欢迎提供更正、补充来源或分享不同的办理经验。'), contributionLink);
+  target.append(contribution);
   if (answer.history?.length) {
     target.append(make('h2', '公开版本记录'));
     const history = make('div', undefined, 'history');
@@ -149,6 +154,50 @@ function renderDetail(answer) {
   show('detail');
 }
 
+function renderContribution(parameters) {
+  const repository = snapshot.site.contributionsRepository;
+  const enabled = typeof repository === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9-]{0,38}\/[a-zA-Z0-9._-]{1,100}$/u.test(repository)
+    && !['.', '..'].includes(repository.split('/')[1]);
+  const answer = snapshot.answers.find(value => value.id === parameters.get('article'));
+  const context = $('contribution-context');
+  context.replaceChildren();
+  context.hidden = !parameters.has('article');
+  if (answer) {
+    const back = make('a', answer.title);
+    back.href = answerHash(answer);
+    const description = make('p', '正在补充：');
+    description.append(back, make('span', ` · 第 ${answer.revisionNumber} 版`, 'muted'));
+    context.append(description, make('p', '文章链接和当前公开版本会带入 GitHub 表单。', 'muted'));
+    if (parameters.has('revision') && parameters.get('revision') !== answer.revisionId) {
+      context.append(make('p', '这篇文章已更新，将引用当前公开版本。', 'muted'));
+    }
+  } else if (parameters.has('article')) context.append(make('p', '未找到关联的公开文章，可按通用投稿继续补充。', 'muted'));
+  $('contribution-unavailable').hidden = enabled;
+  $('contribution-options').hidden = !enabled;
+  for (const [id, template] of [
+    ['contribution-new', 'new-information.yml'], ['contribution-correction', 'correction.yml'], ['contribution-experience', 'experience.yml'],
+  ]) {
+    const link = $(id);
+    link.removeAttribute('href');
+    if (!enabled) continue;
+    const url = new URL(`https://github.com/${repository}/issues/new`);
+    url.searchParams.set('template', template);
+    if (answer) {
+      let articleUrl;
+      try {
+        const base = new URL(snapshot.site.publicUrl);
+        if (base.protocol === 'https:' && !base.username && !base.password) articleUrl = new URL(answerHash(answer), base).href;
+      } catch { /* A malformed public site URL must never become an executable link. */ }
+      if (articleUrl) url.searchParams.set('article', articleUrl);
+      url.searchParams.set('revision', answer.revisionId);
+      url.searchParams.set('context', `${answer.title} · 文章 ID：${answer.id}`.slice(0, 1000));
+    }
+    link.href = url.href;
+    link.referrerPolicy = 'no-referrer';
+  }
+  show('contribute');
+}
+
 function route({ scroll = true } = {}) {
   if (!snapshot) return;
   message();
@@ -158,6 +207,8 @@ function route({ scroll = true } = {}) {
   const parameters = new URLSearchParams(split < 0 ? '' : raw.slice(split + 1));
   if (path === '/about') {
     show('about'); document.title = `关于本指南 | ${snapshot.site.name}`;
+  } else if (path === '/contribute') {
+    renderContribution(parameters); document.title = `补充信息 | ${snapshot.site.name}`;
   } else if (path === '/answers' || path === '/') {
     listHash = '#' + raw;
     renderList(parameters); document.title = snapshot.site.name;

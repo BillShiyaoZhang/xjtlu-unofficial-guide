@@ -36,11 +36,13 @@ npm run dev
 
 ## GitHub Pages
 
-[公开只读指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布。在本地工作台完成「通过并发布」后，可以同步已审核的公开内容到 Pages。站点提供目录、搜索、正文和来源，不包含登录、投稿、编辑、研究采集或数据库。
+[公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布。在本地工作台完成「通过并发布」后，可以同步已审核的公开内容到 Pages。站点提供目录、搜索、正文和来源；补充信息、纠错及不同经验通过页面入口跳转至公开 GitHub Issue 表单。手册页面仍是静态阅读界面，编辑和数据库在本地服务中运行。
 
 审核工作台继续在本地 Node 服务中运行；本地读者页立即更新，Pages 则在同步并完成 GitHub Actions 部署后更新。导出的 `community/pages-reviewed.json` 只包含获准公开的正文、引用与展示信息；账户、密码、内部意见和运行库不会进入静态站点。首次导出前保留四张演示卡，首次导出后改用审核快照，即使快照为空也不回退到演示内容。操作步骤与命令见 [Pages 同步](docs/github-pages.md)。
 
-公开 UGC、高影响内容和 AI 自动发布仍默认关闭。**没有、也不计划部署到 OpenAI Sites**；真实试点只能使用运营方负责的基础设施，并先完成内容、责任和研究说明审核。产品判断与历史设计见：
+公众可使用 GitHub 账号[提交补充、纠错或不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)，也可[查看已有投稿](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。内容由投稿人在 GitHub 最终提交并公开；维护者在 Issues 中整理、去重、关联来源。采纳或关闭 Issue 不代表事实已核验，也不会自动改写手册。使用方式见 [GitHub 投稿与整理](docs/github-contributions.md)。
+
+这次开放的是外部 GitHub Issues 投稿与讨论，是对旧阶段 1「关闭公开 UGC」边界的明确扩展；无需研究邀请或研究同意。站内公开评论、自动导入投稿、高影响内容和 AI 自动发布仍未开放。**没有、也不计划部署到 OpenAI Sites**。产品判断与历史设计见：
 
 - [产品意图](./docs/intention.md)
 - [详细设计](./docs/design.md)

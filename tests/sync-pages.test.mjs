@@ -44,7 +44,7 @@ async function git(root, args, { optional = false } = {}) {
 async function writeSnapshot(root, snapshot) {
   await writeFile(join(root, snapshotFile), JSON.stringify(snapshot, null, 2) + '\n');
 }
-async function fixture(t, { ready = true, published } = {}) {
+async function fixture(t, { ready = true, published, config = pagesConfig } = {}) {
   const temporaryRoot = await realpath(tmpdir());
   const directory = await mkdtemp(join(temporaryRoot, 'guide-pages-sync-test-'));
   t.after(async () => {
@@ -62,7 +62,7 @@ async function fixture(t, { ready = true, published } = {}) {
   await git(root, ['config', 'commit.gpgSign', 'false']);
   await mkdir(join(root, 'community'));
   await mkdir(join(root, 'scripts'));
-  await writeFile(join(root, 'community/pages.config.json'), JSON.stringify(pagesConfig));
+  await writeFile(join(root, 'community/pages.config.json'), JSON.stringify(config));
   await writeFile(join(root, 'scripts/build-pages.mjs'), ready ? "// This pipeline consumes community/pages-reviewed.json\n" : '// Previous demonstration-only pipeline\n');
   await writeFile(join(root, 'README.md'), 'Remote baseline\n');
   if (published) await writeSnapshot(root, published);
@@ -116,6 +116,31 @@ test('same content hash is a no-op even when the local export timestamp changes'
   assert.equal(await git(f.remote, ['rev-parse', 'refs/heads/main']), f.baseline);
   assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
   assert.deepEqual(await readFile(join(f.root, '.git/index')), originalIndex);
+});
+
+test('sync replaces a previously published contribution destination but rejects a current snapshot that still mismatches configuration', async t => {
+  const previous = syntheticSnapshot();
+  previous.site.contributionsRepository = 'previous-owner/previous-feedback';
+  previous.contentHash = pagesContentHash(previous);
+  const config = { ...pagesConfig, contributionsRepository: 'current-owner/current-feedback' };
+  const f = await fixture(t, { published: previous, config });
+  // The new configuration is already deployed, while its last public snapshot still has the old link.
+  await assert.rejects(syncPagesSnapshot({ root: f.root }), { code: 'SYNC_SNAPSHOT' });
+  assert.equal(await git(f.remote, ['rev-parse', 'refs/heads/main']), f.baseline);
+  const current = structuredClone(previous);
+  current.site.contributionsRepository = config.contributionsRepository;
+  current.contentHash = pagesContentHash(current);
+  await writeSnapshot(f.root, current);
+  const index = await readFile(join(f.root, '.git/index'));
+  const result = await syncPagesSnapshot({ root: f.root });
+  assert.equal(result.changed, true);
+  assert.equal(result.parent, f.baseline);
+  assert.equal(result.contentHash, current.contentHash);
+  assert.deepEqual(JSON.parse(await git(f.remote, ['show', `${result.commit}:${snapshotFile}`])), current);
+  assert.equal(await git(f.root, ['diff-tree', '--no-commit-id', '--name-only', '-r', f.baseline, result.commit]), snapshotFile);
+  assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
+  assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
+  assert.equal((await syncPagesSnapshot({ root: f.root })).changed, false);
 });
 
 test('an old remote Pages pipeline blocks synchronization before making a commit', async t => {

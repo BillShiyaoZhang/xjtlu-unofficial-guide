@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
   "mode": "public-reviewed",
-  "generatedAt": "2026-09-10T05:22:35.400Z",
+  "generatedAt": "2026-09-10T06:12:14.579Z",
   "site": {
     "name": "西浦非官方指南",
     "basePath": "/xjtlu-unofficial-guide/",
-    "publicUrl": "https://billshiyaozhang.github.io/xjtlu-unofficial-guide/"
+    "publicUrl": "https://billshiyaozhang.github.io/xjtlu-unofficial-guide/",
+    "contributionsRepository": "BillShiyaoZhang/xjtlu-unofficial-guide"
   },
   "catalog": {
     "topics": [
@@ -468,5 +469,5 @@
       ]
     }
   ],
-  "contentHash": "254b911746e813b707a6bcb51a25ca476e6c9c9efec8c3bba35d6d063b770c38"
+  "contentHash": "815135d6e2d27a3181bb752926175327ccd90dc9b0241397c53ad413c280fc79"
 }

@@ -93,6 +93,7 @@ export async function harness(t, options = {}) {
   const server = options.guide
     ? (await import('../server/guide.mjs')).createGuideServer({
       store, business, catalog, mfaKey, keyring, clock: () => now, assets: options.assets,
+      localPasswordOnly: options.localPasswordOnly ?? false,
     })
     : createRuntimeApp(serverOptions);
   await new Promise((resolve, reject) => {

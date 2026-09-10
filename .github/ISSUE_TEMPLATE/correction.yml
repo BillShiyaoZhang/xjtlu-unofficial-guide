@@ -1,0 +1,86 @@
+name: 纠错或报告过期
+description: 指出错误、失效入口、过期信息，或补充遗漏的适用条件。
+title: "[纠错] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        可以只报告发现的问题，不必先完成全部核验。Issue 被收录或关闭不等于已经完成事实核验；维护者会保留所依据的来源与时间。
+  - type: textarea
+    id: content
+    attributes:
+      label: 哪里需要更正
+      description: 请指出原来的说法或位置、遇到的问题，以及你建议的更正；尚不清楚的部分可以留待讨论。
+      placeholder: 例如哪个链接打不开、哪个步骤已变化，或什么情况下原文不适用。
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: 来源或经历依据
+      description: 有公开依据请贴链接；亲历问题可说明当时场景。暂时没有补充依据也可留空。
+      placeholder: 新公告链接、公开文件名称，或你实际遇到问题的过程。
+    validations:
+      required: false
+  - type: dropdown
+    id: campus
+    attributes:
+      label: 相关校区
+      multiple: true
+      options:
+        - 苏州工业园区校区
+        - 太仓校区
+        - 不限校区
+        - 尚不确定
+    validations:
+      required: true
+  - type: input
+    id: audience
+    attributes:
+      label: 受影响的人群
+      placeholder: 例如本科新生、研究生；适用人群尚不明确也可以注明。
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: 发现问题或变化生效的时间
+      placeholder: 例如 2026 年 9 月发现、从某学年起变化；大致时间也可以。
+    validations:
+      required: true
+  - type: input
+    id: ai
+    attributes:
+      label: AI 参与说明
+      description: 可以使用 AI，请说明参与了哪些部分。
+      placeholder: 未使用；或用于搜索依据、翻译、整理更正建议等。
+    validations:
+      required: true
+  - type: input
+    id: article
+    attributes:
+      label: 关联文章（选填）
+      description: 从手册文章进入时会自动带入；也可以在正文中说明文章位置。
+    validations:
+      required: false
+  - type: input
+    id: revision
+    attributes:
+      label: 阅读版本（选填）
+      description: 如已自动填入，请保留原样。
+    validations:
+      required: false
+  - type: input
+    id: context
+    attributes:
+      label: 页面场景（选填）
+      description: 标记从手册哪里进入；未自动带入时可以留空。
+    validations:
+      required: false
+  - type: checkboxes
+    id: public_submission
+    attributes:
+      label: 公开提交确认
+      options:
+        - label: 我知道此 Issue 及附件会公开，确认未包含个人资料、账号密码或非公开内部材料。
+          required: true

@@ -63,6 +63,16 @@ test('Pages uses deployment-relative public links and validates deployment setti
   assert.throws(() => createPagesData({ ...input, origin: 'http://localhost:4317' }), /HTTPS origin/);
 });
 
+test('Pages exposes only an explicitly configured GitHub owner/repository for contributions', async () => {
+  const input = await fixture();
+  assert.equal(createPagesData(input).site.contributionsRepository, 'BillShiyaoZhang/xjtlu-unofficial-guide');
+  delete input.config.contributionsRepository;
+  assert.equal(createPagesData(input).site.contributionsRepository, undefined);
+  for (const repository of ['https://example.com/issues', 'owner/repo/extra', 'owner/repo?redirect=other', 'owner/..', 'owner/repo#fragment']) {
+    assert.throws(() => createPagesData({ ...input, config: { ...input.config, contributionsRepository: repository } }), /contributions repository/u);
+  }
+});
+
 test('build reads no runtime database and emits only the fixed Pages asset list', async t => {
   const root = await mkdtemp(resolve(tmpdir(), 'guide-pages-build-'));
   t.after(() => rm(root, { recursive: true, force: true }));

@@ -4,6 +4,7 @@
   "siteName": "西浦非官方指南",
   "origin": "https://billshiyaozhang.github.io",
   "basePath": "/xjtlu-unofficial-guide/",
+  "contributionsRepository": "BillShiyaoZhang/xjtlu-unofficial-guide",
   "publishedRevisionIds": [
     "revision-card-ebridge-entry-v1",
     "revision-card-current-student-entry-v1",

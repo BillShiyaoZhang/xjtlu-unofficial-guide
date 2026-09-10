@@ -52,7 +52,13 @@ export async function exportPagesSnapshot({ root = resolve('.'), demo = true, en
   const snapshot = createReviewedPagesData({ state: readExistingState(loaded), catalog, config, keyring, ...(now ? { now } : {}) });
   const snapshotPath = join(community, 'pages-reviewed.json');
   let previous;
-  try { await regularFile(snapshotPath); previous = validateReviewedPagesData(await json(snapshotPath), { config }); }
+  try {
+    await regularFile(snapshotPath);
+    const saved = await json(snapshotPath);
+    // A changed submission destination is deployment metadata, not a reason to
+    // discard the last content snapshot. It is used here only for comparison.
+    previous = validateReviewedPagesData(saved, { config: { ...config, contributionsRepository: saved.site?.contributionsRepository } });
+  }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
   const changed = previous?.contentHash !== snapshot.contentHash;
   if (changed) {
