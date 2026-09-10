@@ -6,9 +6,9 @@
 
 ## 运行边界
 
-使用 Node 24.12.x、npm，以及固定的 core 0.2.0 / runtime 0.3.0 分发包。运行 `npm ci --ignore-scripts`、`npm test`、`npm run test:platform`、`npm run build`。此构建只生成服务端界面文件，不把私有状态打包为静态网页；完整业务必须运行 Node 服务。另有 `npm run build:pages` 构建已导出的公开审核快照；首次导出前使用显式允许的演示内容。见 [Pages 同步](github-pages.md)，静态页面不能替代本手册的登录、审核及持久化流程。
+使用 Node 24.12.x、npm，以及固定的 core 0.2.0 / runtime 0.3.0 分发包。运行 `npm ci --ignore-scripts`、`npm test`、`npm run test:platform`、`npm run build`。此构建只生成服务端界面文件，不把私有状态打包为静态网页；完整业务必须运行 Node 服务。另有 `npm run build:pages` 构建已导出的资料收录与人工审核公开快照；当前公开内容不含演示，缺少资料快照时构建失败。见 [Pages 同步](github-pages.md)，静态页面不能替代本手册的登录、审核及持久化流程。
 
-- `npm run dev`：仅本机演示，独立 `.demo-runtime`，密钥在忽略的 `.dev-secrets.json`。只在首次初始化发布明确标注的种子修订。不得承载真实研究数据。
+- `npm run dev`：本地工作台使用独立 `.demo-runtime`，密钥在忽略的 `.dev-secrets.json`。首次初始化只导入资料草稿，不自动发布；目录与配置沿用历史名称，种子不含演示内容。不得承载真实研究数据。
 - `npm start`：生产模式，不自动发布种子答案。需要 `RUNTIME_MFA_KEY`（32 字节十六进制）及 `RUNTIME_KEYRING`（平台 keyring JSON）。通过密钥管理系统注入，不能提交到 Git 或放进 UI 目录。
 - `GUIDE_ROOT`：指定消费者配置目录，默认 `community`。`HOST` 默认 `127.0.0.1`，`PORT` 默认 `4317`。对外服务需运营方配置 HTTPS、反向代理和访问日志脱敏，不能直接暴露底座通用服务取代指南网关。
 - `npm run build` 构建默认 `community`。`npm start` 会为指定 `GUIDE_ROOT` 构建并加载界面。自定义目录带 `.migration-incomplete` 标记时拒绝启动。

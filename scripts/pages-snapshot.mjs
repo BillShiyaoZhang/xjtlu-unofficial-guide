@@ -82,6 +82,7 @@ export function validateReviewedPagesData(input, { config, ...overrides } = {}) 
       'summary', 'asOf', 'verifiedAt', 'researchedAt', 'reviewDueAt', 'reviewOwnerLabel', 'evidenceNote', 'topic', 'history', 'origin', 'originalOrigin', 'reviewStatus', 'sourceCategories']);
     id(answer.id); id(answer.revisionId); text(answer.title, 160, 1); text(answer.slug, 200, 1);
     if (!Number.isSafeInteger(answer.revisionNumber) || answer.revisionNumber < 1 || typeof answer.demo !== 'boolean') fail('invalid public content version');
+    if (answer.demo && !config.publishedRevisionIds?.length) fail('demo content is not selected for this release');
     if (answer.reviewStatus === 'collected') {
       if (!collected.has(answer.revisionId) || answer.demo || answer.origin !== 'ai_draft' || answer.originalOrigin !== 'ai_draft' ||
           answer.verifiedAt !== '' || answer.reviewOwnerLabel !== '尚未人工核验') fail('collection requires explicit selection and cannot claim human verification');
@@ -210,7 +211,11 @@ export function createReviewedPagesData({ state, catalog, config, keyring, now =
   }
   const collected = collectedNodes(content, config, latestReviews, now);
   const collectedIds = new Set(collected.map(node => node.revisionId));
-  const answers = [...projectPublic(content, { now }).nodes, ...collected].map(node => {
+  // Removing a demo from the release also excludes later approved revisions of it.
+  // Old local stores may retain immutable demo history; it must never republish itself.
+  const demoEntities = new Set((config.publishedRevisionIds ?? []).map(id => revisions.get(id)?.entityId).filter(Boolean));
+  const answers = [...projectPublic(content, { now }).nodes, ...collected]
+    .filter(node => revisions.get(node.revisionId).data.demo !== true || demoEntities.has(node.id)).map(node => {
     const revision = revisions.get(node.revisionId), data = revision.data, entity = entities.get(node.id);
     const legacyDemo = data.demo === true && config.publishedRevisionIds?.includes(revision.id);
     const collection = collectedIds.has(revision.id);

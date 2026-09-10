@@ -33,7 +33,7 @@ async function fixture(t) {
   await mkdir(join(root, config.dataDirectory));
   const liveFile = join(root, config.dataDirectory, 'community.sqlite');
   await writeFile(liveFile, 'Synthetic sentinel: this is not a SQLite database.');
-  const loaded = await loadCommunity(), store = createStore(loaded);
+  const loaded = await loadCommunity({ includeDemo: true }), store = createStore(loaded);
   let backup;
   try {
     publishDemo(store, loaded.bundle, now);

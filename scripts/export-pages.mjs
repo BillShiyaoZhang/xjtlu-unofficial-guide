@@ -59,6 +59,7 @@ export async function exportPagesSnapshot({ root = resolve('.'), demo = true, en
     // allow removals; the replacement above is always validated against current config.
     previous = validateReviewedPagesData(saved, { config: { ...config,
       contributionsRepository: saved.site?.contributionsRepository,
+      publishedRevisionIds: [...new Set([...(config.publishedRevisionIds ?? []), ...(saved.answers?.filter(answer => answer.demo).map(answer => answer.revisionId) ?? [])])],
       collectedRevisionIds: saved.answers?.filter(answer => answer.reviewStatus === 'collected').map(answer => answer.revisionId),
     } });
   }

@@ -5,7 +5,6 @@ import { importContent, projectPublic, publishContent } from '@information-commu
 import { buildHandbook } from '../scripts/build-handbook.mjs';
 import { initializeDemo } from '../scripts/demo.mjs';
 import { createStore, loadCommunity } from './helpers.mjs';
-import { createPagesData } from '../scripts/build-pages.mjs';
 
 const readJson = async path => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
 
@@ -21,16 +20,19 @@ test('the readable handbook and platform bundle stay synchronized with the resea
   for (const [, anchor] of text.matchAll(/\]\(#([a-z0-9-]+)\)/gu)) assert.ok(text.includes(`id="${anchor}"`), `broken chapter link ${anchor}`);
 });
 
-test('first demo initialization imports handbook drafts without making them public or claiming human verification', async t => {
+test('first local initialization imports only the 76 handbook drafts without publishing demonstration content', async t => {
   const loaded = await loadCommunity(), store = createStore(loaded);
   t.after(() => store.close());
   const handbook = await readJson('../community/handbook/runtime-import.json');
   const drafts = handbook.revisions.filter(revision => revision.data.origin === 'ai_draft');
-  assert.ok(drafts.length > 0);
+  assert.equal(drafts.length, 76);
+  assert.deepEqual(loaded.bundle, handbook, 'the production seed contains only the unchanged handbook bundle');
+  assert.equal(loaded.bundle.revisions.some(revision => revision.data.demo === true), false);
   assert.equal(initializeDemo(store, loaded.bundle), true);
   const before = store.read();
   const content = before.modules.content;
-  assert.equal(projectPublic(content).nodes.length, 4);
+  assert.equal(projectPublic(content).nodes.length, 0);
+  assert.equal(before.audit.some(entry => entry.action === 'demo.publish'), false);
   for (const draft of drafts) {
     assert.equal(draft.data.demo, false);
     assert.equal(draft.data.verifiedAt, '');
@@ -44,10 +46,7 @@ test('first demo initialization imports handbook drafts without making them publ
   assert.deepEqual(importContent(content, handbook), content, 'the identical first-import snapshot is idempotent');
   assert.equal(initializeDemo(store, loaded.bundle), false);
   assert.deepEqual(store.read(), before);
-  const pages = createPagesData({
-    config: await readJson('../community/pages.config.json'), profile: loaded.business.content,
-    content: loaded.bundle, catalog: await readJson('../community/catalog.json'), now: '2026-09-10T00:00:00Z',
-  });
-  assert.equal(pages.answers.length, 4);
-  assert.ok(pages.answers.every(answer => !answer.id.startsWith('handbook-')));
+  const config = await readJson('../community/pages.config.json');
+  assert.deepEqual(config.publishedRevisionIds, []);
+  assert.deepEqual(config.sourceRevisionIds, []);
 });

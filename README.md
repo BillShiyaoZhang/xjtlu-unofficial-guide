@@ -19,7 +19,7 @@ npm run build
 npm run dev
 ```
 
-默认访问 <http://127.0.0.1:4317>；端口被占用时命令会输出实际地址。演示使用独立的 `community/.demo-runtime` 和本地随机密钥，首次导入完整内容，只在运行库中发布明确标注的四条演示答案。76 篇资料的 Pages 收录通过独立导出清单完成，原始 AI 稿及运行库发布状态保留；重启不会自动导入或发布未来草稿。演示内容不是新的事实核验结果。
+默认访问 <http://127.0.0.1:4317>；端口被占用时命令会输出实际地址。本地工作台使用独立的 `community/.demo-runtime` 和本地随机密钥，首次将完整资料导入为草稿，不自动发布。76 篇资料的 Pages 收录通过独立导出清单完成，原始 AI 稿及运行库发布状态保留；重启不会自动导入或发布未来草稿。原有四篇演示已从生产内容与公开清单中移除，演示数据仅保留为测试夹具；已有运行库中的不可变历史通过隐藏保留。
 
 ## 维护边界
 
@@ -38,7 +38,7 @@ npm run dev
 
 [公开指南](https://billshiyaozhang.github.io/xjtlu-unofficial-guide/) 由 `npm run build:pages` 和 GitHub Actions 发布，支持「资料整理初版」和「已人工审核」两类内容。76 个精确修订由 `community/pages.config.json` 的 `collectedRevisionIds` 显式列出；无需为此次收录伪造人工审核。后续确实完成人工核对的文章，可从本地工作台「通过并发布」后同步，优先展示其已审核公开版。站点提供目录、搜索、正文和来源；读者可直接在页面填写补充、更正及个人经验，再跳转到已填好标题和正文的 GitHub Issue 页面确认提交，界面明确提示需要 GitHub 账号。
 
-运行 `npm run sync:pages` 后，Pages 在 GitHub Actions 部署完成后更新。导出只读本机运行库，生成 `mode: public-guide` 的 `community/pages-reviewed.json`，将 `collectedCount` 与 `reviewedCount` 分别计数；不会把收录初版改为人工来源、填写核验时间或新增审核记录。当前发布快照包含 80 篇：76 篇资料初版、0 篇人工审核内容、4 篇原有演示。账户、密码、内部意见和运行库不会进入静态站点。人工审核、隐藏、来源撤回和修订更新会在后续同步时反映，清单不会自动公开未来草稿或恢复被取代的初稿。操作步骤见 [Pages 同步](docs/github-pages.md)。
+运行 `npm run sync:pages` 后，Pages 在 GitHub Actions 部署完成后更新。导出只读本机运行库，生成 `mode: public-guide` 的 `community/pages-reviewed.json`，将 `collectedCount` 与 `reviewedCount` 分别计数；不会把收录初版改为人工来源、填写核验时间或新增审核记录。当前发布快照包含 76 篇资料初版、0 篇人工审核内容、0 篇演示。账户、密码、内部意见和运行库不会进入静态站点。人工审核、隐藏、来源撤回和修订更新会在后续同步时反映，清单不会自动公开未来草稿或恢复被取代的初稿。操作步骤见 [Pages 同步](docs/github-pages.md)。
 
 公众可使用 GitHub 账号[提交补充、纠错或不同经验](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues/new/choose)，也可[查看已有投稿](https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide/issues)。内容由投稿人在 GitHub 最终提交并公开；维护者在 Issues 中整理、去重、关联来源。采纳或关闭 Issue 不代表事实已核验，也不会自动改写手册。使用方式见 [投稿说明](CONTRIBUTING.md) 和 [GitHub 投稿与整理](docs/github-contributions.md)。
 

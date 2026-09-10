@@ -8,7 +8,7 @@ import { encryptPrivatePayload, importContent } from '@information-community/run
 import { createReviewedPagesData, pagesContentHash, validateReviewedPagesData } from '../scripts/pages-snapshot.mjs';
 import { buildPages } from '../scripts/build-pages.mjs';
 import { exportPagesSnapshot } from '../scripts/export-pages.mjs';
-import { harness, keyring, readJson } from './helpers.mjs';
+import { harness, keyring, loadDemoPagesConfig, readJson } from './helpers.mjs';
 
 const community = new URL('../community/', import.meta.url);
 const privateReason = '已逐项核对文章来源与适用范围，此为仅供后台保留的审核意见。';
@@ -18,7 +18,7 @@ async function setup(t, options = {}) {
   const h = await harness(t, { guide: true, ...options });
   h.store.transact(state => { state.modules.content = importContent(state.modules.content, h.bundle); });
   const { token } = await h.operator(['content_reviewer']);
-  const config = await readCommunity('pages.config.json');
+  const config = await loadDemoPagesConfig();
   delete config.collectedRevisionIds;
   const articles = async () => (await readJson(await h.get('/api/guide/review-articles', token))).articles;
   const review = async (article, decision = 'approved') => readJson(await h.post('/api/guide/reviews/batch', {
@@ -297,7 +297,7 @@ async function exportFixture(t) {
   }
   const runtimeConfig = await readCommunity('runtime.config.json');
   await writeFile(resolve(directory, 'runtime.demo.json'), JSON.stringify({ ...runtimeConfig, dataDirectory: '.demo-runtime' }));
-  const pagesConfig = await readCommunity('pages.config.json');
+  const pagesConfig = await loadDemoPagesConfig();
   delete pagesConfig.collectedRevisionIds;
   await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify(pagesConfig));
   const serializableKeyring = {
@@ -355,6 +355,46 @@ test('export reads a real private runtime database, preserves no-op bytes and re
   assert.equal(await readFile(first.snapshotPath, 'utf8'), corrupt);
   assert.equal((await readdir(directory)).some(name => /^\.pages-reviewed-.*\.tmp$/u.test(name)), false, 'failed export leaves no temporary publish artifacts');
   assert.deepEqual(await readFile(databasePath), databaseBytes, 'export must never write or migrate the source runtime database');
+});
+
+test('removing demonstration authorizations replaces old exports and never restores examples from retained runtime data', async t => {
+  for (const publication of ['legacy-demo', 'human-reviewed-demo']) {
+    await t.test(publication, async t => {
+      const h = await setup(t);
+      if (publication === 'legacy-demo') h.publish();
+      else for (const article of (await h.articles()).filter(article => article.demo)) await h.review(article);
+      const productionConfig = await readCommunity('pages.config.json');
+      assert.deepEqual(productionConfig.publishedRevisionIds, []);
+      assert.deepEqual(productionConfig.sourceRevisionIds, []);
+      const { root, directory } = await exportFixture(t);
+      await mkdir(resolve(directory, '.demo-runtime'));
+      const databasePath = resolve(directory, '.demo-runtime', 'community.sqlite');
+      await backup(h.store.db, databasePath);
+      const databaseBytes = await readFile(databasePath);
+      const configPath = resolve(directory, 'pages.config.json');
+      const oldConfig = { ...productionConfig, publishedRevisionIds: h.config.publishedRevisionIds, sourceRevisionIds: h.config.sourceRevisionIds };
+      await writeFile(configPath, JSON.stringify(oldConfig));
+      const now = new Date(h.time()).toISOString();
+      const first = await exportPagesSnapshot({ root, demo: true, now });
+      const previous = JSON.parse(await readFile(first.snapshotPath, 'utf8'));
+      assert.equal(previous.answers.length, 80);
+      assert.equal(previous.answers.filter(answer => answer.demo).length, 4);
+      const realAnswers = previous.answers.filter(answer => !answer.demo);
+      await writeFile(configPath, JSON.stringify(productionConfig));
+      assert.throws(() => validateReviewedPagesData(previous, { config: productionConfig }));
+      const removed = await exportPagesSnapshot({ root, demo: true, now });
+      assert.equal(removed.changed, true);
+      assert.equal(removed.answerCount, 76);
+      const current = JSON.parse(await readFile(removed.snapshotPath, 'utf8'));
+      assert.deepEqual(current.answers, realAnswers, 'removing examples preserves every real article and citation');
+      assert.equal(current.answers.some(answer => answer.demo), false);
+      assert.deepEqual(validateReviewedPagesData(current, { config: productionConfig }), current);
+      const currentBytes = await readFile(removed.snapshotPath);
+      assert.equal((await exportPagesSnapshot({ root, demo: true, now })).changed, false);
+      assert.deepEqual(await readFile(removed.snapshotPath), currentBytes);
+      assert.deepEqual(await readFile(databasePath), databaseBytes, 'legacy runtime records remain private and unmodified');
+    });
+  }
 });
 
 test('export replaces an old contribution destination while keeping current configuration and prior snapshot validation strict', async t => {

@@ -105,6 +105,7 @@ export async function syncPagesSnapshot({ root = repositoryRoot, snapshotPath, r
     let previous;
     try { previous = JSON.parse(existing); } catch { throw failure('SYNC_SNAPSHOT'); }
     existingHash = publicSnapshot(Buffer.from(existing), { ...config, contributionsRepository: previous.site?.contributionsRepository,
+      publishedRevisionIds: [...new Set([...(config.publishedRevisionIds ?? []), ...(previous.answers?.filter(answer => answer.demo).map(answer => answer.revisionId) ?? [])])],
       collectedRevisionIds: previous.answers?.filter(answer => answer.reviewStatus === 'collected').map(answer => answer.revisionId),
     }).contentHash;
   }

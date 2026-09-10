@@ -70,7 +70,7 @@ test('query events contain a fixed length category rather than caller-provided t
 });
 
 test('anonymous targets use platform visibility and a supplied invalid card cannot be rescued by a valid area', async () => {
-  const community = await loadCommunity(), store = createStore(community);
+  const community = await loadCommunity({ includeDemo: true }), store = createStore(community);
   try {
     const [card] = publishDemo(store, community.bundle);
     const context = { state: store.read(), now: initialTime };

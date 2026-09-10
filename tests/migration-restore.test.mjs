@@ -9,7 +9,7 @@ import { openRuntime, projectPublic, importContent, bootstrapAccount, inspectAcc
 import { initializeDemo } from '../scripts/demo.mjs';
 import { restoreMigration } from '../scripts/restore-migration.mjs';
 import { recordReview } from '../server/content-review.mjs';
-import { loadCommunity, createStore, communityRoot } from './helpers.mjs';
+import { loadCommunity, createStore, communityRoot, publishDemo } from './helpers.mjs';
 
 async function migrationFixture(t) {
   const directory = await mkdtemp(join(tmpdir(), 'guide-restore-'));
@@ -18,9 +18,9 @@ async function migrationFixture(t) {
     assert.ok(absolute.startsWith(base) && absolute.includes('guide-restore-'));
     await rm(absolute, { recursive: true, force: true });
   });
-  const loaded = await loadCommunity(), store = createStore(loaded);
+  const loaded = await loadCommunity({ includeDemo: true }), store = createStore(loaded);
   let backup;
-  try { initializeDemo(store, loaded.bundle); backup = store.backup(); }
+  try { publishDemo(store, loaded.bundle); backup = store.backup(); }
   finally { store.close(); }
   const artifact = { backup, catalog: JSON.parse(await readFile(join(communityRoot, 'catalog.json'), 'utf8')), report: { kind: 'private-legacy-migration', schemaVersion: 1 } };
   const artifactFile = join(directory, 'artifact.private.json'), reviewFile = join(directory, 'review.private.json');
@@ -37,28 +37,27 @@ test('offline wrapper refuses the generic HTTP start command before opening conf
   }
 });
 
-test('demo publishes only an explicitly marked first initialization, never drafts on restart', async t => {
+test('local initialization never publishes content and does not reimport on restart', async t => {
   const loaded = await loadCommunity(), store = createStore(loaded);
   t.after(() => store.close());
   assert.equal(initializeDemo(store, loaded.bundle), true);
   const draft = structuredClone(loaded.bundle);
   draft.entities = [{ id: 'new-draft', type: 'answer' }];
-  draft.revisions = [{ ...draft.revisions.find(item => item.entityId === 'card-ebridge-entry'), id: 'new-draft-revision', entityId: 'new-draft' }];
+  draft.revisions = [{ ...draft.revisions.find(item => item.data.origin === 'ai_draft'), id: 'new-draft-revision', entityId: 'new-draft' }];
   draft.revisions[0].data.sentences = [{ id: 'advice', text: 'Synthetic draft', kind: 'advice' }];
   draft.citations = [];
   store.transact(state => { state.modules.content = importContent(state.modules.content, draft); });
   assert.equal(initializeDemo(store, loaded.bundle), false);
   assert.equal(store.read().modules.content.entities.find(item => item.id === 'new-draft').publicRevisionId, null);
-  assert.equal(projectPublic(store.read().modules.content).nodes.length, 4);
+  assert.equal(projectPublic(store.read().modules.content).nodes.length, 0);
 });
 
-test('demo refuses to publish unmarked content and rolls back the whole initialization', async t => {
-  const loaded = await loadCommunity(), store = createStore(loaded);
+test('local initialization also leaves explicitly marked test demonstrations unpublished', async t => {
+  const loaded = await loadCommunity({ includeDemo: true }), store = createStore(loaded);
   t.after(() => store.close());
-  const bundle = structuredClone(loaded.bundle);
-  delete bundle.revisions.find(item => item.entityId === 'card-ebridge-entry').data.demo;
-  assert.throws(() => initializeDemo(store, bundle), /explicitly marked/);
-  assert.equal(store.read().revision, 0);
+  assert.equal(initializeDemo(store, loaded.bundle), true);
+  assert.equal(projectPublic(store.read().modules.content).nodes.length, 0);
+  assert.equal(store.read().audit.some(entry => entry.action === 'demo.publish'), false);
 });
 
 test('reviewed migration restores into a new consumer directory without exposing the private artifact', async t => {
@@ -68,8 +67,8 @@ test('reviewed migration restores into a new consumer directory without exposing
     assert.ok(absolute.startsWith(base) && absolute.includes('guide-restore-'));
     await rm(absolute, { recursive: true, force: true });
   });
-  const loaded = await loadCommunity(), store = createStore(loaded);
-  initializeDemo(store, loaded.bundle);
+  const loaded = await loadCommunity({ includeDemo: true }), store = createStore(loaded);
+  publishDemo(store, loaded.bundle);
   const now = Date.parse('2098-09-09T12:00:00Z'), mfaKey = '42'.repeat(32);
   const account = { id: 'synthetic-restored-reviewer', displayName: 'Synthetic reviewer', roles: ['content_reviewer'], password: 'synthetic-restore-password', totpSecret: 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ' };
   bootstrapAccount(store, account, { mfaKey, now });

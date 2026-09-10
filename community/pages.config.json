@@ -5,18 +5,8 @@
   "origin": "https://billshiyaozhang.github.io",
   "basePath": "/xjtlu-unofficial-guide/",
   "contributionsRepository": "BillShiyaoZhang/xjtlu-unofficial-guide",
-  "publishedRevisionIds": [
-    "revision-card-ebridge-entry-v1",
-    "revision-card-current-student-entry-v1",
-    "revision-card-learning-mall-help-v1",
-    "revision-card-read-status-v1"
-  ],
-  "sourceRevisionIds": [
-    "artifact-revision-ebridge",
-    "artifact-revision-current-students",
-    "artifact-revision-learning-mall",
-    "artifact-revision-method"
-  ],
+  "publishedRevisionIds": [],
+  "sourceRevisionIds": [],
   "collectedRevisionIds": [
     "handbook-arrival-academic-integrity-ai-v1",
     "handbook-arrival-academic-calendar-v1",

@@ -173,6 +173,33 @@ test('withdrawing a collected revision replaces the older public-guide snapshot 
   assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
 });
 
+test('cleared demonstration authorizations allow replacing an old remote snapshot without restoring its examples', async t => {
+  const current = syntheticSnapshot();
+  const previous = structuredClone(current);
+  for (const reviewStatus of ['demo', 'approved']) {
+    const example = structuredClone(current.answers[0]);
+    example.id = `synthetic-${reviewStatus}-example`;
+    example.slug = example.id;
+    example.revisionId = `${example.id}-v2`;
+    example.history[0].id = example.revisionId;
+    example.demo = true;
+    example.reviewStatus = reviewStatus;
+    previous.answers.push(example);
+  }
+  previous.contentHash = pagesContentHash(previous);
+  const f = await fixture(t, { published: previous });
+  await assert.rejects(syncPagesSnapshot({ root: f.root }), { code: 'SYNC_SNAPSHOT' });
+  assert.equal(await git(f.remote, ['rev-parse', 'refs/heads/main']), f.baseline);
+  await writeSnapshot(f.root, current);
+  const index = await readFile(join(f.root, '.git/index'));
+  const result = await syncPagesSnapshot({ root: f.root });
+  assert.equal(result.changed, true);
+  assert.deepEqual(JSON.parse(await git(f.remote, ['show', `${result.commit}:${snapshotFile}`])), current);
+  assert.equal(await git(f.root, ['rev-parse', 'HEAD']), f.baseline);
+  assert.deepEqual(await readFile(join(f.root, '.git/index')), index);
+  assert.equal((await syncPagesSnapshot({ root: f.root })).changed, false);
+});
+
 test('a local collection authorization absent from deployed configuration cannot be synchronized', async t => {
   const f = await fixture(t, { published: syntheticSnapshot(), config: { ...pagesConfig, collectedRevisionIds: [] } });
   const snapshot = syntheticCollectedSnapshot();

@@ -27,9 +27,28 @@ export const keyring = { activeVersion: 'test-v1', keys: { 'test-v1': Buffer.all
 const password = 'synthetic-integration-password';
 const totpSecret = 'GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ';
 
-export async function loadCommunity() {
+export async function loadDemoContent() {
+  return JSON.parse(await readFile(new URL('./fixtures/demo-content.json', import.meta.url), 'utf8'));
+}
+
+export async function loadDemoPagesConfig() {
+  const config = JSON.parse(await readFile(join(communityRoot, 'pages.config.json'), 'utf8'));
+  const fixture = await loadDemoContent();
+  const answers = new Set(fixture.entities.filter(entity => entity.type === 'answer').map(entity => entity.id));
+  return {
+    ...config,
+    publishedRevisionIds: fixture.revisions.filter(revision => answers.has(revision.entityId)).map(revision => revision.id),
+    sourceRevisionIds: [...new Set(fixture.citations.map(citation => citation.sourceRevisionId))],
+  };
+}
+
+export async function loadCommunity({ includeDemo = false } = {}) {
   const loaded = await loadRuntimeConfig({ root: communityRoot });
   const bundle = JSON.parse(await readFile(loaded.contentFile, 'utf8'));
+  if (includeDemo) {
+    const fixture = await loadDemoContent();
+    for (const key of ['entities', 'revisions', 'citations', 'links']) bundle[key] = [...fixture[key], ...bundle[key]];
+  }
   return { ...loaded, bundle };
 }
 
@@ -73,7 +92,7 @@ export async function readJson(response, expectedStatus = 200) {
 }
 
 export async function harness(t, options = {}) {
-  const community = await loadCommunity();
+  const community = await loadCommunity({ includeDemo: options.includeDemo ?? true });
   community.business.research = structuredClone(syntheticResearch);
   const bundle = structuredClone(community.bundle);
   options.mutateBundle?.(bundle, community.business);

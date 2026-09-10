@@ -4,13 +4,14 @@ import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import { resolve } from 'node:path';
 import { buildPages, createPagesData } from '../scripts/build-pages.mjs';
+import { loadCommunity, loadDemoPagesConfig } from './helpers.mjs';
 
 const community = new URL('../community/', import.meta.url);
 const readJson = async name => JSON.parse(await readFile(new URL(name, community), 'utf8'));
 async function fixture() {
-  const config = await readJson('pages.config.json');
+  const config = await loadDemoPagesConfig();
   delete config.collectedRevisionIds;
-  return { config, profile: await readJson('content-profile.json'), content: await readJson('content.json'), catalog: await readJson('catalog.json'), now: '2026-09-10T00:00:00Z' };
+  return { config, profile: await readJson('content-profile.json'), content: (await loadCommunity({ includeDemo: true })).bundle, catalog: await readJson('catalog.json'), now: '2026-09-10T00:00:00Z' };
 }
 
 test('Pages exports exactly the reviewed demo revisions as public DTOs', async () => {
@@ -82,7 +83,9 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   const directory = resolve(root, 'community');
   await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
   for (const name of ['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json']) await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
-  await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify((await fixture()).config));
+  const input = await fixture();
+  await writeFile(resolve(directory, 'pages.config.json'), JSON.stringify(input.config));
+  await writeFile(resolve(directory, 'content.json'), JSON.stringify(input.content));
   for (const [name, contents] of Object.entries({ 'index.html': '<script type="module" src="./app.js"></script>', 'app.js': 'fetch("./public.json")', 'contributions.js': 'export const contributionTypes = {};', 'style.css': 'body { color: black; }', 'brand.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>' })) await writeFile(resolve(directory, 'pages-ui', name), contents);
   await mkdir(resolve(directory, '.runtime'));
   await writeFile(resolve(directory, '.runtime', 'community.sqlite'), 'PRIVATE_DATABASE_SENTINEL');
@@ -95,4 +98,27 @@ test('build reads no runtime database and emits only the fixed Pages asset list'
   assert.ok(!serialized.includes('PRIVATE_SECRETS_SENTINEL'));
   await writeFile(resolve(result.output, 'private-backup.json'), 'DO_NOT_PUBLISH');
   await assert.rejects(buildPages({ root }), /unexpected output private-backup.json/);
+});
+
+test('the production Pages build contains exactly the 76 real articles and no demonstration fallback', async t => {
+  const root = await mkdtemp(resolve(tmpdir(), 'guide-pages-production-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const directory = resolve(root, 'community');
+  await mkdir(resolve(directory, 'pages-ui'), { recursive: true });
+  for (const name of ['pages.config.json', 'pages-reviewed.json', 'content-profile.json', 'content.json', 'catalog.json']) {
+    await writeFile(resolve(directory, name), await readFile(new URL(name, community)));
+  }
+  for (const name of ['index.html', 'app.js', 'contributions.js', 'style.css', 'brand.svg']) {
+    await writeFile(resolve(directory, 'pages-ui', name), await readFile(new URL(`pages-ui/${name}`, community)));
+  }
+  const result = await buildPages({ root, now: '2026-09-10T00:00:00Z' });
+  const data = JSON.parse(await readFile(resolve(result.output, 'public.json'), 'utf8'));
+  assert.equal(result.answerCount, 76);
+  assert.ok(data.answers.every(answer => answer.demo === false && answer.reviewStatus === 'collected'));
+  const handbook = await readJson('handbook/runtime-import.json');
+  assert.deepEqual(new Set(data.answers.map(answer => answer.id)), new Set(handbook.entities.filter(entity => entity.type === 'answer').map(entity => entity.id)));
+  const input = await fixture();
+  input.config = await readJson('pages.config.json');
+  delete input.config.collectedRevisionIds;
+  assert.deepEqual(createPagesData(input).answers, [], 'cleared authorizations cannot publish even the explicit test-only demo bundle');
 });

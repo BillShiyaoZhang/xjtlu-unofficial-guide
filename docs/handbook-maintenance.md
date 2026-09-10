@@ -6,7 +6,7 @@
 
 本次按学生实际任务整理公开网页，覆盖苏州工业园区与太仓校园的新生、在校本科生和研究生。内容包括入学、账号、教务、图书馆、语言写作、住宿交通、社团体育、支持服务、交流、实习升学和科研。每篇包含问题、简要答案、适用范围、来源事实、行动建议、注意事项和复核日期。
 
-原有四张演示卡及其来源、修订和引用保留。新增内容已合入 `community/content.json`，并单独生成 `community/handbook/runtime-import.json` 供已有本地库导入。它们使用 `origin: ai_draft`、`demo: false` 和 `reviewStatus: pending-human-review`。`researchedAt` 记录资料读取日期；`verifiedAt` 留空，不能将模型联网检查冒写成人工审核。
+原有四张演示卡及其来源、修订和引用已从生产内容中移除，仅保留为测试夹具；已有运行库中的演示按隐藏处理，保留不可变历史。当前 76 篇资料已合入 `community/content.json`，并单独生成 `community/handbook/runtime-import.json` 供已有本地库导入。它们使用 `origin: ai_draft`、`demo: false` 和 `reviewStatus: pending-human-review`。`researchedAt` 记录资料读取日期；`verifiedAt` 留空，不能将模型联网检查冒写成人工审核。
 
 首次资料导入时，这批内容作为候选稿保存，GitHub Pages 仅展示四张演示卡。用户随后明确要求将搜集的 69 篇全部公开，现增加 Pages 的资料整理初版收录通道；这项授权不计作人工审核，高影响内容和来源校验继续有效。首次资料整理的验收记录保留在文末，反映当时状态，不代表当前 Pages 收录范围。
 
@@ -16,9 +16,9 @@
 
 `export:pages` 只读本机运行库，在隔离内存中对清单选中的版本执行公开投影，仅允许这些版本的 `ai_draft` 来源，其余高影响内容、来源状态与引用规则仍由 SDK 校验。导出的 `community/pages-reviewed.json` 采用 `mode: public-guide`；`collectedCount` 统计资料收录，`reviewedCount` 统计实际人工审核，两者分别报告。原始运行库和生成手册中的初稿状态保持不变。
 
-后续运行 `npm run sync:pages` 会继续处理这份显式清单。人工审核公开版优先于资料初版；隐藏、来源撤回或后续审核标为「需修改」「待核」「不收录」时移除资料初版。新修订或已有发布历史不会使旧初稿重新公开。未来新增草稿不在此次授权内。修改收录清单需先将配置随代码提交部署，再同步新快照，不能仅修改快照或把收录标为人工核验。具体步骤见 [Pages 同步](github-pages.md#本批-69-篇资料的显式收录)。
+后续运行 `npm run sync:pages` 会继续处理这份显式清单。人工审核公开版优先于资料初版；隐藏、来源撤回或后续审核标为「需修改」「待核」「不收录」时移除资料初版。新修订或已有发布历史不会使旧初稿重新公开。未来新增草稿不在此次授权内。修改收录清单需先将配置随代码提交部署，再同步新快照，不能仅修改快照或把收录标为人工核验。具体步骤见 [Pages 同步](github-pages.md#本批-76-篇资料的显式收录)。
 
-当前 `public-guide` 发布快照包含 80 篇：76 篇资料收录、0 篇人工审核、4 篇原有演示。后续同步须等对应 GitHub Actions 部署完成后，公开页面才会更新。
+当前 `public-guide` 发布快照包含 76 篇资料收录、0 篇人工审核、0 篇演示。演示已移出公开清单，后续导出会跳过未列入清单的演示实体。后续同步须等对应 GitHub Actions 部署完成后，公开页面才会更新。
 
 ## 2026-09-10 本轮补充
 
@@ -54,13 +54,13 @@ npm run build:pages
 
 ## 在现有平台中查看
 
-新建本地演示库时，`npm run dev` 会导入完整种子，仅发布四张历史演示答案。重启不再次导入或发布。已有演示库可通过以下显式命令导入本批候选：
+新建本地工作台运行库时，`npm run dev` 会将完整资料导入为草稿，不自动发布。重启不再次导入或发布。`.demo-runtime`、`runtime.demo.json` 与 `--demo` 沿用历史名称；当前种子不含演示内容。已有本地运行库可通过以下显式命令导入本批候选：
 
 ```powershell
 npm run runtime -- --demo import community/handbook/runtime-import.json
 ```
 
-该命令需要演示配置已初始化；只追加内容，不改变发布指针。导入后可在 `/editor` 的「内容审核」页直接浏览候选文章。`coverage.json` 列出每张卡的 entity/revision ID，也可以在修订检查或 `/runtime-editor` 中使用。独立运行环境按 [底座运行手册](platform-runtime.md) 选择自己的 `GUIDE_ROOT` 和导入包；本次未对真实环境执行该命令。
+该命令需要本地配置已初始化；只追加内容，不改变发布指针。导入后可在 `/editor` 的「内容审核」页直接浏览候选文章。`coverage.json` 列出每张卡的 entity/revision ID，也可以在修订检查或 `/runtime-editor` 中使用。独立运行环境按 [底座运行手册](platform-runtime.md) 选择自己的 `GUIDE_ROOT` 和导入包；本次未对真实环境执行该命令。
 
 ## 逐篇勾选与批量审核
 

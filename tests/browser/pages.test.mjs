@@ -5,8 +5,10 @@ import { createRequire } from 'node:module';
 import { copyFile, cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { basename, dirname, resolve, join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { importContent } from '@information-community/runtime';
 import { buildPages } from '../../scripts/build-pages.mjs';
-import { pagesContentHash } from '../../scripts/pages-snapshot.mjs';
+import { createReviewedPagesData, pagesContentHash } from '../../scripts/pages-snapshot.mjs';
+import { createStore, keyring, loadCommunity, loadDemoPagesConfig } from '../helpers.mjs';
 
 const require = createRequire(process.env.PLAYWRIGHT_PACKAGE ?? import.meta.url);
 const { chromium } = require('playwright');
@@ -63,7 +65,7 @@ function reviewedFixture(demo, { empty = false, onlyDemo = false, includeDemo = 
   return snapshot;
 }
 
-async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false, includeDemo = false, contributionsRepository, collectedCount = 0, onlyCollected = false } = {}) {
+async function staticSite(t, { production = false, reviewed = false, empty = false, onlyDemo = false, includeDemo = false, contributionsRepository, collectedCount = 0, onlyCollected = false } = {}) {
   // Never consume or replace the operator's exported snapshot or build directory.
   const root = await mkdtemp(join(tmpdir(), 'guide-pages-browser-'));
   t.after(async () => {
@@ -73,18 +75,31 @@ async function staticSite(t, { reviewed = false, empty = false, onlyDemo = false
   });
   const community = join(root, 'community');
   await mkdir(community);
+  const loaded = await loadCommunity({ includeDemo: !production });
   await Promise.all([
-    ...['pages.config.json', 'content-profile.json', 'content.json', 'catalog.json'].map(name => copyFile(resolve('community', name), join(community, name))),
+    ...['content-profile.json', 'catalog.json'].map(name => copyFile(resolve('community', name), join(community, name))),
+    writeFile(join(community, 'content.json'), JSON.stringify(loaded.bundle)),
     cp(resolve('community/pages-ui'), join(community, 'pages-ui'), { recursive: true }),
   ]);
   const configFile = join(community, 'pages.config.json');
-  const config = JSON.parse(await readFile(configFile, 'utf8'));
-  delete config.collectedRevisionIds;
+  const config = production
+    ? JSON.parse(await readFile(resolve('community/pages.config.json'), 'utf8'))
+    : await loadDemoPagesConfig();
+  if (!production) delete config.collectedRevisionIds;
   if (contributionsRepository !== undefined) {
     if (contributionsRepository === null) delete config.contributionsRepository;
     else config.contributionsRepository = contributionsRepository;
   }
   await writeFile(configFile, JSON.stringify(config));
+  if (production) {
+    const store = createStore(loaded);
+    try {
+      store.transact(state => { state.modules.content = importContent(state.modules.content, loaded.bundle); });
+      const catalog = JSON.parse(await readFile(join(community, 'catalog.json'), 'utf8'));
+      const snapshot = createReviewedPagesData({ state: store.read(), catalog, config, keyring, now: '2026-09-10T00:00:00Z' });
+      await writeFile(join(community, 'pages-reviewed.json'), JSON.stringify(snapshot));
+    } finally { store.close(); }
+  }
   const { output } = await buildPages({ root, basePath, now: '2026-09-10T00:00:00Z' });
   if (reviewed) {
     const demo = JSON.parse(await readFile(join(output, 'public.json'), 'utf8'));
@@ -126,6 +141,37 @@ async function assertPageFits(page) {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   assert.equal(await page.locator('img').evaluateAll(images => images.filter(image => !image.complete || image.naturalWidth === 0).length), 0);
 }
+
+test('the production guide contains 76 collected articles and no demo pages on desktop and mobile', async t => {
+  const site = await staticSite(t, { production: true });
+  assert.equal(site.data.mode, 'public-guide');
+  assert.equal(site.data.answers.length, 76);
+  assert.ok(site.data.answers.every(answer => answer.demo === false && answer.reviewStatus === 'collected'));
+  const removedIds = ['card-ebridge-entry', 'card-current-student-entry', 'card-learning-mall-help', 'card-read-status'];
+  for (const viewport of [{ width: 1440, height: 1040 }, { width: 390, height: 844 }]) {
+    const context = await site.browser.newContext({ viewport });
+    const page = await context.newPage(), errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(site.base);
+    await page.locator('body[data-ready=true]').waitFor();
+    assert.equal(await page.locator('#edition-label').innerText(), '公开只读指南');
+    assert.equal(await page.locator('#count').innerText(), '76 条答案');
+    assert.equal(await page.locator('#answer-list [data-review-status=collected]').count(), 76);
+    assert.equal(await page.locator('#answer-list [data-review-status=demo], .demo').count(), 0);
+    assert.doesNotMatch(await page.locator('#answer-list').innerText(), /演示内容/u);
+    await assertPageFits(page);
+    await page.locator('#about-nav').click();
+    await page.locator('#about-view').waitFor({ state: 'visible' });
+    assert.match(await page.locator('#about-content-description').innerText(), /尚未逐条人工核验/u);
+    assert.doesNotMatch(await page.locator('#about-view').innerText(), /演示|示范/u);
+    for (const id of removedIds) {
+      await page.goto(site.base + '#/answers/' + id);
+      await page.locator('#missing-view').waitFor({ state: 'visible' });
+    }
+    assert.deepEqual(errors, []);
+    await context.close();
+  }
+});
 
 test('public Pages reader works on a project subpath across desktop and mobile with no APIs', async t => {
   const site = await staticSite(t);

@@ -13,7 +13,7 @@ const fail = message => { throw new Error(`Pages build: ${message}`); };
 const jsonFile = async path => JSON.parse(await readFile(path, 'utf8'));
 
 function uniqueIds(values, name) {
-  if (!Array.isArray(values) || !values.length || values.some(value => typeof value !== 'string' || !value) || new Set(values).size !== values.length) fail(`${name} requires explicit, unique revision IDs`);
+  if (!Array.isArray(values) || values.some(value => typeof value !== 'string' || !value) || new Set(values).size !== values.length) fail(`${name} requires an explicit list of unique revision IDs`);
   return new Set(values);
 }
 

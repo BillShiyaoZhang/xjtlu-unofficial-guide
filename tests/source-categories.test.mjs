@@ -6,7 +6,7 @@ import { classifySource, SOURCE_CATEGORIES, sourceCategories } from '../communit
 import { publicSourceMetadata } from '../community/source-registry.mjs';
 import { createReviewedPagesData, pagesContentHash, validateReviewedPagesData } from '../scripts/pages-snapshot.mjs';
 import { compileHandbook } from '../scripts/build-handbook.mjs';
-import { harness, keyring, readJson } from './helpers.mjs';
+import { harness, keyring, loadDemoPagesConfig, readJson } from './helpers.mjs';
 
 test('source categories distinguish XJTLU, verified university accounts, contributors and other websites', () => {
   for (const url of ['https://xjtlu.edu.cn/', 'https://www.xjtlu.edu.cn/zh', 'https://lib.xjtlu.edu.cn/']) {
@@ -54,7 +54,7 @@ test('public Pages and local reader expose all three categories without changing
     bundle.revisions.find(row => row.entityId === 'artifact-current-students').data.url = 'https://www.suzhou.gov.cn/synthetic-test';
   } });
   h.publish();
-  const config = JSON.parse(await readFile(new URL('../community/pages.config.json', import.meta.url), 'utf8'));
+  const config = await loadDemoPagesConfig();
   delete config.collectedRevisionIds;
   const snapshot = createReviewedPagesData({ state: h.store.read(), catalog: h.catalog, config, keyring, now: new Date(h.time()).toISOString() });
   assert.deepEqual(snapshot.catalog.scopes.map(scope => scope.code), h.catalog.scopes.filter(scope => scope.status !== 'hidden').map(scope => scope.code));
