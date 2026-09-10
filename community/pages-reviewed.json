@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 1,
+  "mode": "public-reviewed",
+  "generatedAt": "2026-09-10T05:22:35.400Z",
+  "site": {
+    "name": "西浦非官方指南",
+    "basePath": "/xjtlu-unofficial-guide/",
+    "publicUrl": "https://billshiyaozhang.github.io/xjtlu-unofficial-guide/"
+  },
+  "catalog": {
+    "topics": [
+      {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "titleZh": "账号与系统",
+        "description": "查找登录入口、平台说明和操作帮助。"
+      },
+      {
+        "id": "topic-arrival",
+        "slug": "arrival",
+        "titleZh": "到校准备",
+        "description": "集中核对新生到校前后常见事项与官方入口。"
+      },
+      {
+        "id": "topic-services",
+        "slug": "student-services",
+        "titleZh": "校园办事",
+        "description": "从官方聚合页找到当前可用的学生服务入口。"
+      },
+      {
+        "id": "topic-method",
+        "slug": "using-this-guide",
+        "titleZh": "使用本指南",
+        "description": "理解来源、适用范围、核验时间和待复核标记。"
+      },
+      {
+        "id": "topic-campus",
+        "slug": "campus",
+        "titleZh": "校区与地图",
+        "description": "校区与地图的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-transport",
+        "slug": "transport",
+        "titleZh": "交通与出行",
+        "description": "交通与出行的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-housing",
+        "slug": "housing",
+        "titleZh": "住宿与报修",
+        "description": "住宿与报修的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-life",
+        "slug": "life",
+        "titleZh": "饮食与城市生活",
+        "description": "饮食与城市生活的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-study",
+        "slug": "study",
+        "titleZh": "学习与教务",
+        "description": "学习与教务的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-library",
+        "slug": "library",
+        "titleZh": "图书馆与信息素养",
+        "description": "图书馆与信息素养的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-language",
+        "slug": "language",
+        "titleZh": "语言与学术写作",
+        "description": "语言与学术写作的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-wellbeing",
+        "slug": "wellbeing",
+        "titleZh": "身心健康与求助",
+        "description": "身心健康与求助的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-international",
+        "slug": "international",
+        "titleZh": "国际学生支持",
+        "description": "国际学生支持的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-finance",
+        "slug": "finance",
+        "titleZh": "费用与资助入口",
+        "description": "费用与资助入口的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-clubs",
+        "slug": "clubs",
+        "titleZh": "社团与活动",
+        "description": "社团与活动的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-sport",
+        "slug": "sport",
+        "titleZh": "体育与运动",
+        "description": "体育与运动的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-exchange",
+        "slug": "exchange",
+        "titleZh": "海外交流",
+        "description": "海外交流的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-careers",
+        "slug": "careers",
+        "titleZh": "实习就业与升学",
+        "description": "实习就业与升学的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-research",
+        "slug": "research",
+        "titleZh": "科研与创新",
+        "description": "科研与创新的来源、办事步骤和需核对事项。"
+      },
+      {
+        "id": "topic-community",
+        "slug": "community",
+        "titleZh": "学生社区与非官方资源",
+        "description": "学生社区与非官方资源的来源、办事步骤和需核对事项。"
+      }
+    ],
+    "scopes": [
+      {
+        "id": "scope-campus-suzhou",
+        "dimension": "campus",
+        "code": "suzhou",
+        "labelZh": "苏州校区"
+      },
+      {
+        "id": "scope-audience-new",
+        "dimension": "audience",
+        "code": "new-student",
+        "labelZh": "新生"
+      },
+      {
+        "id": "scope-year-2026",
+        "dimension": "academic_year",
+        "code": "2026",
+        "labelZh": "2026 入学届"
+      },
+      {
+        "id": "scope-campus-taicang",
+        "dimension": "campus",
+        "code": "taicang",
+        "labelZh": "太仓校园"
+      },
+      {
+        "id": "scope-audience-undergraduate",
+        "dimension": "audience",
+        "code": "undergraduate",
+        "labelZh": "本科生"
+      },
+      {
+        "id": "scope-audience-postgraduate",
+        "dimension": "audience",
+        "code": "postgraduate",
+        "labelZh": "研究生"
+      }
+    ],
+    "publishers": [
+      {
+        "id": "publisher-xjtlu",
+        "nameZh": "西交利物浦大学",
+        "canonicalUrl": "https://www.xjtlu.edu.cn/"
+      },
+      {
+        "id": "publisher-guide",
+        "nameZh": "西浦非官方指南编辑组",
+        "canonicalUrl": "https://billshiyaozhang.github.io/xjtlu-unofficial-guide/#/about"
+      }
+    ]
+  },
+  "search": {
+    "aliases": {
+      "e-bridge": [
+        "ebridge",
+        "教务系统",
+        "学生系统"
+      ],
+      "learning mall": [
+        "lm",
+        "教学平台"
+      ],
+      "knowledge base": [
+        "kb",
+        "知识库"
+      ],
+      "新生": [
+        "new student",
+        "到校",
+        "入学"
+      ],
+      "办事": [
+        "学生服务",
+        "service"
+      ],
+      "西交利物浦": [
+        "xjtlu",
+        "西浦"
+      ]
+    }
+  },
+  "answers": [
+    {
+      "id": "card-ebridge-entry",
+      "title": "去哪里核对 e-Bridge 的登录与功能信息？",
+      "revisionId": "revision-card-ebridge-entry-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校 IT 服务中的 e-Bridge 说明页是核对该系统登录与功能信息的官方入口之一。",
+          "kind": "fact"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "2026"
+        ]
+      },
+      "citations": [
+        {
+          "id": "citation-card-ebridge-entry-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "artifact-ebridge",
+          "sourceRevisionId": "artifact-revision-ebridge",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "e-Bridge — XJTLU IT Services",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/en/it-services/e-bridge-eng"
+        }
+      ],
+      "warnings": [],
+      "slug": "where-to-check-e-bridge",
+      "demo": true,
+      "origin": "human",
+      "originalOrigin": "human",
+      "reviewStatus": "demo",
+      "summary": "优先从学校 IT 服务说明页进入，并在原站核对当前登录地址与账号要求。",
+      "asOf": "2026-08-29",
+      "verifiedAt": "2026-08-29T00:00:00Z",
+      "reviewDueAt": "2026-11-30T00:00:00Z",
+      "reviewOwnerLabel": "内容编辑组",
+      "evidenceNote": "平台仅保存来源链接，未归档原文；请到原站核查。",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "revision-card-ebridge-entry-v1",
+          "number": 1,
+          "title": "去哪里核对 e-Bridge 的登录与功能信息？"
+        }
+      ]
+    },
+    {
+      "id": "card-current-student-entry",
+      "title": "从哪里开始找学生常用办事入口？",
+      "revisionId": "revision-card-current-student-entry-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "学校“在校学生”页面集中提供多类学生服务与常用系统入口。",
+          "kind": "fact"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "2026"
+        ]
+      },
+      "citations": [
+        {
+          "id": "citation-card-current-student-entry-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "artifact-current-students",
+          "sourceRevisionId": "artifact-revision-current-students",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "在校学生 — 西交利物浦大学",
+          "mode": "link-only",
+          "url": "https://www.xjtlu.edu.cn/zh/current-students"
+        }
+      ],
+      "warnings": [],
+      "slug": "current-student-service-entry",
+      "demo": true,
+      "origin": "human",
+      "originalOrigin": "human",
+      "reviewStatus": "demo",
+      "summary": "先查看学校“在校学生”聚合页，再进入具体服务并核对最新要求。",
+      "asOf": "2026-08-29",
+      "verifiedAt": "2026-08-29T00:00:00Z",
+      "reviewDueAt": "2026-11-30T00:00:00Z",
+      "reviewOwnerLabel": "内容编辑组",
+      "evidenceNote": "平台仅保存来源链接，未归档原文；请到原站核查。",
+      "topic": {
+        "id": "topic-services",
+        "slug": "student-services",
+        "title": "校园办事"
+      },
+      "history": [
+        {
+          "id": "revision-card-current-student-entry-v1",
+          "number": 1,
+          "title": "从哪里开始找学生常用办事入口？"
+        }
+      ]
+    },
+    {
+      "id": "card-learning-mall-help",
+      "title": "在哪里查 Learning Mall 的操作帮助？",
+      "revisionId": "revision-card-learning-mall-help-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "Learning Mall Knowledge Base 是查找 Learning Mall 操作说明的专门入口。",
+          "kind": "fact"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "suzhou"
+        ],
+        "audience": [
+          "new-student"
+        ],
+        "academic_year": [
+          "2026"
+        ]
+      },
+      "citations": [
+        {
+          "id": "citation-card-learning-mall-help-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "artifact-learning-mall",
+          "sourceRevisionId": "artifact-revision-learning-mall",
+          "position": {
+            "kind": "link"
+          },
+          "order": 0,
+          "title": "Learning Mall Knowledge Base",
+          "mode": "link-only",
+          "url": "https://knowledgebase.xjtlu.edu.cn/"
+        }
+      ],
+      "warnings": [],
+      "slug": "learning-mall-help",
+      "demo": true,
+      "origin": "human",
+      "originalOrigin": "human",
+      "reviewStatus": "demo",
+      "summary": "到 Learning Mall Knowledge Base 查找当前的操作说明，并以原站页面为准。",
+      "asOf": "2026-08-29",
+      "verifiedAt": "2026-08-29T00:00:00Z",
+      "reviewDueAt": "2026-11-30T00:00:00Z",
+      "reviewOwnerLabel": "内容编辑组",
+      "evidenceNote": "平台仅保存来源链接，未归档原文；请到原站核查。",
+      "topic": {
+        "id": "topic-systems",
+        "slug": "accounts-and-systems",
+        "title": "账号与系统"
+      },
+      "history": [
+        {
+          "id": "revision-card-learning-mall-help-v1",
+          "number": 1,
+          "title": "在哪里查 Learning Mall 的操作帮助？"
+        }
+      ]
+    },
+    {
+      "id": "card-read-status",
+      "title": "怎样判断一张答案卡是否仍适用？",
+      "revisionId": "revision-card-read-status-v1",
+      "revisionNumber": 1,
+      "sentences": [
+        {
+          "id": "s1",
+          "text": "每张公开答案都必须标出适用范围、信息截至日期、人工核验时间、复核期限和来源。待复核内容会显示警示并在检索中降级。",
+          "kind": "fact"
+        }
+      ],
+      "scope": {
+        "campus": [
+          "universal"
+        ],
+        "audience": [
+          "universal"
+        ],
+        "academic_year": [
+          "universal"
+        ]
+      },
+      "citations": [
+        {
+          "id": "citation-card-read-status-s1-1",
+          "sentenceId": "s1",
+          "sourceEntityId": "artifact-method",
+          "sourceRevisionId": "artifact-revision-method",
+          "position": {
+            "kind": "text",
+            "start": 0,
+            "end": 56
+          },
+          "order": 0,
+          "title": "西浦非官方指南方法说明",
+          "mode": "excerpt",
+          "excerpt": "每张公开答案都必须标出适用范围、信息截至日期、人工核验时间、复核期限和来源。待复核内容会显示警示并在检索中降级。",
+          "url": "https://billshiyaozhang.github.io/xjtlu-unofficial-guide/#/about"
+        }
+      ],
+      "warnings": [],
+      "slug": "how-to-read-answer-status",
+      "demo": true,
+      "origin": "human",
+      "originalOrigin": "human",
+      "reviewStatus": "demo",
+      "summary": "一起查看适用范围、信息截至日期、人工核验时间、复核期限和来源类型。",
+      "asOf": "2026-08-29",
+      "verifiedAt": "2026-08-29T00:00:00Z",
+      "reviewDueAt": "2026-11-30T00:00:00Z",
+      "reviewOwnerLabel": "内容编辑组",
+      "evidenceNote": "本条引用平台自有方法说明中的可定位证据片段。",
+      "topic": {
+        "id": "topic-method",
+        "slug": "using-this-guide",
+        "title": "使用本指南"
+      },
+      "history": [
+        {
+          "id": "revision-card-read-status-v1",
+          "number": 1,
+          "title": "怎样判断一张答案卡是否仍适用？"
+        }
+      ]
+    }
+  ],
+  "contentHash": "254b911746e813b707a6bcb51a25ca476e6c9c9efec8c3bba35d6d063b770c38"
+}
