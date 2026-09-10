@@ -5,6 +5,8 @@
   "type": "module",
   "engines": { "node": ">=24.12.0 <25" },
   "scripts": {
+    "handbook:build": "node scripts/build-handbook.mjs",
+    "handbook:check": "node scripts/build-handbook.mjs --check",
     "dev": "node scripts/dev.mjs",
     "start": "node server/guide.mjs",
     "build": "node scripts/build.mjs",

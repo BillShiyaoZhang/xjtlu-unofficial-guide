@@ -9,7 +9,8 @@ This directory contains the campus-specific data and policies consumed by the pi
 | `runtime.config.json` | Stable community ID, runtime data location, and business/content file paths. Open the runtime with this directory as its consumer root. |
 | `business.json` | Role permissions, participant self-service allowlists and credential lifetimes, anonymous report DTO, and business file references. |
 | `content-profile.json` | Answer/source types, sentence evidence rules, publication restrictions, scope dimensions, and search aliases. |
-| `content.json` | Four original `stage1-demo-v1` answer cards, their immutable revisions, four sources, and sentence citations. Import alone does not publish them. |
+| `content.json` | Four original `stage1-demo-v1` cards plus the source-backed initial handbook drafts. Import alone does not publish them. |
+| `handbook/` | Research inputs, reading-status notes, coverage index and standalone draft import bundle; readable text is generated into `docs/handbook.md`. |
 | `catalog.json` | Topics, applicability scopes, and publishers retained from the legacy demonstration seed. |
 | `lifecycle.json` | Campus intake/report state machines and retention periods. |
 | `policy.json` | Business enums, conditional resolution rules, and the explicit public revision metadata allowlist for the guide gateway. |
@@ -22,6 +23,8 @@ This directory contains the campus-specific data and policies consumed by the pi
 `catalogFile`, `policyFile`, and `consentFile` are guide-specific references. The gateway loads the catalog and notice; `policy.json` documents business enums and must stay aligned with `server/business-validation.mjs`, rather than acting as an automatic rule engine. The platform loads `contentProfileFile` and `lifecycleFile`. The ignored `.runtime/` directory belongs to the deployed consumer, not to the installed package.
 
 ## Demo Content
+
+The initial handbook adds research-backed candidates to this same content bundle. See [the handbook](../docs/handbook.md) and [maintenance instructions](../docs/handbook-maintenance.md). All new cards retain `origin: ai_draft`, `demo: false`, blank `verifiedAt`, and a separate `researchedAt`. Source retrieval is not human verification. Initial demo setup imports these candidates but only publishes the four historical demo cards; existing databases need an explicit append import. The Pages revision allowlist is unchanged. The `handbook:build` command generates the first-import v1 snapshot, not revisions for a database that already imported it.
 
 The four cards preserve their original answer IDs, revision IDs, slugs, titles, summaries, source URLs, topic IDs, information date (`2026-08-29`), verification time, and review deadline (`2026-11-30`). They are demonstration seed records, not a fresh verification of external university pages. Answer revision data explicitly sets `demo: true`.
 

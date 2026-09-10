@@ -50,7 +50,7 @@ export function createStore({ business, config }) {
 export function publishDemo(store, bundle, now = initialTime) {
   store.transact(state => { state.modules.content = importContent(state.modules.content, bundle); });
   const types = new Map(store.read().modules.content.profile.entityTypes.map(type => [type.id, type.role]));
-  const content = bundle.entities.filter(entity => types.get(entity.type) === 'content');
+  const content = bundle.entities.filter(entity => types.get(entity.type) === 'content' && bundle.revisions.some(revision => revision.entityId === entity.id && revision.data.demo === true));
   for (const entity of content) {
     const revision = bundle.revisions.filter(item => item.entityId === entity.id).sort((a, b) => b.number - a.number)[0];
     store.transact(state => {

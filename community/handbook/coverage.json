@@ -1,0 +1,598 @@
+{
+  "researchedAt": "2026-09-10",
+  "status": "pending-human-review",
+  "cardCount": 69,
+  "topicCount": 20,
+  "sourceCount": 53,
+  "citedSourceCount": 50,
+  "factCount": 93,
+  "citationCount": 95,
+  "humanVerifiedCount": 0,
+  "topics": [
+    {
+      "topic": "method",
+      "title": "使用指南与信息核对",
+      "count": 1
+    },
+    {
+      "topic": "arrival",
+      "title": "到校准备",
+      "count": 2
+    },
+    {
+      "topic": "systems",
+      "title": "账号与系统",
+      "count": 10
+    },
+    {
+      "topic": "services",
+      "title": "校园办事",
+      "count": 6
+    },
+    {
+      "topic": "campus",
+      "title": "校区与地图",
+      "count": 5
+    },
+    {
+      "topic": "transport",
+      "title": "交通与出行",
+      "count": 3
+    },
+    {
+      "topic": "housing",
+      "title": "住宿与报修",
+      "count": 5
+    },
+    {
+      "topic": "life",
+      "title": "饮食与城市生活",
+      "count": 4
+    },
+    {
+      "topic": "study",
+      "title": "学习与教务",
+      "count": 7
+    },
+    {
+      "topic": "library",
+      "title": "图书馆与信息素养",
+      "count": 6
+    },
+    {
+      "topic": "language",
+      "title": "语言与学术写作",
+      "count": 2
+    },
+    {
+      "topic": "wellbeing",
+      "title": "身心健康与求助",
+      "count": 3
+    },
+    {
+      "topic": "international",
+      "title": "国际学生支持",
+      "count": 1
+    },
+    {
+      "topic": "finance",
+      "title": "费用与资助入口",
+      "count": 1
+    },
+    {
+      "topic": "clubs",
+      "title": "社团与活动",
+      "count": 1
+    },
+    {
+      "topic": "sport",
+      "title": "体育与运动",
+      "count": 2
+    },
+    {
+      "topic": "exchange",
+      "title": "海外交流",
+      "count": 3
+    },
+    {
+      "topic": "careers",
+      "title": "实习就业与升学",
+      "count": 3
+    },
+    {
+      "topic": "research",
+      "title": "科研与创新",
+      "count": 2
+    },
+    {
+      "topic": "community",
+      "title": "学生社区与非官方资源",
+      "count": 2
+    }
+  ],
+  "cards": [
+    {
+      "id": "handbook-arrival-academic-integrity-ai",
+      "revisionId": "handbook-arrival-academic-integrity-ai-v1",
+      "title": "作业使用了生成式 AI，提交前应检查什么？",
+      "topic": "study",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-academic-calendar",
+      "revisionId": "handbook-arrival-academic-calendar-v1",
+      "title": "本学期第几周、阅读周和校历去哪里查？",
+      "topic": "study",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-system-bookmarks",
+      "revisionId": "handbook-arrival-system-bookmarks-v1",
+      "title": "常用系统太多，先收藏哪些入口？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-account-setup",
+      "revisionId": "handbook-arrival-account-setup-v1",
+      "title": "校园账号怎么开始用，忘记密码怎么办？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-email",
+      "revisionId": "handbook-arrival-email-v1",
+      "title": "校园邮箱在哪里看，手机配置失败怎么办？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-network-login",
+      "revisionId": "handbook-arrival-network-login-v1",
+      "title": "连上校园 Wi-Fi 却不能上网怎么办？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-printing",
+      "revisionId": "handbook-arrival-printing-v1",
+      "title": "第一次在校园打印，应该怎么准备？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-box-backup",
+      "revisionId": "handbook-arrival-box-backup-v1",
+      "title": "课程文件和小组资料怎么整理备份？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-it-suzhou",
+      "revisionId": "handbook-arrival-it-suzhou-v1",
+      "title": "苏州校区的 IT 问题找谁？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-it-taicang",
+      "revisionId": "handbook-arrival-it-taicang-v1",
+      "title": "太仓校区的 IT 问题找谁？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-learning-mall",
+      "revisionId": "handbook-arrival-learning-mall-v1",
+      "title": "Learning Mall Core 和 Premium 怎么区分？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-ebridge",
+      "revisionId": "handbook-arrival-ebridge-v1",
+      "title": "e-Bridge 主要用来办什么？",
+      "topic": "systems",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-onestop",
+      "revisionId": "handbook-arrival-onestop-v1",
+      "title": "不知道该找哪个部门，可以先问谁？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-card-replacement",
+      "revisionId": "handbook-arrival-card-replacement-v1",
+      "title": "校园卡或学生证丢了，从哪里补办？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-transcripts",
+      "revisionId": "handbook-arrival-transcripts-v1",
+      "title": "在读证明和成绩单怎样申请？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-development-adviser",
+      "revisionId": "handbook-arrival-development-adviser-v1",
+      "title": "适应大学生活遇到困难，成长顾问能帮什么？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-international-support",
+      "revisionId": "handbook-arrival-international-support-v1",
+      "title": "国际及港澳台新生遇到到校事务，先找哪里？",
+      "topic": "international",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-counselling",
+      "revisionId": "handbook-arrival-counselling-v1",
+      "title": "想找人谈谈，怎样预约学校心理咨询？",
+      "topic": "wellbeing",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-emergency-help",
+      "revisionId": "handbook-arrival-emergency-help-v1",
+      "title": "遇到紧急情况，应该拨打什么电话？",
+      "topic": "wellbeing",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-accessibility-support",
+      "revisionId": "handbook-arrival-accessibility-support-v1",
+      "title": "有无障碍或学习支持需求，怎样提前沟通？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-finance-check",
+      "revisionId": "handbook-arrival-finance-check-v1",
+      "title": "学费、奖助学金和经济困难支持，从哪里核对？",
+      "topic": "finance",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-arrival-master-registration",
+      "revisionId": "handbook-arrival-master-registration-v1",
+      "title": "硕士新生到校前，应核对哪些办理事项？",
+      "topic": "arrival",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-read-module-catalogue",
+      "revisionId": "handbook-read-module-catalogue-v1",
+      "title": "开课前怎样读懂课程大纲？",
+      "topic": "study",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-timetable-academic-help",
+      "revisionId": "handbook-timetable-academic-help-v1",
+      "title": "课表有冲突或课程信息不对，怎样描述问题？",
+      "topic": "study",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-choose-transfer-programme",
+      "revisionId": "handbook-choose-transfer-programme-v1",
+      "title": "选专业或考虑转专业前，先做哪些功课？",
+      "topic": "study",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-exam-and-assessment-help",
+      "revisionId": "handbook-exam-and-assessment-help-v1",
+      "title": "考试、补考或考评问题，如何找到正确咨询入口？",
+      "topic": "study",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-find-books-articles",
+      "revisionId": "handbook-find-books-articles-v1",
+      "title": "找教材、论文和电子书，从图书馆哪里开始？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-library-renew-reserve",
+      "revisionId": "handbook-library-renew-reserve-v1",
+      "title": "图书续借、预约或跨馆取书，怎样先查清楚？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-library-study-space",
+      "revisionId": "handbook-library-study-space-v1",
+      "title": "想找自习位或讨论室，应该先核对什么？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-collect-textbooks",
+      "revisionId": "handbook-collect-textbooks-v1",
+      "title": "开学领教材，错过集中发放怎么办？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-library-research-skills",
+      "revisionId": "handbook-library-research-skills-v1",
+      "title": "不会检索或管理参考文献，怎样利用图书馆支持？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-eap-study-habits",
+      "revisionId": "handbook-eap-study-habits-v1",
+      "title": "全英文学习刚开始，怎样用好 EAP？",
+      "topic": "language",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-academic-writing-support",
+      "revisionId": "handbook-academic-writing-support-v1",
+      "title": "论文和作业写不清楚，找谁获得学术写作支持？",
+      "topic": "language",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-liverpool-study-routes",
+      "revisionId": "handbook-liverpool-study-routes-v1",
+      "title": "4+0、2+2 和 2+1+1 怎么区分？",
+      "topic": "exchange",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-semester-exchange-plan",
+      "revisionId": "handbook-semester-exchange-plan-v1",
+      "title": "想申请一学期或一学年的交换，怎样开始？",
+      "topic": "exchange",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-summer-school-plan",
+      "revisionId": "handbook-summer-school-plan-v1",
+      "title": "海外暑校怎么找，哪些事需要先问清？",
+      "topic": "exchange",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-internship-job-search",
+      "revisionId": "handbook-internship-job-search-v1",
+      "title": "找实习或校招信息，有哪些校内入口？",
+      "topic": "careers",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-career-advice-mentor",
+      "revisionId": "handbook-career-advice-mentor-v1",
+      "title": "对职业方向没把握，怎样准备职业咨询或校外导师交流？",
+      "topic": "careers",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-postgraduate-application-materials",
+      "revisionId": "handbook-postgraduate-application-materials-v1",
+      "title": "准备升学申请，先整理哪些材料？",
+      "topic": "careers",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-surf-research-start",
+      "revisionId": "handbook-surf-research-start-v1",
+      "title": "本科生想尝试科研，SURF 可以怎样准备？",
+      "topic": "research",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-find-research-supervisor",
+      "revisionId": "handbook-find-research-supervisor-v1",
+      "title": "想找研究方向或潜在导师，先读什么？",
+      "topic": "research",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-past-papers-and-fyp",
+      "revisionId": "handbook-past-papers-and-fyp-v1",
+      "title": "哪里找往年试卷与毕业论文，怎样正确使用？",
+      "topic": "library",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-sip-routine-medical-entry",
+      "revisionId": "handbook-life-sip-routine-medical-entry-v1",
+      "title": "园区想预约普通门诊，怎么找到官方就医入口？",
+      "topic": "wellbeing",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-two-campuses",
+      "revisionId": "handbook-life-two-campuses-v1",
+      "title": "到校前先核对：园区还是太仓？",
+      "topic": "campus",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-campus-renaming",
+      "revisionId": "handbook-life-campus-renaming-v1",
+      "title": "旧攻略中的“北校区”现在指哪里？",
+      "topic": "campus",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-campus-map",
+      "revisionId": "handbook-life-campus-map-v1",
+      "title": "看不懂楼名或第一次找教室，怎么准备？",
+      "topic": "campus",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-arrive-sip",
+      "revisionId": "handbook-life-arrive-sip-v1",
+      "title": "去园区校园，先查哪些车站和地铁站？",
+      "topic": "transport",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-arrive-taicang",
+      "revisionId": "handbook-life-arrive-taicang-v1",
+      "title": "去太仓校园，车票和导航怎么核对？",
+      "topic": "transport",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-campus-shuttle",
+      "revisionId": "handbook-life-campus-shuttle-v1",
+      "title": "园区和太仓之间的区间车怎么查、怎么坐？",
+      "topic": "transport",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-domestic-housing-notice",
+      "revisionId": "handbook-life-domestic-housing-notice-v1",
+      "title": "中国大陆新生怎样确认自己的宿舍安排？",
+      "topic": "housing",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-sip-dorm-repair",
+      "revisionId": "handbook-life-sip-dorm-repair-v1",
+      "title": "园区宿舍水电、空调或门锁有问题，联系谁？",
+      "topic": "housing",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-taicang-dorm-repair",
+      "revisionId": "handbook-life-taicang-dorm-repair-v1",
+      "title": "太仓公寓报修和找前台，先存哪些信息？",
+      "topic": "housing",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-move-in-checklist",
+      "revisionId": "handbook-life-move-in-checklist-v1",
+      "title": "入住第一天，宿舍要检查和记录什么？",
+      "topic": "housing",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-global-housing-entry",
+      "revisionId": "handbook-life-global-housing-entry-v1",
+      "title": "港澳台及国际学生的住宿信息从哪里查？",
+      "topic": "housing",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-campus-facility-help",
+      "revisionId": "handbook-life-campus-facility-help-v1",
+      "title": "教室或校园公共设施有故障，怎么说明问题？",
+      "topic": "campus",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-campus-dining",
+      "revisionId": "handbook-life-campus-dining-v1",
+      "title": "校内哪里吃饭、营业时间怎么查？",
+      "topic": "life",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-lost-property",
+      "revisionId": "handbook-life-lost-property-v1",
+      "title": "东西丢在校园或区间车上，先找谁？",
+      "topic": "life",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-sip-sports",
+      "revisionId": "handbook-life-sip-sports-v1",
+      "title": "园区想打球或健身，从哪里预约？",
+      "topic": "sport",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-taicang-sports",
+      "revisionId": "handbook-life-taicang-sports-v1",
+      "title": "太仓有哪些体育资源，游泳前查什么？",
+      "topic": "sport",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-clubs-discovery",
+      "revisionId": "handbook-life-clubs-discovery-v1",
+      "title": "想参加社团，怎么找到适合自己的组织？",
+      "topic": "clubs",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-public-library",
+      "revisionId": "handbook-life-public-library-v1",
+      "title": "园区校园附近还可以去哪里阅读、自习？",
+      "topic": "life",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-city-service-12345",
+      "revisionId": "handbook-life-city-service-12345-v1",
+      "title": "校外公共服务问题不知道找哪个部门，怎么办？",
+      "topic": "life",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-life-museum-culture",
+      "revisionId": "handbook-life-museum-culture-v1",
+      "title": "想了解西浦校园文化或看展，从哪里开始？",
+      "topic": "campus",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-official-handbooks-and-editions",
+      "revisionId": "handbook-official-handbooks-and-editions-v1",
+      "title": "官方手册在哪找，如何选对年度和人群？",
+      "topic": "method",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-first-week-action-list",
+      "revisionId": "handbook-first-week-action-list-v1",
+      "title": "到校第一周，可以按什么顺序把基本事项做完？",
+      "topic": "arrival",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-asking-for-help-effectively",
+      "revisionId": "handbook-asking-for-help-effectively-v1",
+      "title": "不知道该找谁时，怎样把问题说清楚？",
+      "topic": "services",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-student-wiki-and-old-guides",
+      "revisionId": "handbook-student-wiki-and-old-guides-v1",
+      "title": "学生 Wiki 和旧攻略适合怎么用？",
+      "topic": "community",
+      "reviewDueAt": "2026-12-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-unofficial-campus-app-projects",
+      "revisionId": "handbook-unofficial-campus-app-projects-v1",
+      "title": "看到非官方校园工具时，先检查什么？",
+      "topic": "community",
+      "reviewDueAt": "2026-11-09T00:00:00.000Z"
+    },
+    {
+      "id": "handbook-learning-path-mentor-2026",
+      "revisionId": "handbook-learning-path-mentor-2026-v1",
+      "title": "2026年新增的学习路径导师（LPM）能帮什么忙？",
+      "topic": "study",
+      "reviewDueAt": "2026-10-10T00:00:00.000Z"
+    }
+  ]
+}

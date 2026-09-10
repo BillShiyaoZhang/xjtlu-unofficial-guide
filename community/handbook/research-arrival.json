@@ -1,0 +1,1356 @@
+{
+  "section": "arrival",
+  "researchedAt": "2026-09-10",
+  "sources": [
+    {
+      "key": "arrival-ai-literacy-training",
+      "title": "AI Literacy: Understand and Effectively Use AI-powered Tools",
+      "url": "https://lib.xjtlu.edu.cn/node/1915",
+      "publisher": "西交利物浦大学图书馆",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位 Workshop Outline 及 TIME/Venue。页面列明活动时间为 2026-03-17、地点为太仓 D-2027；该日期是培训时间，未当作发布日期。仅引用培训介绍包含学术诚信与 AI 引用，不证明活动已实际举办、不代表当前仍可报名，也不构成全校统一 AI 使用许可。"
+    },
+    {
+      "key": "arrival-academic-calendar-2026",
+      "title": "Xi'an Jiaotong-Liverpool University 2026–2027 Academic Calendar (STUDENT)",
+      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/08/ACADEMIC-CALENDAR-2026-27-FOR-STUDENT-XJTLU.pdf",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "从官网“在校学生—教学日历”链接直接打开的一页 PDF；标题为 2026–2027 Academic Calendar (STUDENT)。定位 Description 列与 Colour key，仅核实校历类别和入口，不转录考试日期。URL 中 2026/08 是文件目录，不替代未知发布日期。"
+    },
+    {
+      "key": "arrival-current",
+      "title": "在校学生",
+      "url": "https://www.xjtlu.edu.cn/zh/current-students",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“学习工具”“学术信息”“学生服务”，用于系统与服务导航，不代表已进入登录后业务。"
+    },
+    {
+      "key": "arrival-it",
+      "title": "IT 服务介绍",
+      "url": "https://www.xjtlu.edu.cn/zh/it-services",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“校园账号/校园网络/校园邮箱/校园打印/校园云盘/联系我们”。两校区电话与邮箱由页面正文核对；工作日窗口与其他页面泛称七天支持并不等同，因此卡片不承诺周末到场服务。"
+    },
+    {
+      "key": "arrival-network",
+      "title": "校园网络",
+      "url": "https://www.xjtlu.edu.cn/zh/it-services/%E6%A0%A1%E5%9B%AD%E7%BD%91%E7%BB%9C-intro",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“校园网覆盖与接入能力”，确认 SIP 与 XEC 网络覆盖及有线、无线、远程接入；不引用带宽保证。"
+    },
+    {
+      "key": "arrival-ebridge",
+      "title": "e-Bridge",
+      "url": "https://www.xjtlu.edu.cn/en/it-services/e-bridge-eng",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位 e-Bridge 简介段落，确认注册、学籍、课程和学术记录用途；未登录系统。"
+    },
+    {
+      "key": "arrival-lm",
+      "title": "How to access to Learning Mall Core platform",
+      "url": "https://knowledgebase.xjtlu.edu.cn/article/how-to-access-to-learning-mall-core-platform-341.html",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位 What to know 及 Step 2/3，确认 Core/Premium 区分和账号类型。页面显示更新日期 2023-12-22，未能确认最初发布日期，因此 publishedAt 保留 null。"
+    },
+    {
+      "key": "arrival-support",
+      "title": "学习资源与支持",
+      "url": "https://www.xjtlu.edu.cn/zh/study/why-study-at-xjtlu/resources-and-support",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“学生服务中心”“成长顾问中心”“为国际学生和港澳台学生提供的支持服务”。当前仍附 2025–2026 新生攻略，因此未据此编造 2026 级报到时间。"
+    },
+    {
+      "key": "arrival-proofs",
+      "title": "成绩单与证明",
+      "url": "https://www.xjtlu.edu.cn/zh/transcripts-and-certifications",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“电子版申请方法”“纸质版申请方法”“联系我们”。仅引述入口、文件类型与客服邮箱，不将费用和处理时间写成固定承诺。"
+    },
+    {
+      "key": "arrival-health",
+      "title": "生活服务",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/health-and-wellbeing",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开中文页；定位“心理健康咨询服务中心”“医疗服务”，核对 counsellingservice@xjtlu.edu.cn 与 0512 8816 1815；不作个人诊疗判断或对保密例外作保证。"
+    },
+    {
+      "key": "arrival-emergency",
+      "title": "常用紧急救助及公益服务号码说明",
+      "url": "https://bjca.miit.gov.cn/zwgk/tzgg/art/2022/art_8d4eb93ee3424f30826c97ee400e8937.html",
+      "publisher": "北京市通信管理局",
+      "publishedAt": "2022-08-29",
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；表格第 1–3 项直接核对 110、119、120 的用途。仅使用全国通用号码，不使用该页北京地方服务号码。"
+    },
+    {
+      "key": "arrival-library-emergency",
+      "title": "Adjustment of Library Opening Arrangements during Summer Holiday",
+      "url": "https://lib.xjtlu.edu.cn/node/1992",
+      "publisher": "西交利物浦大学图书馆",
+      "publishedAt": "2026-06-11",
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“In case of emergency (not during staffed hours)”两校区联系人。本卡仅作为图书馆非人工服务时段的校园求助补充，不把暑期开放安排外推到当前学期。"
+    },
+    {
+      "key": "arrival-master-guide",
+      "title": "XJTLU Master's Student Handbook AY2026/27",
+      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2026/09/XJTLU_Masters-Student-Handbook_AY2026-27.pdf",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "从大学出版物页面的实际下载链接定位并打开2026/27新版PDF；定位PDF第6页（印刷页05–06）University Registration，以及PDF第14页Contact XJTLU Graduate School。2026/27是学年，精确发布日期未标明；仅摘写事项结构和联系入口，不代替本人的注册通知。"
+    },
+    {
+      "key": "arrival-master-fees",
+      "title": "硕士研究生招生：学费及奖学金",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/master/fees-and-scholarship",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开；定位“各专业学费信息”表格。仅确认按专业、学制查看费用的官方入口，不录入个人应缴金额或奖学金资格。"
+    },
+    {
+      "key": "arrival-ug-fees-lead",
+      "title": "中国内地（大陆）学生：学费及奖学金",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/fees-and-scholarship",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "search-result-only",
+      "note": "仅检索摘要可见；多次打开返回抓取失败，保留待核验线索，未用作事实句证据；不引用摘要中的金额。"
+    },
+    {
+      "key": "arrival-accessibility-lead",
+      "title": "Disabilities Service",
+      "url": "https://lib.xjtlu.edu.cn/node/271",
+      "publisher": "西交利物浦大学图书馆",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "search-result-only",
+      "note": "仅搜索摘要可见；多次打开返回 Cache miss，未据此确认电梯、闸机、设备或服务地点现状。留给后续编辑直接核对并向图书馆询问校区差异。"
+    },
+    {
+      "key": "arrival-activation-lead",
+      "title": "如何激活 XJTLU 学生账号？",
+      "url": "https://esupport.xjtlu.edu.cn/faq/117",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "search-result-only",
+      "note": "搜索摘要显示账号激活流程；打开仅得到 JavaScript 页面壳，不能核验正文，不用作事实句证据。下一步需浏览器实际读页或由 IT 确认。"
+    }
+  ],
+  "cards": [
+    {
+      "key": "arrival-academic-integrity-ai",
+      "title": "作业使用了生成式 AI，提交前应检查什么？",
+      "topic": "study",
+      "summary": "先核对本门课程的任务要求，再说明自己的使用过程和引用。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "学术诚信",
+        "生成式AI",
+        "人工智能",
+        "AI声明",
+        "引用",
+        "assignment brief",
+        "module leader"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "图书馆的 2026 年 3 月太仓 AI 素养培训介绍将学术诚信和文中引用 AI 列入提纲。",
+          "sourceKeys": [
+            "arrival-ai-literacy-training"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "提交前重读本次 assignment brief 和课程通知，逐项核对允许的工具、使用环节、合作范围及声明要求。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "规则不清楚时，向 module leader 说明准备使用的工具和具体用途，询问是否允许以及如何披露，并保存答复。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "为使用过程保留工具名称、使用日期、相关输入输出、自己检查和修改的记录，按课程要求整理提交材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "逐条回到原始资料核对 AI 输出中的文献、数据和引用，删除自己无法核验的内容。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "最终检查正文、参考文献和工具使用声明是否一致，确保自己能够解释所提交的分析与结论。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "培训介绍不是课程作业的 AI 授权；不据此判断某次使用是否合规，也不推断全校存在统一允许或禁止规则。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "arrival-academic-calendar",
+      "title": "本学期第几周、阅读周和校历去哪里查？",
+      "topic": "study",
+      "summary": "从学校在校学生页打开当学年的学生版校历，再与个人课表核对。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "校历",
+        "教学日历",
+        "academic calendar",
+        "教学周",
+        "阅读周",
+        "考试周",
+        "学期"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校“在校学生—教学日历”入口目前链接到 2026–2027 学年学生版校历。",
+          "sourceKeys": [
+            "arrival-current",
+            "arrival-academic-calendar-2026"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该校历列出教学周、阅读周、考试时段和节假日等类别。",
+          "sourceKeys": [
+            "arrival-academic-calendar-2026"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先核对 PDF 标题中的学年和学生版标识，再把当前日期对应到正确学期与教学周。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "安排个人日程时同时查看课程通知、个人课表和考试通知，不把校历中的整体时段当作某门课的具体时间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "保存官网入口和所看版本；出行或重要安排前重新打开核对，有冲突时请教务或课程方确认。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本卡不转录考试日期、作业截止日或个人放假安排；以官网当前版本及相应正式通知为准。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "arrival-system-bookmarks",
+      "title": "常用系统太多，先收藏哪些入口？",
+      "topic": "systems",
+      "summary": "从学校在校学生页建立自己的入口清单。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "入口",
+        "官网",
+        "系统",
+        "书签",
+        "融合门户",
+        "新生"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校“在校学生”页集中列出邮箱、Learning Mall、e-Bridge、图书馆和学生一站式等入口。",
+          "sourceKeys": [
+            "arrival-current"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先从该页逐个打开，并按“邮件通知、课程学习、学籍办事、生活服务”保存书签。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "第一次登录时核对浏览器地址，尽量从学校官网进入，不使用群聊里来历不明的登录链接。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "给每个书签写一句用途，例如“查注册与证明”或“看课程材料”，减少临时找系统的时间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "某个入口打不开时，记录完整页面地址和错误提示，再向对应部门询问。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-account-setup",
+      "title": "校园账号怎么开始用，忘记密码怎么办？",
+      "topic": "systems",
+      "summary": "先确认学校发来的账号信息，再检查找回方式。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "账号",
+        "激活",
+        "UIM",
+        "SSO",
+        "忘记密码",
+        "重置密码"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "校园账号可用于学校邮箱、计算机、图书馆和 BOX 等系统。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "IT 介绍页指向 UIM（https://sso.xjtlu.edu.cn），用于绑定个人邮箱或手机。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "收到学校的账号通知后，按通知中的官方激活指引完成设置，核对学号及姓名是否一致。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "在首次成功登录后检查找回方式，确保绑定的是自己持续能使用的邮箱或号码。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "遇到激活或重置失败时，向 IT 提供学号、发生时间及脱敏截图；不要发送密码或验证码。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "账号激活 FAQ 本次只能检索到摘要，具体按钮和所需证件流程尚未直接核验。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-email",
+      "title": "校园邮箱在哪里看，手机配置失败怎么办？",
+      "topic": "systems",
+      "summary": "优先用网页版确认账号与收信是否正常。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "邮箱",
+        "邮件",
+        "Outlook",
+        "Exchange",
+        "收不到邮件",
+        "手机邮箱"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校邮箱网页版入口是 https://mail.xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "手机无法添加邮箱时，先测试网页版登录和收发，再判断是账号问题还是客户端设置问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "为入学、课程、办事回执分别建立文件夹，并定期检查垃圾邮件和未读邮件。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "回复办事邮件时保留原主题和往来记录，在正文写清学号、校区及所问事项。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "需要手机配置帮助时，从 IT 官网进入最新邮箱指南，或携带设备向本校区 IT 服务窗口求助。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-network-login",
+      "title": "连上校园 Wi-Fi 却不能上网怎么办？",
+      "topic": "systems",
+      "summary": "确认连入学校网络，并检查网页认证。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "Wi-Fi",
+        "WIFI",
+        "校园网",
+        "网络认证",
+        "无法上网",
+        "无线网"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校无线网络名称为 XJTLU，网络认证入口为 https://netauth.xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "官方网络介绍涵盖苏州工业园区和太仓两个校园。",
+          "sourceKeys": [
+            "arrival-network"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "确认网络名称后打开浏览器检查是否需要认证；若未自动弹出，可通过已核对的认证地址进入。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "在公共设备上避免保存登录状态，离开时退出自己的账号。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "报障时写明校区、楼宇或教室、设备型号、无线或有线连接方式及错误出现的时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-printing",
+      "title": "第一次在校园打印，应该怎么准备？",
+      "topic": "systems",
+      "summary": "先提交打印任务，再到自助设备取件。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "打印",
+        "复印",
+        "扫描",
+        "校园卡",
+        "PDF",
+        "双面"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "校园自助打印系统支持打印、复印和扫描，打印任务可在设备上刷校园卡领取。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "从 IT 页面进入当前打印指引，先确认提交方式、附近可用设备和计费设置。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "打印前检查 PDF 页数、纸张尺寸、单双面、彩色或黑白，先用少量页面试打。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "遇到卡纸或任务重复时，先记下设备位置、任务名称和提示，不要连续反复提交同一文件。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "离开设备前收齐文件，清除自己的临时材料并退出登录，尤其留意含证件或成绩信息的页面。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-box-backup",
+      "title": "课程文件和小组资料怎么整理备份？",
+      "topic": "systems",
+      "summary": "使用校园 BOX 时同时检查目录和分享权限。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "BOX",
+        "云盘",
+        "备份",
+        "文件",
+        "协作",
+        "版本"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "校园云盘 BOX 的入口为 https://box.xjtlu.edu.cn，并提供版本控制功能。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "按学期和课程代码建目录，把原始材料、协作稿和最终提交稿分开保存。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "重要作业在自己的另一处可信存储中保留备份，并检查备份能否打开。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "分享前确认接收对象与权限，含个人证件或他人信息的材料不要设置为公开链接。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "小组合作时约定文件命名和最终提交负责人，交稿前核对文件内容，而不只看文件名。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-it-suzhou",
+      "title": "苏州校区的 IT 问题找谁？",
+      "topic": "systems",
+      "summary": "记录报错信息后联系苏州工业园区 IT 服务。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "IT",
+        "技术支持",
+        "报障",
+        "中心楼",
+        "苏州"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "IT 官网列出苏州服务点为中心楼 956A，电话 0512 8816 1250，邮箱 IT@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "发邮件时在主题写明“系统名称 + 简短故障”，正文附校区、学号、设备和报错时间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "截图遮住密码、验证码及无关个人资料，同时保留需要排查的错误文字。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "到场前从 IT 页面核对当日窗口安排；若设备可以携带，连同充电器一并带上。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-it-taicang",
+      "title": "太仓校区的 IT 问题找谁？",
+      "topic": "systems",
+      "summary": "太仓有独立的 IT 服务联系方式。",
+      "campuses": [
+        "taicang"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "IT",
+        "太仓",
+        "H栋",
+        "技术支持",
+        "报障"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "IT 官网列出太仓服务点为 H 栋一楼服务大厅，电话 0512 8897 0505，邮箱 IT.TC@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-it"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "报障时说明问题发生在太仓，并写清楼宇、房间或设备位置。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果仅一个系统出错，补充其他学校系统能否正常登录，帮助服务人员缩小排查范围。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "到场前核对官网窗口安排，并保存原工单或邮件主题以便连续跟进。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-learning-mall",
+      "title": "Learning Mall Core 和 Premium 怎么区分？",
+      "topic": "systems",
+      "summary": "日常校内课程学习先确认进入 Core。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "Learning Mall",
+        "LM",
+        "Core",
+        "Premium",
+        "学习超市",
+        "课程看不到"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "官方登录指南把 Core 列为师生在线教学平台，Premium 提供额外学习资源并面向校外用户。",
+          "sourceKeys": [
+            "arrival-lm"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "使用学校账号时选择“XJTLU Account”，再用学校邮箱账号的用户名和密码登录。",
+          "sourceKeys": [
+            "arrival-lm"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "从学校学习超市入口或 https://core.xjtlu.edu.cn 进入，先检查当前登录身份。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "找不到某门课时，记录课程代码、班级和页面截图，向课程负责人确认课程页面是否已开放。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果是登录失败，先检查账号类型；如果是课程内容问题，附上具体课程链接询问。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-ebridge",
+      "title": "e-Bridge 主要用来办什么？",
+      "topic": "systems",
+      "summary": "把学籍与课程记录类事务放到 e-Bridge 核对。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "e-Bridge",
+        "ebridge",
+        "学籍",
+        "注册",
+        "个人信息",
+        "课程记录"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "e-Bridge 是学校学生信息与课程管理门户，涵盖注册、学籍、学术记录和课程说明。",
+          "sourceKeys": [
+            "arrival-ebridge"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "通过学校在校学生页进入 https://ebridge.xjtlu.edu.cn，并核对当前学年和个人信息。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "办理事务前先看具体栏目说明，提交后保存回执或状态页面。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "若看到个人资料或记录不一致，注明字段、期望更正内容及支持材料，联系页面指定部门。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "群聊转述与个人系统信息冲突时，把两处信息提供给负责部门核对，避免自行推断办理结果。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-onestop",
+      "title": "不知道该找哪个部门，可以先问谁？",
+      "topic": "services",
+      "summary": "非学术事务可以从学生一站式开始。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "一站式",
+        "办事",
+        "咨询",
+        "学生服务",
+        "找谁",
+        "投诉"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学生一站式提供非学术事务咨询，并协助引导至相关部门。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "官方咨询入口包括 onestop@xjtlu.edu.cn 和 https://studentonestop.xjtlu.edu.cn/。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先用三句话说明“要完成什么、已经做了什么、卡在哪里”，附上校区和学号。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果已有申请编号或邮件往来，一并提供，方便接续处理。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "请对方明确下一步办理部门、材料、提交渠道和查看结果的方式，并保存答复。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-card-replacement",
+      "title": "校园卡或学生证丢了，从哪里补办？",
+      "topic": "services",
+      "summary": "先分清证件类型，再走一站式申请入口。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "校园卡",
+        "学生证",
+        "丢失",
+        "补办",
+        "挂失",
+        "证件"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校一站式服务范围包括学生卡补办，以及学生证注册和补办。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先确认丢失的是校园卡、学生证还是其他证件，向一站式说明准确名称。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "尽快询问是否需要挂失或停用，以及本校区补办需要的身份核验材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "在官方页面确认费用、领取地点和临时通行安排后再办理，避免照搬往届经验。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "不要在公开群聊发布完整证件照片或证件号码，寻物信息保留最少必要内容。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-transcripts",
+      "title": "在读证明和成绩单怎样申请？",
+      "topic": "services",
+      "summary": "进入 e-Bridge 自助门户选择所需文件。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "在读证明",
+        "成绩单",
+        "学生状态证明",
+        "证明信",
+        "电子证明",
+        "transcript"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "在校学生的申请路径为 e-Bridge → Academic → Academic Records → Transcripts and Letters → Self-Service Portal。",
+          "sourceKeys": [
+            "arrival-proofs"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该门户提供成绩单、在校状态证明及其他证明文件；申请问题可联系 Transcripts@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-proofs"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先向接收方确认需要的语言、文件类型、电子或纸质形式，以及是否有验签要求。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "按页面要求下载或提交申请，核对姓名、学号和接收邮箱后再发送。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "纸质文件请在同一官方说明页核对可办类型、费用和领取安排，并留出对方接收材料的时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-development-adviser",
+      "title": "适应大学生活遇到困难，成长顾问能帮什么？",
+      "topic": "services",
+      "summary": "把困惑具体化，再联系自己的成长顾问。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "成长顾问",
+        "DA",
+        "适应",
+        "新生",
+        "压力",
+        "学生支持"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校成长顾问为本科生和研究生提供不同支持，公开咨询邮箱为 sda@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "先从个人系统或学校发给你的通知查找本人的成长顾问，找不到时向中心咨询。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "联系前列出当前最影响生活或学习的两三件事，说明持续多久、已尝试哪些办法。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "会面后把商定的下一步写成小任务，并确认是否需要转介其他部门。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "涉及课程、住宿或健康的具体事项时，可请顾问协助确定负责部门和沟通方式。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-international-support",
+      "title": "国际及港澳台新生遇到到校事务，先找哪里？",
+      "topic": "international",
+      "summary": "先通过西浦国际核对自己的身份类别和校区流程。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "国际生",
+        "港澳台",
+        "XJTLU Global",
+        "签证入口",
+        "居留入口",
+        "到校支持"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校资源页为国际及港澳台学生列出住宿、保险、到校适应等支持，并提供两校区欢迎指南链接。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该页公布的国际学生支持邮箱为 global@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "邮件注明校区、项目、入学年份和需要帮助的事项，先确认适用的办理指南。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "涉及签证或居留时，仅向学校负责团队和官方主管机构核对所需材料、预约及办理要求。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "预订接机或住宿前先询问本届服务是否开放、申请方式和确认凭证，保留书面回复。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "此卡只提供服务入口，不判断签证、居留、保险资格或接机可用性。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-counselling",
+      "title": "想找人谈谈，怎样预约学校心理咨询？",
+      "topic": "wellbeing",
+      "summary": "通过学校咨询中心的官方渠道提出预约需求。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "心理咨询",
+        "SCC",
+        "情绪",
+        "压力",
+        "预约",
+        "心理支持"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校 SCC 提供个人、团体及家庭咨询，支持中文普通话和英语。",
+          "sourceKeys": [
+            "arrival-health"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "预约邮箱为 counsellingservice@xjtlu.edu.cn，公开电话为 0512 8816 1815。",
+          "sourceKeys": [
+            "arrival-health"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "预约时简要说明需要咨询、偏好语言、所在校区和可联系时间，详细经历可以留到会谈中说。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "在预约时核对形式、地点及保密规则，选择能安心交流的时间和环境。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果有即时人身危险或急救需要，直接拨打对应紧急电话，不等待普通预约邮件回复。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "不提供个人心理诊断、治疗建议或预约时效承诺；紧急事件使用紧急求助渠道。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-emergency-help",
+      "title": "遇到紧急情况，应该拨打什么电话？",
+      "topic": "wellbeing",
+      "summary": "先联系与事件对应的公共紧急服务，并清楚说明位置。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "紧急",
+        "急救",
+        "报警",
+        "消防",
+        "110",
+        "119",
+        "120",
+        "安全"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "110 用于公安报警，119 用于消防救援，120 是全国统一医疗急救电话。",
+          "sourceKeys": [
+            "arrival-emergency"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "图书馆 2026 年暑期服务通知列出的非人工服务时段校园联系人为苏州 0512 8816 1066、太仓 0512 8897 0793。",
+          "sourceKeys": [
+            "arrival-library-emergency"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "求助时先讲清校区、建筑、楼层及附近明显标志，再说明发生了什么和需要何种帮助。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "按接警或调度人员要求回答问题，保持电话可接通；在安全前提下请同伴协助指引救援人员。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "提前把公共紧急电话存入手机，并了解自己常去楼宇的出口和集合点。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "校园联系人只作为图书馆通知中列出的补充入口，不替代公共急救、公安或消防服务。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-accessibility-support",
+      "title": "有无障碍或学习支持需求，怎样提前沟通？",
+      "topic": "services",
+      "summary": "先提出具体障碍和支持需求，请学校明确负责渠道。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "无障碍",
+        "合理调整",
+        "特殊支持",
+        "残障",
+        "学习支持",
+        "accessibility"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校学生一站式为非学术问题提供咨询与部门转介。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "可先向一站式说明所在校区、受影响的活动，以及需要确认的无障碍设施或支持安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "涉及课堂、考核或材料形式时，同时联系课程或项目负责人，询问正式申请渠道、材料及处理周期。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "把问题写成具体场景，例如进入某栋楼、长距离移动、阅读电子资料或听取课堂内容存在困难。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "需要图书馆协助时，可查看其 Disabilities Service 页面作为咨询线索，并直接核对本校区当前服务。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "仅向学校指定的私密渠道提供必要材料，并保存沟通和安排确认记录。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "尚未找到可直接核验的当前全校合理调整申请流程；不承诺审批资格或具体安排。图书馆 Disabilities Service 页仅检索可见，设施与服务现状待核验。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-finance-check",
+      "title": "学费、奖助学金和经济困难支持，从哪里核对？",
+      "topic": "finance",
+      "summary": "先匹配学段与身份，再查官方入口和个人通知。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "学费",
+        "缴费",
+        "奖学金",
+        "助学金",
+        "资助",
+        "费用",
+        "经济困难"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "一站式服务范围列有非学术奖学金与助学金申请。",
+          "sourceKeys": [
+            "arrival-support"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "学校硕士招生费用页按专业和学制列出学费信息。",
+          "sourceKeys": [
+            "arrival-master-fees"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "本科生从学校招生栏目中选择自己的身份类别，研究生选择相应学段，再核对入学年份和项目。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "将录取通知、个人系统账单及奖助通知放在一起核对，遇到不一致请负责部门书面确认。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "经济困难可先询问一站式或研究生支持团队是否有适用的支持渠道，以及需要哪些材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "任何付款前核对官方收款页面、项目名称与本人信息，并保存回执；不要凭群聊转账信息付款。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "此卡不列个人应缴金额、资助资格、分期或退款结论；中国内地本科费用页本次仅检索可见，具体内容待直接核验。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "arrival-master-registration",
+      "title": "硕士新生到校前，应核对哪些办理事项？",
+      "topic": "arrival",
+      "summary": "用手册建立清单，再对照本届录取与迎新通知。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "postgraduate",
+        "new-student"
+      ],
+      "keywords": [
+        "硕士",
+        "研究生",
+        "报到",
+        "注册",
+        "现场核验",
+        "入学准备"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "2026/27 硕士手册把注册分为线上、现场和财务三部分，线上环节通过 e-Bridge 核对资料。",
+          "sourceKeys": [
+            "arrival-master-guide"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "同册公布研究生支持邮箱为 pgsupport@xjtlu.edu.cn。",
+          "sourceKeys": [
+            "arrival-master-guide"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "把本人最新录取通知与迎新邮件中的任务逐项列出，分别记录材料、提交入口和完成状态。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "现场核验前，向招生或研究生支持团队确认身份证明、学历及语言材料是否需要原件或补充文件。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "核对本人的联系方式和紧急联系人，并把无法按要求到场、材料缺失或系统无法注册的问题提前书面说明。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "涉及费用或临时困难时，请负责团队说明当前可用渠道，等待正式回复后安排后续步骤。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "引用的是 2026/27 版手册的事项结构；不同入学批次的具体材料、时间、费用和结果仍须以本人正式通知为准。"
+      ],
+      "reviewAfterDays": 90
+    }
+  ]
+}

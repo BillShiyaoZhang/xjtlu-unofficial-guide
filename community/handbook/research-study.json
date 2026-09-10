@@ -1,0 +1,1259 @@
+{
+  "section": "study",
+  "researchedAt": "2026-09-10",
+  "sources": [
+    {
+      "key": "study-registry",
+      "title": "Registry Office — 教务办公室",
+      "url": "https://www.xjtlu.edu.cn/en/professional-services/registry",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Key responsibilities 第 2–5 项及 Contact us。公开职责说明支持课表、专业和考试咨询入口；不据此推断申请资格或处理结果。页面未标明公布日期。"
+    },
+    {
+      "key": "study-modules",
+      "title": "Module Catalogues — 课程目录",
+      "url": "https://modules.xjtlu.edu.cn/dept",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：目录表的 Domain Code、Full Name、Department Code。仅公开目录；实际选课以在校系统与所在专业通知为准。未标明公布日期。"
+    },
+    {
+      "key": "study-module-example",
+      "title": "Professional Skills in Computer Science — Module Catalogues",
+      "url": "https://modules.xjtlu.edu.cn/mod?mod_code=CPT001&psl_code=SEM2",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Academic Year、Semester、Aims and Fit of Module、Learning outcomes、Method of teaching and learning。此示例明确显示 2025/26；只用于说明如何读目录，不能作 2026/27 课程要求。"
+    },
+    {
+      "key": "study-library",
+      "title": "Home — Library for XJTLU",
+      "url": "https://lib.xjtlu.edu.cn/",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Explore Our Collections、Find Space and Facilities、Support Learning and Research。只核实公开入口和服务类别；未登录预约、电子资源或试卷系统。首页无单一公布日期。"
+    },
+    {
+      "key": "study-library-orientation",
+      "title": "2026 Library Orientation | Step into XJTLU Library, Step into a Wider World",
+      "url": "https://lib.xjtlu.edu.cn/node/2019",
+      "publisher": "西交利物浦大学",
+      "publishedAt": "2026-08-28",
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：正文中英双语介绍及 2026 Library Orientation 链接。页面显示 28 August 2026。链接后的 LibGuides 本次未能抓取，具体活动名额和日期需原站确认。"
+    },
+    {
+      "key": "study-textbooks",
+      "title": "Textbook Service — 教材服务",
+      "url": "https://lib.xjtlu.edu.cn/Study_Support/Textbook_Service",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：首段、centralized textbook distribution、Textbook Service Centre Information 及 Textbook Lists/FAQ。主内容无明确公布日期；页面下方其他服务日期不视为本页更新日期。"
+    },
+    {
+      "key": "study-gclh",
+      "title": "Global Cultures and Languages Hub",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：院系介绍段及 Learning and Teaching 导航。页面说明 Hub 于 2025 年成立；本页未标明公布日期。"
+    },
+    {
+      "key": "study-elc",
+      "title": "English Language Centre",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/english-language-centre",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：About 与 Learning and Teaching。只概括 EAP 的学习目标；不复制课程数量、分班或学分规定。未标明公布日期。"
+    },
+    {
+      "key": "study-alc",
+      "title": "Academic Literacies Centre",
+      "url": "https://www.xjtlu.edu.cn/en/study/departments/global-cultures-and-languages-hub/academic-literacies-centre",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Learning and Teaching 两段，说明院系嵌入式语言与学术技能支持、lectures/seminars/individual tutorials。未标明公布日期。"
+    },
+    {
+      "key": "study-degrees",
+      "title": "Degree Types — 学习路径与学位类型",
+      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/degree-types",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：正文开头 4+0、2+2、2+1+1 介绍及利物浦大学官方链接。只用于区分路径结构，不判断某个学生或专业的资格。未标明公布日期。"
+    },
+    {
+      "key": "study-exchange",
+      "title": "Semester or Year Abroad",
+      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/semester-or-year-abroad",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Partner institution / XJTLU Programme / Duration Abroad 对照表及正文末尾 Student Mobility、studyabroad@xjtlu.edu.cn。网页虽列资格分数，本稿不转述个案适用要求。未标明公布日期。"
+    },
+    {
+      "key": "study-summer",
+      "title": "Summer Abroad",
+      "url": "https://www.xjtlu.edu.cn/en/study/international-mobility/summer-abroad",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：正文开头、Programs need nomination / Programs do not need nomination、Please note。页面有 2026 项目链接但无本页公布日期；具体项目资格与费用须另查主办校。"
+    },
+    {
+      "key": "study-careers",
+      "title": "Career Centre — 学校服务介绍",
+      "url": "https://www.xjtlu.edu.cn/en/it-services/career-centre-intro",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Career Guidance、External Mentor、Campus Recruitment 及文末 careers.xjtlu.edu.cn 链接。未标明公布日期；不将旧毕业派遣措辞当作现行政策结论。"
+    },
+    {
+      "key": "study-career-system",
+      "title": "Graduate Destinations — Career Centre 服务入口",
+      "url": "https://www.xjtlu.edu.cn/en/study/why-study-at-xjtlu/graduate-destinations",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Career Centre 段，列出实习、招聘、活动、导师和职业顾问预约。仅引用服务段，不引用升学率、院校排名或毕业生个案。页面无单一公布日期。"
+    },
+    {
+      "key": "study-master-apply",
+      "title": "Master's Admissions — How to Apply",
+      "url": "https://www.xjtlu.edu.cn/en/admissions/master/how-to-apply",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：Before you apply、Apply online。页面同时包含 2027 申请入口和部分较早批次文字，不在本稿复述日期、门槛或奖学金；材料清单仅供准备并需按项目复核。未标明公布日期。"
+    },
+    {
+      "key": "study-surf",
+      "title": "Bumper year for summer undergraduate research projects",
+      "url": "https://www.xjtlu.edu.cn/en/news/2025/11/bumper-year-for-summer-undergraduate-research-projects",
+      "publisher": "西交利物浦大学",
+      "publishedAt": "2025-11-21",
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：开头关于 annual SURF programme 的说明。历史新闻仅证明项目性质，不是当前招募通知；本稿不复制人数、奖项或学生个人故事。"
+    },
+    {
+      "key": "study-research-portal",
+      "title": "XJTLU Research Portal",
+      "url": "https://scholar.xjtlu.edu.cn/",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "定位：首页 Search as / Advanced search 和 XJTLU Research Portal 介绍。首页成功打开；人员列表另有验证码，未绕过，也未抓取受限信息。未标明公布日期。"
+    }
+  ],
+  "cards": [
+    {
+      "key": "read-module-catalogue",
+      "title": "开课前怎样读懂课程大纲？",
+      "topic": "study",
+      "summary": "先按课程代码定位，再核对学年、学习目标和教学方式，把不清楚的要求带到课程答疑。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "module",
+        "课程代码",
+        "大纲",
+        "syllabus",
+        "learning outcomes"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校公开课程目录按学科代码分类，可从中进入课程页面。",
+          "sourceKeys": [
+            "study-modules"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "本次打开的 CPT001 示例页列出学年、学期、课程目标、学习成果和教学方式，学年标为 2025/26。",
+          "sourceKeys": [
+            "study-module-example"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先抄下课表中的课程代码和英文全名，再逐项记录本学期的学习成果、阅读材料、作业类型与老师公布的评分标准。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议将不理解的术语整理成短清单，在第一周课堂或答疑时间确认，随后拆成每周阅读、练习和提交任务。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议用本学期课程通知核对目录内容，尤其留意同名课程、不同学期和往年版本。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "目录示例只演示读取方法；不据此承诺当前课程设置、学分或考核比例。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "timetable-academic-help",
+      "title": "课表有冲突或课程信息不对，怎样描述问题？",
+      "topic": "study",
+      "summary": "准备课程代码、冲突时段和系统截图，向教务办公室提交能够复现的问题。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate",
+        "new-student"
+      ],
+      "keywords": [
+        "课表",
+        "timetable",
+        "撞课",
+        "教务",
+        "课程缺失"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "教务办公室负责课表协调、学生课表个性化服务及日常教务咨询。",
+          "sourceKeys": [
+            "study-registry"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先核对自己选中的学期、校区、课程代码和教学班，再比较课表与本学期课程通知。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议按“课程 A 与课程 B—日期和时段—显示教室—发现时间”描述冲突，并附去掉无关个人信息的截图。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议通过教务官方页核对本校区咨询入口；咨询时说明年级、专业及已经尝试的核对步骤。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议在收到正式答复后保存邮件和调整结果，并再检查对应课程页面是否同步。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本卡不判断选课是否生效，也不替代课程出勤或调课指示。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "choose-transfer-programme",
+      "title": "选专业或考虑转专业前，先做哪些功课？",
+      "topic": "study",
+      "summary": "把兴趣、课程内容和申请规则分开核对，带着具体专业比较表咨询。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "new-student"
+      ],
+      "keywords": [
+        "选专业",
+        "转专业",
+        "专业展",
+        "programme transfer",
+        "academic fair"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "教务办公室统筹本科选专业、转专业流程，并组织专业展会等学术活动。",
+          "sourceKeys": [
+            "study-registry"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先列出两到三个目标专业，比较其核心课程、研究方向、实践形式和后续发展路径。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议实际阅读目标专业课程大纲，找一项小型阅读或练习任务，判断自己是否愿意持续投入。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议准备当前专业、入学届、已修课程与目标专业名称，向教务核对本届规则、提交入口和材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议同时请目标专业老师解释课程衔接和学习负担，并把得到的答复按日期归档。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "不提供转专业资格、名额、分数线、审批结果或学制影响的个案结论。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "exam-and-assessment-help",
+      "title": "考试、补考或考评问题，如何找到正确咨询入口？",
+      "topic": "study",
+      "summary": "先整理考试与课程信息，政策问题交给教务核实，复习安排依据本学期材料。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "考试",
+        "补考",
+        "减轻情节",
+        "MC",
+        "申诉",
+        "appeal"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "教务办公室负责期末考试与补考管理，也处理减轻情节和考评申诉等事务。",
+          "sourceKeys": [
+            "study-registry"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "考前建议逐门核对正式考试通知中的日期、时段、地点、考试形式及允许携带物品，并提前查看路线。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "遇到考试或考评问题，建议记录课程代码、受影响的考核、时间经过、已收到的通知及希望核实的问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如需咨询 mitigating circumstances 或 assessment appeal，建议尽快从教务官方入口询问当前流程、材料要求及适用时限。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议保存提交回执和后续答复；复习时以本学期学习成果与授课材料安排练习。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本稿不判断是否符合减轻情节、是否可以申诉或是否获准补考；不提供具体时限与成绩计算规则。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "find-books-articles",
+      "title": "找教材、论文和电子书，从图书馆哪里开始？",
+      "topic": "library",
+      "summary": "已知书名先查馆藏；按主题找文献时，用综合检索和数据库逐步缩小范围。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "论文",
+        "文献",
+        "数据库",
+        "电子书",
+        "ISBN",
+        "DOI",
+        "Discover"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "图书馆首页提供综合检索、馆藏目录、电子书、电子期刊与数据库入口。",
+          "sourceKeys": [
+            "study-library"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "已知书名时，建议同时准备作者、版本或 ISBN，避免把同名书或不同版次当作课程要求的教材。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "按主题找论文时，建议先拆出两个核心概念，准备英文关键词与同义词，再按年份、文献类型和学科筛选。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议先读摘要判断是否相关，再记录标题、作者、年份、DOI 或稳定链接，方便写作时回溯。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果无法获取全文，建议保存文献题名和报错页面，通过图书馆服务入口询问访问或获取方式。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "可检索到记录不等于有全文权限；本稿未登录数据库核验个人访问范围。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "library-renew-reserve",
+      "title": "图书续借、预约或跨馆取书，怎样先查清楚？",
+      "topic": "library",
+      "summary": "在馆藏目录查看借阅记录与可用操作，提交后再次确认状态。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "借书",
+        "还书",
+        "续借",
+        "预约",
+        "跨校区",
+        "Catalogue"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "馆藏目录入口支持续借、预约和分馆间递送服务。",
+          "sourceKeys": [
+            "study-library"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议从图书馆首页进入 Catalogue，先核对所需图书的馆藏地点、版次与当前可借状态。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "借书后建议记录个人账户显示的到期时间；需要延长使用时，提前查看该册是否可以续借。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "使用预约或跨馆递送前，建议核对取书校区和通知方式，提交后检查记录是否已生成。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果按钮不可用或状态异常，建议携带书名、馆藏条码和报错截图咨询图书馆，确认后再安排往返。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "可借册数、借期、续借条件与处理时间以账户及现行馆规为准。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "library-study-space",
+      "title": "想找自习位或讨论室，应该先核对什么？",
+      "topic": "library",
+      "summary": "先明确安静自习还是小组讨论，再核对校区、开放时间和预约状态。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "自习",
+        "讨论室",
+        "座位",
+        "预约",
+        "图书馆开放时间"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "馆网提供开放时间、空间指南、房间预约及座位预约入口。",
+          "sourceKeys": [
+            "study-library"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "2026 图书馆迎新通知提供空间、资源与常用支持的入门指引。",
+          "sourceKeys": [
+            "study-library-orientation"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先明确人数、讨论音量、设备需求和预计使用时段，再选择相应空间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "预约时建议核对校区、楼层、房间或座位编号，并保存成功页面或确认信息。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "出发前建议再查开放安排；使用后按现场和预约页面的要求结束使用，给下一位读者留出空间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "未核实实时空位；节假日开放时间、预约规则与到场确认方式以原站和现场为准。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "collect-textbooks",
+      "title": "开学领教材，错过集中发放怎么办？",
+      "topic": "library",
+      "summary": "先按课程核对教材列表，再按本校区教材服务通知领取。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student",
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "教材",
+        "领书",
+        "textbook",
+        "第零周",
+        "课本"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "图书馆教材服务页提供教材列表、学生 FAQ，以及两校区教材服务中心信息。",
+          "sourceKeys": [
+            "study-textbooks"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该页说明集中发书通常在每学期第 0 周进行，错过后可按教材服务中心指引领取。",
+          "sourceKeys": [
+            "study-textbooks"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先核对本学期课程、教材版次与发放安排，再整理需要领取或咨询的书目。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "领取前建议查看学校当期通知中的地点、时段和所需凭证；课程发生调整时先向课程方确认对应教材。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果书目缺失、领取记录不符或涉及教材结算，建议把课程代码、书名和领取记录发给教材服务方核对。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "第 0 周是页面的一般说明；本学期安排、教材结算与退换规则须查看当前通知。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "library-research-skills",
+      "title": "不会检索或管理参考文献，怎样利用图书馆支持？",
+      "topic": "library",
+      "summary": "带着一个真实课题学习检索，把找到的资料变成可以追溯的阅读记录。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "学术检索",
+        "参考文献",
+        "引用",
+        "文献综述",
+        "LibGuides",
+        "workshop"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "馆网提供学科指南及信息技能、数字工具、学术出版等工作坊入口。",
+          "sourceKeys": [
+            "study-library"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议预约或参加活动前准备研究题目、已试过的关键词，以及最想解决的一到两个问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "做文献综述时，建议建立“研究问题—方法—主要发现—局限—可引用位置”的阅读表。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议从第一篇文献起保存完整书目信息，按课程指定格式练习引用，并人工核对自动生成的参考文献。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如果写作涉及跨学科主题，建议先看相关学科指南，再用同一组关键词在不同数据库比较结果。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "工作坊报名页本次抓取受限；是否开课、名额及支持形式应从馆网进入后确认。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "eap-study-habits",
+      "title": "全英文学习刚开始，怎样用好 EAP？",
+      "topic": "language",
+      "summary": "围绕本学期任务练习阅读、讨论和表达，逐步形成可重复的学习习惯。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student",
+        "undergraduate"
+      ],
+      "keywords": [
+        "EAP",
+        "英语",
+        "全英文",
+        "课堂讨论",
+        "学术英语"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "英语语言中心通过 EAP 课程支持英语能力以及学术学习所需技能。",
+          "sourceKeys": [
+            "study-elc"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议每周挑选一段真实课程阅读，用自己的话写出主张、证据和一个想追问的问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "讨论前建议准备简短提纲并练习解释一个概念；听课时优先记录论点关系和不理解之处。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "拿到反馈后，建议按结构、论证、引用和语言分类，只选最影响理解的两项做下一轮修改。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如学习任务明显超出当前能力，建议带具体作业和反馈向 EAP 老师询问练习方式与可用支持。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "分班、选课、考核与语言成绩要求以本届正式安排为准。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "academic-writing-support",
+      "title": "论文和作业写不清楚，找谁获得学术写作支持？",
+      "topic": "language",
+      "summary": "把题目、评分标准、草稿和困惑一起带去，比只问“怎么提高写作”更容易得到有效反馈。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "ALC",
+        "写作",
+        "论文",
+        "academic literacies",
+        "writing",
+        "GCLH"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "Academic Literacies Centre 为院系提供英语与学术技能支持，形式包括课堂、研讨及个别辅导。",
+          "sourceKeys": [
+            "study-alc"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "目前官网将 ALC 与 ELC 等中心列在 Global Cultures and Languages Hub 下。",
+          "sourceKeys": [
+            "study-gclh"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先问所在课程或院系有哪些 ALC 支持及预约方式，再提交希望讨论的具体问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "会前建议准备题目要求、评分标准、一小段草稿和老师已有反馈，说明想改进论点、结构还是表达。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "会后建议自己完成修改，并对照原始资料检查引用、数据和结论是否准确。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本次未核实具体院系的预约时段；写作辅导不代表代写、润色承诺或分数保证。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "liverpool-study-routes",
+      "title": "4+0、2+2 和 2+1+1 怎么区分？",
+      "topic": "exchange",
+      "summary": "先看路径结构，再按自己的专业和入学届核对可选路线。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "new-student"
+      ],
+      "keywords": [
+        "2+2",
+        "2+1+1",
+        "4+0",
+        "利物浦",
+        "Liverpool",
+        "太仓"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "官网将 4+0 描述为四个学习阶段均在西浦完成，2+2 为前两阶段在西浦、后两阶段在利物浦大学学习；具体可选路线取决于专业。",
+          "sourceKeys": [
+            "study-degrees"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "对于创业家学院的部分本科专业，2+1+1 为前两阶段在西浦、第三阶段在利物浦、第四阶段回西浦。",
+          "sourceKeys": [
+            "study-degrees"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先在官方学位类型页和本专业页找到自己的完整专业名称，避免仅凭同学院或相近专业类比。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "比较路线时，建议列出课程衔接、未来研究兴趣、生活安排与总体预算等要点，并逐项向项目方核实。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议将目标路径、入学届、当前专业和最关心的问题整理给学校相关团队，并保存正式答复。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "这只是路线结构介绍；不确认某专业或个人具备申请资格，也不复述学费折扣、门槛和截止日。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "semester-exchange-plan",
+      "title": "想申请一学期或一学年的交换，怎样开始？",
+      "topic": "exchange",
+      "summary": "按“自己的专业—合作院校—可交换时段”核对，提前准备课程匹配问题。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate"
+      ],
+      "keywords": [
+        "交换",
+        "exchange",
+        "study abroad",
+        "Student Mobility",
+        "学期交换"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "官方交换页面按合作院校、西浦专业与海外学习时长列出对应关系。",
+          "sourceKeys": [
+            "study-exchange"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该页指向 e-Bridge 的 Student Mobility 信息，并列出 studyabroad@xjtlu.edu.cn 咨询渠道。",
+          "sourceKeys": [
+            "study-exchange"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先查自己的专业是否在对应列表中，再比较对方学期起止与本校课程安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议准备目标院校课程说明、希望修读的模块、当前学习记录和语言材料，向项目方确认当期所需材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "在作出承诺前，建议确认提名、对方院校申请、课程认可和出行准备分别由谁办理，并建立待办清单。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "合作列表不代表当期名额；课程认可、学分转换、资格与截止日必须获得项目方确认。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "summer-school-plan",
+      "title": "海外暑校怎么找，哪些事需要先问清？",
+      "topic": "exchange",
+      "summary": "先分清是否需要学校提名，再核对主办校要求及自己的学习目标。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "暑校",
+        "summer school",
+        "夏校",
+        "暑期交流",
+        "提名"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校暑校页面提供合作项目入口，并区分需要学校提名与可直接向主办校申请的项目。",
+          "sourceKeys": [
+            "study-summer"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先确定想体验学科、补充技能还是了解目标院校，再筛选课程主题和教学形式。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议在主办院校官网核对课程日期、语言、费用包含项目、申请材料及退出安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "对需要提名的项目，建议从学校官方页核对咨询渠道并先确认步骤；直接申请项目则按主办校指引操作。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议特别询问课程成果如何记录、是否涉及本校课程认可，再安排与本校考试和研究项目之间的时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "暑校录取、费用与课程认可不能从项目宣传推断；本稿不将参加暑校等同于获本校学分。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "internship-job-search",
+      "title": "找实习或校招信息，有哪些校内入口？",
+      "topic": "careers",
+      "summary": "用学校职业系统找信息，再为目标岗位准备可验证的技能与项目经历。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "实习",
+        "校招",
+        "招聘",
+        "简历",
+        "面试",
+        "Career Centre"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校 Career Centre System 入口汇集实习、招聘和职业活动信息，并提供职业顾问预约。",
+          "sourceKeys": [
+            "study-career-system"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先列出目标岗位关键词、可实习时间、地点与已有技能，再筛选岗位说明。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议为每个目标岗位整理一份匹配表：岗位要求、对应课程或项目、自己能举出的成果证据。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "投递前建议核对发布主体与申请渠道，将简历调整到岗位实际需要，并保存所投版本与申请日期。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "面试前建议准备两三个真实项目，练习解释问题、自己的贡献、结果以及遇到的局限。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "岗位展示不保证仍开放或会录用；实习安排、协议与学业冲突需另行核实。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "career-advice-mentor",
+      "title": "对职业方向没把握，怎样准备职业咨询或校外导师交流？",
+      "topic": "careers",
+      "summary": "带着具体选择和证据去讨论，把谈话转成下一步能执行的小任务。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "职业规划",
+        "校外导师",
+        "career advisor",
+        "mentor",
+        "就业咨询"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "就业中心提供职业规划支持，也设有校外导师项目。",
+          "sourceKeys": [
+            "study-careers"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "咨询前建议列出感兴趣的两三个方向、已做过的尝试、喜欢或不喜欢的任务，以及现实时间约束。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "与行业导师交流时，建议围绕日常工作、入门技能、岗位差异和成长路径提问，避免只问“哪个行业最好”。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议带一份简历或项目简介，让对方能够根据你的实际经历提出建议。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "交流后建议选择一项小行动，例如访谈从业者、完成作品或研究岗位要求，并设定自己的复盘时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "导师项目的开放年级、批次和匹配方式应查当期通知；咨询不保证实习、录取或工作机会。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "postgraduate-application-materials",
+      "title": "准备升学申请，先整理哪些材料？",
+      "topic": "careers",
+      "summary": "先按目标项目建立材料表，提前邀请了解自己学习情况的推荐人。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "升学",
+        "硕士",
+        "研究生",
+        "推荐信",
+        "个人陈述",
+        "PS",
+        "申请材料"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "西浦硕士申请页的准备清单包括个人陈述、成绩记录、学位或在读证明、语言材料、推荐人信息和简历等。",
+          "sourceKeys": [
+            "study-master-apply"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "申请其他院校时，建议逐个查看目标项目官网，单列必需材料、提交方式、推荐流程及需要自己跟进的环节。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议给材料使用清楚的文件名，记录版本与用途，并核对姓名、课程名称和日期是否一致。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "邀请推荐人时，建议提前征求同意，提供目标项目、个人简历与能帮助其回忆你表现的课程或研究实例。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议将个人陈述围绕真实兴趣、相关经历、尚待补足的能力和项目适配度展开，不把他人录取经历当作自己的预测。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "所列材料只概括西浦公开页面，并非所有院校的统一清单；不推断录取资格、语言豁免或申请时限。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "surf-research-start",
+      "title": "本科生想尝试科研，SURF 可以怎样准备？",
+      "topic": "research",
+      "summary": "先确认研究兴趣与可投入时间，再用小作品或阅读记录展示准备情况。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate"
+      ],
+      "keywords": [
+        "SURF",
+        "本科科研",
+        "暑研",
+        "research",
+        "导师"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校 2025 年 SURF 新闻将该项目介绍为支持本科生与学术老师共同开展研究的年度项目。",
+          "sourceKeys": [
+            "study-surf"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议从感兴趣的课程或问题出发，阅读项目方向介绍，写清自己想理解什么以及为什么。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "联系潜在指导老师前，建议准备简短自我介绍、相关技能或课程经历、一份小作品或阅读笔记。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议询问项目目标、任务分工、时间投入、培训要求及成果形式，再判断是否能与暑期其他安排兼顾。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "开展研究后，建议保留实验或代码版本、阅读记录和每次讨论后的待办，便于复盘自己的贡献。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "来源是 2025 年项目回顾；当前招募、可参与年级、名额、资助与申请步骤须看本年度正式通知。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "find-research-supervisor",
+      "title": "想找研究方向或潜在导师，先读什么？",
+      "topic": "research",
+      "summary": "先读研究内容，再带着具体问题联系，说明自己可以如何参与。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "导师",
+        "科研方向",
+        "FYP",
+        "研究门户",
+        "Research Portal",
+        "套磁"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校 Research Portal 首页提供研究检索和高级检索入口。",
+          "sourceKeys": [
+            "study-research-portal"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先确定一组主题关键词，查找相关教师公开主页、研究项目和近期论文，并核对所在院系。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议选择一两篇最相关论文先读摘要、研究问题与结论，写出自己真正理解的内容和仍不明白的地方。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "联系老师时，建议用简短正文说明身份、兴趣与对应研究的联系，附上相关经历，并提出具体、可回答的问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议根据目标区分课程项目、SURF、毕业课题与研究生申请，再向院系核实相应参与方式。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "研究门户部分人员页面本次显示验证码；未获取受限内容。教师研究兴趣不代表当前有招生或助研名额。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "past-papers-and-fyp",
+      "title": "哪里找往年试卷与毕业论文，怎样正确使用？",
+      "topic": "library",
+      "summary": "把历史材料当作了解题型和结构的参考，再回到本学期课程要求。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "undergraduate",
+        "postgraduate"
+      ],
+      "keywords": [
+        "往年试卷",
+        "past papers",
+        "FYP",
+        "毕业论文",
+        "thesis",
+        "复习"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "图书馆首页设有 Exam Papers & Theses 入口，介绍可查往年试卷及毕业论文等资料。",
+          "sourceKeys": [
+            "study-library"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先记录课程代码、学年和专业，再从图书馆官方入口查找对应材料。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "使用旧试卷时，建议先核对其与本学期学习成果的对应关系，独立练习后整理薄弱知识点。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "阅读 FYP 或论文时，建议关注研究问题如何收窄、方法如何说明、证据如何支持结论，而后回读原始参考文献。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议向课程老师确认允许参考的范围，并保持自己的分析、写作和引用记录。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本次未登录资源系统，不保证每门课、每学年均有材料；历史试卷与论文不构成当前考核要求或可复用答案。"
+      ],
+      "reviewAfterDays": 90
+    }
+  ]
+}

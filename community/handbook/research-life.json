@@ -1,0 +1,1264 @@
+{
+  "section": "life",
+  "researchedAt": "2026-09-10",
+  "sources": [
+    {
+      "key": "life-dushu-hospital",
+      "title": "苏州大学附属第四医院（苏州市独墅湖医院）：就医入口",
+      "url": "https://www.sdhmdp.com/",
+      "publisher": "苏州大学附属第四医院（苏州市独墅湖医院）",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "已打开医院现行首页；顶部“就医指南”列门诊排班、就医须知、来院/院内导航与报告查询，页脚列崇文路9号，并提示网站预约挂号升级、使用医院微信公众号的“掌上就医”。只核对公共就医入口，不进入患者系统、不评价诊疗或医保资格。新版域名sdfsy.com.cn本次超时；sdhmdp.com已实际打开。"
+    },
+    {
+      "key": "life-visit",
+      "title": "访问校园",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/visit-us",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "“西交利物浦大学”“西浦创业家学院（太仓）”“如何前往”段落；2026年3月命名更新提示。仅摘写地址、车站与地铁线，不采用估算车程、公交班次。"
+    },
+    {
+      "key": "life-map",
+      "title": "我们的校园",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/our-campus",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "“校园地图”列有园区与太仓地图下载入口，并提示2026年3月名称更新。已打开介绍页，未声称逐栋检查下载地图。"
+    },
+    {
+      "key": "life-accommodation",
+      "title": "住宿和社区",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/accommodation",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "页面开头说明后勤社会化管理与基本设施。设施描述是总体介绍，不保证具体楼栋与房间一致。"
+    },
+    {
+      "key": "life-domestic-housing",
+      "title": "中国大陆学生宿舍",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/domestic/accommodation",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "页面正文含文星、文荟、文萃、文缘和太仓公寓物业热线，以及录取后通知和实际安排说明；适用中国大陆本硕博学生。"
+    },
+    {
+      "key": "life-global-housing",
+      "title": "港澳台地区及国际学生宿舍",
+      "url": "https://www.xjtlu.edu.cn/zh/admissions/global/accommodation",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "“芭菲国际公寓”“西浦创业家公寓”“住宿预订”。只采用地址、入口与适用范围，不采用页面价格、汇款、违约或交通近远表述。"
+    },
+    {
+      "key": "life-cmo",
+      "title": "Campus Management Office",
+      "url": "https://www.xjtlu.edu.cn/en/professional-services/campus-management-office",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "Roles and responsibilities 与 Contact us：设施、物业、商户管理和园区联系方式；中文版本次打开失败，英文版已打开。"
+    },
+    {
+      "key": "life-guide-2526",
+      "title": "梦想“捕”手：2025—2026学生成长指南",
+      "url": "https://www.xjtlu.edu.cn/wp-content/uploads/2025/07/XJTLU-Student-Development-Advisor-2526-CN.pdf",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "2025—2026学年资料；PDF第15页（印刷页码25—26）“校园管理办公室”。只使用餐饮查询入口与校园服务中心失物招领职能，均以历史指南表述；不抄旧校区名、办公点、时限和停车权限。"
+    },
+    {
+      "key": "life-shuttle",
+      "title": "Shuttle Bus Booking 区间车预约",
+      "url": "https://shuttlebus.xjtlu.edu.cn/",
+      "publisher": "西交利物浦大学校园管理办公室",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "公开首页 Bus Schedule、预约规则、乘车规则。未登录、未预约；只摘写校内师生范围、提前预约、变更取消、二维码乘车与失物联系。"
+    },
+    {
+      "key": "life-sports",
+      "title": "体育与社团活动",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/sports-and-activities",
+      "publisher": "西交利物浦大学",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "“体育中心”“丰富多样的体育运动”明确中校区室外球场、太仓泳池、体育预约入口。未验证实际开放场次、价格、资格或预约余量。"
+    },
+    {
+      "key": "life-engage",
+      "title": "西浦校园生活：社团目录",
+      "url": "https://engage.xjtlu.edu.cn/zh/club",
+      "publisher": "西交利物浦大学 Student Engagement",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "公开目录可见苏州/太仓校区与社团类别、社团介绍链接。目录计数与成员数易变，不用来推断当前招新或活动时间。"
+    },
+    {
+      "key": "life-sip-library",
+      "title": "苏州工业园区图书馆（总馆）",
+      "url": "https://pcc.sipac.gov.cn/main/venue-map/venue-detail/28d4659b8c9bebebdd2e98311b933250",
+      "publisher": "苏州工业园区公共文化中心",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "场馆介绍正文含现名、原名、地址与自修空间。页首和页脚开放时间存在不同写法，正文仅给查询入口，去馆前应查看最新公告。"
+    },
+    {
+      "key": "life-city-12345",
+      "title": "市政府办公室关于印发苏州市12345公共服务平台运行管理办法的通知",
+      "url": "https://www.suzhou.gov.cn/szsrmzf/zfbgswj/202012/a543c78b2e9b447cba3ae2c56a7822bf.shtml",
+      "publisher": "苏州市人民政府",
+      "publishedAt": "2020-12-16",
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "第二条与第九条载明非紧急公共服务及工作制，第十三条区别紧急救助；仅用于官方入口导航，不推断个案受理资格或办理结论。"
+    },
+    {
+      "key": "life-museum",
+      "title": "博物馆",
+      "url": "https://www.xjtlu.edu.cn/zh/campus-life/support-and-facilities/museum",
+      "publisher": "西交利物浦大学博物馆",
+      "publishedAt": null,
+      "accessedAt": "2026-09-10",
+      "verification": "opened",
+      "note": "页面正文列园区本馆、XEC新馆、展览及学生解说团入口；开放说明提示节假日、校园关闭日和临时调整。"
+    }
+  ],
+  "cards": [
+    {
+      "key": "life-sip-routine-medical-entry",
+      "title": "园区想预约普通门诊，怎么找到官方就医入口？",
+      "topic": "wellbeing",
+      "summary": "可从独墅湖医院官网查看就医须知和排班，再按院方当前预约指引办理。",
+      "campuses": ["suzhou"],
+      "audiences": ["universal"],
+      "keywords": ["看病", "普通门诊", "预约挂号", "独墅湖医院", "苏大附四院", "身体不适", "就医", "掌上就医"],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "独墅湖医院官网提供就医须知、门诊排班和院内导航，列出的地址为苏州工业园区崇文路9号。",
+          "sourceKeys": ["life-dushu-hospital"]
+        },
+        {
+          "kind": "fact",
+          "text": "截至2026年9月10日，官网提示网站挂号系统升级，预约请使用“苏州市独墅湖医院”微信公众号的“掌上就医”。",
+          "sourceKeys": ["life-dushu-hospital"]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先从医院官网核对预约渠道，再确认就诊人、院区、科室和日期；不知道挂哪一科时，向院方导诊询问。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议按预约提示准备身份证明、既往就诊资料和本人医保或保险信息；支付与报销问题另向院方或保险服务方核对。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议保存预约确认信息，到院后按现场提示签到；离院前确认报告查询和后续联系入口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "如需急救，请使用本手册的紧急求助渠道，不等待普通门诊预约。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": ["本卡仅提供园区就医入口，不判断症状、推荐药物或承诺号源、费用与报销结果；预约方式与排班以院方当期公告为准。"],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-two-campuses",
+      "title": "到校前先核对：园区还是太仓？",
+      "topic": "campus",
+      "summary": "按通知中的校区与完整地址导航，再定位具体办事楼宇。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "地址",
+        "园区",
+        "苏州",
+        "太仓",
+        "仁爱路",
+        "太仓大道",
+        "报到"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "园区校园地址是苏州工业园区仁爱路111号；太仓校园地址是太仓市太仓大道111号。",
+          "sourceKeys": [
+            "life-visit"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先在报到邮件或活动通知中圈出校区、楼宇和房间，分别保存目的地。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议给接送人员发送完整中文地址，同时写明“园区校园”或“太仓校园”。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议订票前以自己的当年报到通知核对目的地，学院名称不能代替报到地点。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议寄行李前向住宿前台确认公寓收件地址和代收安排。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "校园地址不等于宿舍、快递站或活动入口地址。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-campus-renaming",
+      "title": "旧攻略中的“北校区”现在指哪里？",
+      "topic": "campus",
+      "summary": "2026年3月命名已更新，查旧材料时同时核对楼名和地图。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "北校区",
+        "中校区",
+        "南校区",
+        "AS",
+        "影视与创意科技楼",
+        "东西汇廊",
+        "校区更名"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校自2026年3月将原“北校区”改称“中校区”，生命科学楼所在地块称为新“北校区”。",
+          "sourceKeys": [
+            "life-visit"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "同次更新将AS楼改称“影视与创意科技楼”，原南北校区地下通道改称“东西汇廊”。",
+          "sourceKeys": [
+            "life-visit"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议阅读2025年及以前的攻略时，先记录楼宇英文缩写，再去现行地图定位。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议约见时写“楼名＋房间号”，遇到新旧名称不一致时向通知发出方核对。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "不要把旧材料中的“北校区”直接理解为现今生命科学楼区域。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-campus-map",
+      "title": "看不懂楼名或第一次找教室，怎么准备？",
+      "topic": "campus",
+      "summary": "从学校地图入口保存对应校区地图，再提前走一遍路线。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "校园地图",
+        "教室",
+        "楼宇",
+        "房间号",
+        "迷路",
+        "导航"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校“我们的校园”页面分别提供苏州工业园区和太仓校园地图下载入口。",
+          "sourceKeys": [
+            "life-map"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先按当日通知或课表找到楼宇，再定位房间，保留原始楼名和编号。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议第一次前往时预留找入口、乘电梯和确认楼层的时间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议把手机地图和楼内导向牌配合使用；仍找不到时给前台看完整房间号。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议截图保存当天需要的地图，遇到改道以现场标识和学校通知为准。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-arrive-sip",
+      "title": "去园区校园，先查哪些车站和地铁站？",
+      "topic": "transport",
+      "summary": "把学校推荐的交通节点用于比较，再查当天的完整行程。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "地铁",
+        "8号线",
+        "2号线",
+        "仁爱路站",
+        "松涛街站",
+        "苏州站",
+        "苏州园区站",
+        "苏州北站"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校访问指引列出地铁8号线仁爱路站、2号线松涛街站，以及苏州站、苏州园区站和苏州北站。",
+          "sourceKeys": [
+            "life-visit"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议同时比较车票到站时间和车站到报到地点的后续路程。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议在出发当天查询运营公告、末班车和步行出口，保存备选路线。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议携带大件行李或夜间到达时，把换乘次数和最后一段交通纳入安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议跨城赶车时留足缓冲，并以实时交通情况调整出发时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本卡没有提供实时班次、票价或到达时长；学校访问页的交通信息也标注仅供参考。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-arrive-taicang",
+      "title": "去太仓校园，车票和导航怎么核对？",
+      "topic": "transport",
+      "summary": "先确认太仓目的地，再比较太仓站与太仓南站的接续交通。",
+      "campuses": [
+        "taicang"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "太仓站",
+        "太仓南站",
+        "虹桥",
+        "太仓交通",
+        "高铁",
+        "机场"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校太仓访问指引列出的铁路节点是太仓站和太仓南站，机场节点包括上海虹桥、上海浦东和无锡硕放。",
+          "sourceKeys": [
+            "life-visit"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议购票时逐字检查车站名称，抵达后再导航到太仓大道111号的具体入口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议比较铁路与公路衔接方案时，把换乘等候、行李和报到时间一起考虑。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议晚间抵达前查清最后一段交通，必要时提前与接待方确认可到达时段。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议跨校区参加活动时另查返程，不能用活动开始时间倒推一定能赶上的车次。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "未核实实时公交、轨道交通接驳与接送安排，出行当日需重新查询。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-campus-shuttle",
+      "title": "园区和太仓之间的区间车怎么查、怎么坐？",
+      "topic": "transport",
+      "summary": "从学校预约首页查看线路、日期和规则，确认后保留乘车信息。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "区间车",
+        "班车",
+        "穿梭巴士",
+        "跨校区",
+        "shuttle",
+        "预约"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校区间车预约首页提供SIP与TC往返查询，服务对象为校内师生。",
+          "sourceKeys": [
+            "life-shuttle"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "公开预约规则要求提前预约，行程变化及时取消；乘车时需出示二维码。",
+          "sourceKeys": [
+            "life-shuttle"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议在计划出行时打开预约页，核对当前截止时间、班次、上车点和返程。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议将成功预约的信息保存到手机，并提前到达候车点。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议出发前再次查看学校UC通知，遇到停运或延误及时调整安排。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本卡不承诺余座、免费资格、家属乘车或特定班次；以预约系统与当天学校通知为准。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-domestic-housing-notice",
+      "title": "中国大陆新生怎样确认自己的宿舍安排？",
+      "topic": "housing",
+      "summary": "从本人收到的住宿通知核对安排，先确定房间再采购。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "宿舍分配",
+        "住宿通知",
+        "本科住宿",
+        "硕士住宿",
+        "博士住宿",
+        "文星",
+        "文荟",
+        "文萃",
+        "文缘"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校中国大陆学生住宿页说明，本、硕、博学生录取后会收到宿舍安排信息或邮件，具体安排以入学前通知为准。",
+          "sourceKeys": [
+            "life-domestic-housing"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议检查申请时使用的邮箱与学校通知渠道，保存住宿通知和后续变更。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议列出公寓名称、入住日期、办理地点、需带材料和官方联系方式。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议确认床与收纳空间尺寸后再购买大件用品，并核对现场设施清单。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议尚未收到安排时向学校指定窗口查询，向工作人员提供姓名、学号与入学类别。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "适用中国大陆学生；本卡不保证某一公寓、房型、价格或自行选房机会。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-sip-dorm-repair",
+      "title": "园区宿舍水电、空调或门锁有问题，联系谁？",
+      "topic": "housing",
+      "summary": "按实际公寓找到物业，报清房号和问题并留下记录。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "宿舍报修",
+        "空调",
+        "门锁",
+        "漏水",
+        "停电",
+        "物业",
+        "文星",
+        "文荟",
+        "文萃",
+        "文缘"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校中国大陆学生住宿页列出物业热线：文星0512-88852922、文荟0512-62952612、文萃0512-67616932、文缘0512-62600650。",
+          "sourceKeys": [
+            "life-domestic-housing"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先核对自己所在公寓；报修时提供楼栋、房间、故障现象和方便上门的时间。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议保存受理时间与工单号，在不拍到室友隐私的前提下记录故障。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议维修后当场试用并确认结果；未解决时凭同一记录继续联系物业。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议同时向前台了解停水停电公告，避免把整栋维护误认为房间单独故障。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "电话摘自学校公开目录，未进行拨打测试；以公寓最新公告为准，芭菲等其他公寓需查对应前台。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-taicang-dorm-repair",
+      "title": "太仓公寓报修和找前台，先存哪些信息？",
+      "topic": "housing",
+      "summary": "区分校园与公寓地址，入住时确认当前报修渠道。",
+      "campuses": [
+        "taicang"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "太仓住宿",
+        "创业家公寓",
+        "太仓大道115号",
+        "宿舍报修",
+        "物业前台"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校住宿页面列出创业家公寓地址为太仓大道115号，太仓学生公寓物业电话为0512-53995190。",
+          "sourceKeys": [
+            "life-global-housing",
+            "life-domestic-housing"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议办理入住时保存本楼前台位置、线上报修入口与公共设施使用说明。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议发现设施损坏后尽早报告，记录房号、发生时间和故障变化。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议和物业确认维修是否需要本人在场，并在离开房间前妥善保管个人物品。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议把既有损坏写入入住记录，维修完成后核对是否恢复使用。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "此电话是公寓物业入口，不是校园教学楼设施报修热线；未进行拨打测试。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-move-in-checklist",
+      "title": "入住第一天，宿舍要检查和记录什么？",
+      "topic": "housing",
+      "summary": "先熟悉实际设施和前台规则，再补齐个人用品。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "入住检查",
+        "洗衣房",
+        "空调",
+        "热水",
+        "床品",
+        "家具",
+        "开水"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校住宿介绍列出的常见设施包括家具、空调、卫生间、热水设施和公共洗衣房。",
+          "sourceKeys": [
+            "life-accommodation"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议入住后和物业清单逐项核对床、桌椅、门窗、灯具与卫浴状态，记录已有损坏。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议向前台询问洗衣、饮水、垃圾投放、门禁和水电查询的具体操作。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议先备足一两天的洗漱、换洗和清洁用品，再按实际需要采购。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议和室友商量公共区域清洁、安静时段和共用物品，避免重复购买。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "设施会因公寓、楼栋和建成年份不同而变化；不可按官网示意图保证每间房配置。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-global-housing-entry",
+      "title": "港澳台及国际学生的住宿信息从哪里查？",
+      "topic": "housing",
+      "summary": "使用专门的住宿页面和本人到校通知，核对校区与入住入口。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "new-student"
+      ],
+      "keywords": [
+        "国际学生",
+        "港澳台",
+        "芭菲",
+        "Parfait",
+        "global",
+        "住宿预订"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校为港澳台及国际学生单设住宿说明，园区部分介绍芭菲国际公寓，太仓部分介绍创业家公寓。",
+          "sourceKeys": [
+            "life-global-housing"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "该页面列出的芭菲地址是苏州工业园区雪堂街8号。",
+          "sourceKeys": [
+            "life-global-housing"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先以本人当年的到校通知核对就读和入住校区，再选择相应住宿入口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议按自己的入学学期和学生类别核对申请方式，并保存住宿确认邮件。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议抵达前向接待方确认入住材料、可办理时间及逾时到达安排。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "仅供港澳台及国际学生查询对应入口；页面中的样板房、收费和合同说明不能替代本人的正式安排。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-campus-facility-help",
+      "title": "教室或校园公共设施有故障，怎么说明问题？",
+      "topic": "campus",
+      "summary": "通过校园管理入口反馈公共设施问题，提供可定位的描述。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "校园报修",
+        "教室",
+        "桌椅",
+        "照明",
+        "公共设施",
+        "CMO",
+        "校园管理"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "校园管理办公室负责校园设施维护、物业与商户管理；其公开园区联系邮箱为cmo@xjtlu.edu.cn，电话为0512-88161071。",
+          "sourceKeys": [
+            "life-cmo"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先向所在楼宇前台反映，说明校区、楼宇、楼层、房间和具体设备。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议描述“哪里坏、何时发现、是否影响使用”，附不含个人信息的现场照片。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议保存受理记录；涉及太仓设施时，注明太仓校区并请前台确认相应处理窗口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议把校园公共设施与公寓房间问题分别交给对应前台，以便尽快定位。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "公开联系方式不是紧急救援渠道；本次未核实各楼栋当前线上工单入口。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-campus-dining",
+      "title": "校内哪里吃饭、营业时间怎么查？",
+      "topic": "life",
+      "summary": "从学校商户入口查当期菜单、地点与营业信息。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "食堂",
+        "餐饮",
+        "咖啡",
+        "便利店",
+        "菜单",
+        "商户小程序",
+        "吃饭"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校2025—2026学生指南介绍了校内餐饮和便利店，并给出可查商户地点、营业时间与菜单的小程序二维码。",
+          "sourceKeys": [
+            "life-guide-2526"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议从该指南或学校最新通知找到商户入口，再选对应校区查询。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议第一周分别记下靠近上课地点和住宿地点的用餐选择。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议遇到节假日、考试周或较晚下课，提前核对营业时间并准备备用选择。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议有饮食限制时直接向商户确认配料和制作方式，再决定是否点餐。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "指南属于2025—2026学年资料；商户、菜单、价格和营业时间均须当次查询，不作店铺排名或消费承诺。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-lost-property",
+      "title": "东西丢在校园或区间车上，先找谁？",
+      "topic": "life",
+      "summary": "尽快按遗失地点联系前台，描述物品并保留身份核验细节。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "失物招领",
+        "丢东西",
+        "遗失",
+        "班车失物",
+        "校园服务中心"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校2025—2026学生指南将失物招领列为校园服务中心的服务。",
+          "sourceKeys": [
+            "life-guide-2526"
+          ]
+        },
+        {
+          "kind": "fact",
+          "text": "当前区间车页面公布的遗失物品联系号码为园区0512-81888362、太仓0512-88970793。",
+          "sourceKeys": [
+            "life-shuttle"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议按最后使用地点回忆时间线，先联系该楼宇前台或对应班车服务中心。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议说明物品类型、颜色、时间和位置，并保留只有失主知道的细节供认领核验。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议在公开寻物信息中隐去学号、证件号、住址和完整票据内容。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "校园一般失物入口来自2025—2026指南，班车电话来自当前公开页面；不保证物品已经找到。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-sip-sports",
+      "title": "园区想打球或健身，从哪里预约？",
+      "topic": "sport",
+      "summary": "先在体育中心入口核对校区、项目与可预约时段。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "体育馆",
+        "健身房",
+        "篮球",
+        "网球",
+        "羽毛球",
+        "体育预约"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校体育页面介绍中校区室外篮球场、网球场，并链接西浦体育中心预约网站。",
+          "sourceKeys": [
+            "life-sports"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议从学校体育页面进入预约入口，核对场馆所属校区和项目。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议下单或报名之前查看当前收费、取消条件、装备要求与场馆公告。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议首次参加时选择适合自己的活动强度，并按工作人员的现场指引使用设备。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议约同伴时明确场馆名称和场次，活动结束前留出换衣及返程时间。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "场地介绍不等于当前开放或有空位，也不代表全部项目免费。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-taicang-sports",
+      "title": "太仓有哪些体育资源，游泳前查什么？",
+      "topic": "sport",
+      "summary": "太仓体育中心有泳池，具体开放与使用条件从预约页面确认。",
+      "campuses": [
+        "taicang"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "太仓体育馆",
+        "游泳池",
+        "泳池",
+        "健身",
+        "球馆"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "学校体育与社团活动页面明确介绍了太仓体育中心的游泳池，并提供体育预约入口。",
+          "sourceKeys": [
+            "life-sports"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议预约前确认显示的是太仓场馆，仔细查看泳池或所选项目的开放安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议向场馆确认入场凭证、装备、更衣与储物要求，再出发参加。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议初次使用器械或参加不熟悉的项目时先向工作人员了解使用方法。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议安排一个能长期坚持的运动时段，并在天气或场馆安排变化时调整。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "本卡不提供游泳资格、健康证明要求、收费或教学课程保证，以场馆现行要求为准。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-clubs-discovery",
+      "title": "想参加社团，怎么找到适合自己的组织？",
+      "topic": "clubs",
+      "summary": "用Student Engagement目录筛选校区和兴趣，再核对当期活动。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "社团",
+        "招新",
+        "学生组织",
+        "Student Engagement",
+        "艺术",
+        "公益",
+        "兴趣"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "西浦校园生活社团目录设有苏州、太仓校区入口，以及学术、公益、艺术、体育等分类。",
+          "sourceKeys": [
+            "life-engage"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先选校区，再按兴趣打开社团介绍，记录组织的活动内容和联系入口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议向组织询问本学期活动时间、参与方式和是否接受初学者。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议先参加一两次体验活动，再结合课表决定投入频率。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议参与跨校区活动前一起核对场地与返程；阅读旧活动页时特别检查日期。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "目录中的社团存在记录不等于正在招新，成员数和分类数量也不是活动质量评价。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-public-library",
+      "title": "园区校园附近还可以去哪里阅读、自习？",
+      "topic": "life",
+      "summary": "把苏州工业园区图书馆作为校外阅读选择，先核对当期开放公告。",
+      "campuses": [
+        "suzhou"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "独墅湖图书馆",
+        "园区图书馆",
+        "公共图书馆",
+        "自习",
+        "周边"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "苏州工业园区图书馆总馆原称苏州独墅湖图书馆，地址为仁爱路258号，官方介绍包含阅览与自修空间。",
+          "sourceKeys": [
+            "life-sip-library"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议从公共文化中心场馆页面进入活动或开放公告，确认当天是否开放。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议第一次前往前确认入馆、办证、借阅和座位使用要求。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议仅带需要的学习材料，并把休息和返程时间一并安排。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议查找不同公共图书馆时核对总馆、分馆的具体地址，避免只按简称导航。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "该场馆页页首与页脚开放时间写法不同，初版不固定转载时段；以最新开放公告或馆方答复为准。"
+      ],
+      "reviewAfterDays": 30
+    },
+    {
+      "key": "life-city-service-12345",
+      "title": "校外公共服务问题不知道找哪个部门，怎么办？",
+      "topic": "life",
+      "summary": "可通过苏州12345询问非紧急公共服务的办理入口。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "12345",
+        "公共服务",
+        "便民热线",
+        "咨询",
+        "市民服务",
+        "城市生活"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "苏州市政府公布的12345平台说明将其定位为面向公众的非紧急公共服务入口。",
+          "sourceKeys": [
+            "life-city-12345"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议咨询前整理事情发生的区域、地点、时间和希望了解的具体问题。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议先描述事实和已联系的单位，请工作人员确认应转向的部门与办理入口。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议保存工单号和答复，后续沟通时引用同一记录。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议只在受理渠道提供必要材料，不在公开平台上传证件、手机号或他人隐私。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "12345与紧急救助渠道用途不同；本卡仅介绍入口，不判断个案能否受理或保证办理结果。"
+      ],
+      "reviewAfterDays": 90
+    },
+    {
+      "key": "life-museum-culture",
+      "title": "想了解西浦校园文化或看展，从哪里开始？",
+      "topic": "campus",
+      "summary": "查看西浦博物馆的场馆、展览和学生解说团入口。",
+      "campuses": [
+        "universal"
+      ],
+      "audiences": [
+        "universal"
+      ],
+      "keywords": [
+        "博物馆",
+        "校史",
+        "展览",
+        "学生解说团",
+        "文化活动",
+        "XEC新馆"
+      ],
+      "sentences": [
+        {
+          "kind": "fact",
+          "text": "西浦博物馆官网列有园区本馆、XEC新馆，以及展览、品牌活动和学生解说团等入口。",
+          "sourceKeys": [
+            "life-museum"
+          ]
+        },
+        {
+          "kind": "advice",
+          "text": "建议先按校区查想参观的场馆和展览，再安排路线。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议出发前查看博物馆最新开放信息，特别核对法定假日与校园关闭日。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议对讲解或志愿活动有兴趣时，通过页面中的官方联系入口了解当期参与方式。",
+          "sourceKeys": []
+        },
+        {
+          "kind": "advice",
+          "text": "建议参观时遵守现场拍摄和展品保护提示；做课程项目需要图像时先询问使用要求。",
+          "sourceKeys": []
+        }
+      ],
+      "cautions": [
+        "历史展讯不代表展览仍在进行，加入解说团或参加活动需按当期通知办理。"
+      ],
+      "reviewAfterDays": 30
+    }
+  ]
+}

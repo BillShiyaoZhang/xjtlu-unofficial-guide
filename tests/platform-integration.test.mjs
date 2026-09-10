@@ -231,7 +231,7 @@ test('guide display routes enrich only platform-visible answers and preserve rev
   assert.deepEqual(await readJson(await h.get('/api/guide/catalog')), h.catalog);
   const answers = await readJson(await h.get('/api/guide/answers'));
   const answerTypes = new Set(h.business.content.entityTypes.filter(type => type.role === 'content').map(type => type.id));
-  assert.equal(answers.length, h.bundle.entities.filter(entity => answerTypes.has(entity.type)).length);
+  assert.equal(answers.length, h.bundle.entities.filter(entity => answerTypes.has(entity.type) && h.bundle.revisions.some(revision => revision.entityId === entity.id && revision.data.demo === true)).length);
   const answer = answers[0];
   assert.ok(answer.slug && answer.topic?.title);
   assert.equal(answer.slug, h.bundle.entities.find(entity => entity.id === answer.id).extensions.slug);
