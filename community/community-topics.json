@@ -868,6 +868,528 @@
         "status": "scheduled",
         "registrationStatus": "unknown"
       }
+    },
+    {
+      "id": "collected-zhitiao-6a9d1dc70777423839934997",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请：网申用学校邮箱还是个人邮箱？",
+      "prompt": "原帖询问申研账号应使用西浦邮箱还是个人邮箱，以及毕业后学校邮箱能否继续使用。\n\n欢迎分享申请期间收取通知、毕业后继续联系和修改邮箱的经历。学校邮箱保留期限与目标项目账号规则仍需分别核对，原帖没有给出答案。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9d1dc70777423839934997",
+          "title": "纸条原帖（研究生申请：网申用学校邮箱还是个人邮箱？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:26.869Z",
+          "accessStatus": "read",
+          "summary": "原帖询问申研账号应使用西浦邮箱还是个人邮箱，以及毕业后学校邮箱能否继续使用。",
+          "publishedOn": "2026-09-06"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a9972b2bbfc85382f5336e4",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请：SURF 写进 CV 后，需要公开 GitHub 作品集吗？",
+      "prompt": "原帖已把暑期 SURF 写入申研 CV，正在询问自己负责的模型是否需要公开到 GitHub，以及是否应先征询导师。\n\n欢迎分享如何描述个人贡献、展示可公开成果以及向导师确认共享范围。帖子只提出问题，不能据此认定研究代码已经获准公开。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9972b2bbfc85382f5336e4",
+          "title": "纸条原帖（研究生申请：SURF 写进 CV 后，需要公开 GitHub 作品集吗？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:28.258Z",
+          "accessStatus": "read",
+          "summary": "原帖已把暑期 SURF 写入申研 CV，正在询问自己负责的模型是否需要公开到 GitHub，以及是否应先征询导师。",
+          "publishedOn": "2026-09-03"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a97b6edbbfc85382f491be5",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请：目标项目免语言，还要提交雅思吗？",
+      "prompt": "原帖以目标项目免语言为前提，询问均分较高时，额外提交雅思是否能帮助申请。\n\n欢迎附申请年份、具体项目和语言豁免依据，分享实际提交选择。是否豁免、是否接受额外成绩及其影响须分开核对，原帖没有证实加分效果。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a97b6edbbfc85382f491be5",
+          "title": "纸条原帖（研究生申请：目标项目免语言，还要提交雅思吗？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:29.509Z",
+          "accessStatus": "read",
+          "summary": "原帖以目标项目免语言为前提，询问均分较高时，额外提交雅思是否能帮助申请。",
+          "publishedOn": "2026-09-02"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa205820777423839b8b917",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请：AA 和 FYP 导师是同一人，推荐人怎么安排？",
+      "prompt": "原帖的学术顾问 AA 与毕业项目 FYP 导师为同一人，担心因此少一位推荐人。\n\n欢迎补充目标项目要求的推荐人数、推荐人类型，以及自己联系授课或科研老师的经历。原帖没有说明目标学校，不能直接推断缺少几封推荐信。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa205820777423839b8b917",
+          "title": "纸条原帖（研究生申请：AA 和 FYP 导师是同一人，推荐人怎么安排？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:30.756Z",
+          "accessStatus": "read",
+          "summary": "原帖的学术顾问 AA 与毕业项目 FYP 导师为同一人，担心因此少一位推荐人。",
+          "publishedOn": "2026-09-10"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa3ed47bbfc85382f8c5796",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请：和教授不熟，如何开口请求推荐信？",
+      "prompt": "原帖询问与教授不熟悉时，应该怎样解决申请所需的推荐信。\n\n欢迎分享第一次联系老师时准备了哪些课程、项目经历和截止日期资料，以及后续如何沟通。请描述自己的做法，不代替老师承诺愿意推荐。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa3ed47bbfc85382f8c5796",
+          "title": "纸条原帖（研究生申请：和教授不熟，如何开口请求推荐信？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:31.999Z",
+          "accessStatus": "read",
+          "summary": "原帖询问与教授不熟悉时，应该怎样解决申请所需的推荐信。",
+          "publishedOn": "2026-09-11"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa27b2f0777423839bd4808",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介：美国 12 个项目的报价，包含哪些费用？",
+      "prompt": "原帖为美国方向的 12 个项目询价，说明收到的中介报价不包含投递费和认证费。\n\n原帖金额写作“5.6左右”，未注明单位，本站不换算为具体费用。欢迎比较项目数量、选校与文书服务、投递及认证费用分别由谁承担；这条报价不能代表市场均价。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa27b2f0777423839bd4808",
+          "title": "纸条原帖（留学中介：美国 12 个项目的报价，包含哪些费用？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:33.239Z",
+          "accessStatus": "read",
+          "summary": "原帖为美国方向的 12 个项目询价，说明收到的中介报价不包含投递费和认证费。",
+          "publishedOn": "2026-09-10"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a9d22f8bbfc85382f64b14b",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介：新加坡两所学校的报价如何比较？",
+      "prompt": "原帖提到新加坡两所学校的中介报价，但没有交代具体项目数量和服务范围。\n\n欢迎按申请年份、项目清单、文书修改范围和额外费用分享比较经历。仅凭学校数量与一个报价，暂时无法判断服务是否合适。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9d22f8bbfc85382f64b14b",
+          "title": "纸条原帖（留学中介：新加坡两所学校的报价如何比较？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:34.490Z",
+          "accessStatus": "read",
+          "summary": "原帖提到新加坡两所学校的中介报价，但没有交代具体项目数量和服务范围。",
+          "publishedOn": "2026-09-06"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a9bd45fbbfc85382f5e5491",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介：大三什么时候开始接洽比较合适？",
+      "prompt": "原帖询问通常在大三的哪个阶段找中介，特别提到是否应等第一学期结束。\n\n欢迎说明目标入学年份、地区以及当时已有的材料，分享何时咨询、确定选校和开始文书。准备节奏与签约时间可以分别讨论。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9bd45fbbfc85382f5e5491",
+          "title": "纸条原帖（留学中介：大三什么时候开始接洽比较合适？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:35.773Z",
+          "accessStatus": "read",
+          "summary": "原帖询问通常在大三的哪个阶段找中介，特别提到是否应等第一学期结束。",
+          "publishedOn": "2026-09-05"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a9e78ebbbfc85382f6b9534",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介：申请美国时选校还没定，文书进度怎么办？",
+      "prompt": "原帖询问其他申请美国的同学是否已开始写文书，并表示自己的中介尚未确定选校名单。\n\n欢迎分享如何与顾问约定选校、初稿和修改节点，以及哪些通用经历材料能先整理。原帖没有说明具体截止日期，不能据此判定申请已经耽误。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9e78ebbbfc85382f6b9534",
+          "title": "纸条原帖（留学中介：申请美国时选校还没定，文书进度怎么办？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:37.024Z",
+          "accessStatus": "read",
+          "summary": "原帖询问其他申请美国的同学是否已开始写文书，并表示自己的中介尚未确定选校名单。",
+          "publishedOn": "2026-09-07"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa398ab0777423839c464e8",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介：ICS 申研怎样找到有相近背景的真实经验？",
+      "prompt": "原帖寻求 ICS 方向的申研机构推荐，特别强调希望得到真实推荐。\n\n欢迎说明申请年份、方向、实际使用的服务和沟通体验；如与机构有合作、返佣或校代关系，也请一并说明。本次只读到求推荐的正文，没有读取到可比较的机构评价。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa398ab0777423839c464e8",
+          "title": "纸条原帖（留学中介：ICS 申研怎样找到有相近背景的真实经验？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:38.273Z",
+          "accessStatus": "read",
+          "summary": "原帖寻求 ICS 方向的申研机构推荐，特别强调希望得到真实推荐。",
+          "publishedOn": "2026-09-11"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa41a6b0777423839c8b765",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价｜Paul Craig 的 FYP 指导节奏与要求如何？",
+      "prompt": "原帖询问 SAT 学院 Paul Craig 老师的 FYP 指导体验，以及要求是否严格。\n\n目前收录的是提问。欢迎曾参与同类项目的同学补充学年、研究方向、会面频率和反馈方式；这些背景比单独的“严格”标签更便于比较。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa41a6b0777423839c8b765",
+          "title": "纸条原帖（老师评价｜Paul Craig 的 FYP 指导节奏与要求如何？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:39.524Z",
+          "accessStatus": "read",
+          "summary": "原帖询问 SAT 学院 Paul Craig 老师的 FYP 指导体验，以及要求是否严格。",
+          "publishedOn": "2026-09-11"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa3ede00777423839c7366d",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价｜Yaran Chen 的 FYP 指导体验有哪些？",
+      "prompt": "原帖表示已经选择 Yaran Chen 老师的 FYP，正在向同学了解指导体验。\n\n原帖尚未提供具体评价。欢迎注明学年和项目类型，分享指导沟通、阶段反馈以及需要自己推进的工作。姓名按原帖拼写保留。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa3ede00777423839c7366d",
+          "title": "纸条原帖（老师评价｜Yaran Chen 的 FYP 指导体验有哪些？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:40.775Z",
+          "accessStatus": "read",
+          "summary": "原帖表示已经选择 Yaran Chen 老师的 FYP，正在向同学了解指导体验。",
+          "publishedOn": "2026-09-11"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a72c9110777423839ca0723",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价｜BUS303 的 Lili Jiu 授课和评分体验如何？",
+      "prompt": "原帖询问 BUS303 的 Lili Jiu 老师平时授课及评分情况。\n\n欢迎把授课体验与评分体验分开描述，补充学年、作业形式、评分反馈及个人投入。当前只有提问，没有据此生成教师评分或高低分结论。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a72c9110777423839ca0723",
+          "title": "纸条原帖（老师评价｜BUS303 的 Lili Jiu 授课和评分体验如何？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:42.024Z",
+          "accessStatus": "read",
+          "summary": "原帖询问 BUS303 的 Lili Jiu 老师平时授课及评分情况。",
+          "publishedOn": "2026-08-05"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa239070777423839ba730d",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价与答疑｜MTH117 蔡力（Li Cai）的 office hour 在哪里查？",
+      "prompt": "原帖询问 MTH117 蔡力（Li Cai）老师的 office hour 时间。\n\n本次没有读取到具体答疑安排。欢迎补充当学期的公开课程说明，或分享如何预约、准备问题和获得反馈；这是答疑求助，尚不是教师评价。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa239070777423839ba730d",
+          "title": "纸条原帖（老师评价与答疑｜MTH117 蔡力（Li Cai）的 office hour 在哪里查？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:43.275Z",
+          "accessStatus": "read",
+          "summary": "原帖询问 MTH117 蔡力（Li Cai）老师的 office hour 时间。",
+          "publishedOn": "2026-09-10"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a55e7600777423839d15947",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价｜MTH206、207、219、212 的讲解方式怎么比较？",
+      "prompt": "原帖为大三应数课程 MTH206、MTH207、MTH219、MTH212 寻求老师推荐，希望讲解清楚，并偏好使用 PPT 授课。\n\n欢迎注明课程、学期和老师，描述板书与课件比例、例题讲解、进度以及课后答疑。原帖表达的是学习偏好，没有给出具体老师的评价。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a55e7600777423839d15947",
+          "title": "纸条原帖（老师评价｜MTH206、207、219、212 的讲解方式怎么比较？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:44.524Z",
+          "accessStatus": "read",
+          "summary": "原帖为大三应数课程 MTH206、MTH207、MTH219、MTH212 寻求老师推荐，希望讲解清楚，并偏好使用 PPT 授课。",
+          "publishedOn": "2026-07-14"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a96c9e8bbfc85382f43e5b6",
+      "catalogTopicId": "topic-study",
+      "title": "老师评价｜大数据 FYP 如何比较导师负责程度与评分反馈？",
+      "prompt": "原帖为大数据 FYP 寻求导师推荐，关注指导是否负责、评分是否友好，以及选项目和选导师要留意哪些方面。\n\n欢迎补充具体项目方向、学年、沟通频率和评分反馈的经历。原帖没有点名推荐对象，也不能支持任何导师“保证高分”的说法。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a96c9e8bbfc85382f43e5b6",
+          "title": "纸条原帖（老师评价｜大数据 FYP 如何比较导师负责程度与评分反馈？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:45.826Z",
+          "accessStatus": "read",
+          "summary": "原帖为大数据 FYP 寻求导师推荐，关注指导是否负责、评分是否友好，以及选项目和选导师要留意哪些方面。",
+          "publishedOn": "2026-09-01"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6aa1216e0777423839b22b80",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价｜COM262 和 COM264 的考核、投入与评分怎么比较？",
+      "prompt": "原帖向修过 COM262、COM264 的同学询问两门课的评分体验。\n\n欢迎分别说明学期、作业与考试形式、阅读或项目投入，以及收到的反馈。当前没有两门课的分数样本，暂时不能给出哪门更好拿分的结论。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6aa1216e0777423839b22b80",
+          "title": "纸条原帖（课程评价｜COM262 和 COM264 的考核、投入与评分怎么比较？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:47.110Z",
+          "accessStatus": "read",
+          "summary": "原帖向修过 COM262、COM264 的同学询问两门课的评分体验。",
+          "publishedOn": "2026-09-09"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a95c6aa0777423839686e22",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价｜MTH321 考核是否改为三项 coursework，学习安排怎么调整？",
+      "prompt": "原帖称自己看到 MTH321 当年改为三项 coursework，并询问评分情况。\n\n三项 coursework 是发帖人的说法，本次未核对当学期课程手册。欢迎提供课程说明并分享任务分布、准备时间和反馈，不把原帖担忧当作已经发生的压分。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a95c6aa0777423839686e22",
+          "title": "纸条原帖（课程评价｜MTH321 考核是否改为三项 coursework，学习安排怎么调整？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:48.358Z",
+          "accessStatus": "read",
+          "summary": "原帖称自己看到 MTH321 当年改为三项 coursework，并询问评分情况。",
+          "publishedOn": "2026-09-01"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a7096b50777423839bdcea4",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价｜人工智能硕士选哪两门课，怎样比较工作量？",
+      "prompt": "原帖向人工智能硕士的学长学姐征询两门选课建议，关注学习负担和通过难度。\n\n原帖没有列出候选课程。欢迎补充入学年份、课程代码、编程基础和项目投入，再比较内容匹配度、工作量及考核方式。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a7096b50777423839bdcea4",
+          "title": "纸条原帖（课程评价｜人工智能硕士选哪两门课，怎样比较工作量？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:49.597Z",
+          "accessStatus": "read",
+          "summary": "原帖向人工智能硕士的学长学姐征询两门选课建议，关注学习负担和通过难度。",
+          "publishedOn": "2026-08-03"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a961ddcbbfc85382f3deb96",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价｜ESS 的 Python、C++ 适合零基础吗，对申研有什么帮助？",
+      "prompt": "原帖询问 ESS 的 Python、C++ 课程是否适合缺少基础的同学，也关心修课记录在研究生申请中的作用。\n\n欢迎注明课程名称、学期、先修知识和每周投入，分享实际学到了什么。课程记录方式及招生项目如何使用这些材料，仍需分别核对。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a961ddcbbfc85382f3deb96",
+          "title": "纸条原帖（课程评价｜ESS 的 Python、C++ 适合零基础吗，对申研有什么帮助？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:49:50.841Z",
+          "accessStatus": "read",
+          "summary": "原帖询问 ESS 的 Python、C++ 课程是否适合缺少基础的同学，也关心修课记录在研究生申请中的作用。",
+          "publishedOn": "2026-09-01"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a9963ecbbfc85382f52bd9a",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价｜应数选修的理论与应用内容，怎样和未来方向衔接？",
+      "prompt": "原帖作者认为应数大三、大四选修选择较少、纯数学课程较多，希望增加算法、Python、PyTorch 等应用内容，以衔接后续学习方向。\n\n这是作者对课程设置的个人意见，未验证整体学生去向或课程供给比例。欢迎结合学年、已修课程与目标方向，分享理论训练和应用训练各自带来的帮助。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a9963ecbbfc85382f52bd9a",
+          "title": "纸条原帖（课程评价｜应数选修的理论与应用内容，怎样和未来方向衔接？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:50:15.214Z",
+          "accessStatus": "read",
+          "summary": "原帖作者认为应数大三、大四选修选择较少、纯数学课程较多，希望增加算法、Python、PyTorch 等应用内容，以衔接后续学习方向。",
+          "publishedOn": "2026-09-03"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-zhitiao-6a813a95bbfc85382fe3f50d",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价与准备｜AI 专业用 Mac 还是 Windows，课堂示范能跟上吗？",
+      "prompt": "原帖询问 AI 专业教学中 Mac 与 Windows 是否有差别，以及课堂是否为两个系统分别提供教程。\n\n欢迎注明课程代码、学期和实际使用的软件环境，分享安装、课堂操作和作业体验。原帖未提供软件要求，不能据此推荐购买某种电脑。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://h5.zhitiaox.com/#/pages/forum/forum?id=6a813a95bbfc85382fe3f50d",
+          "title": "纸条原帖（课程评价与准备｜AI 专业用 Mac 还是 Windows，课堂示范能跟上吗？；标题为整理者概括）",
+          "publisher": "纸条社区原帖发布者",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:50:16.729Z",
+          "accessStatus": "read",
+          "summary": "原帖询问 AI 专业教学中 Mac 与 Windows 是否有差别，以及课堂是否为两个系统分别提供教程。",
+          "publishedOn": "2026-08-16"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-github-xjtlu-diy-26fall",
+      "catalogTopicId": "topic-careers",
+      "title": "研究生申请经验｜26Fall CS DIY：时间线、推荐信和跨方向文书复盘",
+      "prompt": "作者复盘 26Fall 的西浦 CS 硕士 DIY 申请，整理材料、推荐信和投递进度，并反思跨申 ECE 时复用 CS 文书与自身经历不够匹配。\n\n欢迎讨论哪些准备步骤适合自己的方向，以及跨专业时怎样说明已有基础。作者对拒录原因的解释是个人复盘，文中的院校门槛和录取趋势未作为本站结论。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://github.com/Tiezhu-233/Masters-application-diy-guide",
+          "title": "Masters Application DIY Guide (XJTLU)",
+          "publisher": "Tiezhu-233（公开经验作者）",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:54:10Z",
+          "accessStatus": "read",
+          "summary": "作者复盘 26Fall 的西浦 CS 硕士 DIY 申请，整理材料、推荐信和投递进度，并反思跨申 ECE 时复用 CS 文书与自身经历不够匹配。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-awesome-xjtlu-mphil-agency-reflection",
+      "catalogTopicId": "topic-careers",
+      "title": "留学中介经验｜MPhil 申请复盘：顾问沟通是否真正帮助了文书？",
+      "prompt": "Awesome-XJTLU 收录的一篇历史申请总结强调研究方向和文书经历的匹配；作者认为，中介服务中重要的是高效沟通，并把申请者的想法落实到文书。\n\n这是 17-CST 作者的历史经验。欢迎分享沟通和修改的具体过程，比较顾问带来的帮助；原文没有提供机构排名，也不能说明某家机构当前的服务水平。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/awesome-xjtlu/wiki/main/docs/grad-application/school-of-advanced-technology/computer-science-technology/17-dequnteng-uk.md",
+          "title": "Awesome-XJTLU：17-CST-Dequn Teng 申请总结",
+          "publisher": "Awesome-XJTLU 收录的个人申请总结",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:54:10Z",
+          "accessStatus": "read",
+          "summary": "Awesome-XJTLU 收录的一篇历史申请总结强调研究方向和文书经历的匹配；作者认为，中介服务中重要的是高效沟通，并把申请者的想法落实到文书。"
+        }
+      ],
+      "collection": true
+    },
+    {
+      "id": "collected-transferwiki-cst-course-experience-23fall",
+      "catalogTopicId": "topic-study",
+      "title": "课程评价与老师评价｜CST 学生的 EAP、自学和 office hour 经验",
+      "prompt": "TransferWiki 的 23 Fall 案例中，一位西浦 CST 学生反思忽视 EAP 的影响，提到 CPT101、CPT111 需要课外自学，也分享了 EEE、MTH 课程结合课件复习和向老师答疑的体验。\n\n这篇是历史本科转学分享，其中的老师评价属于个人体验。欢迎注明当前学期和课程代码补充不同经历；旧课程内容、学分和考核方式不能直接套用到现在。",
+      "kind": "question",
+      "editorial": true,
+      "sources": [
+        {
+          "url": "https://transferwiki.com/bgs/#cavaliers",
+          "title": "TransferWiki：23 Fall / Cavaliers 学生案例",
+          "publisher": "TransferWiki 收录的个人学习经验",
+          "category": "community",
+          "accessedAt": "2026-09-12T09:54:10Z",
+          "accessStatus": "read",
+          "summary": "TransferWiki 的 23 Fall 案例中，一位西浦 CST 学生反思忽视 EAP 的影响，提到 CPT101、CPT111 需要课外自学，也分享了 EEE、MTH 课程结合课件复习和向老师答疑的体验。"
+        }
+      ],
+      "collection": true
     }
   ]
 }

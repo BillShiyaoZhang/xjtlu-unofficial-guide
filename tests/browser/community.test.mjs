@@ -302,6 +302,42 @@ test('home exposes three real editorial questions and allows mobile and keyboard
   }
 });
 
+test('common discussion shortcuts reach matching source collections without expanding the homepage list', async t => {
+  const queries = ['研究生申请', '留学中介', '老师评价', '课程评价'];
+  const config = structuredClone(site.config);
+  const sourceTopic = config.topics.find(topic => topic.collection && topic.kind === 'question');
+  const fixtures = queries.map((query, index) => ({
+    ...structuredClone(sourceTopic), id: `synthetic-discussion-shortcut-${index}`, title: `${query}的合成讨论`,
+    prompt: `这是用于验证${query}搜索入口的合成来源整理。`,
+  }));
+  config.topics.push(...fixtures);
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+    const { page, goto } = await fixture(t, { config, viewport });
+    for (const [index, query] of queries.entries()) {
+      await goto('#/discover');
+      const shortcuts = page.getByRole('group', { name: '常见讨论主题', exact: true });
+      assert.equal(await shortcuts.getByRole('link').count(), 4);
+      assert.equal(await page.locator('.source-collection > .topic-grid .topic-card').count(), 3);
+      const card = page.locator('.source-collection .topic-card h3 a').filter({ hasText: fixtures[index].title });
+      assert.equal(await card.isVisible(), false, 'the appended discussion starts inside the folded source list');
+      await assertFits(page);
+      const shortcut = shortcuts.getByRole('link', { name: `${query} →`, exact: true });
+      await shortcut.focus();
+      await page.keyboard.press('Enter');
+      await page.locator('#answers-view').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#query').inputValue(), query);
+      assert.equal(await page.locator('#list-mode').getAttribute('aria-pressed'), 'true');
+      const result = page.locator('#collection-results h3 a').filter({ hasText: fixtures[index].title });
+      assert.equal(await result.isVisible(), true);
+      await result.click();
+      await page.locator('#topic-view').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#community-topic h1').innerText(), fixtures[index].title);
+      assert.equal(await page.locator('.topic-source-link').count(), fixtures[index].sources.length);
+      await assertFits(page);
+    }
+  }
+});
+
 test('sourced cold-start topics display provenance on desktop and mobile without inventing contributions', async t => {
   const collected = site.config.topics.filter(topic => topic.collection);
   assert.ok(collected.length >= 16);

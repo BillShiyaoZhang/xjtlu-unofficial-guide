@@ -772,6 +772,7 @@ main { padding-top: 28px; }
 .more-topics { margin-top: 12px; font-size: 13px; }
 .more-topics > summary { padding: 8px 0; color: #526a49; min-height: 40px; }
 .source-collection > .eyebrow { margin-bottom: 6px; }
+.source-collection > .category-links { margin: 0 0 20px; }
 .source-collection .topic-card { background: #fff; }
 .source-collection .topic-card .event-state { font-size: 12px; padding: 10px 12px; }
 .participation-section { border-top: 1px solid var(--line); padding-top: 28px; }

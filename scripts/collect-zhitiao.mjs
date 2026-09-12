@@ -9,6 +9,8 @@ const origin = 'https://api.zhitiaox.com';
 const cache = new URL('../community/.cold-start-cache/', import.meta.url);
 const validId = value => typeof value === 'string' && /^[a-f0-9]{24}$/.test(value);
 const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value) && Number.isFinite(Date.parse(value));
+const validQuery = value => typeof value === 'string' && value.trim().length > 0
+  && [...value.trim()].length <= 40 && !/[\u0000-\u001f\u007f]/u.test(value);
 export const shareUrl = id => {
   if (!validId(id)) throw new Error('Invalid post ID');
   return `https://h5.zhitiaox.com/#/pages/forum/forum?id=${id}`;
@@ -16,8 +18,8 @@ export const shareUrl = id => {
 
 // A preliminary omission filter only; retained candidates still require editorial selection.
 const sensitive = /LGBT|Pride|拉拉|男同|女同|出柜|性取向|抑郁|焦虑|自杀|自残|确诊|诊断|病历|挂一个|曝光|身份证|\b1[3-9]\d{9}\b|[\w.+-]+@[\w.-]+\.[a-z]{2,}|(?:微信|vx|v信|QQ|学号)\s*[:：号]?\s*[a-z0-9_-]{5,}/iu;
-export function candidateFromMessage(row, accessedAt) {
-  if (!row || !validId(row._id) || row.school !== 'XJTLU' || row.deleted !== false) return null;
+function projectMessage(row, accessedAt) {
+  if (!row || !validId(row._id) || row.school !== 'XJTLU') return null;
   if (typeof row.content !== 'string' || !row.content.trim() || row.content.length > 6000 || !validDate(row.createdAt)) return null;
   if (sensitive.test(`${row.carton?.title ?? ''}\n${row.content}`)) return null;
   if (row._id === '63341a38526af227cc7d69c7') return null; // retired-client upgrade notice
@@ -28,25 +30,46 @@ export function candidateFromMessage(row, accessedAt) {
   };
 }
 
+export function candidateFromMessage(row, accessedAt) {
+  if (row?.deleted !== false) return null;
+  return projectMessage(row, accessedAt);
+}
+
+// Search omits deletion state. These are discovery leads, never detail-read candidates.
+export function discoveryFromSearchResult(row, accessedAt) {
+  if (row?.deleted === true) return null;
+  const projected = projectMessage(row, accessedAt);
+  return projected ? { ...projected, requiresDetailReread: true } : null;
+}
+
 export function parseOptions(args) {
   const options = { pages: 1, ids: [] };
+  const queries = [];
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--pages' && /^[1-3]$/.test(args[i + 1] ?? '')) options.pages = Number(args[++i]);
     else if (args[i] === '--post' && validId(args[i + 1])) options.ids.push(args[++i]);
-    else throw new Error('Usage: node scripts/collect-zhitiao.mjs [--pages 1..3] [--post POST_ID ...]');
+    else if (args[i] === '--query' && validQuery(args[i + 1])) queries.push(args[++i].trim());
+    else throw new Error('Usage: node scripts/collect-zhitiao.mjs [--pages 1..3] [--post POST_ID ... | --query QUERY ...]');
   }
   options.ids = [...new Set(options.ids)];
   if (options.ids.length > 20) throw new Error('At most 20 explicitly selected posts per run');
+  if (queries.length > 8) throw new Error('At most 8 search queries per run');
+  if (queries.length && options.ids.length) throw new Error('--query and --post cannot be combined');
+  if (queries.length) options.queries = [...new Set(queries)];
   return options;
 }
 
-export async function collectZhitiao({ pages = 1, ids = [], fetchImpl = fetch, pause = delay, now = () => new Date().toISOString() } = {}) {
-  if (!Number.isInteger(pages) || pages < 1 || pages > 3 || ids.length > 20 || !ids.every(validId)) throw new Error('Invalid collection limits');
+export async function collectZhitiao({ pages = 1, ids = [], queries = [], fetchImpl = fetch, pause = delay, now = () => new Date().toISOString() } = {}) {
+  if (!Number.isInteger(pages) || pages < 1 || pages > 3 || !Array.isArray(ids) || ids.length > 20 || !ids.every(validId)
+    || !Array.isArray(queries) || queries.length > 8 || !queries.every(validQuery) || (ids.length && queries.length)) throw new Error('Invalid collection limits');
+  const searchQueries = [...new Set(queries.map(query => query.trim()))];
   const report = { schemaVersion: 1, platform: '纸条', collectedAt: now(), purpose: 'Local editorial candidates; not a public import batch',
     attempts: [], candidates: [], omitted: 0, duplicates: 0, stopped: false };
+  if (searchQueries.length) Object.assign(report, { purpose: 'Local search discoveries requiring individual detail reread; not a public import batch',
+    queries: searchQueries, discoveries: [] });
   const seen = new Set();
   let requested = false;
-  async function request(path) {
+  async function request(path, search = false) {
     if (report.stopped) return null;
     if (requested) await pause(1200);
     requested = true;
@@ -75,16 +98,16 @@ export async function collectZhitiao({ pages = 1, ids = [], fetchImpl = fetch, p
       } finally { reader.releaseLock(); }
       const data = JSON.parse(Buffer.concat(chunks).toString('utf8'));
       const detail = /^\/message\/[a-f0-9]{24}$/.test(path);
-      if (detail ? (!data.message || data.message._id !== path.split('/').at(-1)) : !Array.isArray(data.messages)) throw new Error('unexpected-response');
-      const rows = detail ? [data.message] : data.messages;
-      attempt.status = rows.length && rows.every(row => row._id === '63341a38526af227cc7d69c7') ? 'retired-client' : 'read';
+      if (detail ? (!data.message || data.message._id !== path.split('/').at(-1)) : !Array.isArray(search ? data.result : data.messages)) throw new Error('unexpected-response');
+      const rows = detail ? [data.message] : search ? data.result : data.messages;
+      attempt.status = rows.length && rows.every(row => row?._id === '63341a38526af227cc7d69c7') ? 'retired-client' : 'read';
       attempt.received = rows.length;
       for (const row of rows) {
-        const candidate = candidateFromMessage(row, attempt.accessedAt);
+        const candidate = search ? discoveryFromSearchResult(row, attempt.accessedAt) : candidateFromMessage(row, attempt.accessedAt);
         if (!candidate) { report.omitted++; continue; }
         if (seen.has(candidate.id)) { report.duplicates++; continue; }
         seen.add(candidate.id);
-        report.candidates.push(candidate);
+        (search ? report.discoveries : report.candidates).push(candidate);
       }
       return rows;
     } catch (error) {
@@ -93,7 +116,20 @@ export async function collectZhitiao({ pages = 1, ids = [], fetchImpl = fetch, p
       return null;
     }
   }
-  if (ids.length) {
+  if (searchQueries.length) {
+    for (const query of searchQueries) {
+      let cursor;
+      const cursors = new Set();
+      for (let page = 0; page < pages; page++) {
+        const rows = await request(`/search/message/?q=${encodeURIComponent(query)}${cursor ? `&startId=${encodeURIComponent(cursor)}` : ''}`, true);
+        if (!rows?.length || report.stopped) break;
+        const next = rows.at(-1)?._id;
+        if (!validId(next) || cursors.has(next)) break;
+        cursors.add(next); cursor = next;
+      }
+      if (report.stopped) break;
+    }
+  } else if (ids.length) {
     for (const id of [...new Set(ids)]) { await request(`/message/${id}`); if (report.stopped) break; }
   } else {
     let cursor;
@@ -116,6 +152,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
   const output = new URL(`${report.collectedAt.replace(/[:.]/g, '-')}.json`, cache);
   await writeFile(output, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
   console.log(JSON.stringify({ output: fileURLToPath(output), candidates: report.candidates.length, omitted: report.omitted,
+    ...(report.discoveries ? { discoveries: report.discoveries.length } : {}),
     duplicates: report.duplicates, stopped: report.stopped, attempts: report.attempts }, null, 2));
   if (report.stopped) process.exitCode = 1;
 }

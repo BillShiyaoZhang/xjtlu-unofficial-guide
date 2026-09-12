@@ -398,6 +398,12 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
     if (collections.length) {
       const collected = el('section', undefined, 'home-section collected-topics source-collection');
       collected.append(el('p', '多看一点校园', 'eyebrow'), el('h2', '从公开来源整理'), el('p', '看看校园消息和同学关心的问题。每条整理都可以继续追溯原文。', 'muted'));
+      const discussionLinks = el('div', undefined, 'category-links');
+      discussionLinks.setAttribute('role', 'group'); discussionLinks.setAttribute('aria-label', '常见讨论主题');
+      for (const query of ['研究生申请', '留学中介', '老师评价', '课程评价']) {
+        discussionLinks.append(link(query + ' →', '#/answers?' + new URLSearchParams({ view: 'list', query })));
+      }
+      collected.append(discussionLinks);
       const current = collections.filter(row => !isHistory(row));
       if (current.length) {
         const grid = el('div', undefined, 'topic-grid');

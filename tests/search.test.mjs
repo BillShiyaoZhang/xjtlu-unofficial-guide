@@ -122,3 +122,18 @@ test('collection relevance prioritizes titles, preserves ties and shares query a
   assert.deepEqual(ids(searchCollections(snapshot, config, '暑研')), ['title-match', 'title-tie', 'source-match']);
   assert.deepEqual(ids(searchCollections(snapshot, config, '暑研 准备')), ['source-match']);
 });
+
+test('common discussion vocabulary finds the imported posts and respects their catalog categories', () => {
+  for (const [queries, id, catalogTopicId] of [
+    [['申研', '申请研究生', '硕士申请'], 'collected-zhitiao-6a9d1dc70777423839934997', 'topic-careers'],
+    [['中介', '申研中介', '留学中介'], 'collected-zhitiao-6aa27b2f0777423839bd4808', 'topic-careers'],
+    [['老师评价', '教师评价', '评教'], 'collected-zhitiao-6aa41a6b0777423839c8b765', 'topic-study'],
+    [['课程评价', '课程体验', '评课'], 'collected-zhitiao-6aa1216e0777423839b22b80', 'topic-study'],
+  ]) {
+    for (const query of queries) {
+      assert.ok(ids(searchCollections(snapshot, collections, query, catalogTopicId)).includes(id), query);
+      assert.deepEqual(searchCollections(snapshot, collections, query, 'topic-housing'), []);
+    }
+    assert.equal(snapshot.answers.some(answer => answer.id === id), false);
+  }
+});

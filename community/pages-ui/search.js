@@ -1,7 +1,10 @@
 // Search intent expands vocabulary; it never changes an article's applicability.
 const normalize = value => String(value ?? '').normalize('NFKC').toLowerCase().trim();
 const vocabulary = [
-  ['申请研究生', '申请硕士', '研究生申请', '升学申请'],
+  ['申请研究生', '申请硕士', '研究生申请', '升学申请', '申研', '硕士申请'],
+  ['留学中介', '申研中介', '中介'],
+  ['老师评价', '教师评价', '评教', '授课体验'],
+  ['课程评价', '课程体验', '评课'],
   ['找导师', '研究方向', '潜在导师'],
   ['暑研', '暑期科研', 'surf'],
   ['宿舍报修', '公寓报修', '宿舍水电'],

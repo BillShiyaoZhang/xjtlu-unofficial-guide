@@ -19,6 +19,24 @@
       "observedAt": "2026-09-10T14:48:10Z",
       "observation": "再次访问时浏览器明确显示“登录后查看搜索结果”。公开搜索未获得可核验笔记正文。用户选择先继续其他公开来源，本轮暂缓小红书。",
       "nextStep": "后续用户完成正常登录或提供具体可读笔记后继续；搜索入口不作为学生经验来源。"
+    },
+    {
+      "id": "zhitiao-common-discussions-20260912",
+      "platform": "纸条",
+      "url": "https://api.zhitiaox.com/search/message/?q=%E4%B8%AD%E4%BB%8B",
+      "accessStatus": "read",
+      "observedAt": "2026-09-12T09:50:16.729Z",
+      "observation": "公开搜索与详情无需认证即可读取。10个关键词共返回138条，省略2条、跨批去重7条，得到129条线索；22条选中帖子逐个GET详情成功且未标记删除，已形成原创摘要。",
+      "nextStep": "已导入2026-09-12-discussions.json。后续可用--query有限发现线索，再以--post重读详情；不自动同步或发布。"
+    },
+    {
+      "id": "xiaohongshu-xipu-search-20260912",
+      "platform": "小红书",
+      "url": "https://www.xiaohongshu.com/search_result?keyword=%E8%A5%BF%E6%B5%A6&source=web_explore_feed&type=51",
+      "accessStatus": "unavailable",
+      "observedAt": "2026-09-12T09:57:50Z",
+      "observation": "本次公开搜索未取得笔记正文；内置浏览器实际打开西浦搜索页，明确显示“登录后查看搜索结果”。没有把搜索页、标题或第三方提到的小红书内容当成已读笔记。",
+      "nextStep": "在用户完成正常登录、或提供可公开阅读的具体笔记后再采集。当前批次使用纸条及其他公开个人经验，不收录小红书摘要。"
     }
   ]
 }
