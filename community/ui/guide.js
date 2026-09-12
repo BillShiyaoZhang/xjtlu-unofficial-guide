@@ -11,7 +11,9 @@ const create = (tag, text, className) => {
 let token = sessionStorage.getItem('guide-participant') ?? '';
 let epoch = Number(sessionStorage.getItem('guide-consent-epoch') ?? 0);
 let catalog, notice, answers = [], contextAnswers = [], links = [];
-let readerView = 'branches';
+let readerView = 'list';
+let directoryUrl = '/#answers';
+let appliedQuery = '';
 const answerHref = answer => '/answers/' + encodeURIComponent(answer.slug);
 let queryEventId = null;
 let routeGeneration = 0, searchGeneration = 0;
@@ -71,6 +73,42 @@ function saveSession() {
   $('participant-state').textContent = token ? epoch ? '已参与' : '待确认同意' : '未加入';
 }
 function option(value, text) { const node = create('option', text); node.value = value; return node; }
+function directoryParameters() {
+  const parameters = new URLSearchParams({ view: readerView });
+  const query = $('search').elements.query.value.trim();
+  if (query) parameters.set('query', query);
+  if ($('topic').value) parameters.set('topic', $('topic').value);
+  for (const input of $('scope-filters').querySelectorAll('select')) if (input.value) parameters.set('scope.' + input.name, input.value);
+  return parameters;
+}
+function restoreDirectory(parameters) {
+  readerView = parameters.get('view') === 'branches' ? 'branches' : 'list';
+  $('search').elements.query.value = (parameters.get('query') ?? '').slice(0, 500);
+  $('topic').value = [...$('topic').options].some(item => item.value === parameters.get('topic')) ? parameters.get('topic') : '';
+  for (const input of $('scope-filters').querySelectorAll('select')) {
+    const value = parameters.get('scope.' + input.name);
+    input.value = [...input.options].some(item => item.value === value) ? value : '';
+  }
+  directoryUrl = '/?' + directoryParameters() + '#answers';
+}
+function rememberDirectory() {
+  directoryUrl = '/?' + directoryParameters() + '#answers';
+  history.replaceState({}, '', directoryUrl);
+}
+async function applyDirectoryControls() {
+  rememberDirectory();
+  // A topic or view choice also applies any keyword still waiting in the input.
+  // Otherwise the URL would describe a different query from the displayed data.
+  if ($('search').elements.query.value.trim() !== appliedQuery) await refreshAnswers();
+  else renderAnswers();
+}
+async function resetSearch() {
+  $('search').reset(); $('topic').value = '';
+  for (const input of $('scope-filters').querySelectorAll('select')) input.value = '';
+  rememberDirectory();
+  await refreshAnswers();
+  $('search').elements.query.focus();
+}
 function show(view) {
   for (const section of document.querySelectorAll('.view')) section.hidden = section.id !== view;
   for (const link of document.querySelectorAll('nav a')) {
@@ -81,12 +119,19 @@ function renderAnswers() {
   const visible = answers.filter(answer => !$('topic').value || answer.topic?.id === $('topic').value);
   $('count').textContent = `${visible.length} 条答案`;
   $('answer-list').hidden = readerView !== 'list';
-  $('answer-branches').hidden = readerView !== 'branches';
+  $('answer-branches').hidden = readerView !== 'branches' || !visible.length;
   $('branches-view').setAttribute('aria-pressed', String(readerView === 'branches'));
   $('list-view').setAttribute('aria-pressed', String(readerView === 'list'));
+  $('reader-view-help').textContent = readerView === 'branches' ? '展开主题，查看不同陈述之间的关联与补充；也可以切回列表阅读摘要。' : '先读标题和摘要，找到相关资料后打开全文。';
+  const filtered = Boolean($('search').elements.query.value.trim() || $('topic').value || [...$('scope-filters').querySelectorAll('select')].some(input => input.value));
+  $('reset-search').hidden = !filtered;
+  $('answer-empty').hidden = visible.length > 0;
+  $('answer-empty').querySelector('h2').textContent = filtered ? '暂时没有找到相关资料' : '资料正在准备中';
+  $('answer-empty').querySelector('p').textContent = filtered ? '试试更短的关键词，或清空主题和适用范围后再找一次。' : '当前还没有已发布的资料。之后可以回来看看，或在关于页面了解来源与复核方式。';
+  $('empty-reset').hidden = !filtered;
+  for (const button of $('reader-topics').querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.topic === $('topic').value));
   renderBranches($('answer-branches'), { answers: withBranchAncestors([...answers, ...contextAnswers], visible), topics: catalog.topics, links, topicId: $('topic').value, scopes: catalog.scopes, answerHref, expandTopics: Boolean($('search').elements.query.value.trim()) });
   $('answer-list').replaceChildren();
-  if (!visible.length) $('answer-list').append(create('p', '暂无符合条件的可公开答案。', 'empty'));
   for (const answer of visible) {
     const item = create('article', undefined, 'answer-item');
     item.append(create('span', answer.topic?.title ?? '校园信息', 'topic-label'));
@@ -121,6 +166,7 @@ async function refreshAnswers(record = false) {
   const result = await api('/api/guide/branches?q=' + encodeURIComponent(query) + '&scope=' + encodeURIComponent(JSON.stringify(scope)), { auth: '' });
   if (generation !== searchGeneration) return;
   answers = result.answers; contextAnswers = result.contextAnswers ?? []; links = result.links;
+  appliedQuery = query.trim();
   renderAnswers();
   if (record && participant && token === participant && epoch && query.trim() && researchActive()) {
     const normalized = query.normalize('NFKC').toLocaleLowerCase('zh-CN').replace(/[\p{P}\p{S}]+/gu, ' ').replace(/\s+/g, ' ').trim();
@@ -133,6 +179,8 @@ async function detail(slug, revision, generation) {
   const answer = await api('/api/guide/answers/' + encodeURIComponent(slug) + (revision ? '?revision=' + encodeURIComponent(revision) : ''), { auth: '' });
   if (generation !== routeGeneration) return;
   const target = $('answer-detail'); target.replaceChildren(create('p', answer.topic?.title ?? '', 'eyebrow'), create('h1', answer.title));
+  $('reader-back').href = directoryUrl;
+  target.append(create('p', '先确认适用校区与信息时间，再通过每段下方的来源核对具体安排。', 'reader-detail-help'));
   const parentContext = create('p', undefined, 'supplement-parent'); parentContext.hidden = true; target.append(parentContext);
   const metadata = create('div', undefined, 'detail-meta');
   for (const text of [`第 ${answer.revisionNumber} 版`, `信息截至 ${date(answer.asOf)}`, `人工核验 ${date(answer.verifiedAt)}`, `复核期限 ${date(answer.reviewDueAt)}`, answer.reviewOwnerLabel]) if (text) metadata.append(create('span', text));
@@ -224,14 +272,22 @@ async function route() {
     const match = location.pathname.match(/^\/answers\/([^/]+)(?:\/versions\/([^/]+))?$/u);
     if (match) return await detail(decodeURIComponent(match[1]), new URLSearchParams(location.search).get('revision') ?? match[2], generation);
     const view = location.pathname === '/' ? location.hash.slice(1) || 'answers' : location.pathname.slice(1);
+    if (view === 'answers') {
+      const previous = directoryParameters().toString();
+      restoreDirectory(new URLSearchParams(location.search));
+      if (previous !== directoryParameters().toString()) await refreshAnswers();
+      if (generation !== routeGeneration) return;
+    }
     show(['answers', 'participate', 'report', 'about'].includes(view) ? view : 'answers');
     if (view === 'about' && location.hash === '#method') $('method').scrollIntoView();
     if (view === 'participate') await activity();
   } catch (error) { if (generation === routeGeneration) { show('answers'); message(error.message); } }
 }
-$('search').addEventListener('submit', event => { event.preventDefault(); action(event.target, () => refreshAnswers(true)); });
-$('topic').addEventListener('change', renderAnswers);
-for (const view of ['branches', 'list']) $(view + '-view').addEventListener('click', () => { readerView = view; renderAnswers(); });
+$('search').addEventListener('submit', event => { event.preventDefault(); rememberDirectory(); action(event.target, () => refreshAnswers(true)); });
+$('topic').addEventListener('change', () => applyDirectoryControls().catch(error => message(error.message)));
+for (const view of ['branches', 'list']) $(view + '-view').addEventListener('click', () => { readerView = view; applyDirectoryControls().catch(error => message(error.message)); });
+for (const id of ['reset-search', 'empty-reset']) $(id).addEventListener('click', () => resetSearch().catch(error => message(error.message)));
+document.querySelector('.skip-link').addEventListener('click', event => { event.preventDefault(); $('main').focus(); $('main').scrollIntoView(); });
 document.addEventListener('click', event => {
   const link = event.target.closest('#answer-branches a, #answer-detail .guide-branches a, #answer-detail .supplement-parent a');
   if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -239,7 +295,7 @@ document.addEventListener('click', event => {
   if (url.origin !== location.origin || !url.pathname.startsWith('/answers/')) return;
   event.preventDefault(); history.pushState({}, '', link.href); route();
 });
-$('scope-filters').addEventListener('change', () => refreshAnswers().catch(error => message(error.message)));
+$('scope-filters').addEventListener('change', () => { rememberDirectory(); refreshAnswers().catch(error => message(error.message)); });
 $('redeem').addEventListener('submit', event => {
   event.preventDefault(); action(event.target, async () => {
     const result = await api('/api/participants/redeem', { data: { token: new FormData(event.target).get('token').trim() }, auth: '' });
@@ -306,6 +362,12 @@ window.addEventListener('hashchange', route); window.addEventListener('popstate'
 try {
   [catalog, notice] = await Promise.all([api('/api/guide/catalog', { auth: '' }), api('/api/guide/notice', { auth: '' })]);
   for (const topic of catalog.topics.filter(item => item.status !== 'hidden')) $('topic').append(option(topic.id, topic.titleZh));
+  for (const topic of catalog.topics.filter(item => item.status !== 'hidden').slice(0, 6)) {
+    const button = create('button', topic.titleZh, 'secondary'); button.type = 'button'; button.dataset.topic = topic.id;
+    button.addEventListener('click', () => { $('topic').value = topic.id; $('topic').focus(); applyDirectoryControls().catch(error => message(error.message)); });
+    $('reader-topics').append(button);
+  }
+  $('reader-topics').hidden = !$('reader-topics').children.length;
   for (const dimension of [...new Set(catalog.scopes.map(scope => scope.dimension))]) {
     const label = create('label', { campus: '校区', audience: '人群', academic_year: '入学届' }[dimension] ?? dimension);
     const select = create('select'); select.name = dimension; select.append(option('', '不限'));
@@ -319,5 +381,8 @@ try {
   intakeFields();
   await refreshAnswers();
   for (const answer of answers) $('report-card').append(option(answer.id, answer.title));
+  const initialDirectory = directoryParameters().toString();
+  restoreDirectory(location.pathname === '/' || location.pathname === '/answers' ? new URLSearchParams(location.search) : new URLSearchParams());
+  if (initialDirectory !== directoryParameters().toString()) await refreshAnswers();
   await route();
 } catch (error) { message(error.message); }

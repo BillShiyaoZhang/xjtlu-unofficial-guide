@@ -23,6 +23,110 @@ const timestamp = value => {
 };
 const topicHref = topic => '#/topics/' + encodeURIComponent(topic.id);
 const articleHref = (answer, topic) => '#/answers/' + encodeURIComponent(answer.id) + (topic ? '?' + new URLSearchParams({ fromTopic: topic.id }) : '');
+const directoryHref = topic => '#/answers?' + new URLSearchParams({ view: 'list', ...(topic ? { topic } : {}) });
+// A small editorial reading order, resolved against the current public snapshot.
+// Unpublished or withdrawn articles can never become a suggested link.
+const journeys = [
+  { id: 'arrival', title: '刚到西浦', description: '账号、到校、住宿，先安顿下来', heading: '把第一周安排明白',
+    note: '从基本入口开始，再慢慢熟悉校园。', topics: ['topic-arrival', 'topic-systems', 'topic-housing'],
+    articles: ['handbook-first-week-action-list', 'handbook-arrival-system-bookmarks', 'handbook-life-move-in-checklist'] },
+  { id: 'daily', title: '处理日常', description: '找教室、报修、办事，少绕一点路', heading: '眼前的小问题，从这里找线索',
+    note: '先找到对应的服务，再核对校区和办理安排。', topics: ['topic-services', 'topic-campus', 'topic-housing'],
+    articles: ['handbook-arrival-onestop', 'handbook-life-campus-map', 'handbook-life-sip-dorm-repair'] },
+  { id: 'explore', title: '探索机会', description: '社团、交换、科研，发现新的可能', heading: '校园里，还有这些可能',
+    note: '选一个感兴趣的方向，看看从哪里开始。', topics: ['topic-clubs', 'topic-exchange', 'topic-research'],
+    articles: ['handbook-life-clubs-discovery', 'handbook-semester-exchange-plan', 'handbook-surf-research-start'] },
+];
+let activeJourney = 'arrival';
+
+function journeyAnswers(snapshot, journey) {
+  const selected = journey.articles.map(id => snapshot.answers.find(answer => answer.id === id)).filter(Boolean);
+  for (const answer of snapshot.answers) {
+    if (selected.length >= 3) break;
+    if (journey.topics.includes(answer.topic?.id) && !selected.includes(answer)) selected.push(answer);
+  }
+  return selected;
+}
+
+function discoveryStart(target, snapshot) {
+  const intro = el('div', undefined, 'home-intro');
+  const copy = el('div', undefined, 'home-intro-copy');
+  copy.append(el('p', '一份可以一起完善的校园指南', 'eyebrow'), el('h1', '在西浦，\n从一个小问题开始。'));
+  copy.append(el('p', '找办事入口，读同学经验，发现校园里的更多可能。还没有具体问题，也可以从下面的一条路线逛起。', 'home-description'));
+  const search = el('form', undefined, 'home-search'); search.setAttribute('role', 'search');
+  const label = el('label', '你想了解什么？'); label.htmlFor = 'home-query';
+  const input = el('input'); input.id = 'home-query'; input.type = 'search'; input.placeholder = '搜索宿舍、课程、校园服务…'; input.maxLength = 200;
+  const row = el('div', undefined, 'search-row'); const submit = el('button', '找信息'); submit.type = 'submit'; row.append(input, submit); search.append(label, row);
+  search.addEventListener('submit', event => { event.preventDefault(); location.hash = '#/answers?' + new URLSearchParams({ view: 'list', ...(input.value.trim() ? { query: input.value.trim() } : {}) }); });
+  const examples = el('div', undefined, 'search-examples'); examples.append(el('span', '试着搜：'));
+  for (const query of ['宿舍', '选课', '地图']) examples.append(link(query + ' →', '#/answers?' + new URLSearchParams({ view: 'list', query })));
+  copy.append(search, examples);
+  const start = el('aside', undefined, 'home-start-card'); start.setAttribute('aria-label', '第一次来，从这里开始');
+  start.append(el('p', '第一次来 · 从这里开始', 'eyebrow'), el('h2', '先把校园生活安排明白'));
+  start.append(el('p', '不用一次读完。选一篇，解决一个小问题。', 'start-description'));
+  const first = snapshot.answers.find(answer => answer.id === 'handbook-first-week-action-list')
+    ?? journeyAnswers(snapshot, journeys[0])[0] ?? snapshot.answers[0];
+  if (first) {
+    const featured = link('', articleHref(first) + '?from=discover', 'start-reading');
+    featured.append(el('span', '推荐起点', 'start-label'), el('strong', first.title), el('span', '开始阅读 →', 'start-action'));
+    start.append(featured);
+  } else start.append(el('p', '资料正在准备中，可以先看看已有话题。', 'start-description'));
+  const steps = el('ol', undefined, 'reading-steps');
+  for (const [title, text] of [['找一个问题', '从当前需要出发'], ['核对来源', '留意校区、时间与原文'], ['留下一点经验', '有补充时，再来分享']]) {
+    const item = el('li'); item.append(el('strong', title), el('span', text)); steps.append(item);
+  }
+  start.append(steps); intro.append(copy, start); target.append(intro);
+
+  const section = el('section', undefined, 'home-section journey-section');
+  const heading = el('div', undefined, 'section-title');
+  heading.append(el('h2', '你现在想做什么？'), link('浏览全部资料 →', directoryHref())); section.append(heading);
+  const choices = el('div', undefined, 'journey-options'); choices.setAttribute('role', 'group'); choices.setAttribute('aria-label', '选择探索路线');
+  const results = el('div', undefined, 'journey-results'); results.id = 'journey-results';
+  const status = el('p', '', 'visually-hidden'); status.setAttribute('role', 'status');
+  function selectJourney(journey, announce = true) {
+    activeJourney = journey.id;
+    for (const choice of choices.children) choice.setAttribute('aria-pressed', String(choice.dataset.journey === journey.id));
+    results.replaceChildren();
+    const caption = el('div', undefined, 'journey-caption'); caption.append(el('h3', journey.heading), el('p', journey.note)); results.append(caption);
+    const answers = journeyAnswers(snapshot, journey);
+    const grid = el('div', undefined, 'journey-grid');
+    answers.forEach((answer, index) => {
+      const card = link('', articleHref(answer) + '?from=discover', 'journey-article');
+      const top = el('div', undefined, 'journey-article-top'); top.append(el('span', `0${index + 1}`, 'journey-number'), el('span', answer.topic?.title ?? '校园资料', 'topic-label'));
+      card.append(top, el('h4', answer.title), el('p', answer.summary || '打开资料，查看具体说明与原始来源。'), el('span', '读这篇 →', 'text-action')); grid.append(card);
+    });
+    if (!answers.length) grid.append(el('p', '这条路线的资料正在准备中。可以换一条路线，或看看全部资料。', 'muted'));
+    results.append(grid);
+    const related = el('div', undefined, 'journey-more'); related.append(el('span', '还可以看看'));
+    for (const id of journey.topics) {
+      const topic = snapshot.catalog.topics.find(topic => topic.id === id);
+      if (topic) related.append(link(topic.titleZh + ' →', directoryHref(id)));
+    }
+    results.append(related);
+    if (announce) status.textContent = `已选择${journey.title}，推荐 ${answers.length} 篇资料。`;
+  }
+  for (const [index, journey] of journeys.entries()) {
+    const choice = button('', () => selectJourney(journey), 'journey-option');
+    choice.dataset.journey = journey.id; choice.setAttribute('aria-controls', results.id);
+    choice.append(el('span', `0${index + 1}`, 'journey-index'), el('strong', journey.title), el('span', journey.description)); choices.append(choice);
+  }
+  section.append(choices, results, status); selectJourney(journeys.find(journey => journey.id === activeJourney) ?? journeys[0], false); target.append(section);
+
+  const browse = el('section', undefined, 'home-section topic-browser');
+  const browseHeading = el('div', undefined, 'section-title');
+  browseHeading.append(el('h2', '或者，从一个主题逛起'), el('span', `${snapshot.answers.length} 篇资料 · 按主题整理`, 'muted')); browse.append(browseHeading);
+  const categories = el('div', undefined, 'category-links');
+  const allTopics = catalogTopicCards(snapshot);
+  for (const topic of allTopics.slice(0, 8)) categories.append(link(topic.title, directoryHref(topic.id)));
+  browse.append(categories);
+  if (allTopics.length > 8) {
+    const more = el('details', undefined, 'more-topics'); more.append(el('summary', `展开全部 ${allTopics.length} 个主题`));
+    const extra = el('div', undefined, 'category-links');
+    for (const topic of allTopics.slice(8)) extra.append(link(topic.title, directoryHref(topic.id)));
+    more.append(extra); browse.append(more);
+  }
+  target.append(browse);
+}
 export const updatesTopic = {
   id: 'campus-updates', catalogTopicId: 'topic-campus', title: '校园里，有什么新消息？',
   prompt: '一次活动、临时变化，或你刚刚遇到的校园情况。说清发生时间和地点，后续有变化也可以回来补充。', kind: 'question', editorial: true,
@@ -279,28 +383,21 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
   }
 
   if (!topic) {
-    const intro = el('div', undefined, 'home-intro');
-    intro.append(el('p', '西浦的消息与经验，一起留下来', 'eyebrow'), el('h1', '你知道的一点，\n可能正好帮到同学。'));
-    intro.append(el('p', '看看校园近况，找找已有整理。遇到熟悉的问题，留一句自己的经历就好。', 'home-description'));
-    const search = el('form', undefined, 'home-search'); search.setAttribute('role', 'search');
-    const label = el('label', '想了解学校的什么？'); label.htmlFor = 'home-query';
-    const input = el('input'); input.id = 'home-query'; input.type = 'search'; input.placeholder = '试试「暑研」「宿舍报修」「申请研究生」'; input.maxLength = 200;
-    const row = el('div', undefined, 'search-row'); const submit = el('button', '找信息'); submit.type = 'submit'; row.append(input, submit); search.append(label, row);
-    search.addEventListener('submit', event => { event.preventDefault(); location.hash = '#/answers?' + new URLSearchParams({ view: 'list', query: input.value }); });
-    intro.append(search); target.append(intro);
+    discoveryStart(target, snapshot);
     const cards = topicCards(snapshot, config);
     const featured = cards.filter(row => row.kind === 'question' && !row.collection);
     const section = el('section', undefined, 'home-section');
-    const heading = el('div', undefined, 'section-title'); heading.append(el('h2', '这些问题，想听听你的经历'), link('找已有整理 →', '#/answers?view=list')); section.append(heading);
+    section.classList.add('participation-section');
+    const heading = el('div', undefined, 'section-title'); heading.append(el('h2', '你知道的一点，也能帮到同学'), link('分享一段经验 →', '#/share')); section.append(heading);
+    section.append(el('p', '遇到熟悉的话题，留一句经历就好。阅读无需登录；发布分享时，在 GitHub 确认。', 'muted'));
     if (featured.length) { const grid = el('div', undefined, 'topic-grid'); featured.forEach(row => grid.append(editorialCard(row, signal))); section.append(grid); }
     else section.append(el('p', '共建问题正在准备中，也可以从资料目录找到话题，补充自己的经历。', 'muted'));
-    target.append(section);
     const isHistory = row => row.kind === 'event' ? eventPresentation(row.event).history
       : row.kind === 'incident' ? incidentPresentation(row.incident).history : false;
     const collections = cards.filter(row => row.collection);
     if (collections.length) {
       const collected = el('section', undefined, 'home-section collected-topics source-collection');
-      collected.append(el('h2', '从公开来源整理'), el('p', '校园活动、办事消息与社区经验，保留出处和读取状态。欢迎带着自己的情况补充。', 'muted'));
+      collected.append(el('p', '多看一点校园', 'eyebrow'), el('h2', '从公开来源整理'), el('p', '看看校园消息和同学关心的问题。每条整理都可以继续追溯原文。', 'muted'));
       const current = collections.filter(row => !isHistory(row));
       if (current.length) {
         const grid = el('div', undefined, 'topic-grid');
@@ -333,23 +430,26 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
       const grid = el('div', undefined, 'topic-grid'); historical.forEach(row => grid.append(editorialCard(row, signal))); history.append(grid); updates.append(history);
     }
     const feed = el('div'); updates.append(feed); liveFeed(feed, { preview: true }); target.append(updates);
-    const browse = el('section', undefined, 'home-section'); browse.append(el('h2', '按主题找资料'));
-    const categories = el('div', undefined, 'category-links');
-    for (const row of catalogTopicCards(snapshot)) categories.append(link(row.title, topicHref(row)));
-    browse.append(categories); target.append(browse);
+    target.append(section);
   } else {
-    target.append(link('← 回到校园共建', '#/discover', 'back'));
+    target.append(link('← 回到开始探索', '#/discover', 'back'));
     const stage = el('p', topic.collection ? '公开来源整理 · 待人工核验' : topic.editorial ? '编辑发起的共建话题' : '资料与公开讨论', 'eyebrow topic-stage');
     target.append(stage, el('h1', topic.title), el('p', topic.prompt, 'topic-intro'));
     stateBlock(topic, target, { signal });
-    sourceBlock(topic, target);
     if (topic.createdAt) target.append(el('p', `话题发布于 ${timestamp(topic.createdAt)}（北京时间）`, 'muted'));
     const topActions = el('div', undefined, 'topic-jumps');
-    const composerTarget = el('section'); composerTarget.id = 'topic-composer';
-    const composer = mountComposer(composerTarget, { topic });
-    topActions.append(button(topic.kind === 'event' ? '补充活动消息 / 参与经历' : topic.kind === 'incident' ? '我知道后续情况' : '我也说一句', () => composer.focus(), ''));
+    const composerTarget = el('details', undefined, 'topic-composer-disclosure'); composerTarget.id = 'topic-composer';
+    composerTarget.append(el('summary', '分享我的经历'));
+    const composerBody = el('div'); composerTarget.append(composerBody);
+    const composer = mountComposer(composerBody, { topic });
+    topActions.append(button(topic.kind === 'event' ? '补充活动消息 / 参与经历' : topic.kind === 'incident' ? '我知道后续情况' : '我也说一句', () => { composerTarget.open = true; composer.focus(); }, 'secondary'));
     topActions.append(button('看原始回答 ↓', () => { const feed = target.querySelector('.topic-discussion'); feed.tabIndex = -1; feed.focus(); feed.scrollIntoView({ block: 'start' }); }));
+    topActions.prepend(button(topic.collection ? '看整理与来源 ↓' : '先看相关资料 ↓', () => {
+      const section = target.querySelector(topic.collection ? '.topic-sources' : '.topic-summary');
+      if (section) { section.tabIndex = -1; section.focus({ preventScroll: true }); section.scrollIntoView({ block: 'start' }); }
+    }, ''));
     target.append(topActions);
+    sourceBlock(topic, target);
     // A catalog relationship is not evidence of editorial adoption. Show those materials separately.
     const related = snapshot.answers.filter(answer => answer.topic?.id === topic.catalogTopicId);
     const summary = el('section', undefined, 'topic-summary');
@@ -398,15 +498,12 @@ export function mountCommunity(target, { snapshot, config, topicId, parameters =
     function arrange(posts) {
       const hasSummary = renderSummary(posts, false);
       target.dataset.stage = hasSummary ? 'summarized' : posts.length ? 'discussing' : 'inviting';
-      // Never move the input while someone is writing. On initial reading, show the
-      // concrete next action for the evidence actually available in this topic.
+      // Keep reading first and the layout stable while discussion loads.
+      // Delay replacing summaries when their links or a composer have focus.
       if (protectingInput()) { pendingPosts = posts; return; }
       pendingPosts = undefined;
       renderSummary(posts);
       const focused = document.activeElement, scrollY = window.scrollY;
-      if (hasSummary) topActions.after(summary, discussion, composerTarget);
-      else if (posts.length) topActions.after(discussion, composerTarget, summary);
-      else topActions.after(composerTarget, discussion, summary);
       if (focused?.isConnected && focused !== document.body) focused.focus({ preventScroll: true });
       window.scrollTo({ top: scrollY, behavior: 'instant' });
     }

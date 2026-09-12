@@ -16,7 +16,7 @@
   <a class="skip-link" href="#main">跳到正文</a>
   <header>
     <a class="brand" href="#/discover"><img src="./brand.svg" width="40" height="40" alt=""><span>西浦非官方指南</span></a>
-    <nav aria-label="主导航"><a id="discover-nav" href="#/discover">校园共建</a><a id="answers-nav" href="#/answers?view=list">查资料</a><a id="contribute-nav" href="#/share">说一句</a><a id="about-nav" href="#/about">关于</a></nav>
+    <nav aria-label="主导航"><a id="discover-nav" href="#/discover">开始探索</a><a id="answers-nav" href="#/answers?view=list">查资料</a><a id="contribute-nav" href="#/share">分享经验</a><a id="about-nav" href="#/about">关于</a></nav>
   </header>
   <div class="edition"><span id="edition-label">校园资料与共同记录</span><span id="edition-note">非学校官方信息</span></div>
   <main id="main" tabindex="-1">
@@ -25,24 +25,31 @@
     <section id="discover-view" class="view" hidden><div id="community-home"></div></section>
     <section id="topic-view" class="view" hidden><div id="community-topic"></div></section>
     <section id="share-view" class="view" hidden>
-      <p class="eyebrow">消息、经历、追问，都可以</p><h1>你想补充哪方面？</h1>
-      <p>不用写成完整攻略。选个话题，把你知道的一点先留下来。</p>
+      <a class="back" href="#/discover">← 回到开始探索</a>
+      <p class="eyebrow">消息、经历、追问，都可以</p><h1>分享一点你的校园经验</h1>
+      <p>从一个话题开始，写下你遇到的事或发现的小窍门。几句话就可以。</p>
+      <p class="share-steps">选话题 → 写下经历 → 到 GitHub 核对并发布</p>
+      <p class="muted">可以先写草稿。发布时需要 GitHub 账号，你的用户名与正文会公开。</p>
       <label for="share-topic">选择话题</label><select id="share-topic"></select><div id="share-composer"></div>
       <p class="muted"><a href="#/contribute">需要按文章版本提交补充或更正？使用详细投稿表</a></p>
     </section>
     <section id="answers-view" class="view" aria-labelledby="directory-title" hidden>
-      <div class="section-title"><h1 id="directory-title">查找已有整理</h1><span id="count" class="muted" aria-live="polite"></span></div>
-      <form id="search" role="search"><label class="search-label" for="query">查找校园信息</label><div class="search-row"><input id="query" name="query" type="search" autocomplete="off" maxlength="200" placeholder="搜索答案、主题或来源"><button type="submit">搜索</button></div></form>
-      <div class="filters"><label>主题<select id="topic"><option value="">全部主题</option></select></label><p id="topic-description" class="muted"></p></div>
-      <div class="directory-display" role="group" aria-label="目录显示方式"><button id="branches-mode" type="button" aria-pressed="true" aria-controls="directory-branches">分支图</button><button id="list-mode" type="button" aria-pressed="false" aria-controls="answer-list">列表</button></div>
-      <p id="branches-description" class="muted">展开话题，阅读不同陈述及其补充信息。</p>
-      <div id="directory-branches"></div>
-      <div id="answer-list" class="answer-list" hidden></div>
+      <p class="eyebrow">查资料</p>
+      <div class="section-title"><h1 id="directory-title">你想了解哪件事？</h1><span id="count" class="muted" aria-live="polite"></span></div>
+      <p class="directory-intro">搜一个关键词，或选一个主题慢慢看。点开文章后，可以继续查看原始来源和相关资料。</p>
+      <form id="search" role="search"><label class="search-label" for="query">搜索校园资料</label><div class="search-row"><input id="query" name="query" type="search" autocomplete="off" maxlength="200" placeholder="例如：宿舍、选课、地图" aria-describedby="search-examples"><button type="submit">搜索</button></div></form>
+      <div id="search-examples" class="search-examples"><span>试着搜</span><button type="button" data-search-example="宿舍">宿舍</button><button type="button" data-search-example="选课">选课</button><button type="button" data-search-example="地图">地图</button></div>
+      <div class="filters"><label>按主题浏览<select id="topic"><option value="">全部主题</option></select></label><p id="topic-description" class="muted"></p><button id="reset-filters" type="button" class="secondary" hidden>清除筛选</button></div>
+      <div class="directory-toolbar"><p id="directory-context" class="muted"></p><div class="directory-display" role="group" aria-label="目录显示方式"><button id="list-mode" type="button" aria-pressed="true" aria-controls="answer-list">列表</button><button id="branches-mode" type="button" aria-pressed="false" aria-controls="directory-branches">分支图</button></div></div>
+      <p id="branches-description" class="muted" hidden>想了解资料之间的联系？展开主题，查看不同陈述，以及每条信息的补充与分支。</p>
+      <div id="directory-branches" hidden></div>
+      <div id="answer-list" class="answer-list"></div>
+      <section id="directory-empty" class="directory-empty" aria-labelledby="directory-empty-title" hidden></section>
     </section>
     <section id="detail-view" class="view" hidden>
-      <a class="back" id="back-to-list" href="#/answers">返回答案目录</a>
+      <a class="back" id="back-to-list" href="#/answers">← 返回资料目录</a>
       <article id="answer-detail"></article>
-      <section class="related" aria-labelledby="related-branches-title"><h2 id="related-branches-title">同话题分支</h2><p class="muted">查看同话题的不同陈述及其补充信息，也可继续补充任一条信息。</p><div id="answer-branches"></div></section>
+      <section class="related" aria-labelledby="related-branches-title"><h2 id="related-branches-title">查看这个主题的资料关系</h2><p class="muted">分支图展示同主题的不同陈述及其补充信息。点开另一条继续阅读，也可补充任一条信息。</p><div id="answer-branches"></div></section>
     </section>
     <section id="contribute-view" class="view" aria-labelledby="contribute-title" hidden>
       <p class="eyebrow">一起完善手册</p><h1 id="contribute-title">补充信息</h1>
@@ -87,8 +94,9 @@
       <p>材料来源分为学校官方（学校官网及学校、部门、学院公众号）、用户提供、网络资料（包括商业公众号）。来源类别与 AI 整理、人工核验状态分别标注；学校官方来源不代表本指南是官方发布。</p>
       <h2>公开快照</h2><p id="about-snapshot-description"></p>
       <dl class="snapshot-info"><dt>快照生成时间</dt><dd id="about-generated-at"></dd><dt>项目</dt><dd><a href="https://github.com/BillShiyaoZhang/xjtlu-unofficial-guide" target="_blank" rel="noopener noreferrer">xjtlu-unofficial-guide</a></dd></dl>
+      <div class="page-next"><h2>从你关心的一件事开始</h2><p>去探索常见校园场景，或直接查找资料。发现缺漏时，也欢迎留下自己的经历。</p><div class="contribution-actions"><a class="contribution-link" href="#/discover">开始探索 →</a><a href="#/answers?view=list">查找校园资料</a></div></div>
     </section>
-    <section id="missing-view" class="view" hidden><h1>未找到这条公开答案</h1><p class="muted">该内容不在当前公开快照中。</p><a href="#/answers">返回答案目录</a></section>
+    <section id="missing-view" class="view" hidden><h1>未找到这条公开答案</h1><p class="muted">该内容不在当前公开快照中。可以在目录里搜索文章关键词，或从校园场景重新探索。</p><div class="contribution-actions"><a class="contribution-link" href="#/answers?view=list">去资料目录查找</a><a href="#/discover">回到开始探索</a></div></section>
   </main>
   <footer><span>独立项目 · 非学校官方渠道</span><span id="generated-at"></span></footer>
 </body>

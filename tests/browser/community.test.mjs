@@ -108,6 +108,175 @@ async function fixture(t, { data = site.data, config = site.config, api = () => 
 const waitFeed = (page, text) => page.locator('.view:not([hidden]) .feed-status').filter({ hasText: text }).waitFor();
 const assertFits = async page => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
 
+const journeyLinks = page => page.locator('#journey-results .journey-article[href], #journey-results .journey-article a[href]');
+const answerIdFromHref = href => decodeURIComponent(href.split('?')[0].replace(/^#\/answers\//u, ''));
+async function assertRealAnswerLinks(links, data = site.data) {
+  const hrefs = await links.evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
+  const publishedIds = new Set(data.answers.map(answer => answer.id));
+  for (const href of hrefs) {
+    assert.match(href, /^#\/answers\/[^/?]+(?:\?|$)/u, 'recommendations must open an article');
+    assert.equal(publishedIds.has(answerIdFromHref(href)), true, 'recommendations must come from the loaded public snapshot');
+  }
+  assert.equal(new Set(hrefs).size, hrefs.length, 'a recommendation list must not repeat an article');
+  return hrefs;
+}
+
+test('first-time readers can choose three guided journeys and keep their place when returning from an article', async t => {
+  for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
+    const { page, goto } = await fixture(t, { viewport });
+    await goto('');
+    await page.locator('#discover-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('.home-search').isVisible(), true);
+    const choices = page.locator('.journey-options button');
+    assert.equal(await choices.count(), 3);
+    assert.equal(await choices.filter({ hasText: '刚到西浦' }).getAttribute('aria-pressed'), 'true');
+    const starter = page.locator('.home-start-card a[href^="#/answers/"]');
+    assert.equal(await starter.count(), 1);
+    const [starterHref] = await assertRealAnswerLinks(starter);
+    assert.equal(answerIdFromHref(starterHref), 'handbook-first-week-action-list');
+    const selections = [];
+    for (const name of ['刚到西浦', '处理日常', '探索机会']) {
+      const choice = choices.filter({ hasText: name });
+      await choice.focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await page.locator('.journey-options button[aria-pressed="true"]').count(), 1);
+      assert.equal(await choice.getAttribute('aria-pressed'), 'true');
+      assert.equal(await journeyLinks(page).count(), 3);
+      const hrefs = await assertRealAnswerLinks(journeyLinks(page));
+      selections.push(JSON.stringify(hrefs));
+      assert.equal(await choice.evaluate(node => node === document.activeElement), true, 'choosing a journey must keep keyboard focus on the choice');
+      await assertFits(page);
+    }
+    assert.equal(new Set(selections).size, 3, 'each journey should recommend a different reading path');
+    const href = await journeyLinks(page).first().getAttribute('href');
+    await journeyLinks(page).first().click();
+    await page.locator('#detail-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#answer-detail h1').innerText(), site.data.answers.find(answer => answer.id === answerIdFromHref(href)).title);
+    assert.equal(await page.locator('#back-to-list').getAttribute('href'), '#/discover');
+    const next = page.locator('.reader-next-item h3 a').first();
+    if (await next.count()) {
+      assert.equal(new URLSearchParams((await next.getAttribute('href')).split('?')[1]).get('from'), 'discover');
+      await next.click();
+      await page.locator('#detail-view').waitFor({ state: 'visible' });
+      assert.equal(await page.locator('#back-to-list').getAttribute('href'), '#/discover');
+    }
+    await page.locator('#back-to-list').click();
+    await page.locator('#discover-view').waitFor({ state: 'visible' });
+    assert.equal(await choices.filter({ hasText: '探索机会' }).getAttribute('aria-pressed'), 'true');
+    assert.deepEqual(await assertRealAnswerLinks(journeyLinks(page)), JSON.parse(selections[2]));
+  }
+});
+
+test('home search examples open real matching articles in the directory without typing', async t => {
+  const { page, goto } = await fixture(t, { viewport: { width: 390, height: 844 } });
+  for (const query of ['宿舍', '选课', '地图']) {
+    await goto('#/discover');
+    const example = page.locator('#community-home .search-examples a').filter({ hasText: query });
+    assert.equal(await example.count(), 1);
+    await example.click();
+    await page.locator('#answers-view').waitFor({ state: 'visible' });
+    assert.equal(await page.locator('#query').inputValue(), query);
+    assert.equal(await page.locator('#list-mode').getAttribute('aria-pressed'), 'true');
+    const results = page.locator('#answer-list .answer-item > a');
+    assert.ok(await results.count() > 0, `the suggested query ${query} must return published content`);
+    await assertRealAnswerLinks(results);
+    await assertFits(page);
+  }
+});
+
+test('guided entry points use available articles when the usual first-week article is absent', async t => {
+  const data = structuredClone(site.data);
+  data.answers = data.answers.filter(answer => answer.id !== 'handbook-first-week-action-list').slice(0, 2);
+  const { page, goto } = await fixture(t, { data });
+  await goto('#/discover');
+  const starter = page.locator('.home-start-card a[href^="#/answers/"]');
+  assert.equal(await starter.count(), 1);
+  await assertRealAnswerLinks(starter, data);
+  for (const choice of await page.locator('.journey-options button').all()) {
+    await choice.click();
+    await assertRealAnswerLinks(journeyLinks(page), data);
+    assert.ok(await journeyLinks(page).count() <= data.answers.length);
+  }
+});
+
+test('directory starts as a readable list and offers recovery from unsuccessful searches and missing articles', async t => {
+  const { page, goto } = await fixture(t, { viewport: { width: 390, height: 844 } });
+  await goto('#/answers');
+  assert.equal(await page.locator('#list-mode').getAttribute('aria-pressed'), 'true');
+  assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'false');
+  assert.equal(await page.locator('#directory-branches').isVisible(), false);
+  assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.length);
+  assert.equal(await page.locator('#reset-filters').isVisible(), false);
+  await page.locator('#search-examples button').filter({ hasText: '宿舍' }).click();
+  assert.equal(await page.locator('#query').inputValue(), '宿舍');
+  assert.ok(await page.locator('#answer-list .answer-item').count() > 0);
+  await page.locator('#topic').selectOption('topic-library');
+  await page.locator('#query').fill('synthetic-unmatched-query-938471');
+  assert.equal(await page.locator('#answer-list .answer-item').count(), 0);
+  assert.equal(await page.locator('#directory-empty').isVisible(), true);
+  assert.equal(await page.locator('#directory-empty a[href="#/discover"]').isVisible(), true);
+  assert.equal(await page.locator('#directory-empty a[href="#/share"]').isVisible(), true);
+  await page.locator('#directory-empty').getByRole('button', { name: '清除筛选，浏览全部资料', exact: true }).click();
+  assert.equal(await page.locator('#query').inputValue(), '');
+  assert.equal(await page.locator('#topic').inputValue(), '');
+  assert.equal(await page.locator('#directory-empty').isVisible(), false);
+  assert.equal(await page.locator('#reset-filters').isVisible(), false);
+  assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.length);
+  await assertFits(page);
+  await page.locator('#branches-mode').click();
+  await page.locator('#query').fill('synthetic-unmatched-query-938471');
+  assert.equal(await page.locator('#directory-empty').isVisible(), true);
+  await page.locator('#reset-filters').click();
+  assert.equal(await page.locator('#query').inputValue(), '');
+  assert.equal(await page.locator('#branches-mode').getAttribute('aria-pressed'), 'true', 'clearing filters should preserve the chosen display');
+  assert.equal(await page.locator('#directory-branches').isVisible(), true);
+  assert.equal(await page.locator('#directory-empty').isVisible(), false);
+  await page.locator('#search-examples button').filter({ hasText: '地图' }).click();
+  assert.equal(await page.locator('#query').inputValue(), '地图');
+  assert.equal(await page.locator('#list-mode').getAttribute('aria-pressed'), 'true', 'a suggested search should show immediately readable results');
+  assert.equal(await page.locator('#query').evaluate(node => node === document.activeElement), true);
+  await goto('#/answers/synthetic-missing-article');
+  await page.locator('#missing-view').waitFor({ state: 'visible' });
+  await page.locator('#missing-view a[href="#/answers?view=list"]').click();
+  await page.locator('#answers-view').waitFor({ state: 'visible' });
+  assert.equal(await page.locator('#answer-list .answer-item').count(), site.data.answers.length);
+  await assertFits(page);
+});
+
+test('article navigation exposes sources, real next reads and an optional draft without losing the article route', async t => {
+  const answer = site.data.answers.find(row => row.id === 'handbook-first-week-action-list');
+  const { page, goto } = await fixture(t, { viewport: { width: 390, height: 844 } });
+  await goto(`#/answers/${answer.id}?view=list`);
+  const articleUrl = page.url();
+  assert.equal(await page.locator('#reader-share').getAttribute('open'), null);
+  assert.equal(await page.locator('#reader-share .quick-contribution').count(), 0, 'reading should not mount the sharing form until requested');
+  for (const [name, id] of [['正文', 'reader-body'], ['来源说明', 'reader-evidence'], ['继续阅读', 'reader-next']]) {
+    await page.locator('.reader-navigation').getByRole('button', { name, exact: true }).click();
+    assert.equal(await page.locator(`#${id}`).evaluate(node => node === document.activeElement), true);
+    assert.equal(page.url(), articleUrl, 'section navigation must not replace the article route');
+  }
+  const nextLinks = page.locator('.reader-next-item h3 a');
+  const nextHrefs = await assertRealAnswerLinks(nextLinks);
+  assert.ok(nextHrefs.length > 0 && nextHrefs.length <= 3);
+  for (const href of nextHrefs) {
+    const next = site.data.answers.find(row => row.id === answerIdFromHref(href));
+    assert.notEqual(next.id, answer.id);
+    assert.equal(next.topic.id, answer.topic.id);
+  }
+  await page.locator('.reader-source-action').click();
+  assert.equal(await page.locator('.sentence-sources:not([open])').count(), 0);
+  assert.equal(page.url(), articleUrl);
+  assert.equal(await page.locator('.sentence-sources > summary').first().evaluate(node => node === document.activeElement), true);
+  await page.locator('#reader-share > summary').click();
+  const input = page.locator('#reader-share textarea[name="content"]');
+  await input.fill('在阅读完第一周资料后补充的合成经历。');
+  await page.locator('#reader-share > summary').click();
+  await page.locator('#reader-share > summary').click();
+  assert.equal(await input.inputValue(), '在阅读完第一周资料后补充的合成经历。');
+  assert.equal(await page.locator('#reader-share .quick-contribution').count(), 1, 'reopening the sharing section should reuse its draft');
+  await assertFits(page);
+});
+
 test('home exposes three real editorial questions and allows mobile and keyboard participation without fabricated discussion', async t => {
   for (const viewport of [{ width: 1280, height: 900 }, { width: 390, height: 844 }]) {
     const { page, goto } = await fixture(t, { viewport });
@@ -311,7 +480,8 @@ test('an already-open event page removes its registration CTA across the actual 
   assert.match(await page.locator('.event-state .state-label').innerText(), /按计划安排/u);
 });
 
-async function expectTopicLayout(page, stage, order) {
+async function expectTopicLayout(page, stage) {
+  const order = ['summary', 'discussion', 'composer'];
   await page.waitForFunction(({ stage, order }) => {
     const target = document.querySelector('#community-topic');
     const actual = [...target.children].flatMap(node => node.id === 'topic-composer' ? ['composer']
@@ -320,7 +490,7 @@ async function expectTopicLayout(page, stage, order) {
   }, { stage, order });
 }
 
-test('regression: refresh moves between inviting, discussing and summarized layouts without losing the draft or refresh focus', async t => {
+test('regression: refresh preserves reading order, the expanded composer, its draft and refresh focus across all stages', async t => {
   const topic = site.config.topics[0], firstPost = issue(61, topic.id), citedPost = issue(62, topic.id);
   const data = structuredClone(site.data);
   data.answers = [summary('synthetic-refresh-summary', '刷新后出现的整理', citedPost.html_url)];
@@ -328,21 +498,24 @@ test('regression: refresh moves between inviting, discussing and summarized layo
   const { page, goto } = await fixture(t, { data, api: () => ({ body: posts }) });
   await goto(`#/topics/${topic.id}`);
   await waitFeed(page, '还没有读到这个话题的公开投稿');
-  await expectTopicLayout(page, 'inviting', ['composer', 'discussion', 'summary']);
+  await expectTopicLayout(page, 'inviting');
+  assert.equal(await page.locator('#topic-composer').getAttribute('open'), null);
+  await page.locator('#topic-composer > summary').click();
   const input = page.locator('#topic-composer textarea[name="content"]');
   const originalInput = await input.elementHandle();
   await input.fill('刷新期间继续保留的合成草稿。');
   const refresh = page.getByRole('button', { name: '刷新讨论', exact: true });
   for (const step of [
-    { posts: [firstPost], stage: 'discussing', order: ['discussion', 'composer', 'summary'] },
-    { posts: [firstPost, citedPost], stage: 'summarized', order: ['summary', 'discussion', 'composer'] },
-    { posts: [], stage: 'inviting', order: ['composer', 'discussion', 'summary'] },
+    { posts: [firstPost], stage: 'discussing' },
+    { posts: [firstPost, citedPost], stage: 'summarized' },
+    { posts: [], stage: 'inviting' },
   ]) {
     posts = step.posts;
     await refresh.click();
     await waitFeed(page, posts.length ? `已读到 ${posts.length} 条投稿` : '还没有读到这个话题的公开投稿');
-    await expectTopicLayout(page, step.stage, step.order);
-    assert.equal(await refresh.evaluate(node => node === document.activeElement), true, 'refresh must retain keyboard focus after rearranging sections');
+    await expectTopicLayout(page, step.stage);
+    assert.equal(await refresh.evaluate(node => node === document.activeElement), true, 'refresh must retain keyboard focus after updating sections');
+    assert.notEqual(await page.locator('#topic-composer').getAttribute('open'), null, 'refresh must keep the open composer expanded');
     assert.equal(await originalInput.evaluate(node => node.isConnected && node === document.querySelector('#topic-composer textarea[name="content"]')), true);
     assert.equal(await input.inputValue(), '刷新期间继续保留的合成草稿。');
     assert.equal(await page.locator('.topic-discussion .discussion-post').count(), posts.length);
@@ -371,7 +544,7 @@ test('regression: loading older posts and refreshing a deep link do not focus or
   assert.equal(await page.locator('#issue-71').evaluate(node => node.getBoundingClientRect().top < 0), true);
 });
 
-test('regression: a slow deep-link lookup preserves active writing and applies the pending layout after blur', async t => {
+test('regression: a slow deep-link lookup preserves active writing and a stable reading order after blur', async t => {
   const topic = site.config.topics[0];
   const response = Promise.withResolvers(), requested = Promise.withResolvers();
   const { page, goto } = await fixture(t, { api: url => {
@@ -381,15 +554,16 @@ test('regression: a slow deep-link lookup preserves active writing and applies t
   try {
     await goto(`#/topics/${topic.id}?discussion=issue-88`);
     await requested.promise;
+    await page.getByRole('button', { name: '我也说一句', exact: true }).click();
     const input = page.locator('#topic-composer textarea[name="content"]');
     await input.fill('慢读取过程中正在写的合成内容。');
     response.resolve({ body: issue(88, topic.id) });
     await waitFeed(page, '已读到 1 条投稿');
     assert.equal(await input.evaluate(node => node === document.activeElement), true, 'a late requested post must not take focus from the composer');
     assert.equal(await input.inputValue(), '慢读取过程中正在写的合成内容。');
-    await expectTopicLayout(page, 'discussing', ['composer', 'discussion', 'summary']);
+    await expectTopicLayout(page, 'discussing');
     await page.getByRole('button', { name: '看原始回答 ↓', exact: true }).focus();
-    await expectTopicLayout(page, 'discussing', ['discussion', 'composer', 'summary']);
+    await expectTopicLayout(page, 'discussing');
     assert.equal(await input.inputValue(), '慢读取过程中正在写的合成内容。');
   } finally {
     response.resolve({ body: issue(88, topic.id) });
@@ -412,9 +586,9 @@ test('regression: a focused summary link survives incoming sources until focus l
     await waitFeed(page, '已读到 1 条投稿');
     assert.equal(await originalLink.evaluate(node => node.isConnected && node === document.activeElement), true, 'reading a source must not replace a focused summary link');
     assert.equal(await page.locator('.topic-summary h2').innerText(), '先看看相关资料');
-    await expectTopicLayout(page, 'summarized', ['composer', 'discussion', 'summary']);
+    await expectTopicLayout(page, 'summarized');
     await page.getByRole('button', { name: '看原始回答 ↓', exact: true }).focus();
-    await expectTopicLayout(page, 'summarized', ['summary', 'discussion', 'composer']);
+    await expectTopicLayout(page, 'summarized');
     assert.equal(await page.locator('.topic-summary h2').innerText(), '目前整理');
     assert.equal(await page.locator('.topic-summary .summary-source').getAttribute('href'), citedPost.html_url);
   } finally {

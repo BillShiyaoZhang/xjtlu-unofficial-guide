@@ -356,7 +356,8 @@ test('public Pages reader works on a project subpath across desktop and mobile w
 
     await page.locator('#query').fill('synthetic-query-with-no-matching-answer');
     assert.equal(await page.locator('#answer-list .answer-item').count(), 0);
-    assert.match(await page.locator('#answer-list').innerText(), /暂无符合条件/u);
+    assert.equal(await page.locator('#directory-empty').isVisible(), true);
+    assert.match(await page.locator('#directory-empty').innerText(), /暂无符合条件/u);
     await page.locator('#query').fill('教务系统');
     assert.ok(await page.locator('#answer-list .answer-item').count() > 0);
     await page.reload();
@@ -473,6 +474,8 @@ test('reviewed Pages show AI confirmation and recompute overdue warnings across 
     assert.equal(await page.locator('#answer-detail .citation a').getAttribute('href'), first.citations[0].url);
     assert.equal(await page.locator('#answer-detail .warning').count(), 1);
     assert.equal(await page.locator('#answer-detail .history span').count(), 1);
+    assert.equal(await page.locator('#answer-detail .reader-history').getAttribute('open'), null);
+    await page.locator('#answer-detail .reader-history > summary').click();
     assert.match(await page.locator('#answer-detail .history').innerText(), /第 2 版/u);
     await assertPageFits(page);
     await page.screenshot({ path: join(screenshots, `${name}-pages-reviewed-detail.png`), fullPage: true });
@@ -513,7 +516,8 @@ test('an empty reviewed Pages snapshot remains an empty directory without demo f
   assert.equal(await page.locator('#edition-note').innerText(), '暂无已发布内容');
   assert.equal(await page.locator('#count').innerText(), '0 条答案');
   assert.equal(await page.locator('#answer-list .answer-item').count(), 0);
-  assert.match(await page.locator('#answer-list').innerText(), /暂无符合条件的公开答案/u);
+  assert.equal(await page.locator('#directory-empty').isVisible(), true);
+  assert.match(await page.locator('#directory-empty').innerText(), /还没有已发布的文章/u);
   assert.equal(await page.getByText('公开演示', { exact: true }).count(), 0);
   await page.locator('#query').fill('教务系统');
   assert.equal(await page.locator('#answer-list .answer-item').count(), 0);

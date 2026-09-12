@@ -11,18 +11,25 @@
   <script type="module" src="/extensions/guide.js"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">跳到正文</a>
   <header><a class="brand" href="/"><img src="/extensions/brand.svg" alt="" width="38" height="38"><span>西浦非官方指南</span></a><nav aria-label="主导航"><a href="/#answers">查答案</a><a href="/#participate">参与试点</a><a href="/#report">报告问题</a><a href="/#about">关于</a></nav></header>
-  <main>
+  <main id="main" tabindex="-1">
     <p id="message" role="status" hidden></p>
     <section id="answers" class="view">
-      <div class="section-title"><div><p class="eyebrow">校园信息</p><h1>查找与核对</h1></div><span id="count" class="muted"></span></div>
-      <form id="search" class="search"><input name="query" aria-label="搜索答案" placeholder="搜索账号、系统、校园办事" maxlength="500" type="search"><button type="submit">搜索</button></form>
+      <div class="section-title"><div><p class="eyebrow">带着问题来，从这里开始</p><h1>找到校园办事的下一步</h1></div><span id="count" class="muted" aria-live="polite"></span></div>
+      <p class="reader-intro">选择一个主题，或搜索你正在遇到的问题。这里展示已发布的资料，具体安排请再核对原始来源。</p>
+      <ol class="reader-steps" aria-label="如何使用本指南"><li><strong>找资料</strong><span>用关键词或主题缩小范围</span></li><li><strong>核对出处</strong><span>看看校区、时间和每段来源</span></li><li><strong>反馈问题</strong><span>发现错误？查看<a href="/#report">报告方式</a></span></li></ol>
+      <label for="reader-query" class="search-label">你想了解什么？</label>
+      <form id="search" class="search" role="search"><input id="reader-query" name="query" aria-label="搜索答案" placeholder="输入系统名称，或你想办理的事情" maxlength="500" type="search"><button type="submit">搜索</button></form>
+      <div id="reader-topics" class="reader-topics" role="group" aria-label="按主题开始浏览"></div>
       <div class="filters"><label>话题<select id="topic"><option value="">全部话题</option></select></label><div id="scope-filters"></div></div>
-      <div class="branch-view-switch" role="group" aria-label="阅读视图"><button id="branches-view" type="button" aria-pressed="true">分支图</button><button id="list-view" type="button" aria-pressed="false" class="secondary">列表</button></div>
+      <div class="reader-toolbar"><div class="branch-view-switch" role="group" aria-label="阅读视图"><button id="list-view" type="button" aria-pressed="true">列表</button><button id="branches-view" type="button" aria-pressed="false" class="secondary">分支图</button></div><button id="reset-search" type="button" class="secondary" hidden>清空搜索与筛选</button></div>
+      <p id="reader-view-help" class="muted">先读标题和摘要，找到相关资料后打开全文。</p>
+      <div id="answer-empty" class="reader-empty" hidden><h2>暂时没有找到相关资料</h2><p>试试更短的关键词，或清空主题和适用范围后再找一次。</p><button id="empty-reset" type="button" class="secondary">查看全部已发布资料</button><p class="muted">发现已有资料有误，可以查看<a href="/#report">报告方式</a>。</p></div>
       <div id="answer-branches"></div>
-      <div id="answer-list" class="answer-list" aria-live="polite" hidden></div>
+      <div id="answer-list" class="answer-list"></div>
     </section>
-    <section id="detail" class="view" hidden><a href="/#answers" class="back">返回答案目录</a><div id="answer-detail"></div></section>
+    <section id="detail" class="view" hidden><a id="reader-back" href="/#answers" class="back">返回查找结果</a><div id="answer-detail"></div></section>
     <section id="participate" class="view" hidden>
       <div class="section-title"><div><p class="eyebrow">邀请制研究</p><h1>参与试点</h1></div><span id="participant-state" class="muted">未加入</span></div>
       <div id="notice"></div>
@@ -37,6 +44,7 @@
     </section>
     <section id="report" class="view" hidden>
       <p class="eyebrow">问题闭环</p><h1>报告问题</h1>
+      <p class="reader-intro">隐私问题可以直接报告并获取查询回执；信息过期、适用范围和来源问题需要先以邀请参与者身份加入并同意参与。</p>
       <form id="report-form"><label>问题类型<select name="type"><option value="privacy">隐私问题</option><option value="stale">信息过期</option><option value="scope_error">适用范围有误</option><option value="source_mismatch">来源不匹配</option></select></label><label>相关答案<select name="cardId" id="report-card"><option value="">未指定答案</option></select></label><label>功能区域<select name="affectedArea"><option value="reporting">问题报告</option><option value="home">首页</option><option value="search">搜索</option><option value="topics">话题</option><option value="pilot">试点</option><option value="intake">私有线索</option><option value="other">其他</option></select></label><button>提交报告</button></form>
       <div id="receipt-result" hidden><h2>报告回执</h2><output id="receipt"></output></div>
       <form id="receipt-form"><h2>查询状态</h2><label>回执<input name="receipt" required autocomplete="off" spellcheck="false" maxlength="100"></label><button class="secondary">查询状态</button></form><p id="report-status" aria-live="polite"></p>
